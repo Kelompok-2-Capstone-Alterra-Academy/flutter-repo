@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:staredu/views/screen/auth/login/login_screen.dart';
+import 'package:staredu/views/screen/course/course_taken_list.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
 import 'package:staredu/views/screen/splash_welcome/splash_welcome_screen.dart';
 
@@ -19,11 +20,13 @@ class StarEdu extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.white,
       ),
-      initialRoute: LoginScreen.routeName,
+      initialRoute: CourseTakenListScreen.routeName,
       routes: {
         SplashWelcomeScreen.routeName: (context) => const SplashWelcomeScreen(),
         HomeScreen.routeName: (context) => const HomeScreen(),
         LoginScreen.routeName: (context) => const LoginScreen(),
+        CourseTakenListScreen.routeName: (context) =>
+            const CourseTakenListScreen(),
       },
     );
   }
