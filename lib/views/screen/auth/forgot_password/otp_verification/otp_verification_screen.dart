@@ -78,110 +78,113 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(20.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: 60,
-                          child: TextFormField(
-                            controller: _emailController,
-                            keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(
-                              hintStyle: TextStyle(
-                                  color: Color(0xff363d4a),
-                                  fontWeight: FontWeight.w700),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.grey, width: 0),
+                    child: Form(
+                      key: _formkey,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            width: 60,
+                            child: TextFormField(
+                              controller: _emailController,
+                              keyboardType: TextInputType.number,
+                              decoration: const InputDecoration(
+                                hintStyle: TextStyle(
+                                    color: Color(0xff363d4a),
+                                    fontWeight: FontWeight.w700),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.grey, width: 0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey),
+                                ),
                               ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
-                              ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Kode OTP tidak boleh kosong";
+                                }
+                                return null;
+                              },
                             ),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Kode OTP tidak boleh kosong";
-                              }
-                              return null;
-                            },
                           ),
-                        ),
-                        SizedBox(
-                          width: 60,
-                          child: TextFormField(
-                            controller: _emailController,
-                            keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(
-                              hintStyle: TextStyle(
-                                  color: Color(0xff363d4a),
-                                  fontWeight: FontWeight.w700),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.grey, width: 0),
+                          SizedBox(
+                            width: 60,
+                            child: TextFormField(
+                              controller: _emailController,
+                              keyboardType: TextInputType.number,
+                              decoration: const InputDecoration(
+                                hintStyle: TextStyle(
+                                    color: Color(0xff363d4a),
+                                    fontWeight: FontWeight.w700),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.grey, width: 0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey),
+                                ),
                               ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
-                              ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Kode OTP tidak boleh kosong";
+                                }
+                                return null;
+                              },
                             ),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Kode OTP tidak boleh kosong";
-                              }
-                              return null;
-                            },
                           ),
-                        ),
-                        SizedBox(
-                          width: 60,
-                          child: TextFormField(
-                            controller: _emailController,
-                            keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(
-                              hintStyle: TextStyle(
-                                  color: Color(0xff363d4a),
-                                  fontWeight: FontWeight.w700),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.grey, width: 0),
+                          SizedBox(
+                            width: 60,
+                            child: TextFormField(
+                              controller: _emailController,
+                              keyboardType: TextInputType.number,
+                              decoration: const InputDecoration(
+                                hintStyle: TextStyle(
+                                    color: Color(0xff363d4a),
+                                    fontWeight: FontWeight.w700),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.grey, width: 0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey),
+                                ),
                               ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
-                              ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Kode OTP tidak boleh kosong";
+                                }
+                                return null;
+                              },
                             ),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Kode OTP tidak boleh kosong";
-                              }
-                              return null;
-                            },
                           ),
-                        ),
-                        SizedBox(
-                          width: 60,
-                          child: TextFormField(
-                            controller: _emailController,
-                            keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(
-                              hintStyle: TextStyle(
-                                  color: Color(0xff363d4a),
-                                  fontWeight: FontWeight.w700),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.grey, width: 0),
+                          SizedBox(
+                            width: 60,
+                            child: TextFormField(
+                              controller: _emailController,
+                              keyboardType: TextInputType.number,
+                              decoration: const InputDecoration(
+                                hintStyle: TextStyle(
+                                    color: Color(0xff363d4a),
+                                    fontWeight: FontWeight.w700),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.grey, width: 0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey),
+                                ),
                               ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
-                              ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Kode OTP tidak boleh kosong";
+                                }
+                                return null;
+                              },
                             ),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Kode OTP tidak boleh kosong";
-                              }
-                              return null;
-                            },
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(
