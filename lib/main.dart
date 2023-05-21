@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:staredu/views/screen/auth/forgot_password/main/forgot_password_screen.dart';
+import 'package:staredu/views/screen/auth/forgot_password/otp_verification/otp_verification_screen.dart';
 import 'package:staredu/views/screen/auth/login/login_screen.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
 import 'package:staredu/views/screen/splash_welcome/splash_welcome_screen.dart';
@@ -20,13 +21,15 @@ class StarEdu extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.white,
       ),
-      initialRoute: ForgotPasswordScreen.routeName,
+      initialRoute: OtpVerificationScreen.routeName,
       routes: {
         SplashWelcomeScreen.routeName: (context) => const SplashWelcomeScreen(),
         HomeScreen.routeName: (context) => const HomeScreen(),
         LoginScreen.routeName: (context) => const LoginScreen(),
         ForgotPasswordScreen.routeName: (context) =>
             const ForgotPasswordScreen(),
+        OtpVerificationScreen.routeName: (context) =>
+            const OtpVerificationScreen(),
       },
     );
   }
