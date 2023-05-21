@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:staredu/models/service/course_history%20_model.dart';
+import '../../../models/service/course_history_model.dart';
 import '../../../utils/color/color.dart';
+import 'note_transaction_screen.dart.dart';
 
 class HistoryTransactionScreen extends StatefulWidget {
   const HistoryTransactionScreen({super.key});
@@ -173,7 +174,15 @@ class _HistoryTransactionScreenState extends State<HistoryTransactionScreen> {
                                       color: Colors.transparent,
                                       child: InkWell(
                                         borderRadius: BorderRadius.circular(8),
-                                        onTap: () {},
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  NoteTransactionScreen(),
+                                            ),
+                                          );
+                                        },
                                         child: Center(
                                           child: Text(
                                             "E-Recipt",
