@@ -1,22 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:staredu/views/screen/history/history_transaction_screen.dart';
+import 'package:staredu/views/screen/auth/login/login_screen.dart';
+import 'package:staredu/views/screen/home/home_screen.dart';
+import 'package:staredu/views/screen/splash_welcome/splash_welcome_screen.dart';
+import 'views/screen/sell_course/sell_course_screen.dart';
+
 
 void main() {
-  runApp(const MyApp());
+  runApp(const StarEdu());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class StarEdu extends StatelessWidget {
+  const StarEdu({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: SellCourseScreen(),
+      title: 'Rent Car',
+      debugShowCheckedModeBanner: false,
+      // add primary color
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Colors.white,
       ),
-      home: const HistoryTransactionScreen(),
+      initialRoute: LoginScreen.routeName,
+      routes: {
+        SplashWelcomeScreen.routeName: (context) => const SplashWelcomeScreen(),
+        HomeScreen.routeName: (context) => const HomeScreen(),
+        LoginScreen.routeName: (context) => const LoginScreen(),
+      },
     );
   }
 }
