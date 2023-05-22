@@ -3,6 +3,8 @@ import 'package:staredu/views/screen/auth/login/login_screen.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
 import 'package:staredu/views/screen/splash_welcome/splash_welcome_screen.dart';
 
+import 'views/screen/sell_course/sell_course_screen.dart';
+
 void main() {
   runApp(const StarEdu());
 }
@@ -12,7 +14,9 @@ class StarEdu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: SellCourseScreen(),
       title: 'Rent Car',
       debugShowCheckedModeBanner: false,
       // add primary color
