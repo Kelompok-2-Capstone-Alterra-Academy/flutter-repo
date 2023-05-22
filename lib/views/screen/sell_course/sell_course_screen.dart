@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/models/sell_course_model.dart';
+import 'package:staredu/views/screen/sell_course/sell_course_detail_screen.dart';
 
 import '../../../utils/color/color.dart';
+import '../../../utils/constant/sell_course_list.dart';
 import '../../../widgets/sell_course/secondary_button.dart';
 
 class SellCourseScreen extends StatefulWidget {
@@ -13,41 +15,6 @@ class SellCourseScreen extends StatefulWidget {
 }
 
 class _SellCourseScreenState extends State<SellCourseScreen> {
-  List<SellCourseModel> sellCourses = [
-    SellCourseModel(
-      id: 1,
-      title: "Matematika",
-      price: "Rp. 750.000",
-      rating: "4.8",
-      student: "8950 Siswa",
-      img: "assets/images/calculator.png",
-    ),
-    SellCourseModel(
-      id: 2,
-      title: "Bahasa Inggris",
-      price: "Rp. 499.000",
-      rating: "4.8",
-      student: "8950 Siswa",
-      img: "assets/images/calculator.png",
-    ),
-    SellCourseModel(
-      id: 3,
-      title: "Geografi",
-      price: "Rp. 399.000",
-      rating: "4.8",
-      student: "8950 Siswa",
-      img: "assets/images/calculator.png",
-    ),
-    SellCourseModel(
-      id: 4,
-      title: "Ekonomi",
-      price: "Rp. 550.000",
-      rating: "4.8",
-      student: "8950 Siswa",
-      img: "assets/images/calculator.png",
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
@@ -201,7 +168,28 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
                                       color: Colors.transparent,
                                       child: InkWell(
                                         borderRadius: BorderRadius.circular(8),
-                                        onTap: () {},
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                            PageRouteBuilder(
+                                              pageBuilder: (context, animations,
+                                                      secondaryAnimations) =>
+                                                  SellCourseDetailScreen(
+                                                      indexSellCourse: index),
+                                              transitionsBuilder: (context,
+                                                  animations,
+                                                  secondaryAnimations,
+                                                  childs) {
+                                                final tween =
+                                                    Tween(begin: 0.0, end: 1.0);
+                                                return FadeTransition(
+                                                  opacity:
+                                                      animations.drive(tween),
+                                                  child: childs,
+                                                );
+                                              },
+                                            ),
+                                          );
+                                        },
                                         child: Center(
                                           child: Text(
                                             "Lihat Detail Kursus",
