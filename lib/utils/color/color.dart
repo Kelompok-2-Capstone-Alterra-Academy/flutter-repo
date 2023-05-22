@@ -11,3 +11,4 @@ const Color searchBarColor = Color(0xFFF5F5F5);
 const Color searchBarTextColor = Color(0xFF9E9E9E);
 const Color blackColor = Colors.black;
 const Color whiteColor = Colors.white;
+const Color greyColor = Color(0xFF616161);
