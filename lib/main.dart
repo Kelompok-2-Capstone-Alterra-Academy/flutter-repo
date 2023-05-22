@@ -14,11 +14,10 @@ class StarEdu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SellCourseScreen(),
+      home: const SellCourseScreen(),
       title: 'Rent Car',
-      debugShowCheckedModeBanner: false,
       // add primary color
       theme: ThemeData(
         primaryColor: Colors.white,
