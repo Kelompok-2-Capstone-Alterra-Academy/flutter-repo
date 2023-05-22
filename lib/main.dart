@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:staredu/views/screen/auth/login/login_screen.dart';
 import 'package:staredu/views/screen/course/course_taken_list.dart';
+import 'package:staredu/views/screen/course/module/module_list.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
 import 'package:staredu/views/screen/splash_welcome/splash_welcome_screen.dart';
 
@@ -27,6 +28,7 @@ class StarEdu extends StatelessWidget {
         LoginScreen.routeName: (context) => const LoginScreen(),
         CourseTakenListScreen.routeName: (context) =>
             const CourseTakenListScreen(),
+        ModuleListScreen.routeName: (context) => const ModuleListScreen(),
       },
     );
   }
