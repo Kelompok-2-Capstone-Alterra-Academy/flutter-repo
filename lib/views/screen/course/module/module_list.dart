@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:staredu/models/module_section_model.dart';
 import 'package:staredu/utils/color/color.dart';
+import 'package:staredu/utils/constant/module_section_list.dart';
 import 'package:staredu/views/screen/course/course_taken_list.dart';
 import 'package:staredu/widgets/module_course/module_button.dart';
 import 'package:staredu/widgets/module_course/module_section_card.dart';
