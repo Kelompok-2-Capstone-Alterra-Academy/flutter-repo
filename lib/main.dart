@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:staredu/views/screen/auth/login/login_screen.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
+import 'package:staredu/views/screen/mentor/chat_mentor_screen.dart';
+import 'package:staredu/views/screen/mentor/mentor_screen.dart';
 import 'package:staredu/views/screen/sell_course/course_payment_screen.dart';
 import 'package:staredu/views/screen/sell_course/sell_course_screen.dart';
 import 'package:staredu/views/screen/splash_welcome/splash_welcome_screen.dart';
@@ -16,7 +18,7 @@ class StarEdu extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SellCourseScreen(),
+      home: const MentorScreen(),
       title: 'Rent Car',
       // add primary color
       theme: ThemeData(
