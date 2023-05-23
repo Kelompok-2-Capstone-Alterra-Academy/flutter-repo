@@ -139,7 +139,7 @@ class _CourseTakenListScreenState extends State<CourseTakenListScreen> {
                           onTap: () {
                             Navigator.pushNamed(
                                 context, ModuleListScreen.routeName,
-                                arguments: ModuleArguments(
+                                arguments: ModuleCourseArguments(
                                   courseTaken[index].title.toString(),
                                   int.parse(courseTaken[index]
                                       .currentSection
@@ -317,10 +317,10 @@ class _CourseTakenListScreenState extends State<CourseTakenListScreen> {
   }
 }
 
-class ModuleArguments {
+class ModuleCourseArguments {
   final String title;
   final int currentSection;
   final int totalSection;
 
-  ModuleArguments(this.title, this.currentSection, this.totalSection);
+  ModuleCourseArguments(this.title, this.currentSection, this.totalSection);
 }

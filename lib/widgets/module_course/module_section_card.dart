@@ -435,7 +435,7 @@ class ModuleSectionCard extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        "Pilihan Ganda",
+                                        "Essay",
                                         textAlign: TextAlign.right,
                                         style: GoogleFonts.poppins(
                                           fontStyle: FontStyle.normal,
