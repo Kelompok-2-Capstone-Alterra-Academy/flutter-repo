@@ -4,6 +4,7 @@ class ModulSectionModel {
   bool? video;
   bool? material;
   bool? assignment;
+  bool? quiz;
   bool? finished;
 
   ModulSectionModel({
@@ -12,6 +13,7 @@ class ModulSectionModel {
     this.video,
     this.material,
     this.assignment,
+    this.quiz,
     this.finished,
   });
 }

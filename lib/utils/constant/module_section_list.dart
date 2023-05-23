@@ -7,6 +7,7 @@ List<ModulSectionModel> moduleSection = [
       video: true,
       material: false,
       assignment: true,
+      quiz: false,
       finished: true),
   ModulSectionModel(
     id: 2,
@@ -14,6 +15,7 @@ List<ModulSectionModel> moduleSection = [
     video: true,
     material: true,
     assignment: true,
+    quiz: true,
     finished: true,
   ),
   ModulSectionModel(
@@ -22,6 +24,16 @@ List<ModulSectionModel> moduleSection = [
     video: true,
     material: true,
     assignment: true,
+    quiz: true,
     finished: false,
   ),
+  ModulSectionModel(
+    id: 4,
+    title: "Section 4",
+    video: true,
+    material: true,
+    assignment: true,
+    quiz: true,
+    finished: false,
+  )
 ];

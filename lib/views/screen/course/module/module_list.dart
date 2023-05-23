@@ -19,7 +19,8 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-    final args = ModalRoute.of(context)!.settings.arguments as ModuleArguments;
+    final args =
+        ModalRoute.of(context)!.settings.arguments as ModuleCourseArguments;
     return DefaultTabController(
         length: 2,
         child: Scaffold(
@@ -87,16 +88,19 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           ModuleButton(
+                            courseName: args.title,
                             width: screenWidth,
                             text: "Live Session",
                             borderColor: primaryColor,
                           ),
                           ModuleButton(
+                            courseName: args.title,
                             width: screenWidth,
                             text: "Quiz",
                             borderColor: primaryColor,
                           ),
                           ModuleButton(
+                            courseName: args.title,
                             width: screenWidth,
                             text: "Tanya Mentor",
                             borderColor: primaryColor,
@@ -139,4 +143,10 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
           ),
         ));
   }
+}
+
+class ModuleListQuizArguments {
+  final String courseName;
+
+  ModuleListQuizArguments(this.courseName);
 }

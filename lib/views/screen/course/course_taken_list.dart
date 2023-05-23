@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:staredu/models/course_taken_model.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/views/screen/course/module/module_list.dart';
 import 'package:staredu/utils/constant/list_course_taken.dart';
@@ -103,7 +102,7 @@ class _CourseTakenListScreenState extends State<CourseTakenListScreen> {
                           onTap: () {
                             Navigator.pushNamed(
                                 context, ModuleListScreen.routeName,
-                                arguments: ModuleArguments(
+                                arguments: ModuleCourseArguments(
                                   courseTaken[index].title.toString(),
                                   int.parse(courseTaken[index]
                                       .currentSection
@@ -281,10 +280,10 @@ class _CourseTakenListScreenState extends State<CourseTakenListScreen> {
   }
 }
 
-class ModuleArguments {
+class ModuleCourseArguments {
   final String title;
   final int currentSection;
   final int totalSection;
 
-  ModuleArguments(this.title, this.currentSection, this.totalSection);
+  ModuleCourseArguments(this.title, this.currentSection, this.totalSection);
 }
