@@ -51,31 +51,28 @@ class ModuleQuizCard extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 12),
                             child: Center(
-                              child: Flexible(
-                                fit: FlexFit.loose,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Quiz ${numbering.toString()} - $title",
-                                      style: GoogleFonts.poppins(
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 14,
-                                      ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Quiz ${numbering.toString()} - $title",
+                                    style: GoogleFonts.poppins(
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14,
                                     ),
-                                    Text(
-                                      "100 Point",
-                                      textAlign: TextAlign.right,
-                                      style: GoogleFonts.poppins(
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 9,
-                                      ),
+                                  ),
+                                  Text(
+                                    "100 Point",
+                                    textAlign: TextAlign.right,
+                                    style: GoogleFonts.poppins(
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 9,
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),

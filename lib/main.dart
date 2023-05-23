@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:staredu/views/screen/auth/login/login_screen.dart';
 import 'package:staredu/views/screen/course/course_taken_list.dart';
 import 'package:staredu/views/screen/course/module/module_ask_mentor.dart';
@@ -10,9 +9,6 @@ import 'package:staredu/views/screen/home/home_screen.dart';
 import 'package:staredu/views/screen/splash_welcome/splash_welcome_screen.dart';
 
 void main() {
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent,
-  ));
   runApp(const StarEdu());
 }
 
