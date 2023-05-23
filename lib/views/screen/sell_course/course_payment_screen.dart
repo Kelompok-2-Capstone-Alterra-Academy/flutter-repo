@@ -22,6 +22,8 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
+    bool isChecked = false;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -61,25 +63,25 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                   padding: const EdgeInsets.all(17),
                   child: Column(
                     children: [
-                      DetailPayment(
+                      DetailKursus(
                         icon: Icons.menu_book,
                         title: "Nama Kursus",
                         subtitle: sellCourses[widget.indexSellCourse].title!,
                       ),
                       const SizedBox(height: 15),
-                      const DetailPayment(
+                      const DetailKursus(
                         icon: Icons.school_outlined,
                         title: "Jenjang",
                         subtitle: "SMA/SMK Kelas 12",
                       ),
                       const SizedBox(height: 15),
-                      const DetailPayment(
+                      const DetailKursus(
                         icon: Icons.apps,
                         title: "Section",
                         subtitle: "10 Section",
                       ),
                       const SizedBox(height: 15),
-                      const DetailPayment(
+                      const DetailKursus(
                         icon: Icons.laptop,
                         title: "Live Session",
                         subtitle: "3x Seminggu",
@@ -132,13 +134,13 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                   padding: const EdgeInsets.all(17),
                   child: Column(
                     children: [
-                      DetailPayment(
+                      DetailKursus(
                         icon: Icons.payments_outlined,
                         title: "Harga",
                         subtitle: sellCourses[widget.indexSellCourse].price!,
                       ),
                       const SizedBox(height: 15),
-                      const DetailPayment(
+                      const DetailKursus(
                         icon: Icons.payments_rounded,
                         title: "Biaya Admin",
                         subtitle: "Rp. 500",
@@ -173,11 +175,34 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                 ),
               ),
               SizedBox(height: screenHeight * 0.25),
-              PrimaryButton(
-                screenWidth: screenWidth,
-                title: "Checkout",
-                page: const SellCourseScreen(),
-              )
+              Container(
+                height: 42,
+                width: screenWidth,
+                decoration: const BoxDecoration(
+                  color: primaryColor,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(8),
+                  ),
+                ),
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: () {},
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 12),
+                      child: Center(
+                        child: Text(
+                          "Checkout",
+                          style: GoogleFonts.poppins(
+                              color: whiteColor,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../utils/color/color.dart';
 
-class DetailPayment extends StatelessWidget {
+class DetailKursus extends StatelessWidget {
   final String title;
   final IconData icon;
   final String subtitle;
 
-  const DetailPayment({
+  const DetailKursus({
     super.key,
     required this.title,
     required this.icon,
