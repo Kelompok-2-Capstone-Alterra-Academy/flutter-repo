@@ -4,6 +4,7 @@ import 'package:staredu/utils/color/color.dart';
 import '../../../models/schedule_model.dart';
 import '../../../utils/constant/list_schedule_course.dart';
 import '../../../widgets/card_button.dart';
+import 'detail_schadule_screen.dart';
 
 class ScheduleCourseScreen extends StatefulWidget {
   static const routeName = '/schedule';
@@ -86,44 +87,66 @@ class _ScheduleCourseScreenState extends State<ScheduleCourseScreen> {
                 itemCount: filteredList.length,
                 itemBuilder: (context, index) {
                   ScheduleCourseModel schedule = filteredList[index];
-                  return Container(
-                    margin: const EdgeInsets.only(bottom: 10.0),
-                    decoration: BoxDecoration(
-                      color: primaryColor,
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: ListTile(
-                      title: Text(
-                        schedule.date,
-                        style: GoogleFonts.poppins(
-                            color: Colors.white, fontSize: 12),
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailScheduleScreen(
+                              schedule: scheduleList[index]),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      // Styling Container
+                      margin: const EdgeInsets.only(bottom: 10.0),
+                      decoration: BoxDecoration(
+                        color: primaryColor,
+                        borderRadius: BorderRadius.circular(8.0),
                       ),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            schedule.course,
+                      child: ListTile(
+                        // Judul ListTile
+                        title: Text(
+                          schedule.date,
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 12,
+                          ),
+                        ),
+                        // Subjudul ListTile
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              schedule.course,
+                              style: GoogleFonts.poppins(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ],
+                        ),
+                        // Widget trailing ListTile
+                        trailing: Container(
+                          // Styling container trailing
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20.0,
+                            vertical: 6,
+                          ),
+                          decoration: BoxDecoration(
+                            color: schedule.status == 'Sudah Ikut'
+                                ? Colors.green
+                                : Colors.orange,
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          child: Text(
+                            schedule.status,
                             style: GoogleFonts.poppins(
                               color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
+                              fontSize: 12,
                             ),
                           ),
-                        ],
-                      ),
-                      trailing: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 6),
-                        decoration: BoxDecoration(
-                          color: schedule.status == 'Sudah Ikut'
-                              ? Colors.green
-                              : Colors.orange,
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        child: Text(
-                          schedule.status,
-                          style: GoogleFonts.poppins(
-                              color: Colors.white, fontSize: 12),
                         ),
                       ),
                     ),
