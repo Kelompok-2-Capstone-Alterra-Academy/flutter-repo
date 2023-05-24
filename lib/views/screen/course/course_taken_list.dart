@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/color/color.dart';
+import 'package:staredu/widgets/course/finished_course_taken_list.dart';
 import 'package:staredu/widgets/course/ongoing_course_taken_list.dart';
 
 class CourseTakenListScreen extends StatefulWidget {
@@ -67,9 +68,7 @@ class _CourseTakenListScreenState extends State<CourseTakenListScreen> {
         body: const TabBarView(
           children: [
             OnGoingCourseTakenListScreen(),
-            Center(
-              child: Text("Finished Course"),
-            ),
+            FinishedCourseTakenListScreen(),
           ],
         ),
       ),
