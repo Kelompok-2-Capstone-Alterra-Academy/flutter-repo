@@ -6,10 +6,17 @@ import 'package:staredu/views/screen/auth/login/login_screen.dart';
 import 'package:staredu/views/screen/auth/register/account_verification/account_verification.dart';
 import 'package:staredu/views/screen/auth/register/main/register_screen.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
+import 'package:staredu/views/screen/home/home_view_model.dart';
 import 'package:staredu/views/screen/splash_welcome/splash_welcome_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const StarEdu());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => HomeViewModel()),
+    ],
+    child: const StarEdu(),
+  ));
 }
 
 class StarEdu extends StatelessWidget {
@@ -25,10 +32,10 @@ class StarEdu extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.white,
       ),
-      initialRoute: AccountVerification.routeName,
+      initialRoute: HomeScreen.routeName,
       routes: {
-        SplashWelcomeScreen.routeName: (context) => const SplashWelcomeScreen(),
         HomeScreen.routeName: (context) => const HomeScreen(),
+        SplashWelcomeScreen.routeName: (context) => const SplashWelcomeScreen(),
         LoginScreen.routeName: (context) => const LoginScreen(),
         ForgotPasswordScreen.routeName: (context) =>
             const ForgotPasswordScreen(),
