@@ -142,16 +142,19 @@ class _OnGoingCourseTakenListScreenState
                                     Flexible(
                                       fit: FlexFit.loose,
                                       child: FAProgressBar(
+                                        animatedDuration: const Duration(
+                                          milliseconds: 600,
+                                        ),
                                         progressGradient: const LinearGradient(
                                           begin: Alignment.topCenter,
                                           end: Alignment.bottomCenter,
                                           colors: [
-                                            Color(0xff2196F3),
-                                            Color(0xff4161FF),
+                                            primaryColor,
+                                            secondaryColor,
                                           ],
                                         ),
                                         backgroundColor:
-                                            const Color(0xff0D47A1),
+                                            progressBarBackgroundColor,
                                         size: 10,
                                         borderRadius:
                                             BorderRadius.circular(100),
