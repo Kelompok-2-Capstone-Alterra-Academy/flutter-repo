@@ -73,6 +73,9 @@ flutter:
     - assets/images/logo_splash.jpg
     - assets/images/bottom_splash.jpg
     - assets/images/login_logo.jpg
+    - assets/images/forgot_password.jpg
+    - assets/images/reset_password.jpg
+    - assets/images/alert_reset_password.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
