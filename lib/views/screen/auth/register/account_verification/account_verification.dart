@@ -1,20 +1,22 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:staredu/utils/color/color.dart';
 
-class OtpVerificationScreen extends StatefulWidget {
-  const OtpVerificationScreen({super.key});
-  static String routeName = '/otp_password';
+class AccountVerification extends StatefulWidget {
+  const AccountVerification({super.key});
+  static String routeName = '/account_verification';
 
   @override
-  State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
+  State<AccountVerification> createState() => _AccountVerificationState();
 }
 
-class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
-  final TextEditingController _emailController = TextEditingController();
+class _AccountVerificationState extends State<AccountVerification> {
+  final TextEditingController _otpController = TextEditingController();
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-  int _start = 30;
+  int _start = 60;
   late Timer _timer;
 
   @override
@@ -25,7 +27,6 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
   @override
   void dispose() {
-    _emailController.dispose();
     _timer.cancel();
     super.dispose();
   }
@@ -52,7 +53,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
         centerTitle: true,
         elevation: 0,
         title:
-            const Text('Verifikasi OTP', style: TextStyle(color: blackColor)),
+            const Text('Verifikasi Akun', style: TextStyle(color: blackColor)),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -61,17 +62,42 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
             child: Center(
               child: Column(
                 children: [
-                  SizedBox(
-                      height: 250,
-                      child: Image.asset(
-                        "assets/images/forgot_password.jpg",
-                        width: 200,
-                        height: 400,
-                      )),
-                  const Text(
-                    'Kami telah mengirimkan kode OTP ke email Anda',
-                    style: TextStyle(fontSize: 16, color: blackColor),
-                    textAlign: TextAlign.start,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: const Text(
+                        'Verifikasi Email mu',
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: blackColor,
+                            fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: RichText(
+                        text: const TextSpan(
+                          text: 'Kode OTP dikirim lewat email ',
+                          style: TextStyle(fontSize: 14, color: blackColor),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: 'agnescherrly@contoh.com',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: blackColor)),
+                            TextSpan(
+                                text:
+                                    ', cek dan masukin kode OTP di form bawah,',
+                                style: TextStyle(color: blackColor)),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                   const SizedBox(
                     height: 20,
@@ -86,7 +112,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                           SizedBox(
                             width: 60,
                             child: TextFormField(
-                              controller: _emailController,
+                              controller: _otpController,
                               keyboardType: TextInputType.number,
                               decoration: const InputDecoration(
                                 hintStyle: TextStyle(
@@ -111,7 +137,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                           SizedBox(
                             width: 60,
                             child: TextFormField(
-                              controller: _emailController,
+                              controller: _otpController,
                               keyboardType: TextInputType.number,
                               decoration: const InputDecoration(
                                 hintStyle: TextStyle(
@@ -136,7 +162,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                           SizedBox(
                             width: 60,
                             child: TextFormField(
-                              controller: _emailController,
+                              controller: _otpController,
                               keyboardType: TextInputType.number,
                               decoration: const InputDecoration(
                                 hintStyle: TextStyle(
@@ -161,7 +187,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                           SizedBox(
                             width: 60,
                             child: TextFormField(
-                              controller: _emailController,
+                              controller: _otpController,
                               keyboardType: TextInputType.number,
                               decoration: const InputDecoration(
                                 hintStyle: TextStyle(
@@ -187,16 +213,50 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       ),
                     ),
                   ),
+                  _start == 0
+                      ? Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Kirim ulang kode OTP?',
+                                style: TextStyle(fontSize: 16),
+                                textAlign: TextAlign.start,
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _start = 60;
+                                    startTimer();
+                                  });
+                                },
+                                child: const Text(
+                                  'Kirim',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: blackColor,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              _start == 0
+                                  ? 'Kirim ulang kode OTP'
+                                  : 'Kode OTP akan kadaluarsa dalam $_start detik',
+                              style: TextStyle(fontSize: 16, color: blackColor),
+                              textAlign: TextAlign.start,
+                            ),
+                          ),
+                        ),
                   const SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    'Kode OTP akan kadaluarsa dalam $_start detik',
-                    style: TextStyle(fontSize: 16, color: blackColor),
-                    textAlign: TextAlign.start,
-                  ),
-                  const SizedBox(
-                    height: 100,
+                    height: 70,
                   ),
                   SizedBox(
                     height: 40,
@@ -223,7 +283,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                         if (_formkey.currentState!.validate()) {}
                       },
                       child: const Text(
-                        "Kirim OTP",
+                        "Verifikasi Akun",
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 14),
                       ),
