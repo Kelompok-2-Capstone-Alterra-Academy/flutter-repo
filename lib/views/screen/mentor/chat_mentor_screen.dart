@@ -42,21 +42,23 @@ class _ChatMentorScreenState extends State<ChatMentorScreen> {
             style:
                 GoogleFonts.poppins(fontSize: 13, fontWeight: FontWeight.w600),
           ),
-          subtitle: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            margin: const EdgeInsets.only(right: 110),
-            decoration: const BoxDecoration(
-              color: subjectColor,
-              borderRadius: BorderRadius.all(
-                Radius.circular(8),
+          subtitle: Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              decoration: const BoxDecoration(
+                color: subjectColor,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(8),
+                ),
               ),
-            ),
-            child: Text(
-              mentorList[index].subject!,
-              style: GoogleFonts.poppins(
-                fontSize: 11,
-                fontWeight: FontWeight.w600,
-                color: blackColor,
+              child: Text(
+                mentorList[index].subject!,
+                style: GoogleFonts.poppins(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                  color: blackColor,
+                ),
               ),
             ),
           ),
