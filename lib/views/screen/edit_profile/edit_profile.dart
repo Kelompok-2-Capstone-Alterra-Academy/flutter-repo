@@ -259,11 +259,11 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                     ),
                     onPressed: () {},
-                    child: const Text(
-                      "Simpan Perubahan",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                    ),
+                    child: Text("Simpan Perubahan",
+                        style: GoogleFonts.poppins(
+                            color: whiteColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600)),
                   ),
                 ),
               ],

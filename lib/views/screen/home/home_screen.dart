@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/views/screen/home/home_view_model.dart';
@@ -66,17 +67,17 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
+                              children: [
                                 Text('Selamat Pagi',
-                                    style: TextStyle(
-                                        fontSize: 10,
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 11,
                                         color: whiteColor,
-                                        fontWeight: FontWeight.bold)),
+                                        fontWeight: FontWeight.w400)),
                                 Text('Dwi Bagus',
-                                    style: TextStyle(
-                                        fontSize: 16,
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 14,
                                         color: whiteColor,
-                                        fontWeight: FontWeight.bold)),
+                                        fontWeight: FontWeight.w600)),
                               ],
                             ),
                             GestureDetector(
@@ -84,8 +85,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Navigator.pushNamed(context, '/profile');
                               },
                               child: Container(
-                                width: 30,
-                                height: 30,
+                                width: 32,
+                                height: 32,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(50),
                                   image: const DecorationImage(
@@ -113,8 +114,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   filled: true,
                                   fillColor: whiteColor,
                                   hintText: "Cari kelas yang kamu minati",
-                                  hintStyle: const TextStyle(
-                                      color: blackColor, fontSize: 14),
+                                  hintStyle: GoogleFonts.poppins(
+                                      fontSize: 12, color: blackColor),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
                                     borderSide: const BorderSide(
@@ -141,12 +142,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                         context, '/notification');
                                   },
                                   child: Icon(Icons.notifications_on_outlined,
-                                      color: whiteColor, size: 35),
+                                      color: whiteColor, size: 28),
                                 )),
                             const SizedBox(
                                 height: 45,
                                 child: Icon(Icons.save_as_outlined,
-                                    color: whiteColor, size: 35))
+                                    color: whiteColor, size: 28))
                           ]),
                     ],
                   ),
@@ -161,8 +162,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
                       children: [
-                        const Image(
-                            image: AssetImage("assets/images/banner.jpg")),
+                        //give border on image
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.asset(
+                            "assets/images/banner.jpg",
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                         const SizedBox(height: 20),
                         const RowText(
                             left: 'Course Populer', right: 'Lihat Semua'),
@@ -192,6 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         const SizedBox(height: 20),
                         const RowText(
                             left: 'Mentor Terbaik Kami', right: 'Lihat Semua'),
+                        const SizedBox(height: 10),
                         Consumer<HomeViewModel>(
                           builder: (context, value, child) {
                             return Row(

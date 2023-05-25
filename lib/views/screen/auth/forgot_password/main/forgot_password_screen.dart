@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/color/color.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -16,11 +17,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: blackColor),
         backgroundColor: whiteColor,
         centerTitle: true,
         elevation: 0,
-        title:
-            const Text('Lupa Kata Sandi', style: TextStyle(color: blackColor)),
+        title: Text('Lupa Kata Sandi',
+            style: GoogleFonts.poppins(
+                fontSize: 16, color: blackColor, fontWeight: FontWeight.w600)),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -38,10 +41,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           width: 200,
                           height: 400,
                         )),
-                    const Text(
-                      'Jangan khawatir! Masukkan alamat email yang terkait dengan akun Anda',
-                      style: TextStyle(fontSize: 16, color: blackColor),
-                    ),
+                    Text(
+                        'Jangan khawatir! Masukkan alamat email yang terkait dengan akun Anda',
+                        style: GoogleFonts.poppins(
+                            fontSize: 14,
+                            color: blackColor,
+                            fontWeight: FontWeight.w400)),
                     const SizedBox(
                       height: 20,
                     ),
@@ -49,12 +54,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "Email",
-                          style: TextStyle(
-                              color: Color(0xff363d4a),
-                              fontWeight: FontWeight.w700),
-                        ),
+                        Text("Email",
+                            style: GoogleFonts.poppins(
+                                fontSize: 14,
+                                color: blackColor,
+                                fontWeight: FontWeight.w600)),
                         const SizedBox(
                           height: 5,
                         ),
@@ -64,10 +68,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           maxLength: 28,
                           autocorrect: false,
                           textInputAction: TextInputAction.next,
-                          style: const TextStyle(
-                            color: blackColor,
-                            fontWeight: FontWeight.w400,
-                          ),
+                          style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              color: blackColor,
+                              fontWeight: FontWeight.w400),
                           cursorColor: const Color(0xff00c2cb),
                           decoration: InputDecoration(
                             prefixIcon: const Icon(
@@ -75,8 +79,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             ),
                             counterText: "",
                             labelText: "Email",
-                            labelStyle:
-                                TextStyle(color: blackColor.withOpacity(0.4)),
+                            labelStyle: GoogleFonts.poppins(
+                                color: blackColor.withOpacity(0.4),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400),
                             filled: true,
                             floatingLabelBehavior: FloatingLabelBehavior.never,
                             fillColor: whiteColor,
@@ -114,10 +120,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         onPressed: () {
                           if (_formkey.currentState!.validate()) {}
                         },
-                        child: const Text(
+                        child: Text(
                           "Kirim OTP",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 14),
+                          style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              color: whiteColor,
+                              fontWeight: FontWeight.w600),
                         ),
                       ),
                     ),
