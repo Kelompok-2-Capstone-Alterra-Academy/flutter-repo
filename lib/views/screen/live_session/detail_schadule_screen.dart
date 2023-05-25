@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:staredu/utils/color/color.dart';
 import '../../../models/schedule_model.dart';
 
 class DetailScheduleScreen extends StatefulWidget {
@@ -19,30 +20,26 @@ class _DetailScheduleScreenState extends State<DetailScheduleScreen> {
   Widget build(BuildContext context) {
     final schedule = widget.schedule;
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: whiteColor,
+        elevation: 0,
+        centerTitle: true,
+        iconTheme: const IconThemeData(color: blackColor),
+        title: Text(
+          "Live Session",
+          style: GoogleFonts.poppins(
+            fontSize: 17,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 50),
-            Row(
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                const SizedBox(width: 100),
-                Text(
-                  "Live Session",
-                  style: GoogleFonts.poppins(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
             Center(
               child: Image.asset(
                 'assets/images/live_session.png',
