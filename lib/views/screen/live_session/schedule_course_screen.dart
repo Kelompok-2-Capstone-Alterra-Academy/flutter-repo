@@ -36,10 +36,12 @@ class _ScheduleCourseScreenState extends State<ScheduleCourseScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+
         backgroundColor: whiteColor,
         elevation: 0,
         centerTitle: true,
         iconTheme: const IconThemeData(color: blackColor),
+
         title: Text(
           "Jadwal Pertemuan Kelas",
           style: GoogleFonts.poppins(
