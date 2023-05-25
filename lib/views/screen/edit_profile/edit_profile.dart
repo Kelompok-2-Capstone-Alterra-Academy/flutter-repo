@@ -27,6 +27,7 @@ class _EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          iconTheme: const IconThemeData(color: Colors.black),
           backgroundColor: Colors.white,
           centerTitle: true,
           elevation: 0,
