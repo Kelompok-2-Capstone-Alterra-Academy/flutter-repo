@@ -6,6 +6,7 @@ import 'package:staredu/views/screen/course/module/module_list.dart';
 import 'package:staredu/views/screen/course/module/module_live_session.dart';
 import 'package:staredu/views/screen/course/module/module_list_quiz.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
+import 'package:staredu/views/screen/course/module/module_detail_ppt.dart';
 import 'package:staredu/views/screen/splash_welcome/splash_welcome_screen.dart';
 
 void main() {
@@ -36,6 +37,8 @@ class StarEdu extends StatelessWidget {
         LiveSessionScreen.routeName: (context) => const LiveSessionScreen(),
         ModuleListQuizScreen.routeName: (context) =>
             const ModuleListQuizScreen(),
+        ModulDetailPPTScreen.routeName: (context) =>
+            const ModulDetailPPTScreen(),
       },
     );
   }
