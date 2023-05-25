@@ -45,7 +45,14 @@ class _HomeScreenState extends State<HomeScreen> {
               width: double.infinity,
               child: Container(
                 decoration: const BoxDecoration(
-                    color: primaryColor,
+                    gradient: LinearGradient(
+                      colors: [
+                        primaryColor,
+                        secondaryColor,
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(15),
                         bottomRight: Radius.circular(15))),
@@ -72,15 +79,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                         fontWeight: FontWeight.bold)),
                               ],
                             ),
-                            Container(
-                              width: 30,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                image: const DecorationImage(
-                                  image: AssetImage(
-                                      'assets/images/default_mentor.jpg'),
-                                  fit: BoxFit.cover,
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(context, '/profile');
+                              },
+                              child: Container(
+                                width: 30,
+                                height: 30,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  image: const DecorationImage(
+                                    image: AssetImage(
+                                        'assets/images/default_mentor.jpg'),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                             ),
