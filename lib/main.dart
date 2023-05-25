@@ -5,6 +5,7 @@ import 'package:staredu/views/screen/auth/forgot_password/reset_password/reset_p
 import 'package:staredu/views/screen/auth/login/login_screen.dart';
 import 'package:staredu/views/screen/auth/register/account_verification/account_verification.dart';
 import 'package:staredu/views/screen/auth/register/main/register_screen.dart';
+import 'package:staredu/views/screen/edit_profile/edit_profile.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
 import 'package:staredu/views/screen/home/home_view_model.dart';
 import 'package:staredu/views/screen/profile/profile.dart';
@@ -46,6 +47,7 @@ class StarEdu extends StatelessWidget {
         RegisterScreen.routeName: (context) => const RegisterScreen(),
         AccountVerification.routeName: (context) => const AccountVerification(),
         Profile.routeName: (context) => const Profile(),
+        EditProfile.routeName: (context) => const EditProfile(),
       },
     );
   }

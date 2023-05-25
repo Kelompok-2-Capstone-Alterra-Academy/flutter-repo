@@ -99,7 +99,9 @@ class _ProfileState extends State<Profile> {
                     SectionProfile(
                         title: 'Edit Profile',
                         icon: Icons.person_outline,
-                        press: () {}),
+                        press: () {
+                          Navigator.pushNamed(context, '/edit-profile');
+                        }),
                     const SizedBox(
                       height: 20,
                     ),
