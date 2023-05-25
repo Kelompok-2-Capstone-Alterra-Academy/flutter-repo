@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:staredu/models/sell_course_model.dart';
 import 'package:staredu/views/screen/sell_course/sell_course_detail_screen.dart';
-
 import '../../../utils/color/color.dart';
 import '../../../utils/constant/sell_course_list.dart';
-import '../../../widgets/sell_course/secondary_button.dart';
+import '../../../widgets/sell_course/filter_button.dart';
+import '../../../widgets/sell_course/promo_button.dart';
 
 class SellCourseScreen extends StatefulWidget {
   const SellCourseScreen({super.key});
@@ -57,14 +56,14 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SecondaryButton(
+                FilterButton(
                   width: screenWidth,
                   text: "Pilih Kelas",
                   iconImg: "assets/images/filter_list.png",
                   bgColor: lightBlueColor,
                   borderColor: primaryColor,
                 ),
-                SecondaryButton(
+                PromoButton(
                   width: screenWidth,
                   text: "Klaim Promo",
                   iconImg: "assets/images/check.png",

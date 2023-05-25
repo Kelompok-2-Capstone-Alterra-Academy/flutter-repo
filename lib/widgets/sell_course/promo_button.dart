@@ -3,8 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../utils/color/color.dart';
 
-class SecondaryButton extends StatelessWidget {
-  const SecondaryButton({
+class PromoButton extends StatelessWidget {
+  const PromoButton({
     super.key,
     required this.width,
     required this.text,
