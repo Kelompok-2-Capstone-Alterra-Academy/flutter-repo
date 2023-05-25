@@ -133,10 +133,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               )),
                             ),
-                            const SizedBox(
+                            SizedBox(
                                 height: 45,
-                                child: Icon(Icons.notifications_on_outlined,
-                                    color: whiteColor, size: 35)),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, '/notification');
+                                  },
+                                  child: Icon(Icons.notifications_on_outlined,
+                                      color: whiteColor, size: 35),
+                                )),
                             const SizedBox(
                                 height: 45,
                                 child: Icon(Icons.save_as_outlined,

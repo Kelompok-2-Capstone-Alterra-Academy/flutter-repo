@@ -8,6 +8,8 @@ import 'package:staredu/views/screen/auth/register/main/register_screen.dart';
 import 'package:staredu/views/screen/edit_profile/edit_profile.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
 import 'package:staredu/views/screen/home/home_view_model.dart';
+import 'package:staredu/views/screen/notification/notification_screen.dart';
+import 'package:staredu/views/screen/notification/notification_view_model.dart';
 import 'package:staredu/views/screen/profile/profile.dart';
 import 'package:staredu/views/screen/splash_welcome/splash_welcome_screen.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +18,7 @@ void main() {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => HomeViewModel()),
+      ChangeNotifierProvider(create: (_) => NotificationViewModel())
     ],
     child: const StarEdu(),
   ));
@@ -48,6 +51,7 @@ class StarEdu extends StatelessWidget {
         AccountVerification.routeName: (context) => const AccountVerification(),
         Profile.routeName: (context) => const Profile(),
         EditProfile.routeName: (context) => const EditProfile(),
+        NotificationScreen.routeName: (context) => const NotificationScreen(),
       },
     );
   }
