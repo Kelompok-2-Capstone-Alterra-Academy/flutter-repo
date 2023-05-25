@@ -1,4 +1,4 @@
-import '../../models/service/course_history _model.dart';
+import '../../models/service/course_history_model.dart';
 
 List<CourseHistoryModel> historyCourses = [
   CourseHistoryModel(
