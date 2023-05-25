@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:staredu/models/service/course_history%20_model.dart';
 import '../../../utils/color/color.dart';
+import '../../../utils/constant/history_course_list.dart';
 
 class HistoryTransactionScreen extends StatefulWidget {
   const HistoryTransactionScreen({super.key});
@@ -12,60 +12,28 @@ class HistoryTransactionScreen extends StatefulWidget {
 }
 
 class _HistoryTransactionScreenState extends State<HistoryTransactionScreen> {
-  List<CourseHistoryModel> historyCourses = [
-    CourseHistoryModel(
-      id: 1,
-      title: "Matematika",
-      order: "Tanggal Order : 15 JAnuari 2023",
-      img: "assets/images/calculator.jpg",
-    ),
-    CourseHistoryModel(
-      id: 2,
-      title: "Bahasa Inggris",
-      order: "Tanggal Order : 25 Februari 2023",
-      img: "assets/images/calculator.jpg",
-    ),
-    CourseHistoryModel(
-      id: 3,
-      title: "Geografi",
-      order: "Tanggal Order : 30 Maret 2023",
-      img: "assets/images/calculator.jpg",
-    ),
-    CourseHistoryModel(
-      id: 4,
-      title: "Ekonomi",
-      order: "Tanggal Order : 05 April 2023",
-      img: "assets/images/calculator.jpg",
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: whiteColor,
+        elevation: 0,
+        centerTitle: true,
+        iconTheme: const IconThemeData(color: blackColor),
+        title: Text(
+          "Riwayat Transaksi",
+          style: GoogleFonts.poppins(
+            fontSize: 17,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
-            const SizedBox(height: 75),
-            Row(
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                const SizedBox(width: 55),
-                Text(
-                  "Riwayat Transaksi",
-                  style: GoogleFonts.poppins(
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
             const SizedBox(
               height: 20,
             ),
