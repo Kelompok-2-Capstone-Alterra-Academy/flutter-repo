@@ -11,6 +11,7 @@ class PromoButton extends StatelessWidget {
     required this.iconImg,
     required this.bgColor,
     required this.borderColor,
+    required this.pages,
   });
 
   final double width;
@@ -18,6 +19,7 @@ class PromoButton extends StatelessWidget {
   final String iconImg;
   final Color bgColor;
   final Color borderColor;
+  final Widget pages;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,13 @@ class PromoButton extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => pages,
+                ));
+          },
           child: Padding(
             padding: const EdgeInsets.only(left: 10, right: 12),
             child: Row(

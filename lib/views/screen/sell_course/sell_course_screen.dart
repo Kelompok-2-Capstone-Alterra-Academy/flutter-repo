@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:staredu/views/screen/sell_course/course_voucher_screen.dart';
 import 'package:staredu/views/screen/sell_course/sell_course_detail_screen.dart';
 import '../../../utils/color/color.dart';
 import '../../../utils/constant/sell_course_list.dart';
@@ -69,10 +70,11 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
                   iconImg: "assets/images/check.png",
                   bgColor: lightGreenColor,
                   borderColor: successColor,
+                  pages: const CourseVoucherScreen(),
                 ),
               ],
             ),
-            const SizedBox(height: 35),
+            const SizedBox(height: 15),
             Flexible(
               child: ListView.builder(
                 physics: const BouncingScrollPhysics(),
