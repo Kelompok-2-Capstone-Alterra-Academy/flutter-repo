@@ -45,6 +45,10 @@ dependencies:
   google_fonts: ^4.0.4
   flutter_svg: ^2.0.5
   flutter_animation_progress_bar: ^2.3.1
+  webview_flutter: ^4.2.0
+  flutter_rating_bar: ^4.0.1
+  circle_progress_bar: ^0.1.2
+  simple_circular_progress_bar: ^1.0.2
   youtube_player_flutter: ^8.1.2
   http: ^0.13.4
   path_provider: ^2.0.15
@@ -87,6 +91,10 @@ flutter:
     - assets/images/idea.jpg
     - assets/images/notebook.jpg
     - assets/images/pencil.jpg
+    - assets/images/finish_course_dialog_image.jpg
+    - assets/images/forgot_password.jpg
+    - assets/images/reset_password.jpg
+    - assets/images/alert_reset_password.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
