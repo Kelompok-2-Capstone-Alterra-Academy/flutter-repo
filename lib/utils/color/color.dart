@@ -9,6 +9,7 @@ const Color lightBlueColor = Color(0xFFF0FAFF);
 const Color lightGreenColor = Color(0xFFE1EFE1);
 const Color searchBarColor = Color(0xFFF5F5F5);
 const Color searchBarTextColor = Color(0xFF9E9E9E);
+const Color blue = Color(0xFFBBDEFB);
 const Color starReviewColor = Color(0xFFFF9800);
 const Color blue = Color(0xFFBBDEFB);
 const Color blackColor = Colors.black;
