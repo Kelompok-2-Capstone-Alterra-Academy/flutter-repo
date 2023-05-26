@@ -132,7 +132,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                   child: Column(
                     children: [
                       DetailKursus(
-                        icon: Icons.chat,
+                        icon: Icons.payments_outlined,
                         title: "Harga",
                         subtitle: sellCourses[widget.indexSellCourse].price!,
                       ),
