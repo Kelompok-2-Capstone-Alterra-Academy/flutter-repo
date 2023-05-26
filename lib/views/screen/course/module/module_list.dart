@@ -8,7 +8,7 @@ import 'package:pdf_thumbnail/pdf_thumbnail.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/constant/module_section_list.dart';
-import 'package:staredu/views/screen/course/course_taken_list.dart';
+import 'package:staredu/widgets/course/ongoing_course_taken_list.dart';
 import 'package:staredu/widgets/module_course/module_button.dart';
 import 'package:staredu/widgets/module_course/module_section_card.dart';
 
@@ -34,8 +34,7 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-    final args =
-        ModalRoute.of(context)!.settings.arguments as ModuleCourseArguments;
+    final args = ModalRoute.of(context)!.settings.arguments as ModuleArguments;
     return DefaultTabController(
         length: 2,
         child: Scaffold(
