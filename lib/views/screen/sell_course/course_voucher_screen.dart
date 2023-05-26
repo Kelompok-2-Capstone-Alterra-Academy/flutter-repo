@@ -11,8 +11,12 @@ class CourseVoucherScreen extends StatefulWidget {
 }
 
 class _CourseVoucherScreenState extends State<CourseVoucherScreen> {
+  bool isClaim = false;
+
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -36,7 +40,9 @@ class _CourseVoucherScreenState extends State<CourseVoucherScreen> {
                 borderRadius: BorderRadius.all(Radius.circular(8))),
             child: Container(
               height: 115,
-              margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+              margin: const EdgeInsets.symmetric(
+                vertical: 16,
+              ),
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(
                   Radius.circular(8),
@@ -51,7 +57,7 @@ class _CourseVoucherScreenState extends State<CourseVoucherScreen> {
                       fit: BoxFit.contain,
                     ),
                   ),
-                  const SizedBox(width: 31),
+                  const SizedBox(width: 20),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -82,21 +88,24 @@ class _CourseVoucherScreenState extends State<CourseVoucherScreen> {
                         ],
                       ),
                       Expanded(
-                        child: Text(
-                          voucherList[index].description!,
-                          style: GoogleFonts.poppins(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w400,
+                        child: SizedBox(
+                          width: screenWidth * 0.55,
+                          child: Text(
+                            overflow: TextOverflow.clip,
+                            voucherList[index].description!,
+                            style: GoogleFonts.poppins(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 0),
                       Container(
                         height: 18,
                         width: 154,
-                        decoration: const BoxDecoration(
-                          color: subjectColor,
-                          borderRadius: BorderRadius.all(
+                        decoration: BoxDecoration(
+                          color: isClaim ? subjectColor : successColor,
+                          borderRadius: const BorderRadius.all(
                             Radius.circular(8),
                           ),
                         ),
@@ -104,13 +113,18 @@ class _CourseVoucherScreenState extends State<CourseVoucherScreen> {
                           color: Colors.transparent,
                           child: InkWell(
                             borderRadius: BorderRadius.circular(8),
-                            onTap: () {},
+                            onTap: () {
+                              setState(() {
+                                isClaim = !isClaim;
+                              });
+                            },
                             child: Center(
                               child: Text(
-                                "Lihat Detail Kursus",
+                                isClaim ? "Klaim Promo" : "Promo Di Claim",
                                 style: GoogleFonts.poppins(
                                   fontSize: 9,
                                   fontWeight: FontWeight.w600,
+                                  color: isClaim ? blackColor : whiteColor,
                                 ),
                               ),
                             ),
