@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:staredu/models/arguments/module_arguments.dart';
 import 'package:staredu/views/screen/course/module/detail/module_detail_video.dart';
 import 'package:staredu/views/screen/course/module/module_detail_ppt.dart';
-import 'package:staredu/views/screen/course/module/module_list.dart';
+import 'package:staredu/views/screen/course/module/module_detail_task.dart';
 
 import '../../utils/color/color.dart';
 
@@ -363,7 +364,14 @@ class ModuleSectionCard extends StatelessWidget {
             : const SizedBox.shrink(),
         isAssignmentAvailable!
             ? GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, ModuleDetailTask.routeName,
+                      arguments: ModuleDetailTaskArguments(
+                        courseName.toString(),
+                        title.toString(),
+                        id!,
+                      ));
+                },
                 child: Card(
                   elevation: 2,
                   shape: RoundedRectangleBorder(
