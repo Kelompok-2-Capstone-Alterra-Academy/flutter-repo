@@ -39,10 +39,12 @@ class _SearchChatScreenState extends State<SearchChatScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Search Mentor",
+          "Cari Mentor",
           style: GoogleFonts.poppins(
               fontSize: 17, fontWeight: FontWeight.w600, color: blackColor),
         ),
@@ -55,13 +57,31 @@ class _SearchChatScreenState extends State<SearchChatScreen> {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: TextFormField(
-              onChanged: (value) => searching(value),
-              decoration: InputDecoration(
-                labelText: 'Search Name',
-                suffixIcon: const Icon(Icons.search),
-                labelStyle: GoogleFonts.poppins(
-                    fontSize: 13, fontWeight: FontWeight.w500),
+            child: Container(
+              height: 42,
+              width: screenWidth,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+                color: searchBarColor,
+              ),
+              child: TextFormField(
+                style: GoogleFonts.poppins(
+                  fontSize: 11,
+                ),
+                cursorColor: greyColor,
+                onChanged: (value) => searching(value),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "Cari Nama Mentor",
+                  prefixIcon: const Icon(
+                    Icons.search_rounded,
+                    color: searchBarTextColor,
+                  ),
+                  hintStyle: GoogleFonts.poppins(
+                    color: searchBarTextColor,
+                    fontSize: 11,
+                  ),
+                ),
               ),
             ),
           ),
