@@ -34,11 +34,11 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
           ),
         ],
       ),
-      body: const Padding(
-        padding: EdgeInsets.all(16.0),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
+          children: const [
             TextField(
               decoration: InputDecoration(
                 hintText: "Ceritakan pengalamanmu",
