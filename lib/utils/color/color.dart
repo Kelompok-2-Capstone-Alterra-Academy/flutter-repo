@@ -11,6 +11,7 @@ const Color searchBarColor = Color(0xFFF5F5F5);
 const Color searchBarTextColor = Color(0xFF9E9E9E);
 const Color blue = Color(0xFFBBDEFB);
 const Color starReviewColor = Color(0xFFFF9800);
+const Color blue = Color(0xFFBBDEFB);
 const Color blackColor = Colors.black;
 const Color whiteColor = Colors.white;
 const Color progressBarBackgroundColor = Color(0xff0D47A1);
