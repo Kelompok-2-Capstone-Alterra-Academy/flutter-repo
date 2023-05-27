@@ -18,7 +18,7 @@ class StarEdu extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const SellCourseScreen(),
+      home: const ChatMentorScreen(),
       title: 'Rent Car',
       // add primary color
       theme: ThemeData(
