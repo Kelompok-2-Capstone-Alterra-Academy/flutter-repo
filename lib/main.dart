@@ -14,6 +14,7 @@ import 'package:staredu/views/screen/home/home_screen.dart';
 import 'package:staredu/views/screen/post_feed/post_feed_screen.dart';
 import 'package:staredu/views/screen/live_session/schedule_course_screen.dart';
 import 'package:staredu/views/screen/course/module/module_detail_ppt.dart';
+import 'package:staredu/views/screen/news/news_screen.dart';
 import 'package:staredu/views/screen/live_session/schedule_course_screen.dart';
 import 'package:staredu/views/screen/splash_welcome/splash_welcome_screen.dart';
 
@@ -41,7 +42,7 @@ class StarEdu extends StatelessWidget {
         LoginScreen.routeName: (context) => const LoginScreen(),
         PostFeedScreen.routeName: (context) => const PostFeedScreen(),
         ScheduleCourseScreen.routeName: (context) =>
-            const ScheduleCourseScreen()
+            const ScheduleCourseScreen(),
         CourseTakenListScreen.routeName: (context) =>
             const CourseTakenListScreen(),
         ModuleListScreen.routeName: (context) => const ModuleListScreen(),
@@ -58,6 +59,7 @@ class StarEdu extends StatelessWidget {
         ResetPasswordScreen.routeName: (context) => const ResetPasswordScreen(),
         RegisterScreen.routeName: (context) => const RegisterScreen(),
         AccountVerification.routeName: (context) => const AccountVerification(),
+        NewsScreen.routeName: (context) => const NewsScreen(),
       },
     );
   }
