@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:staredu/models/sell_course_model.dart';
 import 'package:staredu/views/screen/sell_course/sell_course_detail_screen.dart';
-
 import '../../../utils/color/color.dart';
 import '../../../utils/constant/sell_course_list.dart';
 import '../../../widgets/sell_course/secondary_button.dart';
