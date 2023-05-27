@@ -13,6 +13,7 @@ import 'package:staredu/views/screen/auth/register/main/register_screen.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
 import 'package:staredu/views/screen/live_session/schedule_course_screen.dart';
 import 'package:staredu/views/screen/course/module/module_detail_ppt.dart';
+import 'package:staredu/views/screen/news/news_screen.dart';
 import 'package:staredu/views/screen/splash_welcome/splash_welcome_screen.dart';
 
 void main() {
@@ -32,13 +33,13 @@ class StarEdu extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.white,
       ),
-      initialRoute: CourseTakenListScreen.routeName,
+      initialRoute: NewsScreen.routeName,
       routes: {
         SplashWelcomeScreen.routeName: (context) => const SplashWelcomeScreen(),
         HomeScreen.routeName: (context) => const HomeScreen(),
         LoginScreen.routeName: (context) => const LoginScreen(),
         ScheduleCourseScreen.routeName: (context) =>
-            const ScheduleCourseScreen()
+            const ScheduleCourseScreen(),
         CourseTakenListScreen.routeName: (context) =>
             const CourseTakenListScreen(),
         ModuleListScreen.routeName: (context) => const ModuleListScreen(),
@@ -55,7 +56,7 @@ class StarEdu extends StatelessWidget {
         ResetPasswordScreen.routeName: (context) => const ResetPasswordScreen(),
         RegisterScreen.routeName: (context) => const RegisterScreen(),
         AccountVerification.routeName: (context) => const AccountVerification(),
-
+        NewsScreen.routeName: (context) => const NewsScreen(),
       },
     );
   }
