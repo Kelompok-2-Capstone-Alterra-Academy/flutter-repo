@@ -13,12 +13,15 @@ import 'package:staredu/views/screen/notification/notification_view_model.dart';
 import 'package:staredu/views/screen/profile/profile.dart';
 import 'package:staredu/views/screen/splash_welcome/splash_welcome_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:staredu/widgets/bottom_navigation_bar/bottom_navigation_bar_view_model.dart';
 
 void main() {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => HomeViewModel()),
-      ChangeNotifierProvider(create: (_) => NotificationViewModel())
+      ChangeNotifierProvider(create: (_) => NotificationViewModel()),
+      ChangeNotifierProvider(
+          create: (_) => BottomNavigationBarComponentViewModel())
     ],
     child: const StarEdu(),
   ));

@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/views/screen/home/home_view_model.dart';
+import 'package:staredu/widgets/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'package:staredu/widgets/button/button_text.dart';
 import 'package:staredu/widgets/card/card_mentor.dart';
 import 'package:staredu/widgets/row/row_text.dart';
@@ -228,56 +229,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         )),
-        bottomNavigationBar: Container(
-          // give border
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(20.0),
-              topRight: Radius.circular(20.0),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.3),
-                spreadRadius: 2,
-                blurRadius: 10,
-                offset:
-                    const Offset(0, 3), // Offset changes the shadow position
-              ),
-            ],
-          ),
-          child: ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(20.0),
-              topRight: Radius.circular(20.0),
-            ),
-            child: BottomNavigationBar(
-              backgroundColor: whiteColor,
-              type: BottomNavigationBarType.fixed,
-              items: const <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home_filled),
-                  label: 'Beranda',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.collections_bookmark),
-                  label: 'Kursus',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.chat_bubble),
-                  label: 'Chat',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.shopping_cart),
-                  label: 'Transaksi',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
-                  label: 'Akun',
-                ),
-              ],
-              selectedItemColor: primaryColor,
-            ),
-          ),
-        ));
+        bottomNavigationBar: const BottomNavigationBarComponent());
   }
 }
