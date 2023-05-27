@@ -10,8 +10,14 @@ class ModuleQuizDetailDoneDialog extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
 
     return Dialog(
-      insetPadding: const EdgeInsets.symmetric(horizontal: 16),
+      insetPadding: const EdgeInsets.symmetric(horizontal: 24),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(16),
+        ),
+      ),
       child: Container(
+        width: width,
         decoration: const BoxDecoration(
           color: whiteColor,
           borderRadius: BorderRadius.all(
@@ -22,18 +28,22 @@ class ModuleQuizDetailDoneDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             const SizedBox(
-              height: 52,
+              height: 56,
             ),
             const Image(
+              fit: BoxFit.fitWidth,
               image: AssetImage('assets/images/quiz_done.png'),
-              width: 234,
+              width: 237,
+            ),
+            const SizedBox(
+              height: 24,
             ),
             Text(
               "Yeay, Quiz 1 Selesai",
               style: GoogleFonts.poppins(
                 fontStyle: FontStyle.normal,
                 fontWeight: FontWeight.w600,
-                fontSize: 17,
+                fontSize: 15,
               ),
             ),
             const SizedBox(
@@ -54,7 +64,7 @@ class ModuleQuizDetailDoneDialog extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 20,
+              height: 24,
             ),
             Container(
               width: width / 1.4,
@@ -111,6 +121,9 @@ class ModuleQuizDetailDoneDialog extends StatelessWidget {
                   ),
                 ),
               ),
+            ),
+            const SizedBox(
+              height: 8,
             ),
           ],
         ),
