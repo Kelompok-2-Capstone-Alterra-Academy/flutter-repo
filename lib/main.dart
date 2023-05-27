@@ -11,6 +11,7 @@ import 'package:staredu/views/screen/course/module/module_list_quiz.dart';
 import 'package:staredu/views/screen/auth/register/account_verification/account_verification.dart';
 import 'package:staredu/views/screen/auth/register/main/register_screen.dart';
 import 'package:staredu/views/screen/course/module/module_quiz_detail_screen.dart';
+import 'package:staredu/views/screen/course/module/module_send_task.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
 import 'package:staredu/views/screen/course/module/module_detail_ppt.dart';
 import 'package:staredu/views/screen/splash_welcome/splash_welcome_screen.dart';
@@ -32,7 +33,7 @@ class StarEdu extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.white,
       ),
-      initialRoute: ModuleQuizDetailScreen.routeName,
+      initialRoute: ModuleSendTaskScreen.routeName,
       routes: {
         SplashWelcomeScreen.routeName: (context) => const SplashWelcomeScreen(),
         HomeScreen.routeName: (context) => const HomeScreen(),
@@ -55,6 +56,8 @@ class StarEdu extends StatelessWidget {
         AccountVerification.routeName: (context) => const AccountVerification(),
         ModuleQuizDetailScreen.routeName: (context) =>
             const ModuleQuizDetailScreen(),
+        ModuleSendTaskScreen.routeName: (context) =>
+            const ModuleSendTaskScreen(),
       },
     );
   }
