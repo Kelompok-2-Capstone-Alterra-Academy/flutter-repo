@@ -4,6 +4,7 @@ import 'package:staredu/views/screen/auth/forgot_password/otp_verification/otp_v
 import 'package:staredu/views/screen/auth/forgot_password/reset_password/reset_password.dart';
 import 'package:staredu/views/screen/auth/login/login_screen.dart';
 import 'package:staredu/views/screen/course/course_taken_list.dart';
+import 'package:staredu/views/screen/course/module/detail/module_detail_video.dart';
 import 'package:staredu/views/screen/course/module/module_ask_mentor.dart';
 import 'package:staredu/views/screen/course/module/module_list.dart';
 import 'package:staredu/views/screen/course/module/module_live_session.dart';
@@ -55,6 +56,7 @@ class StarEdu extends StatelessWidget {
         LiveSessionScreen.routeName: (context) => const LiveSessionScreen(),
         ModuleListQuizScreen.routeName: (context) =>
             const ModuleListQuizScreen(),
+        ModuleVideoScreen.routeName: (context) => const ModuleVideoScreen(),
         ModulDetailPPTScreen.routeName: (context) =>
             const ModulDetailPPTScreen(),
         ForgotPasswordScreen.routeName: (context) =>

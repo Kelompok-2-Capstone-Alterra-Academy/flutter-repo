@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:staredu/views/screen/course/module/detail/module_detail_video.dart';
+import 'package:staredu/views/screen/course/module/module_list.dart';
 
 import '../../utils/color/color.dart';
 
@@ -45,7 +47,13 @@ class ModuleSectionCard extends StatelessWidget {
         ),
         isVideoAvailable!
             ? GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, ModuleVideoScreen.routeName,
+                      arguments: ModuleDetailVideoArguments(
+                        courseName.toString(),
+                        title.toString(),
+                      ));
+                },
                 child: Card(
                   elevation: 2,
                   shape: RoundedRectangleBorder(
