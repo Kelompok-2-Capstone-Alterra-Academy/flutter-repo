@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/views/screen/news/web_view_screen.dart';
 import '../../../utils/color/color.dart';
 import '../../../utils/constant/news_list.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class NewsScreen extends StatefulWidget {
   static const String routeName = "/news";
@@ -37,10 +36,19 @@ class _NewsScreenState extends State<NewsScreen> {
         itemBuilder: (context, index) {
           final news = newsList[index];
           return GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => WebViewScreen(
+                    url: news.link!,
+                  ),
+                ),
+              );
+            },
             child: Container(
               width: screenWidth,
-              margin: EdgeInsets.all(10.0),
+              margin: const EdgeInsets.all(10.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
               ),
@@ -61,7 +69,7 @@ class _NewsScreenState extends State<NewsScreen> {
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             Text(
                               news.title!,
                               style: GoogleFonts.poppins(
@@ -69,7 +77,7 @@ class _NewsScreenState extends State<NewsScreen> {
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             Text(
                               news.content!,
                               style: GoogleFonts.poppins(

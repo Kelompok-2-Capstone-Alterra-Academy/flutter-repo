@@ -16,3 +16,4 @@ const Color whiteColor = Colors.white;
 const Color greyColor = Color(0xFF616161);
 const Color progressBarBackgroundColor = Color(0xff0D47A1);
 const Color certificateStatusColor = Color(0xff388E3C);
+const Color outlinedButtonColor = Color(0xff1976D2);
