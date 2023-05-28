@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/models/arguments/module_list_quiz_argument.dart';
-import 'package:staredu/views/screen/course/module/module_ask_mentor.dart';
+import 'package:staredu/views/screen/course/module/module_ask_mentor_screen.dart';
 // import 'package:staredu/views/screen/course/module/module_live_session.dart';
-import 'package:staredu/views/screen/course/module/module_list_quiz.dart';
-import 'package:staredu/views/screen/course/module/module_task_list.dart';
+import 'package:staredu/views/screen/course/module/module_list_quiz_screen.dart';
+import 'package:staredu/views/screen/course/module/module_task_list_screen.dart';
 
 import '../../utils/color/color.dart';
 

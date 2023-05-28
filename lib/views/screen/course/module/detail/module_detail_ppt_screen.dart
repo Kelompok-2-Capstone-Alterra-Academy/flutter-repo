@@ -4,7 +4,7 @@ import 'package:staredu/widgets/course/review_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import '../../../../utils/color/color.dart';
+import '../../../../../utils/color/color.dart';
 
 class ModulDetailPPTScreen extends StatefulWidget {
   static const String routeName = "/moduledetailppt";

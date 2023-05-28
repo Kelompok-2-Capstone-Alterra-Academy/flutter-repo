@@ -3,18 +3,18 @@ import 'package:staredu/views/screen/auth/forgot_password/main/forgot_password_s
 import 'package:staredu/views/screen/auth/forgot_password/otp_verification/otp_verification_screen.dart';
 import 'package:staredu/views/screen/auth/forgot_password/reset_password/reset_password.dart';
 import 'package:staredu/views/screen/auth/login/login_screen.dart';
-import 'package:staredu/views/screen/course/course_taken_list.dart';
-import 'package:staredu/views/screen/course/module/detail/module_detail_video.dart';
-import 'package:staredu/views/screen/course/module/module_ask_mentor.dart';
-import 'package:staredu/views/screen/course/module/module_detail_task.dart';
-import 'package:staredu/views/screen/course/module/module_list.dart';
-import 'package:staredu/views/screen/course/module/module_live_session.dart';
-import 'package:staredu/views/screen/course/module/module_list_quiz.dart';
+import 'package:staredu/views/screen/course/course_taken_list_screen.dart';
+import 'package:staredu/views/screen/course/module/detail/module_detail_video_screen.dart';
+import 'package:staredu/views/screen/course/module/module_ask_mentor_screen.dart';
+import 'package:staredu/views/screen/course/module/detail/module_detail_task_screen.dart';
+import 'package:staredu/views/screen/course/module/module_list_screen.dart';
+import 'package:staredu/views/screen/course/module/module_live_session_screen.dart';
+import 'package:staredu/views/screen/course/module/module_list_quiz_screen.dart';
 import 'package:staredu/views/screen/auth/register/account_verification/account_verification.dart';
 import 'package:staredu/views/screen/auth/register/main/register_screen.dart';
-import 'package:staredu/views/screen/course/module/module_quiz_detail_screen.dart';
-import 'package:staredu/views/screen/course/module/module_send_task.dart';
-import 'package:staredu/views/screen/course/module/module_task_list.dart';
+import 'package:staredu/views/screen/course/module/detail/module_quiz_detail_screen.dart';
+import 'package:staredu/views/screen/course/module/module_send_task_screen.dart';
+import 'package:staredu/views/screen/course/module/module_task_list_screen.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
 import 'package:staredu/views/screen/mentor/chat_mentor_screen.dart';
 import 'package:staredu/views/screen/mentor/mentor_screen.dart';
@@ -24,7 +24,7 @@ import 'package:staredu/views/screen/sell_course/course_voucher_screen.dart';
 import 'package:staredu/views/screen/sell_course/sell_course_screen.dart';
 import 'package:staredu/views/screen/post_feed/post_feed_screen.dart';
 import 'package:staredu/views/screen/live_session/schedule_course_screen.dart';
-import 'package:staredu/views/screen/course/module/module_detail_ppt.dart';
+import 'package:staredu/views/screen/course/module/detail/module_detail_ppt_screen.dart';
 import 'package:staredu/views/screen/news/news_screen.dart';
 import 'package:staredu/views/screen/live_session/schedule_course_screen.dart';
 import 'package:staredu/views/screen/splash_welcome/splash_welcome_screen.dart';
@@ -45,7 +45,7 @@ class StarEdu extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.white,
       ),
-      initialRoute: SplashWelcomeScreen.routeName,
+      initialRoute: CourseTakenListScreen.routeName,
       routes: {
         SplashWelcomeScreen.routeName: (context) => const SplashWelcomeScreen(),
         HomeScreen.routeName: (context) => const HomeScreen(),

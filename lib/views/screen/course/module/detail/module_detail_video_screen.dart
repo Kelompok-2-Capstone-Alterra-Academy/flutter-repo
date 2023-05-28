@@ -23,10 +23,10 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
   void initState() {
     super.initState();
     _controller = YoutubePlayerController(
-      initialVideoId: "ScMzIvxBSi4",
+      initialVideoId: "MLpWrANjFbI",
       flags: const YoutubePlayerFlags(
         mute: false,
-        autoPlay: false,
+        autoPlay: true,
         forceHD: false,
         enableCaption: true,
       ),

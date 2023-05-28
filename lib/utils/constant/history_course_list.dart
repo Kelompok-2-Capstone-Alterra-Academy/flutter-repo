@@ -1,4 +1,4 @@
-import '../../models/service/course_history_model.dart';
+import 'package:staredu/models/course_history_model.dart';
 
 List<CourseHistoryModel> historyCourses = [
   CourseHistoryModel(
