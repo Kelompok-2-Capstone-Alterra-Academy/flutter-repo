@@ -2,22 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/color/color.dart';
 
-class ModuleQuizDetailDoneDialog extends StatelessWidget {
-  const ModuleQuizDetailDoneDialog({super.key});
+class ModuleSendTaskDoneDialog extends StatelessWidget {
+  const ModuleSendTaskDoneDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
 
     return Dialog(
-      insetPadding: const EdgeInsets.symmetric(horizontal: 24),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(16),
         ),
       ),
+      insetPadding: const EdgeInsets.symmetric(
+        horizontal: 8,
+      ),
       child: Container(
-        width: width,
         decoration: const BoxDecoration(
           color: whiteColor,
           borderRadius: BorderRadius.all(
@@ -28,18 +29,17 @@ class ModuleQuizDetailDoneDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             const SizedBox(
-              height: 56,
+              height: 50,
             ),
             const Image(
-              fit: BoxFit.fitWidth,
-              image: AssetImage('assets/images/quiz_done.png'),
-              width: 237,
+              image: AssetImage('assets/images/send_task_done.png'),
+              width: 234,
             ),
             const SizedBox(
-              height: 24,
+              height: 12,
             ),
             Text(
-              "Yeay, Quiz 1 Selesai",
+              "Sukses Upload Tugas",
               style: GoogleFonts.poppins(
                 fontStyle: FontStyle.normal,
                 fontWeight: FontWeight.w600,
@@ -53,7 +53,7 @@ class ModuleQuizDetailDoneDialog extends StatelessWidget {
               width: width / 1.4,
               child: Center(
                 child: Text(
-                  "Quiz 1 sudah dikerjakan, silahkan menyelesaikan quiz selanjutnya.",
+                  "Selamat tugas kamu sudah berhasil terkirim",
                   style: GoogleFonts.poppins(
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.w400,
@@ -64,11 +64,10 @@ class ModuleQuizDetailDoneDialog extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 24,
+              height: 20,
             ),
             Container(
               width: width / 1.4,
-              height: width / 9,
               margin: const EdgeInsets.only(
                 left: 24,
                 right: 24,
@@ -83,7 +82,7 @@ class ModuleQuizDetailDoneDialog extends StatelessWidget {
                 ),
                 onPressed: () {},
                 child: Text(
-                  "Quiz Selanjutnya",
+                  "Kembali ke Home",
                   style: GoogleFonts.poppins(
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.w600,
@@ -92,12 +91,8 @@ class ModuleQuizDetailDoneDialog extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 8,
-            ),
             Container(
               width: width / 1.4,
-              height: width / 9,
               margin: const EdgeInsets.only(
                 bottom: 16,
                 left: 24,
@@ -105,15 +100,15 @@ class ModuleQuizDetailDoneDialog extends StatelessWidget {
               ),
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  foregroundColor: primaryColor,
-                  side: const BorderSide(color: primaryColor),
+                  foregroundColor: outlinedButtonColor,
+                  side: const BorderSide(color: outlinedButtonColor),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
                 onPressed: () {},
                 child: Text(
-                  "Kembali ke Kursus",
+                  "Tugas Saya",
                   style: GoogleFonts.poppins(
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.w600,
