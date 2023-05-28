@@ -19,6 +19,11 @@ class _ReviewDialogState extends State<ReviewDialog> {
     final width = MediaQuery.of(context).size.width;
 
     return Dialog(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(16),
+        ),
+      ),
       insetPadding: const EdgeInsets.symmetric(horizontal: 24),
       child: SingleChildScrollView(
         child: Container(
@@ -36,6 +41,8 @@ class _ReviewDialogState extends State<ReviewDialog> {
                 height: 56,
               ),
               const Image(
+                fit: BoxFit.fitWidth,
+                width: 180,
                 image:
                     AssetImage('assets/images/finish_course_dialog_image.jpg'),
               ),
@@ -77,11 +84,10 @@ class _ReviewDialogState extends State<ReviewDialog> {
                 glowRadius: 1,
                 allowHalfRating: true,
                 unratedColor: searchBarColor,
-                itemSize: 46,
                 itemCount: 5,
-                itemPadding: const EdgeInsets.symmetric(horizontal: 1.5),
-                itemBuilder: (context, _) => const Icon(
-                  Icons.star,
+                itemPadding: const EdgeInsets.symmetric(horizontal: 10),
+                itemBuilder: (context, _) => const Image(
+                  image: AssetImage('assets/images/star_rating.png'),
                   color: starReviewColor,
                 ),
                 onRatingUpdate: (value) {
