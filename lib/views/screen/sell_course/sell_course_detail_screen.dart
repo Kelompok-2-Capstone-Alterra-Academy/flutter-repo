@@ -3,7 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/constant/sell_course_list.dart';
 import 'package:staredu/views/screen/sell_course/course_payment_screen.dart';
-
+import '../../../models/sell_course_model.dart';
+import '../../../models/service/wishlist_manager.dart';
 import '../../../widgets/sell_course/detail_keuntungan.dart';
 import '../../../widgets/sell_course/primary_button.dart';
 
@@ -17,6 +18,44 @@ class SellCourseDetailScreen extends StatefulWidget {
 }
 
 class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
+  bool isWishlistSelected = false;
+  WishlistManager wishlistManager = WishlistManager();
+
+  Future<void> checkWishlistStatus() async {
+    List<SellCourseModel> wishlist = await wishlistManager.getWishlist();
+    SellCourseModel currentItem = sellCourses[widget.indexSellCourse];
+
+    setState(() {
+      isWishlistSelected = wishlist.any((item) => item.id == currentItem.id);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    checkWishlistStatus();
+  }
+
+  void toggleWishlistStatus() async {
+    SellCourseModel currentItem = sellCourses[widget.indexSellCourse];
+
+    if (isWishlistSelected) {
+      await wishlistManager.removeWishlistItem(currentItem);
+    } else {
+      await wishlistManager.addWishlistItem(currentItem);
+    }
+
+    setState(() {
+      isWishlistSelected = !isWishlistSelected;
+    });
+  }
+
+  @override
+  void didUpdateWidget(covariant SellCourseDetailScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    checkWishlistStatus();
+  }
+
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
@@ -59,9 +98,15 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  const Icon(
-                    Icons.bookmark_border,
-                    size: 35,
+                  InkWell(
+                    onTap: toggleWishlistStatus,
+                    child: Icon(
+                      isWishlistSelected
+                          ? Icons.bookmark
+                          : Icons.bookmark_border,
+                      size: 35,
+                      color: isWishlistSelected ? Colors.blue : Colors.black,
+                    ),
                   ),
                 ],
               ),
