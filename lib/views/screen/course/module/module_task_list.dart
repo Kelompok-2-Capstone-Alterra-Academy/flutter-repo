@@ -81,24 +81,6 @@ class _TaskListScreenState extends State<TaskListScreen> {
                     );
                   },
                   itemCount: courseTaken.length)
-              // ListView.separated(
-              // physics: const NeverScrollableScrollPhysics(),
-              // shrinkWrap: true,
-              // itemCount: moduleSection.length,
-              // itemBuilder: (context, index) {
-              //   return ModuleQuizCard(
-              //     id: moduleSection[index].id!.toInt(),
-              //     isQuizAvailable: moduleSection[index].quiz,
-              //     title: moduleSection[index].title!.toString(),
-              //     numbering: index.toString(),
-              //   );
-              // },
-              // separatorBuilder: (BuildContext context, int index) {
-              //   return const SizedBox(
-              //     height: 2,
-              //   );
-              // },
-              // ),
             ],
           ),
         ),

@@ -6,9 +6,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf_thumbnail/pdf_thumbnail.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:staredu/models/arguments/module_screen_argument.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/constant/module_section_list.dart';
-import 'package:staredu/widgets/course/ongoing_course_taken_list.dart';
 import 'package:staredu/widgets/module_course/module_button.dart';
 import 'package:staredu/widgets/module_course/module_section_card.dart';
 
@@ -153,7 +153,7 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
               FutureBuilder<File>(
                   future: pdfFile,
                   builder: (context, snapshot) {
-                    return Container(
+                    return SizedBox(
                       height: MediaQuery.of(context).size.height,
                       child: snapshot.hasData
                           ? Container(
@@ -486,17 +486,4 @@ class DownloadService {
     await file.writeAsBytes(bytes);
     return file;
   }
-}
-
-class ModuleListQuizArguments {
-  final String courseName;
-
-  ModuleListQuizArguments(this.courseName);
-}
-
-class ModuleDetailVideoArguments {
-  final String courseName;
-  final String sectionName;
-
-  ModuleDetailVideoArguments(this.courseName, this.sectionName);
 }

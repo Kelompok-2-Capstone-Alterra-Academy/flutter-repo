@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:staredu/models/arguments/module_screen_argument.dart';
 import 'package:staredu/views/screen/course/module/module_list.dart';
 import 'package:staredu/widgets/course/filter_course_taken.dart';
 
@@ -207,12 +208,4 @@ class _OnGoingCourseTakenListScreenState
       ),
     );
   }
-}
-
-class ModuleArguments {
-  final String title;
-  final int currentSection;
-  final int totalSection;
-
-  ModuleArguments(this.title, this.currentSection, this.totalSection);
 }

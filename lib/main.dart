@@ -6,6 +6,7 @@ import 'package:staredu/views/screen/auth/login/login_screen.dart';
 import 'package:staredu/views/screen/course/course_taken_list.dart';
 import 'package:staredu/views/screen/course/module/detail/module_detail_video.dart';
 import 'package:staredu/views/screen/course/module/module_ask_mentor.dart';
+import 'package:staredu/views/screen/course/module/module_detail_task.dart';
 import 'package:staredu/views/screen/course/module/module_list.dart';
 import 'package:staredu/views/screen/course/module/module_live_session.dart';
 import 'package:staredu/views/screen/course/module/module_list_quiz.dart';
@@ -56,6 +57,7 @@ class StarEdu extends StatelessWidget {
         RegisterScreen.routeName: (context) => const RegisterScreen(),
         AccountVerification.routeName: (context) => const AccountVerification(),
         TaskListScreen.routeName: (context) => const TaskListScreen(),
+        ModuleDetailTask.routeName: (context) => const ModuleDetailTask(),
       },
     );
   }
