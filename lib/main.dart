@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:staredu/views/screen/auth/forgot_password/main/forgot_password_screen.dart';
+import 'package:staredu/views/screen/auth/forgot_password/otp_verification/otp_verification_screen.dart';
+import 'package:staredu/views/screen/auth/forgot_password/reset_password/reset_password.dart';
 import 'package:staredu/views/screen/auth/login/login_screen.dart';
+import 'package:staredu/views/screen/course/course_taken_list.dart';
+import 'package:staredu/views/screen/course/module/module_ask_mentor.dart';
+import 'package:staredu/views/screen/course/module/module_list.dart';
+import 'package:staredu/views/screen/course/module/module_live_session.dart';
+import 'package:staredu/views/screen/course/module/module_list_quiz.dart';
+import 'package:staredu/views/screen/auth/register/account_verification/account_verification.dart';
+import 'package:staredu/views/screen/auth/register/main/register_screen.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
 import 'package:staredu/views/screen/mentor/chat_mentor_screen.dart';
 import 'package:staredu/views/screen/mentor/mentor_screen.dart';
 import 'package:staredu/views/screen/sell_course/course_payment_screen.dart';
 import 'package:staredu/views/screen/sell_course/sell_course_screen.dart';
+import 'package:staredu/views/screen/live_session/schedule_course_screen.dart';
+import 'package:staredu/views/screen/course/module/module_detail_ppt.dart';
 import 'package:staredu/views/screen/splash_welcome/splash_welcome_screen.dart';
 
 void main() {
@@ -18,18 +30,37 @@ class StarEdu extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const ChatMentorScreen(),
+//       home: SellCourseScreen(),
       title: 'Rent Car',
       // add primary color
       theme: ThemeData(
         primaryColor: Colors.white,
       ),
-      // initialRoute: LoginScreen.routeName,
-      // routes: {
-      //   SplashWelcomeScreen.routeName: (context) => const SplashWelcomeScreen(),
-      //   HomeScreen.routeName: (context) => const HomeScreen(),
-      //   LoginScreen.routeName: (context) => const LoginScreen(),
-      // },
+      initialRoute: CourseTakenListScreen.routeName,
+      routes: {
+        SplashWelcomeScreen.routeName: (context) => const SplashWelcomeScreen(),
+        HomeScreen.routeName: (context) => const HomeScreen(),
+        LoginScreen.routeName: (context) => const LoginScreen(),
+        ScheduleCourseScreen.routeName: (context) =>
+            const ScheduleCourseScreen()
+        CourseTakenListScreen.routeName: (context) =>
+            const CourseTakenListScreen(),
+        ModuleListScreen.routeName: (context) => const ModuleListScreen(),
+        AskMentorScreen.routeName: (context) => const AskMentorScreen(),
+        LiveSessionScreen.routeName: (context) => const LiveSessionScreen(),
+        ModuleListQuizScreen.routeName: (context) =>
+            const ModuleListQuizScreen(),
+        ModulDetailPPTScreen.routeName: (context) =>
+            const ModulDetailPPTScreen(),
+        ForgotPasswordScreen.routeName: (context) =>
+            const ForgotPasswordScreen(),
+        OtpVerificationScreen.routeName: (context) =>
+            const OtpVerificationScreen(),
+        ResetPasswordScreen.routeName: (context) => const ResetPasswordScreen(),
+        RegisterScreen.routeName: (context) => const RegisterScreen(),
+        AccountVerification.routeName: (context) => const AccountVerification(),
+
+      },
     );
   }
 }
