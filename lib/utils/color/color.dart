@@ -13,5 +13,6 @@ const Color blue = Color(0xFFBBDEFB);
 const Color starReviewColor = Color(0xFFFF9800);
 const Color blackColor = Colors.black;
 const Color whiteColor = Colors.white;
+const Color greyColor = Color(0xFF616161);
 const Color progressBarBackgroundColor = Color(0xff0D47A1);
 const Color certificateStatusColor = Color(0xff388E3C);

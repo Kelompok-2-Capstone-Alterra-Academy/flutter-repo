@@ -3,14 +3,15 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../utils/color/color.dart';
 
-class SecondaryButton extends StatelessWidget {
-  const SecondaryButton({
+class PromoButton extends StatelessWidget {
+  const PromoButton({
     super.key,
     required this.width,
     required this.text,
     required this.iconImg,
     required this.bgColor,
     required this.borderColor,
+    required this.pages,
   });
 
   final double width;
@@ -18,6 +19,7 @@ class SecondaryButton extends StatelessWidget {
   final String iconImg;
   final Color bgColor;
   final Color borderColor;
+  final Widget pages;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,13 @@ class SecondaryButton extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => pages,
+                ));
+          },
           child: Padding(
             padding: const EdgeInsets.only(left: 10, right: 12),
             child: Row(
