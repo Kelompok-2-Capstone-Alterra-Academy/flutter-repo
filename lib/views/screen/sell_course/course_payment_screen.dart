@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/constant/sell_course_list.dart';
-import 'package:staredu/views/screen/sell_course/sell_course_screen.dart';
-import 'package:staredu/widgets/sell_course/primary_button.dart';
-
 import '../../../utils/color/color.dart';
 import '../../../widgets/sell_course/detail_payment.dart';
 
@@ -187,7 +184,108 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                 child: Material(
                   color: Colors.transparent,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(16))),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const SizedBox(height: 50),
+                              SizedBox(
+                                child: Image.asset(
+                                    "assets/images/new_course_popup.png"),
+                              ),
+                              const SizedBox(height: 24),
+                              Text(
+                                "Yeay, Kamu Punya Kursus Baru!",
+                                style: GoogleFonts.poppins(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                    color: blackColor),
+                              ),
+                              const SizedBox(height: 12),
+                              Text(
+                                textAlign: TextAlign.center,
+                                "Pembayaran kamu sukses dan kamu bisa segera memulai pembelajaran",
+                                style: GoogleFonts.poppins(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w400,
+                                    color: blackColor),
+                              ),
+                              const SizedBox(height: 12),
+
+                              //Button Lihat Modul
+                              Container(
+                                height: 42,
+                                width: screenWidth,
+                                decoration: const BoxDecoration(
+                                  color: primaryColor,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(8),
+                                  ),
+                                ),
+                                child: Material(
+                                  color: Colors.transparent,
+                                  child: InkWell(
+                                    onTap: () {},
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10, right: 12),
+                                      child: Center(
+                                        child: Text(
+                                          "Lihat Modul",
+                                          style: GoogleFonts.poppins(
+                                              color: whiteColor,
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+
+                              //Button Riwayat Transaksi
+                              Container(
+                                height: 42,
+                                width: screenWidth,
+                                decoration: BoxDecoration(
+                                  color: whiteColor,
+                                  border: Border.all(color: primaryColor),
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(8),
+                                  ),
+                                ),
+                                child: Material(
+                                  color: Colors.transparent,
+                                  child: InkWell(
+                                    onTap: () {},
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10, right: 12),
+                                      child: Center(
+                                        child: Text(
+                                          "Riwayat Transaksi",
+                                          style: GoogleFonts.poppins(
+                                              color: primaryColor,
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
                     child: Padding(
                       padding: const EdgeInsets.only(left: 10, right: 12),
                       child: Center(
