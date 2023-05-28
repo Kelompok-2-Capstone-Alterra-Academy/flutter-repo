@@ -11,6 +11,7 @@ import 'package:staredu/views/screen/course/module/module_live_session.dart';
 import 'package:staredu/views/screen/course/module/module_list_quiz.dart';
 import 'package:staredu/views/screen/auth/register/account_verification/account_verification.dart';
 import 'package:staredu/views/screen/auth/register/main/register_screen.dart';
+import 'package:staredu/views/screen/course/module/module_task_list.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
 import 'package:staredu/views/screen/course/module/module_detail_ppt.dart';
 import 'package:staredu/views/screen/splash_welcome/splash_welcome_screen.dart';
@@ -54,6 +55,7 @@ class StarEdu extends StatelessWidget {
         ResetPasswordScreen.routeName: (context) => const ResetPasswordScreen(),
         RegisterScreen.routeName: (context) => const RegisterScreen(),
         AccountVerification.routeName: (context) => const AccountVerification(),
+        TaskListScreen.routeName: (context) => const TaskListScreen(),
       },
     );
   }
