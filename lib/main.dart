@@ -11,6 +11,8 @@ import 'package:staredu/views/screen/course/module/module_list_quiz.dart';
 import 'package:staredu/views/screen/auth/register/account_verification/account_verification.dart';
 import 'package:staredu/views/screen/auth/register/main/register_screen.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
+import 'package:staredu/views/screen/mentor/chat_mentor_screen.dart';
+import 'package:staredu/views/screen/mentor/mentor_screen.dart';
 import 'package:staredu/views/screen/sell_course/course_payment_screen.dart';
 import 'package:staredu/views/screen/sell_course/sell_course_screen.dart';
 import 'package:staredu/views/screen/live_session/schedule_course_screen.dart';

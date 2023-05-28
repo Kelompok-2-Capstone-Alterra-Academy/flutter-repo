@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/constant/sell_course_list.dart';
 import 'package:staredu/views/screen/sell_course/course_payment_screen.dart';
-import 'package:staredu/views/screen/sell_course/sell_course_screen.dart';
 
 import '../../../widgets/sell_course/detail_keuntungan.dart';
 import '../../../widgets/sell_course/primary_button.dart';

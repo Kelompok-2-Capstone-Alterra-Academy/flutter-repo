@@ -1,18 +1,18 @@
+//Button for Open Bottomsheet (Not for Changing Page)
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../utils/color/color.dart';
 
-//Button for Changing Page
-class PrimaryButton extends StatelessWidget {
+class BottomsheetButton extends StatelessWidget {
   final String title;
-  final Widget page;
+  final Future widgets;
 
-  const PrimaryButton({
+  const BottomsheetButton({
     super.key,
     required this.screenWidth,
     required this.title,
-    required this.page,
+    required this.widgets,
   });
 
   final double screenWidth;
@@ -32,11 +32,7 @@ class PrimaryButton extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => page,
-                ));
+            widgets;
           },
           child: Padding(
             padding: const EdgeInsets.only(left: 10, right: 12),
