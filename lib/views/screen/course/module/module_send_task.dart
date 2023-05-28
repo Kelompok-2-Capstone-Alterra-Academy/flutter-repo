@@ -4,6 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/color/color.dart';
+import 'package:staredu/widgets/module_course/module_send_task_done_dialog.dart';
 
 class ModuleSendTaskScreen extends StatefulWidget {
   static const String routeName = "/sendtask";
@@ -209,7 +210,13 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) =>
+                              const ModuleSendTaskDoneDialog(),
+                        );
+                      },
                       child: Text(
                         "Submit",
                         style: GoogleFonts.poppins(
