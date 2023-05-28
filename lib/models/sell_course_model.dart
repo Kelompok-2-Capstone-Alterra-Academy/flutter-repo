@@ -14,4 +14,26 @@ class SellCourseModel {
     this.student,
     this.img,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'price': price,
+      'rating': rating,
+      'student': student,
+      'img': img,
+    };
+  }
+
+  factory SellCourseModel.fromJson(Map<String, dynamic> json) {
+    return SellCourseModel(
+      id: json['id'],
+      title: json['title'],
+      price: json['price'],
+      rating: json['rating'],
+      student: json['student'],
+      img: json['img'],
+    );
+  }
 }
