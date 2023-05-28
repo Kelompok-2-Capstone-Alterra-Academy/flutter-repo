@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:staredu/models/arguments/module_arguments.dart';
+import 'package:staredu/models/arguments/module_detail_task_argument.dart';
+import 'package:staredu/models/arguments/module_detail_video_argument.dart';
 import 'package:staredu/views/screen/course/module/detail/module_detail_video.dart';
 import 'package:staredu/views/screen/course/module/module_detail_ppt.dart';
 import 'package:staredu/views/screen/course/module/module_detail_task.dart';

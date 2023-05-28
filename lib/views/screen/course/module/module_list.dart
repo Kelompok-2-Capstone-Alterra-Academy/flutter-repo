@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf_thumbnail/pdf_thumbnail.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:staredu/models/arguments/module_arguments.dart';
+import 'package:staredu/models/arguments/module_screen_argument.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/constant/module_section_list.dart';
 import 'package:staredu/widgets/module_course/module_button.dart';
