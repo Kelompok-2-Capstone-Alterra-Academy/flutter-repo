@@ -5,6 +5,8 @@ import '../../../utils/color/color.dart';
 import '../../../widgets/sell_course/detail_payment.dart';
 
 class CoursePaymentScreen extends StatefulWidget {
+  static const String routeName = "/course_payment";
+
   final int indexSellCourse;
 
   const CoursePaymentScreen({super.key, required this.indexSellCourse});

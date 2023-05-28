@@ -9,6 +9,8 @@ import '../../../widgets/sell_course/detail_keuntungan.dart';
 import '../../../widgets/sell_course/primary_button.dart';
 
 class SellCourseDetailScreen extends StatefulWidget {
+  static const String routeName = "/sell_course_detail";
+
   final int indexSellCourse;
 
   const SellCourseDetailScreen({super.key, required this.indexSellCourse});
