@@ -5,6 +5,7 @@ import 'package:staredu/utils/constant/mentor_list.dart';
 import '../../../utils/color/color.dart';
 
 class MentorScreen extends StatefulWidget {
+  static const String routeName = "/mentor";
   const MentorScreen({super.key});
 
   @override

@@ -4,6 +4,8 @@ import 'package:staredu/utils/constant/voucher_list.dart';
 import '../../../utils/color/color.dart';
 
 class CourseVoucherScreen extends StatefulWidget {
+  static const String routeName = "/course_voucher";
+
   const CourseVoucherScreen({super.key});
 
   @override

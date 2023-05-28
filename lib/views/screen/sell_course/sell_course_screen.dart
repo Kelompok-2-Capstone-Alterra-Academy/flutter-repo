@@ -9,6 +9,8 @@ import '../../../widgets/sell_course/filter_button.dart';
 import '../../../widgets/sell_course/promo_button.dart';
 
 class SellCourseScreen extends StatefulWidget {
+  static const String routeName = "/sell_course";
+
   const SellCourseScreen({super.key});
 
   @override

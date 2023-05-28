@@ -6,6 +6,7 @@ import '../../../models/mentor_model.dart';
 import '../../../utils/color/color.dart';
 
 class SearchChatScreen extends StatefulWidget {
+  static const String routeName = "/search_chat";
   const SearchChatScreen({super.key});
 
   @override

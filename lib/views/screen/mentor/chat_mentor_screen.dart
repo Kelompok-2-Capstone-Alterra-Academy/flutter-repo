@@ -6,6 +6,7 @@ import 'package:staredu/views/screen/mentor/search_chat_screen.dart';
 import '../../../utils/color/color.dart';
 
 class ChatMentorScreen extends StatefulWidget {
+  static const String routeName = "/chat_mentor";
   const ChatMentorScreen({super.key});
 
   @override
