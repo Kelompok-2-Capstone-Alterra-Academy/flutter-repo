@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/constant/sell_course_list.dart';
+import 'package:staredu/views/screen/sell_course/course_payment_screen.dart';
 import '../../../models/sell_course_model.dart';
 import '../../../models/service/wishlist_manager.dart';
 import '../../../widgets/sell_course/detail_keuntungan.dart';
+import '../../../widgets/sell_course/primary_button.dart';
 
 class SellCourseDetailScreen extends StatefulWidget {
+  static const String routeName = "/sell_course_detail";
+
   final int indexSellCourse;
 
   const SellCourseDetailScreen({super.key, required this.indexSellCourse});
@@ -193,33 +197,11 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
                 text: "Rangkuman materi",
               ),
               const SizedBox(height: 40),
-              Container(
-                height: 42,
-                width: screenWidth,
-                decoration: const BoxDecoration(
-                  color: primaryColor,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(8),
-                  ),
-                ),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {},
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 12),
-                      child: Center(
-                        child: Text(
-                          "Ambil Kursus",
-                          style: GoogleFonts.poppins(
-                              color: whiteColor,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+              PrimaryButton(
+                screenWidth: screenWidth,
+                title: "Ambil Kursus",
+                page: CoursePaymentScreen(
+                    indexSellCourse: widget.indexSellCourse),
               ),
             ],
           ),
