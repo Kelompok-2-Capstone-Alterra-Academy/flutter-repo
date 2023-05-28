@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/color/color.dart';
 
-import '../../../models/service/course_history_model.dart';
+import '../../../models/course_history_model.dart';
 
 class NoteTransactionScreen extends StatefulWidget {
   const NoteTransactionScreen({Key? key}) : super(key: key);

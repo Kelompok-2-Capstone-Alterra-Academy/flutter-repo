@@ -42,6 +42,7 @@ class StarEdu extends StatelessWidget {
         primaryColor: Colors.white,
       ),
       initialRoute: SplashWelcomeScreen.routeName,
+
       routes: {
         SplashWelcomeScreen.routeName: (context) => const SplashWelcomeScreen(),
         HomeScreen.routeName: (context) => const HomeScreen(),
