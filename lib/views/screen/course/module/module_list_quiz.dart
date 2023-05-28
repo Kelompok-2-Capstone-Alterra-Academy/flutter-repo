@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:staredu/models/arguments/module_list_quiz_argument.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/constant/module_section_list.dart';
-import 'package:staredu/views/screen/course/module/module_list.dart';
 import 'package:staredu/widgets/module_course/module_quiz_card.dart';
 
 class ModuleListQuizScreen extends StatefulWidget {

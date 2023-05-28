@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:staredu/views/screen/course/module/module_detail_ppt.dart';
+import 'package:staredu/models/arguments/module_screen_argument.dart';
 import 'package:staredu/views/screen/course/module/module_list.dart';
+import 'package:staredu/widgets/course/filter_course_taken.dart';
 
 import '../../utils/color/color.dart';
 import '../../utils/constant/list_course_taken.dart';
@@ -30,16 +31,9 @@ class _OnGoingCourseTakenListScreenState
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Align(
+            const Align(
               alignment: AlignmentDirectional.centerEnd,
-              child: Text(
-                "Urutkan",
-                style: GoogleFonts.poppins(
-                  fontStyle: FontStyle.normal,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 11,
-                ),
-              ),
+              child: FilterCourseTaken(),
             ),
             const SizedBox(
               height: 4,
@@ -50,10 +44,15 @@ class _OnGoingCourseTakenListScreenState
               itemCount: courseTaken.length,
               itemBuilder: (context, index) {
                 return InkWell(
-                  onTap: () => Navigator.pushNamed(
-                    context,
-                    ModulDetailPPTScreen.routeName,
-                  ),
+                  onTap: () {
+                    Navigator.pushNamed(context, ModuleListScreen.routeName,
+                        arguments: ModuleArguments(
+                          courseTaken[index].title.toString(),
+                          int.parse(
+                              courseTaken[index].currentSection.toString()),
+                          int.parse(courseTaken[index].totalSection.toString()),
+                        ));
+                  },
                   child: Card(
                     elevation: 2,
                     shape: RoundedRectangleBorder(

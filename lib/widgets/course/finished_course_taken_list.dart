@@ -1,8 +1,8 @@
 import 'package:circle_progress_bar/circle_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 import 'package:staredu/utils/constant/list_finished_course_taken.dart';
+import 'package:staredu/widgets/course/filter_course_taken.dart';
 
 import '../../utils/color/color.dart';
 import '../../utils/constant/list_course_taken.dart';
@@ -30,16 +30,9 @@ class _FinishedCourseTakenListScreenState
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Align(
+            const Align(
               alignment: AlignmentDirectional.centerEnd,
-              child: Text(
-                "Urutkan",
-                style: GoogleFonts.poppins(
-                  fontStyle: FontStyle.normal,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 11,
-                ),
-              ),
+              child: FilterCourseTaken(),
             ),
             const SizedBox(
               height: 4,

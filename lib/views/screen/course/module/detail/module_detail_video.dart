@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:staredu/models/arguments/module_detail_video_argument.dart';
 import 'package:staredu/utils/color/color.dart';
-import 'package:staredu/views/screen/course/module/module_list.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class ModuleVideoScreen extends StatefulWidget {
