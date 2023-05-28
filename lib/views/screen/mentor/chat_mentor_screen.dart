@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/constant/mentor_list.dart';
+import 'package:staredu/views/screen/mentor/search_chat_screen.dart';
 
 import '../../../utils/color/color.dart';
 
@@ -27,7 +28,13 @@ class _ChatMentorScreenState extends State<ChatMentorScreen> {
         backgroundColor: Colors.transparent,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SearchChatScreen(),
+                  ));
+            },
             icon: const Icon(Icons.search_rounded),
             splashRadius: 18,
           ),
