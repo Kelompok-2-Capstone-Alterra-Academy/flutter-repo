@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CardMentor extends StatelessWidget {
   final String name;
@@ -24,7 +25,12 @@ class CardMentor extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         Text(name,
-            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+            style: GoogleFonts.poppins(
+              color: Colors.black,
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.w400,
+              fontSize: 12,
+            )),
       ],
     );
   }
