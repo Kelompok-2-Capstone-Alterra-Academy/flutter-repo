@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/color/color.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -41,21 +41,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: Container(
                 color: primaryColor,
                 padding: const EdgeInsets.all(10),
-                child: Column(children: const [
+                child: Column(children: [
                   Align(
                       alignment: Alignment.topLeft,
                       child: Text('Selamat Datang',
-                          style: TextStyle(
+                          style: GoogleFonts.poppins(
+                              fontSize: 18,
                               color: whiteColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17))),
-                  SizedBox(
+                              fontWeight: FontWeight.w600))),
+                  const SizedBox(
                     height: 10,
                   ),
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text('Yuk, isi formulir registrasi dibawah ini',
-                        style: TextStyle(color: whiteColor)),
+                        style: GoogleFonts.poppins(
+                            fontSize: 12,
+                            color: whiteColor,
+                            fontWeight: FontWeight.w400)),
                   )
                 ]),
               ),
@@ -100,12 +103,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              "Nama Lengkap",
-                              style: TextStyle(
-                                  color: Color(0xff363d4a),
-                                  fontWeight: FontWeight.w700),
-                            ),
+                            Text("Nama Lengkap",
+                                style: GoogleFonts.poppins(
+                                    color: blackColor,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700)),
                             const SizedBox(
                               height: 5,
                             ),
@@ -115,16 +117,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               maxLength: 28,
                               autocorrect: false,
                               textInputAction: TextInputAction.next,
-                              style: const TextStyle(
+                              style: GoogleFonts.poppins(
                                 color: blackColor,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w400,
                               ),
                               cursorColor: const Color(0xff00c2cb),
                               decoration: InputDecoration(
                                 counterText: "",
                                 labelText: "Nama Lengkap",
-                                labelStyle: TextStyle(
-                                    color: blackColor.withOpacity(0.4)),
+                                labelStyle: GoogleFonts.poppins(
+                                  color: blackColor,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                ),
                                 filled: true,
                                 floatingLabelBehavior:
                                     FloatingLabelBehavior.never,
@@ -143,12 +149,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              "Email",
-                              style: TextStyle(
-                                  color: Color(0xff363d4a),
-                                  fontWeight: FontWeight.w700),
-                            ),
+                            Text("Email",
+                                style: GoogleFonts.poppins(
+                                    color: blackColor,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700)),
                             const SizedBox(
                               height: 5,
                             ),
@@ -158,16 +163,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               maxLength: 28,
                               autocorrect: false,
                               textInputAction: TextInputAction.next,
-                              style: const TextStyle(
+                              style: GoogleFonts.poppins(
                                 color: blackColor,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w400,
                               ),
                               cursorColor: const Color(0xff00c2cb),
                               decoration: InputDecoration(
                                 counterText: "",
                                 labelText: "Email",
-                                labelStyle: TextStyle(
-                                    color: blackColor.withOpacity(0.4)),
+                                labelStyle: GoogleFonts.poppins(
+                                  color: blackColor,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                ),
                                 filled: true,
                                 floatingLabelBehavior:
                                     FloatingLabelBehavior.never,
@@ -186,12 +195,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              "Nomor Handphone",
-                              style: TextStyle(
-                                  color: Color(0xff363d4a),
-                                  fontWeight: FontWeight.w700),
-                            ),
+                            Text("Nomor Handphone",
+                                style: GoogleFonts.poppins(
+                                    color: blackColor,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700)),
                             const SizedBox(
                               height: 5,
                             ),
@@ -201,16 +209,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               maxLength: 28,
                               autocorrect: false,
                               textInputAction: TextInputAction.next,
-                              style: const TextStyle(
+                              style: GoogleFonts.poppins(
                                 color: blackColor,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w400,
                               ),
                               cursorColor: const Color(0xff00c2cb),
                               decoration: InputDecoration(
                                 counterText: "",
                                 labelText: "Nomor Handphone",
-                                labelStyle: TextStyle(
-                                    color: blackColor.withOpacity(0.4)),
+                                labelStyle: GoogleFonts.poppins(
+                                  color: blackColor,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                ),
                                 filled: true,
                                 floatingLabelBehavior:
                                     FloatingLabelBehavior.never,
@@ -229,12 +241,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              "Username",
-                              style: TextStyle(
-                                  color: Color(0xff363d4a),
-                                  fontWeight: FontWeight.w700),
-                            ),
+                            Text("Username",
+                                style: GoogleFonts.poppins(
+                                    color: blackColor,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700)),
                             const SizedBox(
                               height: 5,
                             ),
@@ -244,16 +255,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               maxLength: 28,
                               autocorrect: false,
                               textInputAction: TextInputAction.next,
-                              style: const TextStyle(
+                              style: GoogleFonts.poppins(
                                 color: blackColor,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w400,
                               ),
                               cursorColor: const Color(0xff00c2cb),
                               decoration: InputDecoration(
                                 counterText: "",
                                 labelText: "Username",
-                                labelStyle: TextStyle(
-                                    color: blackColor.withOpacity(0.4)),
+                                labelStyle: GoogleFonts.poppins(
+                                  color: blackColor,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                ),
                                 filled: true,
                                 floatingLabelBehavior:
                                     FloatingLabelBehavior.never,
@@ -272,12 +287,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              "Kata Sandi",
-                              style: TextStyle(
-                                  color: Color(0xff363d4a),
-                                  fontWeight: FontWeight.w700),
-                            ),
+                            Text("Kata Sandi",
+                                style: GoogleFonts.poppins(
+                                    color: blackColor,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700)),
                             const SizedBox(
                               height: 5,
                             ),
@@ -287,8 +301,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               maxLength: 20,
                               autocorrect: false,
                               textInputAction: TextInputAction.next,
-                              style: const TextStyle(
+                              style: GoogleFonts.poppins(
                                 color: blackColor,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w400,
                               ),
                               cursorColor: const Color(0xff00c2cb),
@@ -308,8 +323,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                                 counterText: "",
                                 labelText: "Kata Sandi",
-                                labelStyle: TextStyle(
-                                    color: blackColor.withOpacity(0.4)),
+                                labelStyle: GoogleFonts.poppins(
+                                  color: blackColor,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                ),
                                 filled: true,
                                 floatingLabelBehavior:
                                     FloatingLabelBehavior.never,
@@ -350,11 +368,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             onPressed: () {
                               if (_formkey.currentState!.validate()) {}
                             },
-                            child: const Text(
-                              "Lanjut",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 14),
-                            ),
+                            child: Text("Lanjut",
+                                style: GoogleFonts.poppins(
+                                    color: blackColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600)),
                           ),
                         ),
                         const SizedBox(
@@ -363,20 +381,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text("Kamu udah punya akun?",
-                                style:
-                                    TextStyle(color: blackColor, fontSize: 14)),
+                            Text(
+                              "Kamu udah punya akun?",
+                              style: GoogleFonts.poppins(
+                                color: blackColor,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
                             GestureDetector(
                               onTap: () {
                                 // Navigator.pushNamedAndRemoveUntil(
                                 //     context, SignUpScreen.routeName, (route) => false);
                               },
-                              child: const Text(
+                              child: Text(
                                 "  Masuk",
-                                style: TextStyle(
-                                    color: blackColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14),
+                                style: GoogleFonts.poppins(
+                                  color: blackColor,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                ),
                               ),
                             ),
                           ],

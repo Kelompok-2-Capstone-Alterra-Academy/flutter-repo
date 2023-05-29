@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/color/color.dart';
 
 class AccountVerification extends StatefulWidget {
@@ -52,8 +53,9 @@ class _AccountVerificationState extends State<AccountVerification> {
         backgroundColor: whiteColor,
         centerTitle: true,
         elevation: 0,
-        title:
-            const Text('Verifikasi Akun', style: TextStyle(color: blackColor)),
+        title: Text('Verifikasi Akun',
+            style: GoogleFonts.poppins(
+                fontSize: 18, color: blackColor, fontWeight: FontWeight.w600)),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -66,12 +68,12 @@ class _AccountVerificationState extends State<AccountVerification> {
                     padding: const EdgeInsets.all(8.0),
                     child: Align(
                       alignment: Alignment.centerLeft,
-                      child: const Text(
+                      child: Text(
                         'Verifikasi Email mu',
-                        style: TextStyle(
-                            fontSize: 16,
+                        style: GoogleFonts.poppins(
+                            fontSize: 18,
                             color: blackColor,
-                            fontWeight: FontWeight.bold),
+                            fontWeight: FontWeight.w600),
                         textAlign: TextAlign.start,
                       ),
                     ),
@@ -81,19 +83,26 @@ class _AccountVerificationState extends State<AccountVerification> {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: RichText(
-                        text: const TextSpan(
+                        text: TextSpan(
                           text: 'Kode OTP dikirim lewat email ',
-                          style: TextStyle(fontSize: 14, color: blackColor),
+                          style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              color: blackColor,
+                              fontWeight: FontWeight.w400),
                           children: <TextSpan>[
                             TextSpan(
                                 text: 'agnescherrly@contoh.com',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: blackColor)),
+                                style: GoogleFonts.poppins(
+                                    fontSize: 14,
+                                    color: blackColor,
+                                    fontWeight: FontWeight.w400)),
                             TextSpan(
                                 text:
                                     ', cek dan masukin kode OTP di form bawah,',
-                                style: TextStyle(color: blackColor)),
+                                style: GoogleFonts.poppins(
+                                    fontSize: 14,
+                                    color: blackColor,
+                                    fontWeight: FontWeight.w400)),
                           ],
                         ),
                       ),
@@ -114,9 +123,10 @@ class _AccountVerificationState extends State<AccountVerification> {
                             child: TextFormField(
                               controller: _otpController,
                               keyboardType: TextInputType.number,
-                              decoration: const InputDecoration(
-                                hintStyle: TextStyle(
-                                    color: Color(0xff363d4a),
+                              decoration: InputDecoration(
+                                hintStyle: GoogleFonts.poppins(
+                                    fontSize: 18,
+                                    color: blackColor,
                                     fontWeight: FontWeight.w700),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide:
@@ -139,15 +149,16 @@ class _AccountVerificationState extends State<AccountVerification> {
                             child: TextFormField(
                               controller: _otpController,
                               keyboardType: TextInputType.number,
-                              decoration: const InputDecoration(
-                                hintStyle: TextStyle(
-                                    color: Color(0xff363d4a),
+                              decoration: InputDecoration(
+                                hintStyle: GoogleFonts.poppins(
+                                    fontSize: 18,
+                                    color: blackColor,
                                     fontWeight: FontWeight.w700),
-                                enabledBorder: OutlineInputBorder(
+                                enabledBorder: const OutlineInputBorder(
                                   borderSide:
                                       BorderSide(color: Colors.grey, width: 0),
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.grey),
                                 ),
                               ),
@@ -164,15 +175,16 @@ class _AccountVerificationState extends State<AccountVerification> {
                             child: TextFormField(
                               controller: _otpController,
                               keyboardType: TextInputType.number,
-                              decoration: const InputDecoration(
-                                hintStyle: TextStyle(
-                                    color: Color(0xff363d4a),
+                              decoration: InputDecoration(
+                                hintStyle: GoogleFonts.poppins(
+                                    fontSize: 18,
+                                    color: blackColor,
                                     fontWeight: FontWeight.w700),
-                                enabledBorder: OutlineInputBorder(
+                                enabledBorder: const OutlineInputBorder(
                                   borderSide:
                                       BorderSide(color: Colors.grey, width: 0),
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.grey),
                                 ),
                               ),
@@ -189,15 +201,16 @@ class _AccountVerificationState extends State<AccountVerification> {
                             child: TextFormField(
                               controller: _otpController,
                               keyboardType: TextInputType.number,
-                              decoration: const InputDecoration(
-                                hintStyle: TextStyle(
-                                    color: Color(0xff363d4a),
+                              decoration: InputDecoration(
+                                hintStyle: GoogleFonts.poppins(
+                                    fontSize: 18,
+                                    color: blackColor,
                                     fontWeight: FontWeight.w700),
-                                enabledBorder: OutlineInputBorder(
+                                enabledBorder: const OutlineInputBorder(
                                   borderSide:
                                       BorderSide(color: Colors.grey, width: 0),
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.grey),
                                 ),
                               ),
@@ -219,9 +232,12 @@ class _AccountVerificationState extends State<AccountVerification> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              const Text(
+                              Text(
                                 'Kirim ulang kode OTP?',
-                                style: TextStyle(fontSize: 16),
+                                style: GoogleFonts.poppins(
+                                    fontSize: 12,
+                                    color: blackColor,
+                                    fontWeight: FontWeight.w400),
                                 textAlign: TextAlign.start,
                               ),
                               TextButton(
@@ -231,12 +247,12 @@ class _AccountVerificationState extends State<AccountVerification> {
                                     startTimer();
                                   });
                                 },
-                                child: const Text(
+                                child: Text(
                                   'Kirim',
-                                  style: TextStyle(
-                                      fontSize: 16,
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 12,
                                       color: blackColor,
-                                      fontWeight: FontWeight.bold),
+                                      fontWeight: FontWeight.w600),
                                 ),
                               ),
                             ],
@@ -250,7 +266,10 @@ class _AccountVerificationState extends State<AccountVerification> {
                               _start == 0
                                   ? 'Kirim ulang kode OTP'
                                   : 'Kode OTP akan kadaluarsa dalam $_start detik',
-                              style: TextStyle(fontSize: 16, color: blackColor),
+                              style: GoogleFonts.poppins(
+                                  fontSize: 12,
+                                  color: blackColor,
+                                  fontWeight: FontWeight.w400),
                               textAlign: TextAlign.start,
                             ),
                           ),
@@ -282,11 +301,12 @@ class _AccountVerificationState extends State<AccountVerification> {
                       onPressed: () {
                         if (_formkey.currentState!.validate()) {}
                       },
-                      child: const Text(
-                        "Verifikasi Akun",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 14),
-                      ),
+                      child: Text("Verifikasi Akun",
+                          style: GoogleFonts.poppins(
+                            fontSize: 14,
+                            color: whiteColor,
+                            fontWeight: FontWeight.w600,
+                          )),
                     ),
                   ),
                 ],

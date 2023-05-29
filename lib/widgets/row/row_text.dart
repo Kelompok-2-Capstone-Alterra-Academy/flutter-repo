@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class RowText extends StatelessWidget {
   final String left;
@@ -12,8 +13,11 @@ class RowText extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(left,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-        Text(right, style: const TextStyle(fontSize: 12)),
+            style:
+                GoogleFonts.poppins(fontSize: 15, fontWeight: FontWeight.w600)),
+        Text(right,
+            style:
+                GoogleFonts.poppins(fontSize: 10, fontWeight: FontWeight.w400)),
       ],
     );
   }

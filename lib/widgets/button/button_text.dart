@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/color/color.dart';
 
 class ButtonText extends StatelessWidget {
@@ -31,9 +32,9 @@ class ButtonText extends StatelessWidget {
             ),
             onPressed: press,
             child: Text(text,
-                style: const TextStyle(
+                style: GoogleFonts.poppins(
                     fontSize: 10,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                     color: whiteColor)))
         : ElevatedButton(
             style: ButtonStyle(
@@ -55,9 +56,9 @@ class ButtonText extends StatelessWidget {
             ),
             onPressed: () {},
             child: Text(text,
-                style: const TextStyle(
+                style: GoogleFonts.poppins(
                     fontSize: 10,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w600,
                     color: secondaryColor)));
   }
 }
