@@ -3,7 +3,7 @@ import 'package:staredu/views/screen/home/home_screen.dart';
 
 class SplashWelcomeScreen extends StatefulWidget {
   const SplashWelcomeScreen({super.key});
-  static const routeName = '/';
+  static const routeName = '/splash';
 
   @override
   State<SplashWelcomeScreen> createState() => _SplashWelcomeScreenState();

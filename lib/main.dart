@@ -12,6 +12,12 @@ import 'package:staredu/views/screen/course/module/module_live_session_screen.da
 import 'package:staredu/views/screen/course/module/module_list_quiz_screen.dart';
 import 'package:staredu/views/screen/auth/register/account_verification/account_verification.dart';
 import 'package:staredu/views/screen/auth/register/main/register_screen.dart';
+import 'package:staredu/views/screen/edit_profile/edit_profile.dart';
+import 'package:staredu/views/screen/home/home_screen.dart';
+import 'package:staredu/views/screen/home/home_view_model.dart';
+import 'package:staredu/views/screen/notification/notification_screen.dart';
+import 'package:staredu/views/screen/notification/notification_view_model.dart';
+import 'package:staredu/views/screen/profile/profile.dart';
 import 'package:staredu/views/screen/course/module/detail/module_quiz_detail_screen.dart';
 import 'package:staredu/views/screen/course/module/module_send_task_screen.dart';
 import 'package:staredu/views/screen/course/module/module_task_list_screen.dart';
@@ -28,9 +34,19 @@ import 'package:staredu/views/screen/course/module/detail/module_detail_ppt_scre
 import 'package:staredu/views/screen/news/news_screen.dart';
 import 'package:staredu/views/screen/live_session/schedule_course_screen.dart';
 import 'package:staredu/views/screen/splash_welcome/splash_welcome_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:staredu/widgets/bottom_navigation_bar/bottom_navigation_bar_view_model.dart';
 
 void main() {
-  runApp(const StarEdu());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => HomeViewModel()),
+      ChangeNotifierProvider(create: (_) => NotificationViewModel()),
+      ChangeNotifierProvider(
+          create: (_) => BottomNavigationBarComponentViewModel())
+    ],
+    child: const StarEdu(),
+  ));
 }
 
 class StarEdu extends StatelessWidget {
@@ -40,15 +56,15 @@ class StarEdu extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Rent Car',
+      title: 'StarEdu',
       // add primary color
       theme: ThemeData(
         primaryColor: Colors.white,
       ),
-      initialRoute: CourseTakenListScreen.routeName,
+      initialRoute: HomeScreen.routeName,
       routes: {
-        SplashWelcomeScreen.routeName: (context) => const SplashWelcomeScreen(),
         HomeScreen.routeName: (context) => const HomeScreen(),
+        SplashWelcomeScreen.routeName: (context) => const SplashWelcomeScreen(),
         LoginScreen.routeName: (context) => const LoginScreen(),
         PostFeedScreen.routeName: (context) => const PostFeedScreen(),
         ScheduleCourseScreen.routeName: (context) =>
@@ -70,6 +86,9 @@ class StarEdu extends StatelessWidget {
         ResetPasswordScreen.routeName: (context) => const ResetPasswordScreen(),
         RegisterScreen.routeName: (context) => const RegisterScreen(),
         AccountVerification.routeName: (context) => const AccountVerification(),
+        Profile.routeName: (context) => const Profile(),
+        EditProfile.routeName: (context) => const EditProfile(),
+        NotificationScreen.routeName: (context) => const NotificationScreen(),
         ModuleQuizDetailScreen.routeName: (context) =>
             const ModuleQuizDetailScreen(),
         ModuleSendTaskScreen.routeName: (context) =>
