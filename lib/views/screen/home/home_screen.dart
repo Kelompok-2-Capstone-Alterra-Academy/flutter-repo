@@ -34,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final TextEditingController _searchController = TextEditingController();
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: primaryColor,
           centerTitle: true,
           elevation: 0,

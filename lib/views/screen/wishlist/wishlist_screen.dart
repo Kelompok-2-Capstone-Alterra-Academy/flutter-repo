@@ -6,6 +6,10 @@ import '../../../utils/color/color.dart';
 import '../sell_course/sell_course_detail_screen.dart';
 
 class WishlistScreen extends StatefulWidget {
+  static const String routeName = "/wishlist_screen";
+
+  const WishlistScreen({super.key});
+
   @override
   _WishlistScreenState createState() => _WishlistScreenState();
 }

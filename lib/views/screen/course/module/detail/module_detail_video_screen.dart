@@ -26,7 +26,7 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
       initialVideoId: "MLpWrANjFbI",
       flags: const YoutubePlayerFlags(
         mute: false,
-        autoPlay: true,
+        autoPlay: false,
         forceHD: false,
         enableCaption: true,
       ),

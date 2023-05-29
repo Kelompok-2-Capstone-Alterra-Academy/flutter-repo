@@ -339,7 +339,6 @@ class _NoteTransactionScreenState extends State<NoteTransactionScreen> {
               ),
               const SizedBox(height: 20),
               Container(
-                height: 200,
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(12)),
                   color: searchBarColor,

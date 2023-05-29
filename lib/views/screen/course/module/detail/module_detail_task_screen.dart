@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/models/arguments/module_detail_task_argument.dart';
+import 'package:staredu/views/screen/course/module/module_send_task_screen.dart';
 
 import '../../../../../utils/color/color.dart';
 
@@ -245,10 +246,26 @@ class _ModuleDetailTaskState extends State<ModuleDetailTask> {
                       ),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        pageBuilder:
+                            (context, animations, secondaryAnimations) =>
+                                const ModuleSendTaskScreen(),
+                        transitionsBuilder:
+                            (context, animations, secondaryAnimations, childs) {
+                          final tween = Tween(begin: 0.0, end: 1.0);
+                          return FadeTransition(
+                            opacity: animations.drive(tween),
+                            child: childs,
+                          );
+                        },
+                      ),
+                    );
+                  },
                   child: Center(
                     child: Text(
-                      'Kumpulan',
+                      'Kumpulkan',
                       style: GoogleFonts.poppins(
                         fontStyle: FontStyle.normal,
                         fontWeight: FontWeight.w600,
