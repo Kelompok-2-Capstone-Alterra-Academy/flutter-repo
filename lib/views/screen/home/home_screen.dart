@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/views/screen/home/home_view_model.dart';
+import 'package:staredu/widgets/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'package:staredu/widgets/button/button_text.dart';
 import 'package:staredu/widgets/card/card_mentor.dart';
 import 'package:staredu/widgets/row/row_text.dart';
@@ -45,7 +47,14 @@ class _HomeScreenState extends State<HomeScreen> {
               width: double.infinity,
               child: Container(
                 decoration: const BoxDecoration(
-                    color: primaryColor,
+                    gradient: LinearGradient(
+                      colors: [
+                        primaryColor,
+                        secondaryColor,
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(15),
                         bottomRight: Radius.circular(15))),
@@ -59,28 +68,33 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
+                              children: [
                                 Text('Selamat Pagi',
-                                    style: TextStyle(
-                                        fontSize: 10,
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 11,
                                         color: whiteColor,
-                                        fontWeight: FontWeight.bold)),
+                                        fontWeight: FontWeight.w400)),
                                 Text('Dwi Bagus',
-                                    style: TextStyle(
-                                        fontSize: 16,
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 14,
                                         color: whiteColor,
-                                        fontWeight: FontWeight.bold)),
+                                        fontWeight: FontWeight.w600)),
                               ],
                             ),
-                            Container(
-                              width: 30,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                image: const DecorationImage(
-                                  image: AssetImage(
-                                      'assets/images/default_mentor.jpg'),
-                                  fit: BoxFit.cover,
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(context, '/profile');
+                              },
+                              child: Container(
+                                width: 32,
+                                height: 32,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  image: const DecorationImage(
+                                    image: AssetImage(
+                                        'assets/images/default_mentor.jpg'),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                             ),
@@ -101,8 +115,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   filled: true,
                                   fillColor: whiteColor,
                                   hintText: "Cari kelas yang kamu minati",
-                                  hintStyle: const TextStyle(
-                                      color: blackColor, fontSize: 14),
+                                  hintStyle: GoogleFonts.poppins(
+                                      fontSize: 12, color: blackColor),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
                                     borderSide: const BorderSide(
@@ -121,14 +135,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               )),
                             ),
-                            const SizedBox(
+                            SizedBox(
                                 height: 45,
-                                child: Icon(Icons.notifications_on_outlined,
-                                    color: whiteColor, size: 35)),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, '/notification');
+                                  },
+                                  child: Icon(Icons.notifications_on_outlined,
+                                      color: whiteColor, size: 28),
+                                )),
                             const SizedBox(
                                 height: 45,
                                 child: Icon(Icons.save_as_outlined,
-                                    color: whiteColor, size: 35))
+                                    color: whiteColor, size: 28))
                           ]),
                     ],
                   ),
@@ -143,8 +163,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
                       children: [
-                        const Image(
-                            image: AssetImage("assets/images/banner.jpg")),
+                        //give border on image
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.asset(
+                            "assets/images/banner.jpg",
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                         const SizedBox(height: 20),
                         const RowText(
                             left: 'Course Populer', right: 'Lihat Semua'),
@@ -174,6 +200,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         const SizedBox(height: 20),
                         const RowText(
                             left: 'Mentor Terbaik Kami', right: 'Lihat Semua'),
+                        const SizedBox(height: 10),
                         Consumer<HomeViewModel>(
                           builder: (context, value, child) {
                             return Row(
@@ -202,56 +229,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         )),
-        bottomNavigationBar: Container(
-          // give border
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(20.0),
-              topRight: Radius.circular(20.0),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.3),
-                spreadRadius: 2,
-                blurRadius: 10,
-                offset:
-                    const Offset(0, 3), // Offset changes the shadow position
-              ),
-            ],
-          ),
-          child: ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(20.0),
-              topRight: Radius.circular(20.0),
-            ),
-            child: BottomNavigationBar(
-              backgroundColor: whiteColor,
-              type: BottomNavigationBarType.fixed,
-              items: const <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home_filled),
-                  label: 'Beranda',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.collections_bookmark),
-                  label: 'Kursus',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.chat_bubble),
-                  label: 'Chat',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.shopping_cart),
-                  label: 'Transaksi',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
-                  label: 'Akun',
-                ),
-              ],
-              selectedItemColor: primaryColor,
-            ),
-          ),
-        ));
+        bottomNavigationBar: const BottomNavigationBarComponent());
   }
 }
