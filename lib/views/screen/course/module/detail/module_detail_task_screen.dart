@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/models/arguments/module_detail_task_argument.dart';
 
-import '../../../../utils/color/color.dart';
+import '../../../../../utils/color/color.dart';
 
 class ModuleDetailTask extends StatefulWidget {
   static const String routeName = "/moduledetailtask";

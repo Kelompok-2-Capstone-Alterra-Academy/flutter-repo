@@ -193,7 +193,7 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                       padding: const EdgeInsets.only(
                                         left: 8,
                                         top: 8,
-                                        right: 16,
+                                        right: 8,
                                         bottom: 9,
                                       ),
                                       decoration: BoxDecoration(
@@ -210,7 +210,7 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                               padding: const EdgeInsets.only(
                                                   left: 15,
                                                   top: 10,
-                                                  right: 20,
+                                                  right: 10,
                                                   bottom: 10),
                                               child: Column(
                                                 children: [
@@ -433,8 +433,21 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                           ),
                                         ),
                                       ),
-                                      onPressed: () {
-                                        downloadFile();
+                                      onPressed: () async {
+                                        await downloadFile();
+                                        if (context.mounted) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: const Center(
+                                                child: Text(
+                                                    "Sertifikat Berhasil di Download"),
+                                              ),
+                                              backgroundColor:
+                                                  blackColor.withOpacity(0.5),
+                                            ),
+                                          );
+                                        }
                                       },
                                       child: Center(
                                         child: Text(
@@ -459,12 +472,12 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
         ));
   }
 
-  void downloadFile() async {
+  Future<void> downloadFile() async {
     var status = await Permission.storage.status;
     if (!status.isGranted) {
       await Permission.storage.request();
     }
-    var path = "storage/emulated/0/Download/pdf-certificate3-dummy.pdf";
+    var path = "storage/emulated/0/Download/testdummy1.pdf";
     var file = File(path);
     var result = await get(
         Uri.parse("https://web.wpi.edu/Images/CMS/Provost/landscape.pdf"));
