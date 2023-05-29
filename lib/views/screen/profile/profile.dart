@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/color/color.dart';
+import 'package:staredu/widgets/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'package:staredu/widgets/profile/section_profile.dart';
 
 class Profile extends StatefulWidget {
@@ -89,7 +90,7 @@ class _ProfileState extends State<Profile> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Padding(
@@ -166,6 +167,7 @@ class _ProfileState extends State<Profile> {
               )
             ],
           ),
-        ));
+        ),
+        bottomNavigationBar: const BottomNavigationBarComponent());
   }
 }
