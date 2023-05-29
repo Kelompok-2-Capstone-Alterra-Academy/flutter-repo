@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/color/color.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -46,12 +47,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         "Masuk ke Akun",
-                        style: TextStyle(
+                        style: GoogleFonts.poppins(
+                            fontSize: 18,
                             color: blackColor,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
+                            fontWeight: FontWeight.w600),
                       ),
                       const SizedBox(
                         height: 15,
@@ -60,10 +61,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
+                          Text(
                             "Email",
-                            style: TextStyle(
-                                color: Color(0xff363d4a),
+                            style: GoogleFonts.poppins(
+                                fontSize: 12,
+                                color: blackColor,
                                 fontWeight: FontWeight.w700),
                           ),
                           const SizedBox(
@@ -75,7 +77,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             maxLength: 28,
                             autocorrect: false,
                             textInputAction: TextInputAction.next,
-                            style: const TextStyle(
+                            style: GoogleFonts.poppins(
+                              fontSize: 12,
                               color: blackColor,
                               fontWeight: FontWeight.w400,
                             ),
@@ -85,9 +88,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Icons.email_sharp,
                               ),
                               counterText: "",
-                              labelText: "Email",
-                              labelStyle:
-                                  TextStyle(color: blackColor.withOpacity(0.4)),
+                              hintText: "Email",
+                              labelStyle: GoogleFonts.poppins(
+                                  fontSize: 12,
+                                  color: blackColor.withOpacity(0.4),
+                                  fontWeight: FontWeight.w400),
                               filled: true,
                               floatingLabelBehavior:
                                   FloatingLabelBehavior.never,
@@ -106,12 +111,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            "Kata Sandi",
-                            style: TextStyle(
-                                color: Color(0xff363d4a),
-                                fontWeight: FontWeight.w700),
-                          ),
+                          Text("Kata Sandi",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 12,
+                                  color: blackColor,
+                                  fontWeight: FontWeight.w700)),
                           const SizedBox(
                             height: 5,
                           ),
@@ -121,8 +125,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             maxLength: 20,
                             autocorrect: false,
                             textInputAction: TextInputAction.next,
-                            style: const TextStyle(
-                              color: blackColor,
+                            style: GoogleFonts.poppins(
+                              fontSize: 12,
+                              color: blackColor.withOpacity(0.4),
                               fontWeight: FontWeight.w400,
                             ),
                             cursorColor: const Color(0xff00c2cb),
@@ -142,9 +147,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                               counterText: "",
-                              labelText: "Kata Sandi",
-                              labelStyle:
-                                  TextStyle(color: blackColor.withOpacity(0.4)),
+                              hintText: "Kata Sandi",
+                              labelStyle: GoogleFonts.poppins(
+                                  fontSize: 12,
+                                  color: blackColor.withOpacity(0.4),
+                                  fontWeight: FontWeight.w400),
                               filled: true,
                               floatingLabelBehavior:
                                   FloatingLabelBehavior.never,
@@ -158,7 +165,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ],
                       ),
-                      
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -169,13 +175,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                 onChanged: (value) {},
                                 activeColor: primaryColor,
                               ),
-                              const Text(
-                                "Ingat saya",
-                                style: TextStyle(
-                                    color: blackColor,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14),
-                              ),
+                              Text("Ingat saya",
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 12,
+                                      color: blackColor,
+                                      fontWeight: FontWeight.w400)),
                             ],
                           ),
                           GestureDetector(
@@ -185,12 +189,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               //     ForgotPasswordScreen.routeName,
                               //     (route) => false);
                             },
-                            child: const Text(
+                            child: Text(
                               "Lupa Kata Sandi?",
-                              style: TextStyle(
+                              style: GoogleFonts.poppins(
+                                  fontSize: 12,
                                   color: blackColor,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14),
+                                  fontWeight: FontWeight.w400),
                             ),
                           ),
                         ],
@@ -222,11 +226,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           onPressed: () {
                             if (_formkey.currentState!.validate()) {}
                           },
-                          child: const Text(
-                            "Masuk",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 14),
-                          ),
+                          child: Text("Masuk",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 14,
+                                  color: whiteColor,
+                                  fontWeight: FontWeight.w600)),
                         ),
                       ),
                       const SizedBox(
@@ -235,23 +239,21 @@ class _LoginScreenState extends State<LoginScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Belum Punya Akun?",
-                              style: TextStyle(
+                          Text("Belum Punya Akun?",
+                              style: GoogleFonts.poppins(
                                   color: blackColor,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w400,
                                   fontSize: 14)),
                           GestureDetector(
                             onTap: () {
                               // Navigator.pushNamedAndRemoveUntil(
                               //     context, SignUpScreen.routeName, (route) => false);
                             },
-                            child: const Text(
-                              "  Daftar",
-                              style: TextStyle(
-                                  color: blackColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14),
-                            ),
+                            child: Text("  Daftar",
+                                style: GoogleFonts.poppins(
+                                    color: primaryColor,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14)),
                           ),
                         ],
                       ),

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/color/color.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
@@ -51,8 +52,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
         backgroundColor: whiteColor,
         centerTitle: true,
         elevation: 0,
-        title:
-            const Text('Verifikasi OTP', style: TextStyle(color: blackColor)),
+        title: Text('Verifikasi OTP',
+            style: GoogleFonts.poppins(
+                fontSize: 18, color: blackColor, fontWeight: FontWeight.w600)),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -68,9 +70,12 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                         width: 200,
                         height: 400,
                       )),
-                  const Text(
+                  Text(
                     'Kami telah mengirimkan kode OTP ke email Anda',
-                    style: TextStyle(fontSize: 16, color: blackColor),
+                    style: GoogleFonts.poppins(
+                        fontSize: 14,
+                        color: blackColor,
+                        fontWeight: FontWeight.w400),
                     textAlign: TextAlign.start,
                   ),
                   const SizedBox(
@@ -88,15 +93,15 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                             child: TextFormField(
                               controller: _emailController,
                               keyboardType: TextInputType.number,
-                              decoration: const InputDecoration(
-                                hintStyle: TextStyle(
-                                    color: Color(0xff363d4a),
+                              decoration: InputDecoration(
+                                hintStyle: GoogleFonts.poppins(
+                                    color: blackColor,
                                     fontWeight: FontWeight.w700),
-                                enabledBorder: OutlineInputBorder(
+                                enabledBorder: const OutlineInputBorder(
                                   borderSide:
                                       BorderSide(color: Colors.grey, width: 0),
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.grey),
                                 ),
                               ),
@@ -113,15 +118,15 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                             child: TextFormField(
                               controller: _emailController,
                               keyboardType: TextInputType.number,
-                              decoration: const InputDecoration(
-                                hintStyle: TextStyle(
-                                    color: Color(0xff363d4a),
+                              decoration: InputDecoration(
+                                hintStyle: GoogleFonts.poppins(
+                                    color: blackColor,
                                     fontWeight: FontWeight.w700),
-                                enabledBorder: OutlineInputBorder(
+                                enabledBorder: const OutlineInputBorder(
                                   borderSide:
                                       BorderSide(color: Colors.grey, width: 0),
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.grey),
                                 ),
                               ),
@@ -138,15 +143,15 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                             child: TextFormField(
                               controller: _emailController,
                               keyboardType: TextInputType.number,
-                              decoration: const InputDecoration(
-                                hintStyle: TextStyle(
-                                    color: Color(0xff363d4a),
+                              decoration: InputDecoration(
+                                hintStyle: GoogleFonts.poppins(
+                                    color: blackColor,
                                     fontWeight: FontWeight.w700),
-                                enabledBorder: OutlineInputBorder(
+                                enabledBorder: const OutlineInputBorder(
                                   borderSide:
                                       BorderSide(color: Colors.grey, width: 0),
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.grey),
                                 ),
                               ),
@@ -163,15 +168,15 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                             child: TextFormField(
                               controller: _emailController,
                               keyboardType: TextInputType.number,
-                              decoration: const InputDecoration(
-                                hintStyle: TextStyle(
-                                    color: Color(0xff363d4a),
+                              decoration: InputDecoration(
+                                hintStyle: GoogleFonts.poppins(
+                                    color: blackColor,
                                     fontWeight: FontWeight.w700),
-                                enabledBorder: OutlineInputBorder(
+                                enabledBorder: const OutlineInputBorder(
                                   borderSide:
                                       BorderSide(color: Colors.grey, width: 0),
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.grey),
                                 ),
                               ),
@@ -192,7 +197,10 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   ),
                   Text(
                     'Kode OTP akan kadaluarsa dalam $_start detik',
-                    style: TextStyle(fontSize: 16, color: blackColor),
+                    style: GoogleFonts.poppins(
+                        fontSize: 14,
+                        color: blackColor,
+                        fontWeight: FontWeight.w400),
                     textAlign: TextAlign.start,
                   ),
                   const SizedBox(
@@ -222,11 +230,11 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       onPressed: () {
                         if (_formkey.currentState!.validate()) {}
                       },
-                      child: const Text(
-                        "Kirim OTP",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 14),
-                      ),
+                      child: Text("Lanjutkan",
+                          style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              color: whiteColor,
+                              fontWeight: FontWeight.w600)),
                     ),
                   ),
                 ],

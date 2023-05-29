@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/views/screen/auth/login/login_screen.dart';
 
@@ -25,8 +26,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         backgroundColor: whiteColor,
         centerTitle: true,
         elevation: 0,
-        title:
-            const Text('Lupa Kata Sandi', style: TextStyle(color: blackColor)),
+        title: Text('Lupa Kata Sandi',
+            style: GoogleFonts.poppins(
+                fontSize: 18, color: blackColor, fontWeight: FontWeight.w600)),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -44,15 +46,14 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           width: 200,
                           height: 400,
                         )),
-                    const Align(
+                    Align(
                       alignment: Alignment.topLeft,
                       child: Text(
                         'Buat Kata Sandi Baru',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: blackColor,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: GoogleFonts.poppins(
+                            fontSize: 16,
+                            color: blackColor,
+                            fontWeight: FontWeight.w600),
                       ),
                     ),
                     const SizedBox(
@@ -62,10 +63,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           "Kata Sandi Baru",
-                          style: TextStyle(
-                              color: Color(0xff363d4a),
+                          style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              color: blackColor,
                               fontWeight: FontWeight.w700),
                         ),
                         const SizedBox(
@@ -77,10 +79,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           maxLength: 20,
                           autocorrect: false,
                           textInputAction: TextInputAction.next,
-                          style: const TextStyle(
-                            color: blackColor,
-                            fontWeight: FontWeight.w400,
-                          ),
+                          style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              color: blackColor,
+                              fontWeight: FontWeight.w400),
                           cursorColor: const Color(0xff00c2cb),
                           keyboardType: TextInputType.visiblePassword,
                           decoration: InputDecoration(
@@ -98,9 +100,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                               ),
                             ),
                             counterText: "",
-                            labelText: "Kata Sandi",
-                            labelStyle:
-                                TextStyle(color: blackColor.withOpacity(0.4)),
+                            hintText: "Kata Sandi Baru",
+                            labelStyle: GoogleFonts.poppins(
+                                fontSize: 14,
+                                color: blackColor.withOpacity(0.4),
+                                fontWeight: FontWeight.w400),
                             filled: true,
                             floatingLabelBehavior: FloatingLabelBehavior.never,
                             fillColor: whiteColor,
@@ -120,12 +124,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "Konfirmasi Kata Sandi",
-                          style: TextStyle(
-                              color: Color(0xff363d4a),
-                              fontWeight: FontWeight.w700),
-                        ),
+                        Text("Ulangi Kata Sandi",
+                            style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              color: blackColor,
+                              fontWeight: FontWeight.w700,
+                            )),
                         const SizedBox(
                           height: 5,
                         ),
@@ -135,10 +139,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           maxLength: 20,
                           autocorrect: false,
                           textInputAction: TextInputAction.next,
-                          style: const TextStyle(
-                            color: blackColor,
-                            fontWeight: FontWeight.w400,
-                          ),
+                          style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              color: blackColor,
+                              fontWeight: FontWeight.w400),
                           cursorColor: const Color(0xff00c2cb),
                           keyboardType: TextInputType.visiblePassword,
                           decoration: InputDecoration(
@@ -157,9 +161,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                               ),
                             ),
                             counterText: "",
-                            labelText: "Kata Sandi",
-                            labelStyle:
-                                TextStyle(color: blackColor.withOpacity(0.4)),
+                            labelText: "Ulangi Kata Sandi",
+                            labelStyle: GoogleFonts.poppins(
+                                fontSize: 14,
+                                color: blackColor.withOpacity(0.4),
+                                fontWeight: FontWeight.w400),
                             filled: true,
                             floatingLabelBehavior: FloatingLabelBehavior.never,
                             fillColor: whiteColor,
@@ -214,20 +220,24 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                       height: 80,
                                       child: Container(
                                         alignment: Alignment.center,
-                                        child: Column(children: const [
-                                          Text(
-                                            'Sukses Ganti Kata Sandi',
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          SizedBox(
+                                        child: Column(children: [
+                                          Text('Sukses Ganti Kata Sandi',
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 17,
+                                                color: blackColor,
+                                                fontWeight: FontWeight.w600,
+                                              )),
+                                          const SizedBox(
                                             height: 20,
                                           ),
                                           Text(
                                             textAlign: TextAlign.center,
                                             'Kata Sandi akunmu telah diperbaharui, silahkan untuk masuk kembali',
-                                            style: TextStyle(fontSize: 16),
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 14,
+                                              color: blackColor,
+                                              fontWeight: FontWeight.w400,
+                                            ),
                                           ),
                                         ]),
                                       ),
@@ -261,9 +271,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                             Navigator.pushNamed(
                                                 context, LoginScreen.routeName);
                                           },
-                                          child: const Text(
+                                          child: Text(
                                             "Masuk",
-                                            style: TextStyle(
+                                            style: GoogleFonts.poppins(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 14),
                                           ),
@@ -274,10 +284,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                 });
                           }
                         },
-                        child: const Text(
+                        child: Text(
                           "Lanjutkan",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 14),
+                          style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14,
+                              color: whiteColor),
                         ),
                       ),
                     ),

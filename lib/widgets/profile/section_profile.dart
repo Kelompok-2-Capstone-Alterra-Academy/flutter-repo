@@ -47,9 +47,12 @@ class SectionProfile extends StatelessWidget {
                   fontSize: 15,
                 )),
             const Spacer(),
-            Icon(
-              iconRight,
-              color: blackColor,
+            GestureDetector(
+              onTap: press,
+              child: Icon(
+                iconRight,
+                color: blackColor,
+              ),
             ),
           ],
         ),
