@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:staredu/models/post_feed_model.dart';
 import 'package:staredu/utils/color/color.dart';
+import 'package:staredu/utils/constant/list_post_feed.dart';
 import 'package:staredu/views/screen/home/home_view_model.dart';
 import 'package:staredu/widgets/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'package:staredu/widgets/button/button_text.dart';
 import 'package:staredu/widgets/card/card_mentor.dart';
+import 'package:staredu/widgets/news/news.dart';
+import 'package:staredu/widgets/post_feed/post_feed.dart';
 import 'package:staredu/widgets/row/row_text.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -217,10 +221,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         const RowText(
                             left: 'Seputar Pendidikan di Indonesia',
                             right: 'Lihat Semua'),
+                        News(screenWidth: MediaQuery.of(context).size.width),
                         const SizedBox(height: 20),
                         const RowText(
                             left: 'Yuk, sharing sama pengguna lain',
                             right: 'Lihat Semua'),
+                        PostFeed(postFeeds: postFeedsData),
                       ],
                     ),
                   ),
