@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:staredu/models/arguments/module_list_quiz_argument.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/constant/module_section_list.dart';
 import 'package:staredu/widgets/module_course/module_quiz_card.dart';
 
 class ModuleListQuizScreen extends StatefulWidget {
   static const String routeName = "/modulelistquiz";
-  const ModuleListQuizScreen({super.key});
+
+  final String? courseName;
+  const ModuleListQuizScreen({super.key, this.courseName});
 
   @override
   State<ModuleListQuizScreen> createState() => _ModuleListQuizScreenState();
@@ -17,8 +18,7 @@ class _ModuleListQuizScreenState extends State<ModuleListQuizScreen> {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-    final args =
-        ModalRoute.of(context)!.settings.arguments as ModuleListQuizArguments;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -52,7 +52,7 @@ class _ModuleListQuizScreenState extends State<ModuleListQuizScreen> {
               Padding(
                 padding: const EdgeInsets.only(left: 6),
                 child: Text(
-                  args.courseName.toString(),
+                  widget.courseName.toString(),
                   style: GoogleFonts.poppins(
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.w600,

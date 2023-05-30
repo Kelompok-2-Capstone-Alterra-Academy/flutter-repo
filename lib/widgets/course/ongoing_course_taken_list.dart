@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:staredu/models/arguments/module_screen_argument.dart';
 import 'package:staredu/views/screen/course/module/module_list_screen.dart';
 import 'package:staredu/widgets/course/filter_course_taken.dart';
 
@@ -45,13 +44,23 @@ class _OnGoingCourseTakenListScreenState
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, ModuleListScreen.routeName,
-                        arguments: ModuleArguments(
-                          courseTaken[index].title.toString(),
-                          int.parse(
-                              courseTaken[index].currentSection.toString()),
-                          int.parse(courseTaken[index].totalSection.toString()),
-                        ));
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        pageBuilder:
+                            (context, animations, secondaryAnimations) =>
+                                ModuleListScreen(
+                          courseName: courseTaken[index].title.toString(),
+                        ),
+                        transitionsBuilder:
+                            (context, animations, secondaryAnimations, childs) {
+                          final tween = Tween(begin: 0.0, end: 1.0);
+                          return FadeTransition(
+                            opacity: animations.drive(tween),
+                            child: childs,
+                          );
+                        },
+                      ),
+                    );
                   },
                   child: Card(
                     elevation: 2,

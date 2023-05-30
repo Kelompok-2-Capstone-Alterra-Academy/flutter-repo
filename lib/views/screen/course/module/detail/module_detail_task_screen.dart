@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:staredu/models/arguments/module_detail_task_argument.dart';
 import 'package:staredu/views/screen/course/module/module_send_task_screen.dart';
 
 import '../../../../../utils/color/color.dart';
 
 class ModuleDetailTask extends StatefulWidget {
   static const String routeName = "/moduledetailtask";
-  const ModuleDetailTask({super.key});
+
+  final String? courseName;
+  final String? sectionName;
+  final int? numbering;
+
+  const ModuleDetailTask({
+    super.key,
+    this.courseName,
+    this.sectionName,
+    this.numbering,
+  });
 
   @override
   State<ModuleDetailTask> createState() => _ModuleDetailTaskState();
@@ -18,8 +27,6 @@ class _ModuleDetailTaskState extends State<ModuleDetailTask> {
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
 
-    final args =
-        ModalRoute.of(context)!.settings.arguments as ModuleDetailTaskArguments;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -27,7 +34,7 @@ class _ModuleDetailTaskState extends State<ModuleDetailTask> {
         foregroundColor: blackColor,
         elevation: 0,
         title: Text(
-          "Latihan ${args.numbering} - ${args.sectionName}",
+          "Latihan ${widget.numbering} - ${widget.sectionName}",
           style: GoogleFonts.poppins(
             fontStyle: FontStyle.normal,
             fontWeight: FontWeight.w600,
@@ -51,7 +58,7 @@ class _ModuleDetailTaskState extends State<ModuleDetailTask> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                args.courseName.toString(),
+                widget.courseName.toString(),
                 style: GoogleFonts.poppins(
                   fontStyle: FontStyle.normal,
                   fontWeight: FontWeight.w600,

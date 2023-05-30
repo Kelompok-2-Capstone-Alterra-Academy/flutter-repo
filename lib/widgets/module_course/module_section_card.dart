@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:staredu/models/arguments/module_detail_task_argument.dart';
-import 'package:staredu/models/arguments/module_detail_video_argument.dart';
 import 'package:staredu/views/screen/course/module/detail/module_detail_video_screen.dart';
 import 'package:staredu/views/screen/course/module/detail/module_detail_ppt_screen.dart';
 import 'package:staredu/views/screen/course/module/detail/module_detail_task_screen.dart';
@@ -12,7 +10,7 @@ class ModuleSectionCard extends StatelessWidget {
   const ModuleSectionCard({
     super.key,
     this.id,
-    this.title,
+    this.sectionName,
     this.courseName,
     this.isVideoAvailable,
     this.isMaterialAvailable,
@@ -21,7 +19,7 @@ class ModuleSectionCard extends StatelessWidget {
   });
 
   final int? id;
-  final String? title;
+  final String? sectionName;
   final String? courseName;
   final bool? isVideoAvailable;
   final bool? isMaterialAvailable;
@@ -36,7 +34,7 @@ class ModuleSectionCard extends StatelessWidget {
       textBaseline: TextBaseline.alphabetic,
       children: [
         Text(
-          "Section $id - $title",
+          "Section $id - $sectionName",
           textAlign: TextAlign.left,
           style: GoogleFonts.poppins(
             color: const Color(0xff616161),
@@ -51,11 +49,21 @@ class ModuleSectionCard extends StatelessWidget {
         isVideoAvailable!
             ? GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, ModuleVideoScreen.routeName,
-                      arguments: ModuleDetailVideoArguments(
-                        courseName.toString(),
-                        title.toString(),
-                      ));
+                  Navigator.of(context).push(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animations, secondaryAnimations) =>
+                          ModuleVideoScreen(
+                              courseName: courseName, sectionName: sectionName),
+                      transitionsBuilder:
+                          (context, animations, secondaryAnimations, childs) {
+                        final tween = Tween(begin: 0.0, end: 1.0);
+                        return FadeTransition(
+                          opacity: animations.drive(tween),
+                          child: childs,
+                        );
+                      },
+                    ),
+                  );
                 },
                 child: Card(
                   elevation: 2,
@@ -366,12 +374,23 @@ class ModuleSectionCard extends StatelessWidget {
         isAssignmentAvailable!
             ? GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, ModuleDetailTask.routeName,
-                      arguments: ModuleDetailTaskArguments(
-                        courseName.toString(),
-                        title.toString(),
-                        id!,
-                      ));
+                  Navigator.of(context).push(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animations, secondaryAnimations) =>
+                          ModuleDetailTask(
+                        courseName: courseName,
+                        sectionName: sectionName,
+                      ),
+                      transitionsBuilder:
+                          (context, animations, secondaryAnimations, childs) {
+                        final tween = Tween(begin: 0.0, end: 1.0);
+                        return FadeTransition(
+                          opacity: animations.drive(tween),
+                          child: childs,
+                        );
+                      },
+                    ),
+                  );
                 },
                 child: Card(
                   elevation: 2,
