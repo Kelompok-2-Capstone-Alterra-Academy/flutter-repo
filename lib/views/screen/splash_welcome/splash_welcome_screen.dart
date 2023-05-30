@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:staredu/utils/animation/fade_animation.dart';
+import 'package:staredu/utils/animation/slide_animation.dart';
+import 'package:staredu/utils/preferences/preferences_utils.dart';
+import 'package:staredu/views/screen/auth/register/main/register_screen.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
 
 class SplashWelcomeScreen extends StatefulWidget {
@@ -10,26 +14,43 @@ class SplashWelcomeScreen extends StatefulWidget {
 }
 
 class _SplashWelcomeScreenState extends State<SplashWelcomeScreen> {
-  bool isLoading = true;
+  bool? isLogin;
   @override
   Widget build(BuildContext context) {
-    return isLoading
-        ? Scaffold(
-            backgroundColor: Colors.white,
-            body: Center(child: Image.asset('assets/images/logo_splash.jpg')),
-            bottomNavigationBar: SizedBox(
-                height: 150,
-                child: Image.asset('assets/images/bottom_splash.jpg')))
-        : const HomeScreen();
+    return Scaffold(
+        backgroundColor: Colors.white,
+        body: Center(child: Image.asset('assets/images/logo_splash.jpg')),
+        bottomNavigationBar: SizedBox(
+            height: 150,
+            child: Image.asset('assets/images/bottom_splash.jpg')));
   }
 
   @override
   void initState() {
     super.initState();
+    init();
+  }
+
+  void init() async {
+    PreferencesUtils preferencesUtils = PreferencesUtils();
+    await preferencesUtils.init();
     Future.delayed(const Duration(seconds: 5), () {
       setState(() {
-        isLoading = false;
+        isLogin = preferencesUtils.getPreferencesBool('isLogin');
       });
+      if (isLogin == null) {
+        Navigator.pushAndRemoveUntil(
+          context,
+          FadeAnimation(page: const RegisterScreen()),
+          (Route<dynamic> route) => false,
+        );
+      } else {
+        Navigator.pushAndRemoveUntil(
+          context,
+          SlideAnimation(page: const HomeScreen()),
+          (Route<dynamic> route) => false,
+        );
+      }
     });
   }
 }
