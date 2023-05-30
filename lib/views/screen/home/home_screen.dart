@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:staredu/models/post_feed_model.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/constant/list_post_feed.dart';
 import 'package:staredu/views/screen/home/home_view_model.dart';
@@ -21,6 +20,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool? isLogin;
+
   @override
   void initState() {
     super.initState();
