@@ -11,9 +11,22 @@ import '../../../widgets/sell_course/primary_button.dart';
 class SellCourseDetailScreen extends StatefulWidget {
   static const String routeName = "/sell_course_detail";
 
-  final int indexSellCourse;
+  final int id;
+  final String img;
+  final String title;
+  final String price;
+  final String rating;
+  final String student;
 
-  const SellCourseDetailScreen({super.key, required this.indexSellCourse});
+  const SellCourseDetailScreen({
+    super.key,
+    required this.title,
+    required this.price,
+    required this.rating,
+    required this.student,
+    required this.id,
+    required this.img,
+  });
 
   @override
   State<SellCourseDetailScreen> createState() => _SellCourseDetailScreenState();
@@ -25,10 +38,9 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
 
   Future<void> checkWishlistStatus() async {
     List<SellCourseModel> wishlist = await wishlistManager.getWishlist();
-    SellCourseModel currentItem = sellCourses[widget.indexSellCourse];
 
     setState(() {
-      isWishlistSelected = wishlist.any((item) => item.id == currentItem.id);
+      isWishlistSelected = wishlist.any((item) => item.id == widget.id);
     });
   }
 
@@ -39,12 +51,11 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
   }
 
   void toggleWishlistStatus() async {
-    SellCourseModel currentItem = sellCourses[widget.indexSellCourse];
-
     if (isWishlistSelected) {
-      await wishlistManager.removeWishlistItem(currentItem);
+      await wishlistManager.removeWishlistItem(widget.id);
     } else {
-      await wishlistManager.addWishlistItem(currentItem);
+      await wishlistManager.addWishlistItem(widget.id, widget.img, widget.price,
+          widget.rating, widget.student, widget.title);
     }
 
     setState(() {
@@ -94,7 +105,7 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    sellCourses[widget.indexSellCourse].title!,
+                    widget.title,
                     style: GoogleFonts.poppins(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
@@ -120,7 +131,7 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
                   ),
                   const SizedBox(width: 7),
                   Text(
-                    sellCourses[widget.indexSellCourse].rating!,
+                    widget.rating,
                     style: GoogleFonts.poppins(
                         fontSize: 11,
                         fontWeight: FontWeight.w600,
@@ -136,7 +147,7 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
                   ),
                   const SizedBox(width: 7),
                   Text(
-                    sellCourses[widget.indexSellCourse].student!,
+                    widget.student,
                     style: GoogleFonts.poppins(
                         fontSize: 11,
                         fontWeight: FontWeight.w600,
@@ -146,7 +157,7 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
               ),
               const SizedBox(height: 10),
               Text(
-                sellCourses[widget.indexSellCourse].price!,
+                widget.price,
                 style: GoogleFonts.poppins(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
@@ -201,7 +212,9 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
                 screenWidth: screenWidth,
                 title: "Ambil Kursus",
                 page: CoursePaymentScreen(
-                    indexSellCourse: widget.indexSellCourse),
+                  title: widget.title,
+                  price: widget.price,
+                ),
               ),
             ],
           ),

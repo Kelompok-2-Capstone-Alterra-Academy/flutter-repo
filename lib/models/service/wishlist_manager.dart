@@ -22,19 +22,27 @@ class WishlistManager {
     return [];
   }
 
-  Future<void> addWishlistItem(SellCourseModel course) async {
+  Future<void> addWishlistItem(int id, String img, String price, String rating,
+      String student, String title) async {
     List<SellCourseModel> wishlist = await getWishlist();
-    bool isCourseInWishlist = wishlist.any((item) => item.id == course.id);
+    bool isCourseInWishlist = wishlist.any((item) => item.id == id);
 
     if (!isCourseInWishlist) {
-      wishlist.add(course);
+      wishlist.add(SellCourseModel(
+        id: id,
+        img: img,
+        price: price,
+        rating: rating,
+        student: student,
+        title: title,
+      ));
       await saveWishlist(wishlist);
     }
   }
 
-  Future<void> removeWishlistItem(SellCourseModel course) async {
+  Future<void> removeWishlistItem(int id) async {
     List<SellCourseModel> wishlist = await getWishlist();
-    wishlist.removeWhere((item) => item.id == course.id);
+    wishlist.removeWhere((item) => item.id == id);
     await saveWishlist(wishlist);
   }
 

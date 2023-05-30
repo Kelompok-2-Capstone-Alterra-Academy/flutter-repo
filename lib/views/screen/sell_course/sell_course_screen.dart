@@ -109,140 +109,122 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
                       itemBuilder: (context, index) {
                         return Column(
                           children: [
-                            Card(
-                              elevation: 2,
-                              shape: const RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(8))),
-                              child: Container(
-                                height: 115,
-                                margin: const EdgeInsets.symmetric(
-                                    vertical: 16, horizontal: 20),
-                                decoration: const BoxDecoration(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(8),
+                            InkWell(
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(8),
+                              ),
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  PageRouteBuilder(
+                                    pageBuilder: (context, animations,
+                                            secondaryAnimations) =>
+                                        SellCourseDetailScreen(
+                                            id: findCourse[index].id!,
+                                            img: findCourse[index].img!,
+                                            title: findCourse[index].title!,
+                                            rating: findCourse[index].rating!,
+                                            student: findCourse[index].student!,
+                                            price: findCourse[index].price!),
+                                    transitionsBuilder: (context, animations,
+                                        secondaryAnimations, childs) {
+                                      final tween = Tween(begin: 0.0, end: 1.0);
+                                      return FadeTransition(
+                                        opacity: animations.drive(tween),
+                                        child: childs,
+                                      );
+                                    },
                                   ),
-                                  color: whiteColor,
-                                ),
-                                child: Row(
-                                  children: [
-                                    SizedBox(
-                                      child: Image.asset(
-                                        findCourse[index].img!,
-                                        fit: BoxFit.contain,
+                                );
+                              },
+                              child: Card(
+                                elevation: 2,
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8))),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 16, horizontal: 20),
+                                  child: Container(
+                                    height: 80,
+                                    decoration: const BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(8),
                                       ),
+                                      color: whiteColor,
                                     ),
-                                    const SizedBox(width: 31),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                    child: Row(
                                       children: [
-                                        Text(
-                                          findCourse[index].title!,
-                                          style: GoogleFonts.poppins(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w600,
+                                        SizedBox(
+                                          child: Image.asset(
+                                            findCourse[index].img!,
+                                            fit: BoxFit.contain,
                                           ),
                                         ),
-                                        const SizedBox(height: 3),
-                                        Text(
-                                          findCourse[index].price!,
-                                          style: GoogleFonts.poppins(
-                                            fontSize: 11,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        Row(
+                                        const SizedBox(width: 31),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            const Icon(
-                                              Icons.star,
-                                              color: warningColor,
-                                            ),
-                                            const SizedBox(width: 7),
                                             Text(
-                                              findCourse[index].rating!,
+                                              findCourse[index].title!,
                                               style: GoogleFonts.poppins(
-                                                  fontSize: 11,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: searchBarTextColor),
-                                            ),
-                                            const SizedBox(width: 7),
-                                            Text(
-                                              "|",
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 25,
-                                                fontWeight: FontWeight.w300,
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w600,
                                               ),
                                             ),
-                                            const SizedBox(width: 7),
+                                            const SizedBox(height: 3),
                                             Text(
-                                              findCourse[index].student!,
+                                              findCourse[index].price!,
                                               style: GoogleFonts.poppins(
-                                                  fontSize: 11,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: searchBarTextColor),
+                                                fontSize: 11,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                            Row(
+                                              children: [
+                                                const Icon(
+                                                  Icons.star,
+                                                  color: warningColor,
+                                                ),
+                                                const SizedBox(width: 7),
+                                                Text(
+                                                  findCourse[index].rating!,
+                                                  style: GoogleFonts.poppins(
+                                                      fontSize: 11,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color:
+                                                          searchBarTextColor),
+                                                ),
+                                                const SizedBox(width: 7),
+                                                Text(
+                                                  "|",
+                                                  style: GoogleFonts.poppins(
+                                                    fontSize: 25,
+                                                    fontWeight: FontWeight.w300,
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 7),
+                                                Text(
+                                                  findCourse[index].student!,
+                                                  style: GoogleFonts.poppins(
+                                                      fontSize: 11,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color:
+                                                          searchBarTextColor),
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),
-                                        const SizedBox(height: 16),
-                                        Container(
-                                          height: 18,
-                                          width: 154,
-                                          decoration: const BoxDecoration(
-                                            color: subjectColor,
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(8),
-                                            ),
-                                          ),
-                                          child: Material(
-                                            color: Colors.transparent,
-                                            child: InkWell(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              onTap: () {
-                                                Navigator.of(context).push(
-                                                  PageRouteBuilder(
-                                                    pageBuilder: (context,
-                                                            animations,
-                                                            secondaryAnimations) =>
-                                                        SellCourseDetailScreen(
-                                                            indexSellCourse:
-                                                                index),
-                                                    transitionsBuilder:
-                                                        (context,
-                                                            animations,
-                                                            secondaryAnimations,
-                                                            childs) {
-                                                      final tween = Tween(
-                                                          begin: 0.0, end: 1.0);
-                                                      return FadeTransition(
-                                                        opacity: animations
-                                                            .drive(tween),
-                                                        child: childs,
-                                                      );
-                                                    },
-                                                  ),
-                                                );
-                                              },
-                                              child: Center(
-                                                child: Text(
-                                                  "Lihat Detail Kursus",
-                                                  style: GoogleFonts.poppins(
-                                                    fontSize: 9,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
                                       ],
                                     ),
-                                  ],
+                                  ),
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 2),
+                            const SizedBox(height: 8),
                           ],
                         );
                       },
