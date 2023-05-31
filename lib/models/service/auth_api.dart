@@ -22,4 +22,17 @@ class AuthAPI {
         .then((value) => value.data)
         .catchError((e) => handleErrorApi(e));
   }
+
+  static Future<dynamic> verifyOtp(String email, String otp) async {
+    final response = Dio().post(
+      '$BASE_URL_API/verify-otp',
+      data: {
+        'email': email,
+        'token': otp,
+      },
+    );
+    return response
+        .then((value) => value.data)
+        .catchError((e) => handleErrorApi(e));
+  }
 }

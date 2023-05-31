@@ -5,7 +5,7 @@ import 'package:staredu/utils/animation/slide_animation.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/state/my_state.dart';
 import 'package:staredu/views/screen/auth/register/account_verification/account_verification.dart';
-import 'package:staredu/views/screen/auth/register/main/register_screen_view_model.dart';
+import 'package:staredu/views/screen/auth/register/register_screen_view_model.dart';
 import 'package:staredu/widgets/loading/circular_progress.dart';
 import 'package:staredu/widgets/loading/opacity_progress.dart';
 
@@ -78,6 +78,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
       return 'Kata Sandi harus mengandung 1 karakter spesial';
     }
     return null;
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _phoneController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -388,7 +397,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 if (_formkey.currentState!.validate()) {
                                   Provider.of<RegisterViewModel>(context,
                                           listen: false)
-                                      .setState(MyState.loading);
+                                      .setStateRegister(MyState.loading);
                                   String message =
                                       await Provider.of<RegisterViewModel>(
                                               context,
@@ -398,14 +407,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                               _emailController.text,
                                               _phoneController.text,
                                               _passwordController.text);
-                                  print('bool');
-                                  print(message);
                                   if (message.contains('success')) {
                                     // ignore: use_build_context_synchronously
                                     Navigator.push(
                                         context,
                                         SlideAnimation(
-                                            page: AccountVerification()));
+                                            page: const AccountVerification(),
+                                            arguments: _emailController.text));
                                   } else {
                                     // ignore: use_build_context_synchronously
                                     ScaffoldMessenger.of(context)
@@ -457,14 +465,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
         ),
         Consumer<RegisterViewModel>(
-          builder: (context, value, child) => value.state == MyState.loading
-              ? const OpacityProgressComponent()
-              : const SizedBox.shrink(),
+          builder: (context, value, child) =>
+              value.stateRegister == MyState.loading
+                  ? const OpacityProgressComponent()
+                  : const SizedBox.shrink(),
         ),
         Consumer<RegisterViewModel>(
-          builder: (context, value, child) => value.state == MyState.loading
-              ? const CircularProgressComponent()
-              : const SizedBox.shrink(),
+          builder: (context, value, child) =>
+              value.stateRegister == MyState.loading
+                  ? const CircularProgressComponent()
+                  : const SizedBox.shrink(),
         )
       ]),
     );
