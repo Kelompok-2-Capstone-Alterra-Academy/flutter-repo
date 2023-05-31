@@ -102,6 +102,8 @@ flutter:
     - assets/images/quiz_done.png
     - assets/images/send_task_done.png
     - assets/images/star_rating.png
+    - assets/images/task_icon.png
+    - assets/images/file_dot.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

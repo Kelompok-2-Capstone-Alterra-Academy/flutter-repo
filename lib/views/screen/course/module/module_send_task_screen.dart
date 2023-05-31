@@ -60,7 +60,7 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
                     height: 8,
                   ),
                   Text(
-                    "Trigonometri merupakan sebuah cabang matematika yang berhadapan dengan sudut segitigas, contohnya seperti sinus, cosinus dan tangen",
+                    "Kerjakan Tugas Matematika Dasar pada dokumen dibawah ini. Jawaban di tulis tangan kemudian diFoto/discan dan kemudian diupload dalam bentuk pdf Nama file (no induk_nama_jenis latihan)",
                     style: GoogleFonts.poppins(
                       fontStyle: FontStyle.normal,
                       fontWeight: FontWeight.w400,
