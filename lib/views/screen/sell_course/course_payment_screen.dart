@@ -9,9 +9,11 @@ import '../../../widgets/sell_course/detail_payment.dart';
 class CoursePaymentScreen extends StatefulWidget {
   static const String routeName = "/course_payment";
 
-  final int indexSellCourse;
+  final String title;
+  final String price;
 
-  const CoursePaymentScreen({super.key, required this.indexSellCourse});
+  const CoursePaymentScreen(
+      {super.key, required this.title, required this.price});
 
   @override
   State<CoursePaymentScreen> createState() => _CoursePaymentScreenState();
@@ -67,7 +69,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                       DetailKursus(
                         icon: Icons.menu_book,
                         title: "Nama Kursus",
-                        subtitle: sellCourses[widget.indexSellCourse].title!,
+                        subtitle: widget.title,
                       ),
                       const SizedBox(height: 15),
                       const DetailKursus(
@@ -138,7 +140,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                       DetailKursus(
                         icon: Icons.payments_outlined,
                         title: "Harga",
-                        subtitle: sellCourses[widget.indexSellCourse].price!,
+                        subtitle: widget.price,
                       ),
                       const SizedBox(height: 15),
                       const DetailKursus(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/models/sell_course_model.dart';
+import 'package:staredu/utils/constant/sell_course_list.dart';
 import '../../../models/service/wishlist_manager.dart';
 import '../../../utils/color/color.dart';
 import '../sell_course/sell_course_detail_screen.dart';
@@ -145,7 +146,14 @@ class _WishlistScreenState extends State<WishlistScreen> {
                                     pageBuilder: (context, animations,
                                             secondaryAnimations) =>
                                         SellCourseDetailScreen(
-                                            indexSellCourse: index),
+                                            id: wishlistItems[index].id!,
+                                            img: wishlistItems[index].img!,
+                                            title: wishlistItems[index].title!,
+                                            rating:
+                                                wishlistItems[index].rating!,
+                                            student:
+                                                wishlistItems[index].student!,
+                                            price: wishlistItems[index].price!),
                                     transitionsBuilder: (context, animations,
                                         secondaryAnimations, childs) {
                                       final tween = Tween(begin: 0.0, end: 1.0);
