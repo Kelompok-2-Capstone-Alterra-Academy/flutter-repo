@@ -5,6 +5,7 @@ class SellCourseModel {
   final String? rating;
   final String? student;
   final String? img;
+  final String? grade;
 
   SellCourseModel({
     this.id,
@@ -13,6 +14,7 @@ class SellCourseModel {
     this.rating,
     this.student,
     this.img,
+    this.grade,
   });
 
   Map<String, dynamic> toJson() {
@@ -23,6 +25,7 @@ class SellCourseModel {
       'rating': rating,
       'student': student,
       'img': img,
+      'grade': grade,
     };
   }
 
@@ -34,6 +37,7 @@ class SellCourseModel {
       rating: json['rating'],
       student: json['student'],
       img: json['img'],
+      grade: json['grade'],
     );
   }
 }
