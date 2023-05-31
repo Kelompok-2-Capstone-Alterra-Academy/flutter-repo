@@ -75,11 +75,3 @@ class _CourseTakenListScreenState extends State<CourseTakenListScreen> {
     );
   }
 }
-
-class ModuleCourseArguments {
-  final String title;
-  final int currentSection;
-  final int totalSection;
-
-  ModuleCourseArguments(this.title, this.currentSection, this.totalSection);
-}
