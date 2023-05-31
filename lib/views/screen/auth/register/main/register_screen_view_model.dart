@@ -20,8 +20,6 @@ class RegisterViewModel extends ChangeNotifier {
       phoneNumber,
       password,
     );
-    print('response');
-    print(response);
     if (response == null) {
       setState(MyState.failed);
       return 'Register Failed';
