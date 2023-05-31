@@ -33,32 +33,29 @@ class _NoteTransactionScreenState extends State<NoteTransactionScreen> {
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: whiteColor,
+        elevation: 0,
+        centerTitle: true,
+        iconTheme: const IconThemeData(color: blackColor),
+        title: Text(
+          "Nota Kursus",
+          style: GoogleFonts.poppins(
+            fontSize: 17,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 40),
-              Row(
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.arrow_back),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  const SizedBox(width: 55),
-                  Text(
-                    "Nota Kursus",
-                    style: GoogleFonts.poppins(
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
+              const SizedBox(
+                height: 20,
               ),
-              const SizedBox(height: 25),
               Image.asset(
                 'assets/images/barcode.jpg',
                 fit: BoxFit.contain,

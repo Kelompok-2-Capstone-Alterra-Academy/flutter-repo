@@ -13,6 +13,8 @@ import 'package:staredu/views/screen/course/module/module_list_quiz_screen.dart'
 import 'package:staredu/views/screen/auth/register/account_verification/account_verification.dart';
 import 'package:staredu/views/screen/auth/register/main/register_screen.dart';
 import 'package:staredu/views/screen/edit_profile/edit_profile.dart';
+import 'package:staredu/views/screen/history/history_transaction_screen.dart';
+import 'package:staredu/views/screen/history/note_transaction_screen.dart.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
 import 'package:staredu/views/screen/home/home_view_model.dart';
 import 'package:staredu/views/screen/notification/notification_screen.dart';
@@ -59,11 +61,12 @@ class StarEdu extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'StarEdu',
+      home: const HistoryTransactionScreen(),
       // add primary color
       theme: ThemeData(
         primaryColor: Colors.white,
       ),
-      initialRoute: SplashWelcomeScreen.routeName,
+      // initialRoute: SplashWelcomeScreen.routeName,
       routes: {
         HomeScreen.routeName: (context) => const HomeScreen(),
         SplashWelcomeScreen.routeName: (context) => const SplashWelcomeScreen(),
