@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:staredu/utils/animation/fade_animation.dart';
 import 'package:staredu/utils/animation/slide_animation.dart';
 import 'package:staredu/utils/preferences/preferences_utils.dart';
+import 'package:staredu/views/screen/auth/login/login_screen.dart';
 import 'package:staredu/views/screen/auth/register/main/register_screen.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
 
@@ -41,7 +42,7 @@ class _SplashWelcomeScreenState extends State<SplashWelcomeScreen> {
       if (isLogin == null) {
         Navigator.pushAndRemoveUntil(
           context,
-          FadeAnimation(page: const RegisterScreen()),
+          FadeAnimation(page: const LoginScreen()),
           (Route<dynamic> route) => false,
         );
       } else {

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:staredu/utils/animation/slide_animation.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/state/my_state.dart';
+import 'package:staredu/views/screen/auth/login/login_screen.dart';
 import 'package:staredu/views/screen/auth/register/account_verification/account_verification.dart';
 import 'package:staredu/views/screen/auth/register/register_screen_view_model.dart';
 import 'package:staredu/widgets/loading/circular_progress.dart';
@@ -445,7 +446,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                               ),
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      SlideAnimation(
+                                          page: const LoginScreen()));
+                                },
                                 child: Text(
                                   "  Masuk",
                                   style: GoogleFonts.poppins(

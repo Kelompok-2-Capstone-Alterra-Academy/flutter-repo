@@ -35,4 +35,17 @@ class AuthAPI {
         .then((value) => value.data)
         .catchError((e) => handleErrorApi(e));
   }
+
+  static Future<dynamic> login(String email, String password) async {
+    final response = Dio().post(
+      '$BASE_URL_API/login',
+      data: {
+        'email': email,
+        'password': password,
+      },
+    );
+    return response
+        .then((value) => value.data)
+        .catchError((e) => handleErrorApi(e));
+  }
 }
