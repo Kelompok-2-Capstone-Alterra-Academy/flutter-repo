@@ -258,7 +258,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                                 Navigator.push(
                                     context,
                                     FadeAnimation(
-                                        page: const ResetPasswordScreen()));
+                                        page: const ResetPasswordScreen(),
+                                        arguments: message.split(' ')[1]));
                               } else {
                                 // ignore: use_build_context_synchronously
                                 ScaffoldMessenger.of(context)

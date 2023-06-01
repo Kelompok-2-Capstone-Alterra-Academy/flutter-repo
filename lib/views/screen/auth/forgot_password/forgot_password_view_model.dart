@@ -6,9 +6,11 @@ class ForgotPasswordViewModel extends ChangeNotifier {
   dynamic response;
   MyState _stateForgotPassword = MyState.initial;
   MyState _stateOtp = MyState.initial;
+  MyState _stateResetPassword = MyState.initial;
 
   MyState get stateForgotPassword => _stateForgotPassword;
   MyState get stateOtp => _stateOtp;
+  MyState get stateResetPassword => _stateResetPassword;
 
   Future<String> forgotPassword(String email) async {
     response = await AuthAPI.forgotPassword(email);
@@ -35,12 +37,29 @@ class ForgotPasswordViewModel extends ChangeNotifier {
       return 'Verify OTP Failed';
     }
 
-    if (response['status_code'] == 200) {
+    if (response['status_code'] == 201) {
       setStateOtp(MyState.success);
-      return 'success';
+      return 'success ${response['token']}';
     } else {
       setStateOtp(MyState.failed);
-      return response['message'];
+      return response['message'] ?? 'Verify OTP Failed';
+    }
+  }
+
+  Future<String> resetPassword(String token, String password) async {
+    response = await AuthAPI.resetPassword(token, password);
+
+    if (response == null) {
+      setStateResetPassword(MyState.failed);
+      return 'Reset Password Failed';
+    }
+
+    if (response['status_code'] == 201) {
+      setStateResetPassword(MyState.success);
+      return 'success';
+    } else {
+      setStateResetPassword(MyState.failed);
+      return response['message'] ?? 'Reset Password Failed';
     }
   }
 
@@ -51,6 +70,11 @@ class ForgotPasswordViewModel extends ChangeNotifier {
 
   void setStateOtp(MyState state) {
     _stateOtp = state;
+    notifyListeners();
+  }
+
+  void setStateResetPassword(MyState state) {
+    _stateResetPassword = state;
     notifyListeners();
   }
 }
