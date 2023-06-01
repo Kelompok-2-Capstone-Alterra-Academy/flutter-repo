@@ -6,6 +6,7 @@ import 'package:staredu/utils/animation/slide_animation.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/preferences/preferences_utils.dart';
 import 'package:staredu/utils/state/my_state.dart';
+import 'package:staredu/views/screen/auth/forgot_password/main/forgot_password_screen.dart';
 import 'package:staredu/views/screen/auth/login/login_view_model.dart';
 import 'package:staredu/views/screen/auth/register/main/register_screen.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
@@ -204,25 +205,20 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ],
                         ),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Row(
-                              children: [
-                                Checkbox(
-                                  value: false,
-                                  onChanged: (value) {},
-                                  activeColor: primaryColor,
-                                ),
-                                Text("Ingat saya",
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 12,
-                                        color: blackColor,
-                                        fontWeight: FontWeight.w400)),
-                              ],
-                            ),
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                // ignore: use_build_context_synchronously
+                                Navigator.push(
+                                    context,
+                                    SlideAnimation(
+                                        page: const ForgotPasswordScreen()));
+                              },
                               child: Text(
                                 "Lupa Kata Sandi?",
                                 style: GoogleFonts.poppins(

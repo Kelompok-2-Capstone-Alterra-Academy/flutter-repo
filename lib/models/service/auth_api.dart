@@ -48,4 +48,16 @@ class AuthAPI {
         .then((value) => value.data)
         .catchError((e) => handleErrorApi(e));
   }
+
+  static Future<dynamic> forgotPassword(String email) async {
+    final response = Dio().post(
+      '$BASE_URL_API/forgot-password',
+      data: {
+        'email': email,
+      },
+    );
+    return response
+        .then((value) => value.data)
+        .catchError((e) => handleErrorApi(e));
+  }
 }
