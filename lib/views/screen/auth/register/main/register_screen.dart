@@ -24,7 +24,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   bool _obscureText = true;
+  bool _obscureTextConfirm = true;
 
   String? validateName(String value) {
     if (value.isEmpty) {
@@ -87,6 +90,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _phoneController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -154,18 +158,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              SizedBox(
-                                height: 5,
-                                width: MediaQuery.of(context).size.width * 0.45,
-                                child: Container(
-                                  color: primaryColor,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 5,
-                                width: MediaQuery.of(context).size.width * 0.45,
-                                child: Container(
-                                  color: whiteColor,
+                              Expanded(
+                                child: SizedBox(
+                                  height: 5,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Container(
+                                    color: primaryColor,
+                                  ),
                                 ),
                               ),
                             ],
@@ -187,6 +186,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                               TextFormField(
                                 controller: _nameController,
+                                validator: (value) => validateName(value!),
                                 keyboardType: TextInputType.name,
                                 maxLength: 28,
                                 autocorrect: false,
@@ -233,6 +233,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                               TextFormField(
                                 controller: _emailController,
+                                validator: (value) => validateEmail(value!),
                                 keyboardType: TextInputType.emailAddress,
                                 maxLength: 28,
                                 autocorrect: false,
@@ -279,6 +280,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                               TextFormField(
                                 controller: _phoneController,
+                                validator: (value) => validatePhone(value!),
                                 keyboardType: TextInputType.phone,
                                 maxLength: 28,
                                 autocorrect: false,
@@ -326,6 +328,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               TextFormField(
                                 obscureText: _obscureText,
                                 controller: _passwordController,
+                                validator: (value) => validatePassword(value!),
                                 maxLength: 20,
                                 autocorrect: false,
                                 textInputAction: TextInputAction.next,
@@ -370,6 +373,69 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ],
                           ),
                           const SizedBox(
+                            height: 10,
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Konfirmasi Kata Sandi",
+                                  style: GoogleFonts.poppins(
+                                      color: blackColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700)),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              TextFormField(
+                                obscureText: _obscureTextConfirm,
+                                controller: _confirmPasswordController,
+                                validator: (value) => validatePassword(value!),
+                                maxLength: 20,
+                                autocorrect: false,
+                                textInputAction: TextInputAction.next,
+                                style: GoogleFonts.poppins(
+                                  color: blackColor,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                cursorColor: const Color(0xff00c2cb),
+                                keyboardType: TextInputType.visiblePassword,
+                                decoration: InputDecoration(
+                                  suffixIcon: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _obscureTextConfirm =
+                                            !_obscureTextConfirm;
+                                      });
+                                    },
+                                    child: Icon(
+                                      _obscureText
+                                          ? Icons.visibility
+                                          : Icons.visibility_off,
+                                    ),
+                                  ),
+                                  counterText: "",
+                                  labelText: "Konfirmasi Kata Sandi",
+                                  labelStyle: GoogleFonts.poppins(
+                                    color: blackColor,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                  filled: true,
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.never,
+                                  fillColor: whiteColor,
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: const BorderSide(
+                                        width: 1,
+                                      )),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
                             height: 30,
                           ),
                           SizedBox(
@@ -395,7 +461,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                               ),
                               onPressed: () async {
-                                if (_formkey.currentState!.validate()) {
+                                if (_formkey.currentState!.validate() &&
+                                    _passwordController.text ==
+                                        _confirmPasswordController.text) {
                                   Provider.of<RegisterViewModel>(context,
                                           listen: false)
                                       .setStateRegister(MyState.loading);
@@ -422,6 +490,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       content: Text(message),
                                     ));
                                   }
+                                } else {
+                                  // ignore: use_build_context_synchronously
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(const SnackBar(
+                                    content: Text(
+                                        'Kata Sandi dan Konfirmasi Kata Sandi tidak sama'),
+                                  ));
                                 }
                               },
                               child: Text("Lanjut",
