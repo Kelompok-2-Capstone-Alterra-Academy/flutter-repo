@@ -2,35 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:staredu/models/service/auth_api.dart';
 import 'package:staredu/utils/state/my_state.dart';
 
-class RegisterViewModel extends ChangeNotifier {
+class LoginViewModel extends ChangeNotifier {
   dynamic response;
   MyState _state = MyState.initial;
 
   MyState get state => _state;
 
-  Future<String> register(
-    String name,
-    String email,
-    String phoneNumber,
-    String password,
-  ) async {
-    response = await AuthAPI.register(
-      name,
-      email,
-      phoneNumber,
-      password,
-    );
+  Future<String> login(String email, String password) async {
+    response = await AuthAPI.login(email, password);
+
     if (response == null) {
       setState(MyState.failed);
-      return 'Register Failed';
+      return 'Login Failed';
     }
 
-    if (response['status_code'] == 201) {
+    if (response["token"] != null) {
       setState(MyState.success);
-      return 'success';
+      return response["token"];
     } else {
       setState(MyState.failed);
-      return response['message'];
+      return response['message'] ?? 'Login Failed';
     }
   }
 
