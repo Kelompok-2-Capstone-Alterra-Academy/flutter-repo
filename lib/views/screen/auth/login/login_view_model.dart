@@ -9,19 +9,25 @@ class LoginViewModel extends ChangeNotifier {
   MyState get state => _state;
 
   Future<String> login(String email, String password) async {
-    response = await AuthAPI.login(email, password);
+    try {
+      response = await AuthAPI.login(email, password);
 
-    if (response == null) {
+      if (response == null) {
+        setState(MyState.failed);
+        return 'Login Failed';
+      }
+      print('test');
+      print(response);
+      if (response["data"]["token"] != null) {
+        setState(MyState.success);
+        return 'success ${response["data"]["token"]}';
+      } else {
+        setState(MyState.failed);
+        return response['message'] ?? 'Login Failed';
+      }
+    } catch (e) {
       setState(MyState.failed);
       return 'Login Failed';
-    }
-
-    if (response["token"] != null) {
-      setState(MyState.success);
-      return response["token"];
-    } else {
-      setState(MyState.failed);
-      return response['message'] ?? 'Login Failed';
     }
   }
 

@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 
 handleErrorApi(error) {
   String message = '';
+  print(error);
   if (error is DioError) {
     switch (error.type) {
       case DioErrorType.cancel:

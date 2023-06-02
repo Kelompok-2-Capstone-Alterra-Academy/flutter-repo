@@ -51,7 +51,9 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   saveToken(String value) async {
-    preferencesUtils.savePreferencesString('token', value);
+    String token = value.split(' ')[1];
+    preferencesUtils.savePreferencesString('token', token);
+    preferencesUtils.savePreferencesBool('isLogin', true);
   }
 
   @override
@@ -265,6 +267,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             _passwordController.text);
                                 if (message.contains('success')) {
                                   await saveToken(message);
+                                  // ignore: use_build_context_synchronously
                                   showModalBottomSheet(
                                       context: context,
                                       builder: (context) {
@@ -277,13 +280,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                             padding: const EdgeInsets.all(20.0),
                                             child: Column(
                                               children: [
-                                                Icon(
-                                                  Icons.looks_sharp,
+                                                const Icon(
+                                                  Icons.lock_sharp,
                                                   color: blackColor,
-                                                  size: 50,
+                                                  size: 70,
                                                 ),
                                                 const SizedBox(
-                                                  height: 20,
+                                                  height: 10,
                                                 ),
                                                 Text(
                                                   "Simpan Kata Sandi?",
@@ -314,6 +317,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       await savePassword(
                                                           _passwordController
                                                               .text);
+                                                      // ignore: use_build_context_synchronously
                                                       Navigator.push(
                                                           context,
                                                           FadeAnimation(
