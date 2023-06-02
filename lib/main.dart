@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:staredu/views/screen/auth/forgot_password/forgot_password_view_model.dart';
 import 'package:staredu/views/screen/auth/forgot_password/main/forgot_password_screen.dart';
 import 'package:staredu/views/screen/auth/forgot_password/otp_verification/otp_verification_screen.dart';
 import 'package:staredu/views/screen/auth/forgot_password/reset_password/reset_password.dart';
 import 'package:staredu/views/screen/auth/login/login_screen.dart';
+import 'package:staredu/views/screen/auth/login/login_view_model.dart';
+import 'package:staredu/views/screen/auth/register/register_screen_view_model.dart';
 import 'package:staredu/views/screen/course/course_taken_list_screen.dart';
 import 'package:staredu/views/screen/course/module/detail/module_detail_video_screen.dart';
 import 'package:staredu/views/screen/course/module/module_ask_mentor_screen.dart';
@@ -43,7 +46,10 @@ void main() {
       ChangeNotifierProvider(create: (_) => HomeViewModel()),
       ChangeNotifierProvider(create: (_) => NotificationViewModel()),
       ChangeNotifierProvider(
-          create: (_) => BottomNavigationBarComponentViewModel())
+          create: (_) => BottomNavigationBarComponentViewModel()),
+      ChangeNotifierProvider(create: (_) => RegisterViewModel()),
+      ChangeNotifierProvider(create: (_) => LoginViewModel()),
+      ChangeNotifierProvider(create: (_) => ForgotPasswordViewModel()),
     ],
     child: const StarEdu(),
   ));

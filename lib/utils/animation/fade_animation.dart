@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 
 class FadeAnimation extends PageRouteBuilder {
   final Widget page;
+  dynamic arguments;
 
-  FadeAnimation({required this.page})
+  FadeAnimation({required this.page, this.arguments})
       : super(
+          settings: arguments != null
+              ? RouteSettings(arguments: arguments)
+              : const RouteSettings(),
           transitionDuration: const Duration(milliseconds: 1000),
           transitionsBuilder: (
             BuildContext context,

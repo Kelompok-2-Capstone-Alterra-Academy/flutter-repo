@@ -4,9 +4,13 @@ import 'package:flutter/material.dart';
 // Define a slide animation
 class SlideAnimation extends PageRouteBuilder {
   final Widget page;
+  dynamic arguments;
 
-  SlideAnimation({required this.page})
+  SlideAnimation({required this.page, this.arguments})
       : super(
+        settings: arguments != null
+            ? RouteSettings(arguments: arguments)
+            : const RouteSettings(),
           transitionDuration: const Duration(milliseconds: 1000),
           transitionsBuilder: (
             BuildContext context,
