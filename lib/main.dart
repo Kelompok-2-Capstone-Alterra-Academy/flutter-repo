@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:staredu/views/screen/auth/forgot_password/forgot_password_view_model.dart';
 import 'package:staredu/views/screen/auth/forgot_password/main/forgot_password_screen.dart';
 import 'package:staredu/views/screen/auth/forgot_password/otp_verification/otp_verification_screen.dart';
 import 'package:staredu/views/screen/auth/forgot_password/reset_password/reset_password.dart';
@@ -48,6 +49,7 @@ void main() {
           create: (_) => BottomNavigationBarComponentViewModel()),
       ChangeNotifierProvider(create: (_) => RegisterViewModel()),
       ChangeNotifierProvider(create: (_) => LoginViewModel()),
+      ChangeNotifierProvider(create: (_) => ForgotPasswordViewModel()),
     ],
     child: const StarEdu(),
   ));
