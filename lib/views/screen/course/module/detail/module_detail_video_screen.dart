@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:staredu/models/arguments/module_detail_video_argument.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class ModuleVideoScreen extends StatefulWidget {
   static const String routeName = "/modulevideo";
-  const ModuleVideoScreen({super.key});
+
+  final String? courseName;
+  final String? sectionName;
+
+  const ModuleVideoScreen({super.key, this.courseName, this.sectionName});
 
   @override
   State<ModuleVideoScreen> createState() => _ModuleVideoScreenState();
@@ -26,7 +29,7 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
       initialVideoId: "MLpWrANjFbI",
       flags: const YoutubePlayerFlags(
         mute: false,
-        autoPlay: true,
+        autoPlay: false,
         forceHD: false,
         enableCaption: true,
       ),
@@ -58,9 +61,6 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-
-    final args = ModalRoute.of(context)!.settings.arguments
-        as ModuleDetailVideoArguments;
 
     return YoutubePlayerBuilder(
       player: YoutubePlayer(
@@ -115,9 +115,9 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
               height: 20,
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 6),
+              padding: const EdgeInsets.only(left: 16, right: 16),
               child: Text(
-                '${args.courseName} - ${args.sectionName}',
+                '${widget.courseName} - ${widget.sectionName}',
                 style: GoogleFonts.poppins(
                   fontStyle: FontStyle.normal,
                   fontWeight: FontWeight.w600,
@@ -130,70 +130,69 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
             ),
             Expanded(
               child: Container(
-                padding: const EdgeInsets.only(left: 6),
-                child: Text(
-                  'testing description : Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent arcu enim, pretium in justo et, fringilla sagittis dui. Cras mauris nibh, pretium ut dignissim id, iaculis consequat ligula. Nulla non pulvinar turpis, id maximus nisl. Ut condimentum enim ligula. Morbi dui erat, laoreet sodales feugiat eu, lobortis fringilla massa. Nam pretium arcu quis eros volutpat interdum. Proin hendrerit tellus non arcu sollicitudin, at sollicitudin nibh imperdiet. Aliquam semper feugiat nisl et ultrices. Mauris consequat elementum lectus, sed sollicitudin ipsum. Aenean consequat tellus vel sapien facilisis, non venenatis velit laoreet. Etiam non venenatis ante. Vivamus vel quam iaculis diam consectetur molestie et in nulla. Aenean ultrices, ex sit amet dignissim interdum, libero augue commodo urna, tincidunt mattis eros magna sed turpis. Vestibulum aliquet nibh massa, a auctor arcu tristique in. Integer imperdiet vestibulum lacus quis tristique. Quisque scelerisque nisi convallis enim hendrerit consectetur.',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 5,
-                  style: GoogleFonts.poppins(
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 11,
-                  ),
+                padding: const EdgeInsets.only(left: 16, right: 16),
+                child: ListView(
+                  children: [
+                    Text(
+                      'testing description : Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent arcu enim, pretium in justo et, fringilla sagittis dui. Cras mauris nibh, pretium ut dignissim id, iaculis consequat ligula. Nulla non pulvinar turpis, id maximus nisl. Ut condimentum enim ligula. Morbi dui erat, laoreet sodales feugiat eu, lobortis fringilla massa. Nam pretium arcu quis eros volutpat interdum. Proin hendrerit tellus non arcu sollicitudin, at sollicitudin nibh imperdiet. Aliquam semper feugiat nisl et ultrices. Mauris consequat elementum lectus, sed sollicitudin ipsum. Aenean consequat tellus vel sapien facilisis, non venenatis velit laoreet. Etiam non venenatis ante. Vivamus vel quam iaculis diam consectetur molestie et in nulla. Aenean ultrices, ex sit amet dignissim interdum, libero augue commodo urna, tincidunt mattis eros magna sed turpis. Vestibulum aliquet nibh massa, a auctor arcu tristique in. Integer imperdiet vestibulum lacus quis tristique. Quisque scelerisque nisi convallis enim hendrerit consectetur.',
+                      style: GoogleFonts.poppins(
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 11,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width / 2.3,
-                    margin: const EdgeInsets.only(bottom: 16),
-                    child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: whiteColor,
-                        backgroundColor: primaryColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width / 2.3,
+                  margin: const EdgeInsets.only(bottom: 16),
+                  child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: whiteColor,
+                      backgroundColor: primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      onPressed: () {},
-                      child: Text(
-                        "Selesai",
-                        style: GoogleFonts.poppins(
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 13,
-                        ),
+                    ),
+                    onPressed: () {},
+                    child: Text(
+                      "Selesai",
+                      style: GoogleFonts.poppins(
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 13,
                       ),
                     ),
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width / 2.3,
-                    margin: const EdgeInsets.only(bottom: 16),
-                    child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: primaryColor,
-                        side: const BorderSide(color: primaryColor),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width / 2.3,
+                  margin: const EdgeInsets.only(bottom: 16),
+                  child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: primaryColor,
+                      side: const BorderSide(color: primaryColor),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      onPressed: () {},
-                      child: Text(
-                        "Tanya Mentor",
-                        style: GoogleFonts.poppins(
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 13,
-                        ),
+                    ),
+                    onPressed: () {},
+                    child: Text(
+                      "Tanya Mentor",
+                      style: GoogleFonts.poppins(
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 13,
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ],
         ),

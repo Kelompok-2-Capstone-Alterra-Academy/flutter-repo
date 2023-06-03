@@ -25,4 +25,10 @@ List<CourseHistoryModel> historyCourses = [
     order: "Tanggal Order : 05 April 2023",
     img: "assets/images/calculator.jpg",
   ),
+  CourseHistoryModel(
+    id: 5,
+    title: "Sejarah Indonesia",
+    order: "Tanggal Order : 01 Mei 2023",
+    img: "assets/images/calculator.jpg",
+  ),
 ];

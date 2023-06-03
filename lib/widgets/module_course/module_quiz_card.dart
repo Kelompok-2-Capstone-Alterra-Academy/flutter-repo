@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/color/color.dart';
+import 'package:staredu/views/screen/course/module/detail/module_quiz_detail_screen.dart';
 
 class ModuleQuizCard extends StatelessWidget {
   const ModuleQuizCard({
@@ -24,7 +25,22 @@ class ModuleQuizCard extends StatelessWidget {
       children: [
         isQuizAvailable!
             ? GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animations, secondaryAnimations) =>
+                          const ModuleQuizDetailScreen(),
+                      transitionsBuilder:
+                          (context, animations, secondaryAnimations, childs) {
+                        final tween = Tween(begin: 0.0, end: 1.0);
+                        return FadeTransition(
+                          opacity: animations.drive(tween),
+                          child: childs,
+                        );
+                      },
+                    ),
+                  );
+                },
                 child: Card(
                   elevation: 0,
                   shadowColor: Colors.transparent,

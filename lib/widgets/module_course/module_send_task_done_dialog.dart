@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/color/color.dart';
+import 'package:staredu/views/screen/home/home_screen.dart';
 
 class ModuleSendTaskDoneDialog extends StatelessWidget {
   const ModuleSendTaskDoneDialog({super.key});
@@ -80,7 +81,22 @@ class ModuleSendTaskDoneDialog extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animations, secondaryAnimations) =>
+                          const HomeScreen(),
+                      transitionsBuilder:
+                          (context, animations, secondaryAnimations, childs) {
+                        final tween = Tween(begin: 0.0, end: 1.0);
+                        return FadeTransition(
+                          opacity: animations.drive(tween),
+                          child: childs,
+                        );
+                      },
+                    ),
+                  );
+                },
                 child: Text(
                   "Kembali ke Home",
                   style: GoogleFonts.poppins(

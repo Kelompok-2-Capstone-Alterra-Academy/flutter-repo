@@ -16,6 +16,8 @@ import 'package:staredu/views/screen/course/module/module_list_quiz_screen.dart'
 import 'package:staredu/views/screen/auth/register/account_verification/account_verification.dart';
 import 'package:staredu/views/screen/auth/register/main/register_screen.dart';
 import 'package:staredu/views/screen/edit_profile/edit_profile.dart';
+import 'package:staredu/views/screen/history/history_transaction_screen.dart';
+import 'package:staredu/views/screen/history/note_transaction_screen.dart.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
 import 'package:staredu/views/screen/home/home_view_model.dart';
 import 'package:staredu/views/screen/notification/notification_screen.dart';
@@ -30,6 +32,7 @@ import 'package:staredu/views/screen/mentor/mentor_screen.dart';
 import 'package:staredu/views/screen/mentor/search_chat_screen.dart';
 import 'package:staredu/views/screen/sell_course/course_payment_screen.dart';
 import 'package:staredu/views/screen/sell_course/course_voucher_screen.dart';
+import 'package:staredu/views/screen/sell_course/sell_course_detail_screen.dart';
 import 'package:staredu/views/screen/sell_course/sell_course_screen.dart';
 import 'package:staredu/views/screen/post_feed/post_feed_screen.dart';
 import 'package:staredu/views/screen/live_session/schedule_course_screen.dart';
@@ -38,6 +41,7 @@ import 'package:staredu/views/screen/news/news_screen.dart';
 import 'package:staredu/views/screen/live_session/schedule_course_screen.dart';
 import 'package:staredu/views/screen/splash_welcome/splash_welcome_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:staredu/views/screen/wishlist/wishlist_screen.dart';
 import 'package:staredu/widgets/bottom_navigation_bar/bottom_navigation_bar_view_model.dart';
 
 void main() {
@@ -107,6 +111,7 @@ class StarEdu extends StatelessWidget {
         SearchChatScreen.routeName: (context) => const SearchChatScreen(),
         TaskListScreen.routeName: (context) => const TaskListScreen(),
         ModuleDetailTask.routeName: (context) => const ModuleDetailTask(),
+        WishlistScreen.routeName: (context) => const WishlistScreen(),
       },
     );
   }

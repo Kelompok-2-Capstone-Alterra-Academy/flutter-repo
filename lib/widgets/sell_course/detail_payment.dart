@@ -23,14 +23,14 @@ class DetailKursus extends StatelessWidget {
           children: [
             Icon(
               icon,
-              color: greyColor,
+              color: greyColor2,
               size: 18,
             ),
             const SizedBox(width: 11),
             Text(
               title,
               style: GoogleFonts.poppins(
-                  fontSize: 11, fontWeight: FontWeight.w500, color: greyColor),
+                  fontSize: 11, fontWeight: FontWeight.w500, color: greyColor2),
             ),
           ],
         ),

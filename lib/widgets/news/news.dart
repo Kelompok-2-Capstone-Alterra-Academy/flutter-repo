@@ -18,7 +18,7 @@ class News extends StatelessWidget {
       onTap: () {},
       child: Container(
         width: screenWidth,
-        margin: const EdgeInsets.all(10.0),
+        margin: const EdgeInsets.all(0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
         ),
