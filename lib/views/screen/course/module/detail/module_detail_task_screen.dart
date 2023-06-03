@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:staredu/utils/http/http_utils.dart';
 import 'package:staredu/views/screen/course/module/module_send_task_screen.dart';
 
 import '../../../../../utils/color/color.dart';
@@ -23,9 +24,23 @@ class ModuleDetailTask extends StatefulWidget {
 }
 
 class _ModuleDetailTaskState extends State<ModuleDetailTask> {
+  late String fileName;
+  late Future<String> fileType;
+  late Future<int> fileSize;
+  bool isLoading = false;
+  String fileUrl = 'https://web.wpi.edu/Images/CMS/Provost/landscape.pdf';
+
+  @override
+  void initState() {
+    super.initState();
+    fileName = getFileNameFromUrl(fileUrl);
+    //fileType = getFileType(fileUrl);
+    //print(fileType);
+    fileSize = getFileSize(fileUrl);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final double screenHeight = MediaQuery.of(context).size.height;
     final double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -84,82 +99,161 @@ class _ModuleDetailTaskState extends State<ModuleDetailTask> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Container(
-                    padding: const EdgeInsets.only(
-                        left: 16, right: 16, bottom: 8, top: 8),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: greyColor2,
-                        ),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(8))),
-                    width: 200,
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: const [
-                            Image(
-                              image: AssetImage('assets/images/file_dot.png'),
-                            ),
-                            Image(
-                              image: AssetImage('assets/images/file_dot.png'),
-                            ),
-                            Image(
-                              image: AssetImage('assets/images/file_dot.png'),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        const Divider(
-                          color: greyColor2,
-                          height: 3,
-                          thickness: 2,
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Image(
-                              image: AssetImage('assets/images/task_icon.png'),
-                            ),
-                            const SizedBox(
-                              width: 16,
-                            ),
-                            Expanded(
-                              child: Text(
-                                "Tugas Matematika Dasar.doc",
-                                style: GoogleFonts.poppins(
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 13,
-                                ),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
+                  InkWell(
+                    onTap: () async {
+                      setState(() {
+                        isLoading = !isLoading;
+                      });
+
+                      await downloadFile(fileUrl, fileName);
+
+                      if (context.mounted) {
+                        setState(() {
+                          isLoading = !isLoading;
+                        });
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              "Berhasil mengunduh tugas !",
+                              style: GoogleFonts.poppins(
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 11,
                               ),
                             ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Text(
-                            "78 kb",
-                            style: GoogleFonts.poppins(
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 9,
-                              color: greyColor2,
-                            ),
+                            backgroundColor: successColor,
                           ),
-                        ),
-                      ],
+                        );
+                      }
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.only(
+                          left: 16, right: 16, bottom: 8, top: 8),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            color: greyColor2,
+                          ),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(8))),
+                      width: 200,
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: const [
+                              Image(
+                                image: AssetImage('assets/images/file_dot.png'),
+                              ),
+                              Image(
+                                image: AssetImage('assets/images/file_dot.png'),
+                              ),
+                              Image(
+                                image: AssetImage('assets/images/file_dot.png'),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          isLoading
+                              ? const LinearProgressIndicator(
+                                  minHeight: 3,
+                                  color: primaryColor,
+                                )
+                              : const Divider(
+                                  color: searchBarTextColor,
+                                  height: 3,
+                                  thickness: 2,
+                                ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Image(
+                                image:
+                                    AssetImage('assets/images/task_icon.png'),
+                              ),
+                              const SizedBox(
+                                width: 16,
+                              ),
+                              Expanded(
+                                child: Text(
+                                  fileName,
+                                  style: GoogleFonts.poppins(
+                                    fontStyle: FontStyle.normal,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 13,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Align(
+                              alignment: Alignment.bottomLeft,
+                              child: FutureBuilder<int>(
+                                future: fileSize,
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return Text(
+                                      "... kb",
+                                      style: GoogleFonts.poppins(
+                                        fontStyle: FontStyle.normal,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 9,
+                                        color: greyColor2,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                    );
+                                  } else if (snapshot.hasData) {
+                                    return Text(
+                                      "${snapshot.data} kb",
+                                      style: GoogleFonts.poppins(
+                                        fontStyle: FontStyle.normal,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 9,
+                                        color: greyColor2,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                    );
+                                  } else if (snapshot.hasError) {
+                                    return Text(
+                                      'Error: ${snapshot.error}',
+                                      style: GoogleFonts.poppins(
+                                        fontStyle: FontStyle.normal,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 9,
+                                        color: greyColor2,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                    );
+                                  } else {
+                                    return Text(
+                                      "No Data Available",
+                                      style: GoogleFonts.poppins(
+                                        fontStyle: FontStyle.normal,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 9,
+                                        color: greyColor2,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                    );
+                                  }
+                                },
+                              )),
+                        ],
+                      ),
                     ),
                   ),
                   const Spacer(),
@@ -167,7 +261,7 @@ class _ModuleDetailTaskState extends State<ModuleDetailTask> {
                     style: ButtonStyle(
                       shape: MaterialStatePropertyAll(
                         RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(12),
                         ),
                       ),
                     ),
@@ -188,13 +282,16 @@ class _ModuleDetailTaskState extends State<ModuleDetailTask> {
                         ),
                       );
                     },
-                    child: Center(
-                      child: Text(
-                        'Kumpulkan',
-                        style: GoogleFonts.poppins(
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14,
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Center(
+                        child: Text(
+                          'Kumpulkan Tugas',
+                          style: GoogleFonts.poppins(
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                          ),
                         ),
                       ),
                     ),
