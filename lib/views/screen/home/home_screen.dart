@@ -5,6 +5,11 @@ import 'package:staredu/models/post_feed_model.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/constant/list_post_feed.dart';
 import 'package:staredu/views/screen/home/home_view_model.dart';
+import 'package:staredu/views/screen/mentor/mentor_screen.dart';
+import 'package:staredu/views/screen/news/news_screen.dart';
+import 'package:staredu/views/screen/post_feed/post_feed_screen.dart';
+import 'package:staredu/views/screen/sell_course/sell_course_screen.dart';
+import 'package:staredu/views/screen/wishlist/wishlist_screen.dart';
 import 'package:staredu/widgets/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'package:staredu/widgets/button/button_text.dart';
 import 'package:staredu/widgets/card/card_mentor.dart';
@@ -30,8 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-    final TextEditingController _searchController = TextEditingController();
+    // final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+    // final TextEditingController _searchController = TextEditingController();
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -109,36 +114,64 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.7,
-                              height: 45,
-                              child: Form(
-                                  child: TextFormField(
-                                controller: _searchController,
-                                decoration: InputDecoration(
-                                  prefixIcon: const Icon(Icons.search),
-                                  filled: true,
-                                  fillColor: whiteColor,
-                                  hintText: "Cari kelas yang kamu minati",
-                                  hintStyle: GoogleFonts.poppins(
-                                      fontSize: 12, color: blackColor),
-                                  border: OutlineInputBorder(
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const SellCourseScreen(),
+                                    ));
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 0.7,
+                                height: 45,
+                                decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                        color: Colors.white, width: 1),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                        color: Colors.white, width: 1),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                        color: Colors.white, width: 1),
-                                  ),
+                                    color: whiteColor),
+                                child: Row(
+                                  children: [
+                                    const SizedBox(width: 15),
+                                    const Icon(
+                                      Icons.search,
+                                      color: greyColor2,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    Text(
+                                      "Cari kelas yang kamu minati",
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 12, color: greyColor2),
+                                    ),
+                                  ],
                                 ),
-                              )),
+                                // child: Form(
+                                //     child: TextFormField(
+                                //   controller: _searchController,
+                                //   decoration: InputDecoration(
+                                //     prefixIcon: const Icon(Icons.search),
+                                //     filled: true,
+                                //     fillColor: whiteColor,
+                                //     hintText: "Cari kelas yang kamu minati",
+                                //     hintStyle: GoogleFonts.poppins(
+                                //         fontSize: 12, color: blackColor),
+                                //     border: OutlineInputBorder(
+                                //       borderRadius: BorderRadius.circular(10),
+                                //       borderSide: const BorderSide(
+                                //           color: Colors.white, width: 1),
+                                //     ),
+                                //     enabledBorder: OutlineInputBorder(
+                                //       borderRadius: BorderRadius.circular(10),
+                                //       borderSide: const BorderSide(
+                                //           color: Colors.white, width: 1),
+                                //     ),
+                                //     focusedBorder: OutlineInputBorder(
+                                //       borderRadius: BorderRadius.circular(10),
+                                //       borderSide: const BorderSide(
+                                //           color: Colors.white, width: 1),
+                                //     ),
+                                //   ),
+                                // )),
+                              ),
                             ),
                             SizedBox(
                                 height: 45,
@@ -147,13 +180,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Navigator.pushNamed(
                                         context, '/notification');
                                   },
-                                  child: Icon(Icons.notifications_on_outlined,
+                                  child: const Icon(Icons.notifications_none,
                                       color: whiteColor, size: 28),
                                 )),
-                            const SizedBox(
+                            SizedBox(
                                 height: 45,
-                                child: Icon(Icons.save_as_outlined,
-                                    color: whiteColor, size: 28))
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const WishlistScreen(),
+                                        ));
+                                  },
+                                  child: const Icon(
+                                      Icons.collections_bookmark_outlined,
+                                      color: whiteColor,
+                                      size: 28),
+                                ))
                           ]),
                     ],
                   ),
@@ -178,7 +223,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         const SizedBox(height: 20),
                         const RowText(
-                            left: 'Course Populer', right: 'Lihat Semua'),
+                            left: 'Course Populer',
+                            right: 'Lihat Semua',
+                            page: SellCourseScreen()),
                         const SizedBox(height: 10),
                         Consumer<HomeViewModel>(
                           builder: (context, value, child) {
@@ -204,7 +251,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         const SizedBox(height: 20),
                         const RowText(
-                            left: 'Mentor Terbaik Kami', right: 'Lihat Semua'),
+                            left: 'Mentor Terbaik Kami',
+                            right: 'Lihat Semua',
+                            page: MentorScreen()),
                         const SizedBox(height: 10),
                         Consumer<HomeViewModel>(
                           builder: (context, value, child) {
@@ -221,12 +270,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         const SizedBox(height: 20),
                         const RowText(
                             left: 'Seputar Pendidikan di Indonesia',
-                            right: 'Lihat Semua'),
+                            right: 'Lihat Semua',
+                            page: NewsScreen()),
                         News(screenWidth: MediaQuery.of(context).size.width),
                         const SizedBox(height: 20),
                         const RowText(
                             left: 'Yuk, sharing sama pengguna lain',
-                            right: 'Lihat Semua'),
+                            right: 'Lihat Semua',
+                            page: PostFeedScreen()),
                         PostFeed(postFeeds: postFeedsData),
                       ],
                     ),

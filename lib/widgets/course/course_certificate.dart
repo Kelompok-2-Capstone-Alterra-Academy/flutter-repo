@@ -290,6 +290,7 @@ class _CourseCertificateState extends State<CourseCertificate> {
                                       child: Text(
                                           "Sertifikat Berhasil di Download"),
                                     ),
+                                    duration: const Duration(seconds: 1),
                                     backgroundColor:
                                         blackColor.withOpacity(0.5),
                                   ),

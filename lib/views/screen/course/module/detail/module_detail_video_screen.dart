@@ -131,19 +131,20 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
             Expanded(
               child: Container(
                 padding: const EdgeInsets.only(left: 16, right: 16),
-                child: Text(
-                  'testing description : Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent arcu enim, pretium in justo et, fringilla sagittis dui. Cras mauris nibh, pretium ut dignissim id, iaculis consequat ligula. Nulla non pulvinar turpis, id maximus nisl. Ut condimentum enim ligula. Morbi dui erat, laoreet sodales feugiat eu, lobortis fringilla massa. Nam pretium arcu quis eros volutpat interdum. Proin hendrerit tellus non arcu sollicitudin, at sollicitudin nibh imperdiet. Aliquam semper feugiat nisl et ultrices. Mauris consequat elementum lectus, sed sollicitudin ipsum. Aenean consequat tellus vel sapien facilisis, non venenatis velit laoreet. Etiam non venenatis ante. Vivamus vel quam iaculis diam consectetur molestie et in nulla. Aenean ultrices, ex sit amet dignissim interdum, libero augue commodo urna, tincidunt mattis eros magna sed turpis. Vestibulum aliquet nibh massa, a auctor arcu tristique in. Integer imperdiet vestibulum lacus quis tristique. Quisque scelerisque nisi convallis enim hendrerit consectetur.',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 5,
-                  style: GoogleFonts.poppins(
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 11,
-                  ),
+                child: ListView(
+                  children: [
+                    Text(
+                      'testing description : Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent arcu enim, pretium in justo et, fringilla sagittis dui. Cras mauris nibh, pretium ut dignissim id, iaculis consequat ligula. Nulla non pulvinar turpis, id maximus nisl. Ut condimentum enim ligula. Morbi dui erat, laoreet sodales feugiat eu, lobortis fringilla massa. Nam pretium arcu quis eros volutpat interdum. Proin hendrerit tellus non arcu sollicitudin, at sollicitudin nibh imperdiet. Aliquam semper feugiat nisl et ultrices. Mauris consequat elementum lectus, sed sollicitudin ipsum. Aenean consequat tellus vel sapien facilisis, non venenatis velit laoreet. Etiam non venenatis ante. Vivamus vel quam iaculis diam consectetur molestie et in nulla. Aenean ultrices, ex sit amet dignissim interdum, libero augue commodo urna, tincidunt mattis eros magna sed turpis. Vestibulum aliquet nibh massa, a auctor arcu tristique in. Integer imperdiet vestibulum lacus quis tristique. Quisque scelerisque nisi convallis enim hendrerit consectetur.',
+                      style: GoogleFonts.poppins(
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 11,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
-            const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

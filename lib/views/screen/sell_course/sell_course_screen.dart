@@ -47,11 +47,16 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
     final double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        iconTheme: const IconThemeData(color: blackColor),
+        backgroundColor: Colors.transparent,
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
-            const SizedBox(height: 75),
+            const SizedBox(height: 5),
             Container(
               height: 42,
               width: screenWidth,

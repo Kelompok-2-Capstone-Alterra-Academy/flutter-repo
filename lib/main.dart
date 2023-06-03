@@ -61,12 +61,11 @@ class StarEdu extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'StarEdu',
-      home: const HistoryTransactionScreen(),
       // add primary color
       theme: ThemeData(
         primaryColor: Colors.white,
       ),
-      // initialRoute: SplashWelcomeScreen.routeName,
+      initialRoute: SplashWelcomeScreen.routeName,
       routes: {
         HomeScreen.routeName: (context) => const HomeScreen(),
         SplashWelcomeScreen.routeName: (context) => const SplashWelcomeScreen(),
