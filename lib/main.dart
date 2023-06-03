@@ -1,115 +1,118 @@
 import 'package:flutter/material.dart';
+import 'package:staredu/views/screen/auth/forgot_password/forgot_password_view_model.dart';
+import 'package:staredu/views/screen/auth/forgot_password/main/forgot_password_screen.dart';
+import 'package:staredu/views/screen/auth/forgot_password/otp_verification/otp_verification_screen.dart';
+import 'package:staredu/views/screen/auth/forgot_password/reset_password/reset_password.dart';
+import 'package:staredu/views/screen/auth/login/login_screen.dart';
+import 'package:staredu/views/screen/auth/login/login_view_model.dart';
+import 'package:staredu/views/screen/auth/register/register_screen_view_model.dart';
+import 'package:staredu/views/screen/course/course_taken_list_screen.dart';
+import 'package:staredu/views/screen/course/module/detail/module_detail_video_screen.dart';
+import 'package:staredu/views/screen/course/module/module_ask_mentor_screen.dart';
+import 'package:staredu/views/screen/course/module/detail/module_detail_task_screen.dart';
+import 'package:staredu/views/screen/course/module/module_list_screen.dart';
+import 'package:staredu/views/screen/course/module/module_live_session_screen.dart';
+import 'package:staredu/views/screen/course/module/module_list_quiz_screen.dart';
+import 'package:staredu/views/screen/auth/register/account_verification/account_verification.dart';
+import 'package:staredu/views/screen/auth/register/main/register_screen.dart';
+import 'package:staredu/views/screen/edit_profile/edit_profile.dart';
+import 'package:staredu/views/screen/history/history_transaction_screen.dart';
+import 'package:staredu/views/screen/history/note_transaction_screen.dart.dart';
+import 'package:staredu/views/screen/home/home_screen.dart';
+import 'package:staredu/views/screen/home/home_view_model.dart';
+import 'package:staredu/views/screen/notification/notification_screen.dart';
+import 'package:staredu/views/screen/notification/notification_view_model.dart';
+import 'package:staredu/views/screen/profile/profile.dart';
+import 'package:staredu/views/screen/course/module/detail/module_quiz_detail_screen.dart';
+import 'package:staredu/views/screen/course/module/module_send_task_screen.dart';
+import 'package:staredu/views/screen/course/module/module_task_list_screen.dart';
+import 'package:staredu/views/screen/home/home_screen.dart';
+import 'package:staredu/views/screen/mentor/chat_mentor_screen.dart';
+import 'package:staredu/views/screen/mentor/mentor_screen.dart';
+import 'package:staredu/views/screen/mentor/search_chat_screen.dart';
+import 'package:staredu/views/screen/sell_course/course_payment_screen.dart';
+import 'package:staredu/views/screen/sell_course/course_voucher_screen.dart';
+import 'package:staredu/views/screen/sell_course/sell_course_detail_screen.dart';
+import 'package:staredu/views/screen/sell_course/sell_course_screen.dart';
+import 'package:staredu/views/screen/post_feed/post_feed_screen.dart';
+import 'package:staredu/views/screen/live_session/schedule_course_screen.dart';
+import 'package:staredu/views/screen/course/module/detail/module_detail_ppt_screen.dart';
+import 'package:staredu/views/screen/news/news_screen.dart';
+import 'package:staredu/views/screen/live_session/schedule_course_screen.dart';
+import 'package:staredu/views/screen/splash_welcome/splash_welcome_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:staredu/views/screen/wishlist/wishlist_screen.dart';
+import 'package:staredu/widgets/bottom_navigation_bar/bottom_navigation_bar_view_model.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => HomeViewModel()),
+      ChangeNotifierProvider(create: (_) => NotificationViewModel()),
+      ChangeNotifierProvider(
+          create: (_) => BottomNavigationBarComponentViewModel()),
+      ChangeNotifierProvider(create: (_) => RegisterViewModel()),
+      ChangeNotifierProvider(create: (_) => LoginViewModel()),
+      ChangeNotifierProvider(create: (_) => ForgotPasswordViewModel()),
+    ],
+    child: const StarEdu(),
+  ));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class StarEdu extends StatelessWidget {
+  const StarEdu({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'StarEdu',
+      // add primary color
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
+        primaryColor: Colors.white,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      initialRoute: SplashWelcomeScreen.routeName,
+      routes: {
+        HomeScreen.routeName: (context) => const HomeScreen(),
+        SplashWelcomeScreen.routeName: (context) => const SplashWelcomeScreen(),
+        LoginScreen.routeName: (context) => const LoginScreen(),
+        PostFeedScreen.routeName: (context) => const PostFeedScreen(),
+        ScheduleCourseScreen.routeName: (context) =>
+            const ScheduleCourseScreen(),
+        CourseTakenListScreen.routeName: (context) =>
+            const CourseTakenListScreen(),
+        ModuleListScreen.routeName: (context) => const ModuleListScreen(),
+        AskMentorScreen.routeName: (context) => const AskMentorScreen(),
+        LiveSessionScreen.routeName: (context) => const LiveSessionScreen(),
+        ModuleListQuizScreen.routeName: (context) =>
+            const ModuleListQuizScreen(),
+        ModuleVideoScreen.routeName: (context) => const ModuleVideoScreen(),
+        ModulDetailPPTScreen.routeName: (context) =>
+            const ModulDetailPPTScreen(),
+        ForgotPasswordScreen.routeName: (context) =>
+            const ForgotPasswordScreen(),
+        OtpVerificationScreen.routeName: (context) =>
+            const OtpVerificationScreen(),
+        ResetPasswordScreen.routeName: (context) => const ResetPasswordScreen(),
+        RegisterScreen.routeName: (context) => const RegisterScreen(),
+        AccountVerification.routeName: (context) => const AccountVerification(),
+        Profile.routeName: (context) => const Profile(),
+        EditProfile.routeName: (context) => const EditProfile(),
+        NotificationScreen.routeName: (context) => const NotificationScreen(),
+        ModuleQuizDetailScreen.routeName: (context) =>
+            const ModuleQuizDetailScreen(),
+        ModuleSendTaskScreen.routeName: (context) =>
+            const ModuleSendTaskScreen(),
+        NewsScreen.routeName: (context) => const NewsScreen(),
+        SellCourseScreen.routeName: (context) => const SellCourseScreen(),
+        CourseVoucherScreen.routeName: (context) => const CourseVoucherScreen(),
+        MentorScreen.routeName: (context) => const MentorScreen(),
+        ChatMentorScreen.routeName: (context) => const ChatMentorScreen(),
+        SearchChatScreen.routeName: (context) => const SearchChatScreen(),
+        TaskListScreen.routeName: (context) => const TaskListScreen(),
+        ModuleDetailTask.routeName: (context) => const ModuleDetailTask(),
+        WishlistScreen.routeName: (context) => const WishlistScreen(),
+      },
     );
   }
 }
