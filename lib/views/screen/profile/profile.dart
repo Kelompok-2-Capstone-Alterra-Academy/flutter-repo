@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:staredu/utils/animation/fade_animation.dart';
+import 'package:staredu/utils/animation/slide_animation.dart';
 import 'package:staredu/utils/color/color.dart';
+import 'package:staredu/utils/preferences/preferences_utils.dart';
+import 'package:staredu/views/screen/auth/login/login_screen.dart';
 import 'package:staredu/widgets/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'package:staredu/widgets/profile/section_profile.dart';
 
@@ -13,6 +17,19 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  late PreferencesUtils preferencesUtils;
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  void init() async {
+    preferencesUtils = PreferencesUtils();
+    await preferencesUtils.init();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -152,7 +169,13 @@ class _ProfileState extends State<Profile> {
                             },
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () async {
+                          await preferencesUtils.removePreferences('token');
+                          await preferencesUtils.removePreferences('isLogin');
+                          // ignore: use_build_context_synchronously
+                          Navigator.pushReplacement(context,
+                              FadeAnimation(page: const LoginScreen()));
+                        },
                         child: Text("Keluar",
                             style: GoogleFonts.poppins(
                               color: primaryColor,

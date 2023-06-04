@@ -37,6 +37,7 @@ class AuthAPI {
   }
 
   static Future<dynamic> login(String email, String password) async {
+    print('email: $email');
     final response = Dio().post(
       '$BASE_URL_API/login',
       data: {
