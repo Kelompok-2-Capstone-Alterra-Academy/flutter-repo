@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class BottomNavigationBarComponentViewModel extends ChangeNotifier {
   // Add your state and logic here
-  int _currentIndex = 2;
+  int _currentIndex = 0;
 
   int get currentIndex => _currentIndex;
 
