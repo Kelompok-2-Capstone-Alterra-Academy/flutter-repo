@@ -374,7 +374,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             GestureDetector(
                               onTap: () {
                                 // ignore: use_build_context_synchronously
-                                Navigator.pushReplacement(
+                                Navigator.push(
                                     context,
                                     SlideAnimation(
                                         page: const RegisterScreen()));

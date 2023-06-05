@@ -1,17 +1,16 @@
 // Import the necessary packages
 import 'package:flutter/material.dart';
 
-// Define a slide animation
-class SlideAnimation extends PageRouteBuilder {
+// Define a slide animation with default duration and slide from bottom
+class SlideAnimation3 extends PageRouteBuilder {
   final Widget page;
   dynamic arguments;
 
-  SlideAnimation({required this.page, this.arguments})
+  SlideAnimation3({required this.page, this.arguments})
       : super(
           settings: arguments != null
               ? RouteSettings(arguments: arguments)
               : const RouteSettings(),
-          transitionDuration: const Duration(milliseconds: 1000),
           transitionsBuilder: (
             BuildContext context,
             Animation<double> animation,
@@ -20,7 +19,7 @@ class SlideAnimation extends PageRouteBuilder {
           ) {
             return SlideTransition(
               position: Tween<Offset>(
-                begin: const Offset(1.0, 0.0),
+                begin: const Offset(0.0, 1.0),
                 end: Offset.zero,
               ).animate(animation),
               child: child,

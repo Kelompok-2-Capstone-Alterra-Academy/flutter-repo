@@ -4,6 +4,7 @@ import 'package:staredu/views/screen/course/module/detail/module_detail_video_sc
 import 'package:staredu/views/screen/course/module/detail/module_detail_ppt_screen.dart';
 import 'package:staredu/views/screen/course/module/detail/module_detail_task_screen.dart';
 
+import '../../utils/animation/fade_animation2.dart';
 import '../../utils/color/color.dart';
 
 class ModuleSectionCard extends StatelessWidget {
@@ -49,21 +50,9 @@ class ModuleSectionCard extends StatelessWidget {
         isVideoAvailable!
             ? GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(
-                    PageRouteBuilder(
-                      pageBuilder: (context, animations, secondaryAnimations) =>
-                          ModuleVideoScreen(
-                              courseName: courseName, sectionName: sectionName),
-                      transitionsBuilder:
-                          (context, animations, secondaryAnimations, childs) {
-                        final tween = Tween(begin: 0.0, end: 1.0);
-                        return FadeTransition(
-                          opacity: animations.drive(tween),
-                          child: childs,
-                        );
-                      },
-                    ),
-                  );
+                  Navigator.of(context).push(FadeAnimation2(
+                      page: ModuleVideoScreen(
+                          courseName: courseName, sectionName: sectionName)));
                 },
                 child: Card(
                   elevation: 2,
@@ -217,10 +206,8 @@ class ModuleSectionCard extends StatelessWidget {
         isMaterialAvailable!
             ? GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    ModulDetailPPTScreen.routeName,
-                  );
+                  Navigator.push(context,
+                      FadeAnimation2(page: const ModulDetailPPTScreen()));
                 },
                 child: Card(
                   elevation: 2,
@@ -374,23 +361,11 @@ class ModuleSectionCard extends StatelessWidget {
         isAssignmentAvailable!
             ? GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(
-                    PageRouteBuilder(
-                      pageBuilder: (context, animations, secondaryAnimations) =>
-                          ModuleDetailTask(
-                        courseName: courseName,
-                        sectionName: sectionName,
-                      ),
-                      transitionsBuilder:
-                          (context, animations, secondaryAnimations, childs) {
-                        final tween = Tween(begin: 0.0, end: 1.0);
-                        return FadeTransition(
-                          opacity: animations.drive(tween),
-                          child: childs,
-                        );
-                      },
-                    ),
-                  );
+                  Navigator.of(context).push(FadeAnimation2(
+                      page: ModuleDetailTask(
+                    courseName: courseName,
+                    sectionName: sectionName,
+                  )));
                 },
                 child: Card(
                   elevation: 2,

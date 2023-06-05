@@ -4,6 +4,7 @@ import 'package:staredu/utils/constant/mentor_list.dart';
 
 import '../../../models/mentor_model.dart';
 import '../../../utils/color/color.dart';
+import '../../../widgets/bottom_navigation_bar/bottom_navigation_bar.dart';
 
 class SearchChatScreen extends StatefulWidget {
   static const String routeName = "/search_chat";
@@ -134,6 +135,7 @@ class _SearchChatScreenState extends State<SearchChatScreen> {
           ),
         ],
       ),
+      bottomNavigationBar: const BottomNavigationBarComponent(),
     );
   }
 }

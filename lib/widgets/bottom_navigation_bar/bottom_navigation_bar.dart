@@ -10,6 +10,8 @@ import 'package:staredu/views/screen/mentor/chat_mentor_screen.dart';
 import 'package:staredu/views/screen/profile/profile.dart';
 import 'package:staredu/widgets/bottom_navigation_bar/bottom_navigation_bar_view_model.dart';
 
+import '../../utils/animation/fade_animation2.dart';
+
 class BottomNavigationBarComponent extends StatefulWidget {
   const BottomNavigationBarComponent({super.key});
 
@@ -28,62 +30,32 @@ class _BottomNavigationBarComponentState
   void changeScreen(int index) {
     switch (index) {
       case 0:
-        Navigator.pushAndRemoveUntil(
-            context,
-            PageRouteBuilder(
-              pageBuilder: (context, animations, secondaryAnimations) =>
-                  const HomeScreen(),
-              transitionsBuilder:
-                  (context, animations, secondaryAnimations, childs) {
-                final tween = Tween(begin: 0.0, end: 1.0);
-                return FadeTransition(
-                  opacity: animations.drive(tween),
-                  child: childs,
-                );
-              },
-            ),
-            (route) => false);
+        Navigator.pushAndRemoveUntil(context,
+            FadeAnimation2(page: const HomeScreen()), (route) => false);
         break;
       case 1:
         Navigator.pushAndRemoveUntil(
             context,
-            PageRouteBuilder(
-              pageBuilder: (context, animations, secondaryAnimations) =>
-                  const CourseTakenListScreen(),
-              transitionsBuilder:
-                  (context, animations, secondaryAnimations, childs) {
-                final tween = Tween(begin: 0.0, end: 1.0);
-                return FadeTransition(
-                  opacity: animations.drive(tween),
-                  child: childs,
-                );
-              },
-            ),
+            FadeAnimation2(page: const CourseTakenListScreen()),
             (route) => false);
         break;
       case 2:
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const ChatMentorScreen(),
-            ),
-            (route) => false);
+        Navigator.pushAndRemoveUntil(context,
+            FadeAnimation2(page: const ChatMentorScreen()), (route) => false);
         break;
       case 3:
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(
-              builder: (context) => const HistoryTransactionScreen(),
-            ),
+            FadeAnimation2(page: const HistoryTransactionScreen()),
             (route) => false);
         break;
       case 4:
-        Navigator.pushNamedAndRemoveUntil(
-            context, Profile.routeName, (route) => false);
+        Navigator.pushAndRemoveUntil(
+            context, FadeAnimation2(page: const Profile()), (route) => false);
         break;
       default:
-        Navigator.pushNamedAndRemoveUntil(
-            context, HomeScreen.routeName, (route) => false);
+        Navigator.pushAndRemoveUntil(context,
+            FadeAnimation2(page: const HomeScreen()), (route) => false);
         break;
     }
   }
@@ -135,7 +107,7 @@ class _BottomNavigationBarComponentState
                     label: 'Chat',
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.shopping_cart),
+                    icon: Icon(Icons.list_alt_rounded),
                     label: 'Transaksi',
                   ),
                   BottomNavigationBarItem(

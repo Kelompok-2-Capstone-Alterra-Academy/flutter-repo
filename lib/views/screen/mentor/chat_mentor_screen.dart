@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/constant/mentor_list.dart';
 import 'package:staredu/views/screen/mentor/search_chat_screen.dart';
 
+import '../../../utils/animation/fade_animation2.dart';
 import '../../../utils/color/color.dart';
 import '../../../widgets/bottom_navigation_bar/bottom_navigation_bar.dart';
 
@@ -32,10 +33,7 @@ class _ChatMentorScreenState extends State<ChatMentorScreen> {
             IconButton(
               onPressed: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SearchChatScreen(),
-                    ));
+                    context, FadeAnimation2(page: const SearchChatScreen()));
               },
               icon: const Icon(Icons.search_rounded),
               splashRadius: 18,

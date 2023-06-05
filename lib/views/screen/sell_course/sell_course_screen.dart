@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/models/sell_course_model.dart';
+import 'package:staredu/utils/animation/fade_animation.dart';
 import 'package:staredu/views/screen/sell_course/course_voucher_screen.dart';
 import 'package:staredu/views/screen/sell_course/sell_course_detail_screen.dart';
+import '../../../utils/animation/fade_animation2.dart';
 import '../../../utils/color/color.dart';
 import '../../../utils/constant/sell_course_list.dart';
 import '../../../widgets/sell_course/filter_button.dart';
@@ -119,27 +121,14 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
                                 Radius.circular(8),
                               ),
                               onTap: () {
-                                Navigator.of(context).push(
-                                  PageRouteBuilder(
-                                    pageBuilder: (context, animations,
-                                            secondaryAnimations) =>
-                                        SellCourseDetailScreen(
-                                            id: findCourse[index].id!,
-                                            img: findCourse[index].img!,
-                                            title: findCourse[index].title!,
-                                            rating: findCourse[index].rating!,
-                                            student: findCourse[index].student!,
-                                            price: findCourse[index].price!),
-                                    transitionsBuilder: (context, animations,
-                                        secondaryAnimations, childs) {
-                                      final tween = Tween(begin: 0.0, end: 1.0);
-                                      return FadeTransition(
-                                        opacity: animations.drive(tween),
-                                        child: childs,
-                                      );
-                                    },
-                                  ),
-                                );
+                                Navigator.of(context).push(FadeAnimation2(
+                                    page: SellCourseDetailScreen(
+                                        id: findCourse[index].id!,
+                                        img: findCourse[index].img!,
+                                        title: findCourse[index].title!,
+                                        rating: findCourse[index].rating!,
+                                        student: findCourse[index].student!,
+                                        price: findCourse[index].price!)));
                               },
                               child: Card(
                                 elevation: 2,

@@ -159,7 +159,9 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                     child: Text(
                       "Selesai",
                       style: GoogleFonts.poppins(
