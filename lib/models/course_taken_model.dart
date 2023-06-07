@@ -5,6 +5,8 @@ class CourseTakenModel {
   String? currentSection;
   String? totalSection;
   double? progress;
+  String? score;
+  bool? certificateStatus;
 
   CourseTakenModel({
     this.id,
@@ -13,5 +15,7 @@ class CourseTakenModel {
     this.currentSection,
     this.totalSection,
     this.progress,
+    this.score,
+    this.certificateStatus,
   });
 }
