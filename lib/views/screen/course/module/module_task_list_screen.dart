@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/constant/list_course_taken.dart';
-import 'package:staredu/utils/constant/module_section_list.dart';
+import 'package:staredu/utils/constant/module_list.dart';
 import 'package:staredu/widgets/module_course/module_task_card.dart';
 
 class TaskListScreen extends StatefulWidget {
@@ -57,15 +57,15 @@ class _TaskListScreenState extends State<TaskListScreen> {
                     return ListView.separated(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: moduleSection.length,
+                      itemCount: moduleList.length,
                       itemBuilder: (context, indexSection) {
                         String? courseName = courseTaken[indexCourse].title;
                         return ModuleTaskCard(
                           courseName: courseName,
-                          sectionName: moduleSection[indexSection].title,
+                          sectionName: moduleList[indexSection].title,
                           sectionNumbering: indexSection.toInt(),
                           isAssignmentAvailable:
-                              moduleSection[indexSection].assignment,
+                              moduleList[indexSection].assignment,
                         );
                       },
                       separatorBuilder: (BuildContext context, int index) {

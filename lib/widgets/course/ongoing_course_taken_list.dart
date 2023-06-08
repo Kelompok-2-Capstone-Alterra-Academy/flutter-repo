@@ -62,6 +62,7 @@ class _OnGoingCourseTakenListScreenState
                                       ModuleListScreen(
                                 courseName:
                                     onGoingCourse[index].title.toString(),
+                                courseId: int.parse(onGoingCourse[index].id),
                               ),
                               transitionsBuilder: (context, animations,
                                   secondaryAnimations, childs) {

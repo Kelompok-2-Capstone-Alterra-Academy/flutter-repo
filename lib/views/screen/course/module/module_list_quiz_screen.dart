@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/color/color.dart';
-import 'package:staredu/utils/constant/module_section_list.dart';
+import 'package:staredu/utils/constant/module_list.dart';
 import 'package:staredu/widgets/module_course/module_quiz_card.dart';
 
 class ModuleListQuizScreen extends StatefulWidget {
@@ -66,12 +66,12 @@ class _ModuleListQuizScreenState extends State<ModuleListQuizScreen> {
               ListView.separated(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: moduleSection.length,
+                itemCount: moduleList.length,
                 itemBuilder: (context, index) {
                   return ModuleQuizCard(
-                    id: moduleSection[index].id!.toInt(),
-                    isQuizAvailable: moduleSection[index].quiz,
-                    title: moduleSection[index].title!.toString(),
+                    id: moduleList[index].id!.toInt(),
+                    isQuizAvailable: moduleList[index].quiz,
+                    title: moduleList[index].title!.toString(),
                     numbering: index.toString(),
                   );
                 },

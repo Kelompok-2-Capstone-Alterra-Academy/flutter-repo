@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:staredu/utils/constant/list_course_taken.dart';
 import 'package:staredu/views/screen/auth/forgot_password/forgot_password_view_model.dart';
 import 'package:staredu/views/screen/auth/forgot_password/main/forgot_password_screen.dart';
 import 'package:staredu/views/screen/auth/forgot_password/otp_verification/otp_verification_screen.dart';
@@ -45,6 +46,7 @@ import 'package:staredu/views/screen/splash_welcome/splash_welcome_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/views/screen/wishlist/wishlist_screen.dart';
 import 'package:staredu/views/view_model/course/course_taken_view_model.dart';
+import 'package:staredu/views/view_model/course/module_list_view_model.dart';
 import 'package:staredu/widgets/bottom_navigation_bar/bottom_navigation_bar_view_model.dart';
 
 class PostHttpOverrides extends HttpOverrides {
@@ -68,6 +70,7 @@ void main() {
       ChangeNotifierProvider(create: (_) => LoginViewModel()),
       ChangeNotifierProvider(create: (_) => ForgotPasswordViewModel()),
       ChangeNotifierProvider(create: (_) => CourseTakenViewModel()),
+      ChangeNotifierProvider(create: (_) => ModuleListViewModel()),
     ],
     child: const StarEdu(),
   ));
@@ -85,7 +88,7 @@ class StarEdu extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.white,
       ),
-      initialRoute: SplashWelcomeScreen.routeName,
+      initialRoute: CourseTakenListScreen.routeName,
       routes: {
         HomeScreen.routeName: (context) => const HomeScreen(),
         SplashWelcomeScreen.routeName: (context) => const SplashWelcomeScreen(),
