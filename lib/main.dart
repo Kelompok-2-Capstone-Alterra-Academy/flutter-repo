@@ -46,7 +46,7 @@ import 'package:staredu/views/screen/splash_welcome/splash_welcome_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/views/screen/wishlist/wishlist_screen.dart';
 import 'package:staredu/views/view_model/course/course_taken_view_model.dart';
-import 'package:staredu/views/view_model/course/module_list_view_model.dart';
+import 'package:staredu/views/view_model/course/module_view_model.dart';
 import 'package:staredu/widgets/bottom_navigation_bar/bottom_navigation_bar_view_model.dart';
 
 class PostHttpOverrides extends HttpOverrides {
