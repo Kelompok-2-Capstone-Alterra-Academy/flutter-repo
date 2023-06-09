@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:staredu/models/user_model.dart';
 import 'package:staredu/utils/color/color.dart';
 
 class EditProfile extends StatefulWidget {
@@ -25,6 +26,7 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
+    final User user = ModalRoute.of(context)!.settings.arguments as User;
     return Scaffold(
       appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.black),
@@ -72,7 +74,7 @@ class _EditProfileState extends State<EditProfile> {
                             SizedBox(
                               width: 250,
                               child: TextFormField(
-                                controller: nameController,
+                                controller: nameController..text = user.name,
                                 keyboardType: TextInputType.text,
                                 autocorrect: false,
                                 textInputAction: TextInputAction.next,
@@ -92,7 +94,7 @@ class _EditProfileState extends State<EditProfile> {
                             SizedBox(
                               width: 250,
                               child: TextFormField(
-                                controller: emailController,
+                                controller: emailController..text = user.email,
                                 keyboardType: TextInputType.emailAddress,
                                 autocorrect: false,
                                 textInputAction: TextInputAction.next,
@@ -113,7 +115,7 @@ class _EditProfileState extends State<EditProfile> {
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
-                  controller: dateController,
+                  controller: dateController..text = user.dob,
                   keyboardType: TextInputType.datetime,
                   autocorrect: false,
                   textInputAction: TextInputAction.next,
@@ -133,7 +135,7 @@ class _EditProfileState extends State<EditProfile> {
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
-                  controller: addressController,
+                  controller: addressController..text = user.city,
                   keyboardType: TextInputType.text,
                   autocorrect: false,
                   textInputAction: TextInputAction.next,
@@ -149,7 +151,7 @@ class _EditProfileState extends State<EditProfile> {
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
-                  controller: phoneController,
+                  controller: phoneController..text = user.phoneNumber,
                   keyboardType: TextInputType.phone,
                   autocorrect: false,
                   textInputAction: TextInputAction.next,
@@ -166,7 +168,7 @@ class _EditProfileState extends State<EditProfile> {
                 const SizedBox(height: 10),
                 //gender
                 TextFormField(
-                  controller: genderController,
+                  controller: genderController..text = user.gender,
                   keyboardType: TextInputType.text,
                   autocorrect: false,
                   textInputAction: TextInputAction.next,
@@ -187,7 +189,7 @@ class _EditProfileState extends State<EditProfile> {
                 const SizedBox(height: 10),
                 // grade
                 TextFormField(
-                  controller: gradeController,
+                  controller: gradeController..text = user.classes,
                   keyboardType: TextInputType.text,
                   autocorrect: false,
                   textInputAction: TextInputAction.next,
@@ -207,7 +209,7 @@ class _EditProfileState extends State<EditProfile> {
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
-                  controller: schoolNameController,
+                  controller: schoolNameController..text = user.schoolName,
                   keyboardType: TextInputType.text,
                   autocorrect: false,
                   textInputAction: TextInputAction.next,
@@ -223,7 +225,7 @@ class _EditProfileState extends State<EditProfile> {
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
-                  controller: majorController,
+                  controller: majorController..text = user.major,
                   keyboardType: TextInputType.text,
                   autocorrect: false,
                   textInputAction: TextInputAction.next,
