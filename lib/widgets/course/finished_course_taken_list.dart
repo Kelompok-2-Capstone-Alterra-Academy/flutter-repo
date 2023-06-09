@@ -23,12 +23,9 @@ class _FinishedCourseTakenListScreenState
     extends State<FinishedCourseTakenListScreen> {
   @override
   Widget build(BuildContext context) {
-    final finishedCourse = [];
-    for (var i = 0; i < widget.viewModel.courseTaken.length; i++) {
-      if (widget.viewModel.courseTaken[i].progress == 100) {
-        finishedCourse.add(widget.viewModel.courseTaken[i]);
-      }
-    }
+    final finishedCourse = widget.viewModel.courseTaken
+        .where((course) => course.progress == 100)
+        .toList();
     return SingleChildScrollView(
       child: Container(
         color: whiteColor,
@@ -106,7 +103,7 @@ class _FinishedCourseTakenListScreenState
                                             ),
                                           ),
                                           Text(
-                                            finishedCourse[index].score,
+                                            finishedCourse[index].score!,
                                             style: GoogleFonts.poppins(
                                               fontStyle: FontStyle.normal,
                                               fontWeight: FontWeight.w600,
@@ -149,7 +146,7 @@ class _FinishedCourseTakenListScreenState
                                 child: CircleProgressBar(
                                   foregroundColor: primaryColor,
                                   backgroundColor: searchBarColor,
-                                  value: finishedCourse[index].progress,
+                                  value: finishedCourse[index].progress!,
                                   child: Container(
                                     margin: const EdgeInsets.all(4),
                                     decoration: BoxDecoration(

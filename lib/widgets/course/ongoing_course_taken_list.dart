@@ -23,12 +23,9 @@ class _OnGoingCourseTakenListScreenState
     extends State<OnGoingCourseTakenListScreen> {
   @override
   Widget build(BuildContext context) {
-    final onGoingCourse = [];
-    for (var i = 0; i < widget.viewModel.courseTaken.length; i++) {
-      if (widget.viewModel.courseTaken[i].progress! < 100) {
-        onGoingCourse.add(widget.viewModel.courseTaken[i]);
-      }
-    }
+    final onGoingCourse = widget.viewModel.courseTaken
+        .where((course) => course.progress! <= 100)
+        .toList();
     return SingleChildScrollView(
       child: Container(
         color: whiteColor,
@@ -185,8 +182,8 @@ class _OnGoingCourseTakenListScreenState
                                               size: 10,
                                               borderRadius:
                                                   BorderRadius.circular(100),
-                                              currentValue:
-                                                  onGoingCourse[index].progress,
+                                              currentValue: onGoingCourse[index]
+                                                  .progress!,
                                               maxValue: 100,
                                               direction: Axis.horizontal,
                                             ),
