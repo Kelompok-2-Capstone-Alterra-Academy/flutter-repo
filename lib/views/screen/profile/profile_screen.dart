@@ -7,7 +7,7 @@ import 'package:staredu/utils/animation/slide_animation.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/preferences/preferences_utils.dart';
 import 'package:staredu/views/screen/auth/login/login_screen.dart';
-import 'package:staredu/views/screen/edit_profile/edit_profile.dart';
+import 'package:staredu/views/screen/edit_profile/edit_profile_screen.dart';
 import 'package:staredu/views/screen/profile/profile_view_model.dart';
 import 'package:staredu/widgets/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'package:staredu/widgets/profile/section_profile.dart';

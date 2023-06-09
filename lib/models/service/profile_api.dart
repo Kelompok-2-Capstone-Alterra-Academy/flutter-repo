@@ -20,4 +20,17 @@ class ProfileAPI {
     //     .catchError((e) => handleErrorApi(e));
     return userMock;
   }
+
+  static Future<User> updateUserDetail(User? user, String? token) async {
+    // final response = Dio().put('$BASE_URL_API/user/${user?.email}',
+    //     options: Options(headers: {
+    //       'Authorization': 'Bearer $token',
+    //     }),
+    //     data: user?.toJson());
+    // return response
+    //     .then((value) => value.data)
+    //     .catchError((e) => handleErrorApi(e));
+    return userMock;
+
+  }
 }
