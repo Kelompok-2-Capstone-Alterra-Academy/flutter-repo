@@ -25,4 +25,15 @@ class CourseAPI {
     //     .catchError((e) => handleErrorApi(e));
     return courseTaken;
   }
+
+  Future<dynamic> sendTask() async {
+    // final response = await Dio().post(
+    // data:{
+    // });
+
+    // return response
+    //     .then((value) => value.data)
+    //     .catchError((e) => handleErrorApi(e));
+    return 'success';
+  }
 }
