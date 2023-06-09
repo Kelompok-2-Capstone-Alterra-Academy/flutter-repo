@@ -78,8 +78,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
       return 'Kata Sandi harus mengandung 1 huruf kecil';
     } else if (!value.contains(RegExp(r'^(?=.*?[0-9])'))) {
       return 'Kata Sandi harus mengandung 1 angka';
-    } else if (!value.contains(RegExp(r'^(?=.*?[!@#\$&*~])'))) {
-      return 'Kata Sandi harus mengandung 1 karakter spesial';
     }
     return null;
   }

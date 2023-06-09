@@ -173,8 +173,10 @@ class _ProfileState extends State<Profile> {
                           await preferencesUtils.removePreferences('token');
                           await preferencesUtils.removePreferences('isLogin');
                           // ignore: use_build_context_synchronously
-                          Navigator.pushReplacement(context,
-                              FadeAnimation(page: const LoginScreen()));
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              FadeAnimation(page: const LoginScreen()),
+                              (route) => false);
                         },
                         child: Text("Keluar",
                             style: GoogleFonts.poppins(
