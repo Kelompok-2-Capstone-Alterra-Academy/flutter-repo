@@ -146,14 +146,14 @@ class _WishlistScreenState extends State<WishlistScreen> {
                                     pageBuilder: (context, animations,
                                             secondaryAnimations) =>
                                         SellCourseDetailScreen(
-                                            id: wishlistItems[index].id!,
-                                            img: wishlistItems[index].img!,
-                                            title: wishlistItems[index].title!,
-                                            rating:
-                                                wishlistItems[index].rating!,
-                                            student:
-                                                wishlistItems[index].student!,
-                                            price: wishlistItems[index].price!),
+                                      id: wishlistItems[index].id!,
+                                      img: wishlistItems[index].img!,
+                                      title: wishlistItems[index].title!,
+                                      rating: wishlistItems[index].rating!,
+                                      student: wishlistItems[index].student!,
+                                      price: wishlistItems[index].price!,
+                                      grade: wishlistItems[index].grade!,
+                                    ),
                                     transitionsBuilder: (context, animations,
                                         secondaryAnimations, childs) {
                                       final tween = Tween(begin: 0.0, end: 1.0);
