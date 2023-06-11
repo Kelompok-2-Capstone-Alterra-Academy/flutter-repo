@@ -11,6 +11,9 @@ class ModuleListViewModel with ChangeNotifier {
   List<DetailVideoModel> _detailVideo = [];
   List<DetailVideoModel> get detailVideo => _detailVideo;
 
+  List<DetailTaskModel> _detailTask = [];
+  List<DetailTaskModel> get detailTask => _detailTask;
+
   final ModuleApi moduleApi = ModuleApi();
 
   MyState myState = MyState.initial;
@@ -34,6 +37,18 @@ class ModuleListViewModel with ChangeNotifier {
 
     try {
       _detailVideo = await api.getSectionVideo();
+      myState = MyState.success;
+      notifyListeners();
+    } catch (e) {
+      myState = MyState.failed;
+    }
+  }
+
+  Future getSectionTask() async {
+    myState = MyState.loading;
+
+    try {
+      _detailTask = await api.getSectionTask();
       myState = MyState.success;
       notifyListeners();
     } catch (e) {

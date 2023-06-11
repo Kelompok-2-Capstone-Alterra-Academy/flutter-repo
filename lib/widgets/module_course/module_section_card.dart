@@ -32,11 +32,6 @@ class ModuleSectionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<ModuleListViewModel>(context, listen: false).getSectionVideo();
-    final List linkVideo = ModuleListViewModel()
-        .detailVideo
-        .where((detailVideo) => detailVideo.sectionId == id)
-        .toList();
     int numbering = 1;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -408,6 +403,8 @@ class ModuleSectionCard extends StatelessWidget {
                     PageRouteBuilder(
                       pageBuilder: (context, animations, secondaryAnimations) =>
                           ModuleDetailTask(
+                        courseId: id,
+                        sectionId: sectionId,
                         courseName: courseName,
                         sectionName: sectionName,
                       ),

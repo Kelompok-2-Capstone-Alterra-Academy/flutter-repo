@@ -113,63 +113,6 @@ class ModuleApi {
     // return response
     //     .then((value) => value.data)
     //     .catchError((e) => handleErrorApi(e));
-
-    // final List<DetailVideoModel> data = [
-    //   DetailVideoModel(
-    //     id: 1,
-    //     sectionId: 1,
-    //     courseId: 1,
-    //     link: 'MLpWrANjFbI',
-    //   ),
-    //   DetailVideoModel(
-    //     id: 2,
-    //     sectionId: 2,
-    //     courseId: 1,
-    //     link: 'MLpWrANjFbI',
-    //   ),
-    //   DetailVideoModel(
-    //     id: 3,
-    //     sectionId: 3,
-    //     courseId: 1,
-    //     link: 'MLpWrANjFbI',
-    //   ),
-    //   DetailVideoModel(
-    //     id: 4,
-    //     sectionId: 1,
-    //     courseId: 2,
-    //     link: 'MLpWrANjFbI',
-    //   ),
-    //   DetailVideoModel(
-    //     id: 5,
-    //     sectionId: 2,
-    //     courseId: 2,
-    //     link: 'MLpWrANjFbI',
-    //   ),
-    //   DetailVideoModel(
-    //     id: 6,
-    //     sectionId: 3,
-    //     courseId: 2,
-    //     link: 'MLpWrANjFbI',
-    //   ),
-    //   DetailVideoModel(
-    //     id: 7,
-    //     sectionId: 1,
-    //     courseId: 3,
-    //     link: 'MLpWrANjFbI',
-    //   ),
-    //   DetailVideoModel(
-    //     id: 8,
-    //     sectionId: 2,
-    //     courseId: 3,
-    //     link: 'MLpWrANjFbI',
-    //   ),
-    //   DetailVideoModel(
-    //     id: 9,
-    //     sectionId: 3,
-    //     courseId: 3,
-    //     link: 'MLpWrANjFbI',
-    //   ),
-    // ];
     final List<DetailVideoModel> data = [
       DetailVideoModel(
         link: 'MLpWrANjFbI',
@@ -179,6 +122,31 @@ class ModuleApi {
       ),
       DetailVideoModel(
         link: 'MLpWrANjFbI',
+        id: 1,
+        sectionId: 2,
+        courseId: 1,
+      ),
+    ];
+    return data;
+  }
+
+  Future<List<DetailTaskModel>> getSectionTask() async {
+    // final response = await Dio().get();
+
+    // return response
+    //     .then((value) => value.data)
+    //     .catchError((e) => handleErrorApi(e));
+    final List<DetailTaskModel> data = [
+      DetailTaskModel(
+        deskripsi:
+            'Kerjakan Tugas Matematika Dasar pada dokumen dibawah ini. Jawaban di tulis tangan kemudian diFoto/discan dan kemudian diupload dalam bentuk pdf Nama file (no induk_nama_jenis latihan) ini make dummy api',
+        id: 1,
+        sectionId: 1,
+        courseId: 1,
+      ),
+      DetailTaskModel(
+        deskripsi:
+            'Kerjakan Tugas Matematika Dasar pada dokumen dibawah ini. Jawaban di tulis tangan kemudian diFoto/discan dan kemudian diupload dalam bentuk pdf Nama file (no induk_nama_jenis latihan) ini make dummy api',
         id: 1,
         sectionId: 2,
         courseId: 1,
