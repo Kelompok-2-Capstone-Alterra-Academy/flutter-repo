@@ -81,7 +81,10 @@ class ModuleQuizDetailDoneDialog extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
                 child: Text(
                   "Quiz Selanjutnya",
                   style: GoogleFonts.poppins(

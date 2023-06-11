@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/constant/sell_course_list.dart';
+import 'package:staredu/views/screen/course/course_taken_list_screen.dart';
+import 'package:staredu/views/screen/history/history_transaction_screen.dart';
 import '../../../utils/color/color.dart';
 import '../../../widgets/sell_course/detail_payment.dart';
 
 class CoursePaymentScreen extends StatefulWidget {
   static const String routeName = "/course_payment";
 
-  final int indexSellCourse;
+  final String title;
+  final String price;
 
-  const CoursePaymentScreen({super.key, required this.indexSellCourse});
+  const CoursePaymentScreen(
+      {super.key, required this.title, required this.price});
 
   @override
   State<CoursePaymentScreen> createState() => _CoursePaymentScreenState();
@@ -65,7 +69,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                       DetailKursus(
                         icon: Icons.menu_book,
                         title: "Nama Kursus",
-                        subtitle: sellCourses[widget.indexSellCourse].title!,
+                        subtitle: widget.title,
                       ),
                       const SizedBox(height: 15),
                       const DetailKursus(
@@ -136,7 +140,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                       DetailKursus(
                         icon: Icons.payments_outlined,
                         title: "Harga",
-                        subtitle: sellCourses[widget.indexSellCourse].price!,
+                        subtitle: widget.price,
                       ),
                       const SizedBox(height: 15),
                       const DetailKursus(
@@ -158,7 +162,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                             style: GoogleFonts.poppins(
                                 fontSize: 11,
                                 fontWeight: FontWeight.w500,
-                                color: greyColor),
+                                color: greyColor2),
                           ),
                           Text(
                             "Rp. 750.000",
@@ -233,7 +237,26 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                                 child: Material(
                                   color: Colors.transparent,
                                   child: InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        PageRouteBuilder(
+                                          pageBuilder: (context, animations,
+                                                  secondaryAnimations) =>
+                                              const CourseTakenListScreen(),
+                                          transitionsBuilder: (context,
+                                              animations,
+                                              secondaryAnimations,
+                                              childs) {
+                                            final tween =
+                                                Tween(begin: 0.0, end: 1.0);
+                                            return FadeTransition(
+                                              opacity: animations.drive(tween),
+                                              child: childs,
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    },
                                     child: Padding(
                                       padding: const EdgeInsets.only(
                                           left: 10, right: 12),
@@ -266,7 +289,26 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                                 child: Material(
                                   color: Colors.transparent,
                                   child: InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        PageRouteBuilder(
+                                          pageBuilder: (context, animations,
+                                                  secondaryAnimations) =>
+                                              const HistoryTransactionScreen(),
+                                          transitionsBuilder: (context,
+                                              animations,
+                                              secondaryAnimations,
+                                              childs) {
+                                            final tween =
+                                                Tween(begin: 0.0, end: 1.0);
+                                            return FadeTransition(
+                                              opacity: animations.drive(tween),
+                                              child: childs,
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    },
                                     child: Padding(
                                       padding: const EdgeInsets.only(
                                           left: 10, right: 12),

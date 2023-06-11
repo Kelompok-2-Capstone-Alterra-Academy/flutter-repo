@@ -41,43 +41,39 @@ class _MentorScreenState extends State<MentorScreen> {
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(8))),
             elevation: 2,
-            child: InkWell(
-              borderRadius: const BorderRadius.all(Radius.circular(8)),
-              onTap: () {},
-              child: Column(
-                children: [
-                  const SizedBox(height: 19),
-                  Container(
-                    width: 60,
-                    height: 60,
-                    decoration: const BoxDecoration(shape: BoxShape.circle),
-                    child: Image.asset(
-                      mentorList[index].pic!,
-                      fit: BoxFit.cover,
-                    ),
+            child: Column(
+              children: [
+                const SizedBox(height: 19),
+                Container(
+                  width: 60,
+                  height: 60,
+                  decoration: const BoxDecoration(shape: BoxShape.circle),
+                  child: Image.asset(
+                    mentorList[index].pic!,
+                    fit: BoxFit.cover,
                   ),
-                  const SizedBox(height: 9),
-                  Text(
-                    mentorList[index].name!,
+                ),
+                const SizedBox(height: 9),
+                Text(
+                  mentorList[index].name!,
+                  style: GoogleFonts.poppins(
+                      fontSize: 13, fontWeight: FontWeight.w500),
+                ),
+                const SizedBox(height: 10),
+                Container(
+                  width: 116,
+                  height: 20,
+                  decoration: const BoxDecoration(
+                      color: subjectColor,
+                      borderRadius: BorderRadius.all(Radius.circular(8))),
+                  child: Center(
+                      child: Text(
+                    mentorList[index].subject!,
                     style: GoogleFonts.poppins(
-                        fontSize: 13, fontWeight: FontWeight.w500),
-                  ),
-                  const SizedBox(height: 10),
-                  Container(
-                    width: 116,
-                    height: 20,
-                    decoration: const BoxDecoration(
-                        color: subjectColor,
-                        borderRadius: BorderRadius.all(Radius.circular(8))),
-                    child: Center(
-                        child: Text(
-                      mentorList[index].subject!,
-                      style: GoogleFonts.poppins(
-                          fontSize: 11, fontWeight: FontWeight.w600),
-                    )),
-                  ),
-                ],
-              ),
+                        fontSize: 11, fontWeight: FontWeight.w600),
+                  )),
+                ),
+              ],
             ),
           ),
         ),

@@ -3,8 +3,11 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/utils/color/color.dart';
+import 'package:staredu/views/screen/course/course_taken_list_screen.dart';
+import 'package:staredu/views/screen/history/history_transaction_screen.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
 import 'package:staredu/views/screen/profile/profile_screen.dart';
+import 'package:staredu/views/screen/mentor/chat_mentor_screen.dart';
 import 'package:staredu/widgets/bottom_navigation_bar/bottom_navigation_bar_view_model.dart';
 
 class BottomNavigationBarComponent extends StatefulWidget {
@@ -25,10 +28,55 @@ class _BottomNavigationBarComponentState
   void changeScreen(int index) {
     switch (index) {
       case 0:
-        Navigator.pushNamedAndRemoveUntil(
-            context, HomeScreen.routeName, (route) => false);
+        Navigator.pushAndRemoveUntil(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (context, animations, secondaryAnimations) =>
+                  const HomeScreen(),
+              transitionsBuilder:
+                  (context, animations, secondaryAnimations, childs) {
+                final tween = Tween(begin: 0.0, end: 1.0);
+                return FadeTransition(
+                  opacity: animations.drive(tween),
+                  child: childs,
+                );
+              },
+            ),
+            (route) => false);
         break;
-      // TODO Add Other Screen
+      case 1:
+        Navigator.pushAndRemoveUntil(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (context, animations, secondaryAnimations) =>
+                  const CourseTakenListScreen(),
+              transitionsBuilder:
+                  (context, animations, secondaryAnimations, childs) {
+                final tween = Tween(begin: 0.0, end: 1.0);
+                return FadeTransition(
+                  opacity: animations.drive(tween),
+                  child: childs,
+                );
+              },
+            ),
+            (route) => false);
+        break;
+      case 2:
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const ChatMentorScreen(),
+            ),
+            (route) => false);
+        break;
+      case 3:
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const HistoryTransactionScreen(),
+            ),
+            (route) => false);
+        break;
       case 4:
         Navigator.pushNamedAndRemoveUntil(
             context, Profile.routeName, (route) => false);
@@ -79,11 +127,11 @@ class _BottomNavigationBarComponentState
                     label: 'Beranda',
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.collections_bookmark),
+                    icon: Icon(Icons.book_rounded),
                     label: 'Kursus',
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.chat_bubble),
+                    icon: Icon(Icons.message_rounded),
                     label: 'Chat',
                   ),
                   BottomNavigationBarItem(

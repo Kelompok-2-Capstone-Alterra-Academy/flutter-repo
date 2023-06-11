@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/color/color.dart';
+import 'package:staredu/views/screen/course/course_taken_list_screen.dart';
 
 class ReviewDialog extends StatefulWidget {
   const ReviewDialog({super.key});
@@ -197,7 +198,23 @@ class _ReviewDialogState extends State<ReviewDialog> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          PageRouteBuilder(
+                            pageBuilder:
+                                (context, animations, secondaryAnimations) =>
+                                    const CourseTakenListScreen(),
+                            transitionsBuilder: (context, animations,
+                                secondaryAnimations, childs) {
+                              final tween = Tween(begin: 0.0, end: 1.0);
+                              return FadeTransition(
+                                opacity: animations.drive(tween),
+                                child: childs,
+                              );
+                            },
+                          ),
+                        );
+                      },
                       child: Text(
                         "Kembali ke Kursus",
                         style: GoogleFonts.poppins(
