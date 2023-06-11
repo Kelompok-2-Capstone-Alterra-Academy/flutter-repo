@@ -33,8 +33,6 @@ class RegisterViewModel extends ChangeNotifier {
     }
 
     if (response['status_code'] == 201) {
-      await preferencesUtils.savePreferencesString('email', email);
-      await preferencesUtils.savePreferencesString('name', name);
       setStateRegister(MyState.success);
       return 'success';
     } else {
@@ -44,23 +42,23 @@ class RegisterViewModel extends ChangeNotifier {
   }
 
   Future<String> verifyOtp(String email, String otp) async {
-    response = await AuthAPI.verifyOtp(email, otp);
+    try {
+      response = await AuthAPI.verifyOtp(email, otp);
+      if (response == null) {
+        setStateOtp(MyState.failed);
+        return 'Verify OTP Failed';
+      }
 
-    PreferencesUtils preferencesUtils = PreferencesUtils();
-    await preferencesUtils.init();
-
-    if (response == null) {
+      if (response["data"]["token"] != null) {
+        setStateOtp(MyState.success);
+        return 'success ${response["data"]["token"]}';
+      } else {
+        setStateOtp(MyState.failed);
+        return response['message'];
+      }
+    } catch (e) {
       setStateOtp(MyState.failed);
-      return 'Verify OTP Failed';
-    }
-
-    if (response['status_code'] == 200) {
-      await preferencesUtils.savePreferencesBool('isLogin', true);
-      setStateOtp(MyState.success);
-      return 'success';
-    } else {
-      setStateOtp(MyState.failed);
-      return response['message'];
+      return response["message"] ?? 'Verify OTP Failed';
     }
   }
 

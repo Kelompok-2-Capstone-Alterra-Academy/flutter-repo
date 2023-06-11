@@ -6,8 +6,8 @@ import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/views/screen/course/course_taken_list_screen.dart';
 import 'package:staredu/views/screen/history/history_transaction_screen.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
+import 'package:staredu/views/screen/profile/profile_screen.dart';
 import 'package:staredu/views/screen/mentor/chat_mentor_screen.dart';
-import 'package:staredu/views/screen/profile/profile.dart';
 import 'package:staredu/widgets/bottom_navigation_bar/bottom_navigation_bar_view_model.dart';
 
 class BottomNavigationBarComponent extends StatefulWidget {

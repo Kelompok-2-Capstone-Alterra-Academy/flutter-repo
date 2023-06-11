@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:staredu/models/user_model.dart';
 import 'package:staredu/utils/animation/fade_animation.dart';
 import 'package:staredu/utils/animation/slide_animation.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/preferences/preferences_utils.dart';
 import 'package:staredu/views/screen/auth/login/login_screen.dart';
+import 'package:staredu/views/screen/edit_profile/edit_profile_screen.dart';
+import 'package:staredu/views/screen/profile/profile_view_model.dart';
 import 'package:staredu/widgets/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'package:staredu/widgets/profile/section_profile.dart';
 
@@ -18,6 +22,8 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   late PreferencesUtils preferencesUtils;
+  String? email;
+  late User? user;
 
   @override
   void initState() {
@@ -28,6 +34,13 @@ class _ProfileState extends State<Profile> {
   void init() async {
     preferencesUtils = PreferencesUtils();
     await preferencesUtils.init();
+    setState(() {
+      email = preferencesUtils.getPreferencesString('email');
+    });
+    String? token = preferencesUtils.getPreferencesString('token');
+    // ignore: use_build_context_synchronously
+    Provider.of<ProfileViewModel>(context, listen: false)
+        .getUserDetail(email, token);
   }
 
   @override
@@ -83,18 +96,23 @@ class _ProfileState extends State<Profile> {
                         const SizedBox(
                           height: 15,
                         ),
-                        Text('Ericha Septioana',
-                            style: GoogleFonts.poppins(
-                              color: whiteColor,
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 17,
-                            )),
+                        Consumer<ProfileViewModel>(
+                          builder: (context, value, child) {
+                            user = value.response;
+                            return Text(user?.name ?? '',
+                                style: GoogleFonts.poppins(
+                                  color: whiteColor,
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 17,
+                                ));
+                          },
+                        ),
                         const SizedBox(
                           height: 10,
                         ),
                         Text(
-                          'ericha@gmail.com',
+                          email ?? '',
                           style: GoogleFonts.poppins(
                             color: whiteColor,
                             fontStyle: FontStyle.normal,
@@ -114,12 +132,18 @@ class _ProfileState extends State<Profile> {
                 padding: const EdgeInsets.all(15.0),
                 child: Column(
                   children: [
-                    SectionProfile(
-                        title: 'Edit Profile',
-                        icon: Icons.person_outline,
-                        press: () {
-                          Navigator.pushNamed(context, '/edit-profile');
-                        }),
+                    Consumer<ProfileViewModel>(
+                      builder: (context, value, child) {
+                        user = value.response;
+                        return SectionProfile(
+                            title: 'Edit Profile',
+                            icon: Icons.person_outline,
+                            press: () {
+                              Navigator.push(context,
+                                  SlideAnimation(page: const EditProfile(), arguments: user));
+                            });
+                      },
+                    ),
                     const SizedBox(
                       height: 20,
                     ),
@@ -173,8 +197,10 @@ class _ProfileState extends State<Profile> {
                           await preferencesUtils.removePreferences('token');
                           await preferencesUtils.removePreferences('isLogin');
                           // ignore: use_build_context_synchronously
-                          Navigator.pushReplacement(context,
-                              FadeAnimation(page: const LoginScreen()));
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              FadeAnimation(page: const LoginScreen()),
+                              (route) => false);
                         },
                         child: Text("Keluar",
                             style: GoogleFonts.poppins(

@@ -1,10 +1,10 @@
 class User {
   String name;
   String email;
-  String password;
-  String role;
+  String dob;
+  String city;
   String phoneNumber;
-  String status;
+  String major;
   String schoolName;
   String classes;
   String gender;
@@ -12,10 +12,10 @@ class User {
   User(
       {required this.name,
       required this.email,
-      required this.password,
-      required this.role,
+      required this.dob,
+      required this.city,
       required this.phoneNumber,
-      required this.status,
+      required this.major,
       required this.schoolName,
       required this.classes,
       required this.gender});
@@ -24,10 +24,10 @@ class User {
     return User(
         name: json['name'],
         email: json['email'],
-        password: json['password'],
-        role: json['role'],
+        dob: json['dob'],
+        city: json['city'],
         phoneNumber: json['phone_number'],
-        status: json['status'],
+        major: json['major'],
         schoolName: json['school_name'],
         classes: json['class'],
         gender: json['gender']);
@@ -37,10 +37,10 @@ class User {
     return {
       'name': name,
       'email': email,
-      'password': password,
-      'role': role,
+      'dob': dob,
+      'city': city,
       'phone_number': phoneNumber,
-      'status': status,
+      'major': major,
       'school_name': schoolName,
       'class': classes,
       'gender': gender,
