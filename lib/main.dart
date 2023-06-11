@@ -17,7 +17,8 @@ import 'package:staredu/views/screen/course/module/module_live_session_screen.da
 import 'package:staredu/views/screen/course/module/module_list_quiz_screen.dart';
 import 'package:staredu/views/screen/auth/register/account_verification/account_verification.dart';
 import 'package:staredu/views/screen/auth/register/main/register_screen.dart';
-import 'package:staredu/views/screen/edit_profile/edit_profile.dart';
+import 'package:staredu/views/screen/edit_profile/edit_profile_screen.dart';
+import 'package:staredu/views/screen/edit_profile/edit_profile_view_model.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
 import 'package:staredu/views/screen/home/home_view_model.dart';
 import 'package:staredu/views/screen/notification/notification_screen.dart';
@@ -64,6 +65,7 @@ void main() {
       ChangeNotifierProvider(create: (_) => LoginViewModel()),
       ChangeNotifierProvider(create: (_) => ForgotPasswordViewModel()),
       ChangeNotifierProvider(create: (_) => ProfileViewModel()),
+      ChangeNotifierProvider(create: (_) => EditProfileViewModel()),
     ],
     child: const StarEdu(),
   ));

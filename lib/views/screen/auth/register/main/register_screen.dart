@@ -58,15 +58,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return null;
   }
 
-  String? validateUsername(String value) {
-    if (value.isEmpty) {
-      return 'Username tidak boleh kosong';
-    } else if (value.length < 3) {
-      return 'Username minimal 3 karakter';
-    }
-    return null;
-  }
-
   String? validatePassword(String value) {
     if (value.isEmpty) {
       return 'Kata Sandi tidak boleh kosong';
