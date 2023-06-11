@@ -17,12 +17,13 @@ import 'package:staredu/views/screen/course/module/module_live_session_screen.da
 import 'package:staredu/views/screen/course/module/module_list_quiz_screen.dart';
 import 'package:staredu/views/screen/auth/register/account_verification/account_verification.dart';
 import 'package:staredu/views/screen/auth/register/main/register_screen.dart';
-import 'package:staredu/views/screen/edit_profile/edit_profile.dart';
+import 'package:staredu/views/screen/edit_profile/edit_profile_screen.dart';
+import 'package:staredu/views/screen/edit_profile/edit_profile_view_model.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
 import 'package:staredu/views/screen/home/home_view_model.dart';
 import 'package:staredu/views/screen/notification/notification_screen.dart';
 import 'package:staredu/views/screen/notification/notification_view_model.dart';
-import 'package:staredu/views/screen/profile/profile.dart';
+import 'package:staredu/views/screen/profile/profile_screen.dart';
 import 'package:staredu/views/screen/course/module/detail/module_quiz_detail_screen.dart';
 import 'package:staredu/views/screen/course/module/module_send_task_screen.dart';
 import 'package:staredu/views/screen/course/module/module_task_list_screen.dart';
@@ -30,6 +31,7 @@ import 'package:staredu/views/screen/home/home_screen.dart';
 import 'package:staredu/views/screen/mentor/chat_mentor_screen.dart';
 import 'package:staredu/views/screen/mentor/mentor_screen.dart';
 import 'package:staredu/views/screen/mentor/search_chat_screen.dart';
+import 'package:staredu/views/screen/profile/profile_view_model.dart';
 import 'package:staredu/views/screen/sell_course/course_payment_screen.dart';
 import 'package:staredu/views/screen/sell_course/course_voucher_screen.dart';
 import 'package:staredu/views/screen/sell_course/sell_course_screen.dart';
@@ -62,6 +64,8 @@ void main() {
       ChangeNotifierProvider(create: (_) => RegisterViewModel()),
       ChangeNotifierProvider(create: (_) => LoginViewModel()),
       ChangeNotifierProvider(create: (_) => ForgotPasswordViewModel()),
+      ChangeNotifierProvider(create: (_) => ProfileViewModel()),
+      ChangeNotifierProvider(create: (_) => EditProfileViewModel()),
     ],
     child: const StarEdu(),
   ));

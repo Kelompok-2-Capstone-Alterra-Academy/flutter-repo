@@ -4,7 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
-import 'package:staredu/views/screen/profile/profile.dart';
+import 'package:staredu/views/screen/profile/profile_screen.dart';
 import 'package:staredu/widgets/bottom_navigation_bar/bottom_navigation_bar_view_model.dart';
 
 class BottomNavigationBarComponent extends StatefulWidget {
