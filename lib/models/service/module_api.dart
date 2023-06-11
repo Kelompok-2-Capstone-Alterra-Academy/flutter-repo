@@ -8,7 +8,7 @@ import 'package:staredu/utils/constant/list_course_taken.dart';
 import 'package:staredu/utils/constant/module_list.dart';
 
 class ModuleApi {
-  static Future<List<ModuleListModel>> getModuleList() async {
+  Future<List<ModuleListModel>> getModuleList() async {
     // final response = await Dio().get();
 
     // return response
@@ -107,7 +107,7 @@ class ModuleApi {
     return data;
   }
 
-  static Future<List<DetailVideoModel>> getSectionVideo() async {
+  Future<List<DetailVideoModel>> getSectionVideo() async {
     // final response = await Dio().get();
 
     // return response
@@ -175,6 +175,12 @@ class ModuleApi {
         link: 'MLpWrANjFbI',
         id: 1,
         sectionId: 1,
+        courseId: 1,
+      ),
+      DetailVideoModel(
+        link: 'MLpWrANjFbI',
+        id: 1,
+        sectionId: 2,
         courseId: 1,
       ),
     ];

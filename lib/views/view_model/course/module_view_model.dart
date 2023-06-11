@@ -15,11 +15,13 @@ class ModuleListViewModel with ChangeNotifier {
 
   MyState myState = MyState.initial;
 
+  ModuleApi api = ModuleApi();
+
   Future getModuleList() async {
     myState = MyState.loading;
 
     try {
-      _moduleList = await ModuleApi.getModuleList();
+      _moduleList = await api.getModuleList();
       myState = MyState.success;
       notifyListeners();
     } catch (e) {
@@ -31,7 +33,7 @@ class ModuleListViewModel with ChangeNotifier {
     myState = MyState.loading;
 
     try {
-      _detailVideo = await ModuleApi.getSectionVideo();
+      _detailVideo = await api.getSectionVideo();
       myState = MyState.success;
       notifyListeners();
     } catch (e) {

@@ -50,13 +50,15 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-    // final moduleViewModel =
-    //     Provider.of<ModuleListViewModel>(context, listen: false);
-    // final linkVideo = moduleViewModel.detailVideo.where((detailVideo) =>
-    //     detailVideo.courseId == widget.courseId &&
-    //     detailVideo.sectionId == widget.sectionId);
+    final moduleViewModel =
+        Provider.of<ModuleListViewModel>(context, listen: false);
+    final linkVideo = moduleViewModel.detailVideo
+        .where((detailVideo) =>
+            detailVideo.courseId == widget.courseId &&
+            detailVideo.sectionId == widget.sectionId)
+        .toList();
     return Consumer<ModuleListViewModel>(
-      builder: (context, value, child) {
+      builder: (context, value, _) {
         return Scaffold(
           appBar: AppBar(
             centerTitle: true,
@@ -76,33 +78,39 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              YoutubePlayer(
-                controller: _videoController,
-                width: screenWidth,
-                showVideoProgressIndicator: true,
-                progressIndicatorColor: Colors.redAccent,
-                progressColors: const ProgressBarColors(
-                  playedColor: Colors.red,
-                  handleColor: Colors.red,
-                  bufferedColor: Colors.redAccent,
-                ),
-                onReady: () {
-                  // _videoController.load(value.detailVideo);
-                },
-                topActions: <Widget>[
-                  const SizedBox(width: 8.0),
-                  Expanded(
-                    child: Text(
-                      _videoController.metadata.title,
-                      style: GoogleFonts.poppins(
-                        color: Colors.white,
-                        fontSize: 18.0,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount: 1,
+                itemBuilder: (context, index) {
+                  return YoutubePlayer(
+                    controller: _videoController,
+                    width: screenWidth,
+                    showVideoProgressIndicator: true,
+                    progressIndicatorColor: Colors.redAccent,
+                    progressColors: const ProgressBarColors(
+                      playedColor: Colors.red,
+                      handleColor: Colors.red,
+                      bufferedColor: Colors.redAccent,
                     ),
-                  ),
-                ],
+                    onReady: () {
+                      _videoController.load(linkVideo[index].link.toString());
+                    },
+                    topActions: <Widget>[
+                      const SizedBox(width: 8.0),
+                      Expanded(
+                        child: Text(
+                          _videoController.metadata.title,
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 18.0,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
               const SizedBox(
                 height: 20,
