@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:staredu/models/sell_course_model.dart';
 import 'package:staredu/views/screen/sell_course/course_voucher_screen.dart';
 import 'package:staredu/views/screen/sell_course/sell_course_detail_screen.dart';
 import 'package:staredu/views/view_model/sell_course/sell_course_view_model.dart';
 import '../../../utils/animation/fade_animation2.dart';
 import '../../../utils/color/color.dart';
-import '../../../utils/constant/sell_course_list.dart';
 import '../../../utils/state/my_state.dart';
 import '../../../widgets/sell_course/filter_button.dart';
 import '../../../widgets/sell_course/promo_button.dart';
@@ -35,22 +33,6 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
     );
     super.initState();
   }
-
-  // //Fungsi untuk search kursus (belum di implementasikan ke provider)
-  // void searching(String enterKey) {
-  //   List<SellCourseModel> results = [];
-  //   if (enterKey.isEmpty) {
-  //     results = sellCourses;
-  //   } else {
-  //     results = sellCourses
-  //         .where((user) =>
-  //             user.title!.toLowerCase().contains(enterKey.toLowerCase()))
-  //         .toList();
-  //   }
-  //   setState(() {
-  //     findCourse = results;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -165,16 +147,14 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
                                   onTap: () {
                                     Navigator.of(context).push(FadeAnimation2(
                                         page: SellCourseDetailScreen(
-                                            id: value.findCourse[index].id!,
-                                            img: value.findCourse[index].img!,
-                                            title:
-                                                value.findCourse[index].title!,
-                                            rating:
-                                                value.findCourse[index].rating!,
-                                            student: value
-                                                .findCourse[index].student!,
-                                            price: value
-                                                .findCourse[index].price!)));
+                                      id: value.findCourse[index].id!,
+                                      img: value.findCourse[index].img!,
+                                      title: value.findCourse[index].title!,
+                                      rating: value.findCourse[index].rating!,
+                                      student: value.findCourse[index].student!,
+                                      price: value.findCourse[index].price!,
+                                      grade: value.findCourse[index].grade!,
+                                    )));
                                   },
                                   child: Card(
                                     elevation: 2,
