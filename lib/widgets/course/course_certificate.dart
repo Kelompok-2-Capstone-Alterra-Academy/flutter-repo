@@ -13,7 +13,9 @@ import 'package:staredu/views/view_model/course/certificate_view_model.dart';
 import '../../utils/color/color.dart';
 
 class CourseCertificate extends StatefulWidget {
-  const CourseCertificate({super.key});
+  final String? pdfLink;
+
+  const CourseCertificate({super.key, this.pdfLink});
 
   @override
   State<CourseCertificate> createState() => _CourseCertificateState();
@@ -25,7 +27,8 @@ class _CourseCertificateState extends State<CourseCertificate> {
 // TODO : Menampilkan File PDF Certificate Sesuai dengan coursenya, menunggu API yang sudah jadi
   @override
   void initState() {
-    pdfFile = DownloadService.downloadFile(pdfUrl, 'sample.pdf');
+    pdfFile =
+        DownloadService.downloadFile(widget.pdfLink.toString(), 'sample.pdf');
     super.initState();
     Provider.of<CertificateViewModel>(context, listen: false).getCertificate();
   }

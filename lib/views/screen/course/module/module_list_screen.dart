@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/constant/module_list.dart';
+import 'package:staredu/views/view_model/course/certificate_view_model.dart';
 // import 'package:staredu/utils/constant/module_list.dart';
 import 'package:staredu/views/view_model/course/module_view_model.dart';
 import 'package:staredu/widgets/course/course_certificate.dart';
@@ -28,11 +29,15 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
   void initState() {
     super.initState();
     Provider.of<ModuleListViewModel>(context, listen: false).getModuleList();
+    Provider.of<CertificateViewModel>(context, listen: false).getCertificate();
   }
 
   @override
   Widget build(BuildContext context) {
-    final moduleViewModel = Provider.of<ModuleListViewModel>(context);
+    final moduleViewModel =
+        Provider.of<ModuleListViewModel>(context, listen: false);
+    final certificateViewModel =
+        Provider.of<CertificateViewModel>(context, listen: false);
     final List filteredModuleList = moduleViewModel.moduleList
         .where((moduleList) => moduleList.courseId == widget.courseId)
         .toList();
@@ -160,7 +165,19 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                       ),
                     ),
                   ),
-                  const CourseCertificate()
+                  Consumer<CertificateViewModel>(
+                    builder: (context, value, child) {
+                      return ListView.builder(
+                        itemCount: 1,
+                        itemBuilder: (context, index) {
+                          return CourseCertificate(
+                            pdfLink: certificateViewModel
+                                .moduleCertificate[index].link,
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ],
               );
             },
