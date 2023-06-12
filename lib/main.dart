@@ -113,8 +113,8 @@ class StarEdu extends StatelessWidget {
         Profile.routeName: (context) => const Profile(),
         EditProfile.routeName: (context) => const EditProfile(),
         NotificationScreen.routeName: (context) => const NotificationScreen(),
-        ModuleQuizDetailScreen.routeName: (context) =>
-            const ModuleQuizDetailScreen(),
+        // ModuleQuizDetailScreen.routeName: (context) =>
+        //     const ModuleQuizDetailScreen(),
         ModuleSendTaskScreen.routeName: (context) =>
             const ModuleSendTaskScreen(),
         NewsScreen.routeName: (context) => const NewsScreen(),
