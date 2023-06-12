@@ -147,16 +147,14 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
                                   onTap: () {
                                     Navigator.of(context).push(FadeAnimation2(
                                         page: SellCourseDetailScreen(
-                                            id: value.findCourse[index].id!,
-                                            img: value.findCourse[index].img!,
-                                            title:
-                                                value.findCourse[index].title!,
-                                            rating:
-                                                value.findCourse[index].rating!,
-                                            student: value
-                                                .findCourse[index].student!,
-                                            price: value
-                                                .findCourse[index].price!)));
+                                      id: value.findCourse[index].id!,
+                                      img: value.findCourse[index].img!,
+                                      title: value.findCourse[index].title!,
+                                      rating: value.findCourse[index].rating!,
+                                      student: value.findCourse[index].student!,
+                                      price: value.findCourse[index].price!,
+                                      grade: value.findCourse[index].grade!,
+                                    )));
                                   },
                                   child: Card(
                                     elevation: 2,
