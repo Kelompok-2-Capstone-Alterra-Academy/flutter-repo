@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:staredu/models/service/sell_course_api.dart';
 
 import '../../../models/sell_course_model.dart';
+import '../../../models/service/course_api.dart';
 import '../../../utils/state/my_state.dart';
 
 class SellCourseViewModel extends ChangeNotifier {
@@ -12,7 +12,7 @@ class SellCourseViewModel extends ChangeNotifier {
   List<SellCourseModel> _findCourse = [];
   List<SellCourseModel> get findCourse => _findCourse;
 
-  final SellCourseAPI sellCourseAPI = SellCourseAPI();
+  final CourseAPI courseAPI = CourseAPI();
 
   MyState myState = MyState.initial;
 
@@ -21,7 +21,7 @@ class SellCourseViewModel extends ChangeNotifier {
       myState = MyState.loading;
       notifyListeners();
 
-      _courseForSale = await sellCourseAPI.getCourseForSale();
+      _courseForSale = await courseAPI.getCourseForSale();
       _findCourse = _courseForSale;
 
       myState = MyState.success;

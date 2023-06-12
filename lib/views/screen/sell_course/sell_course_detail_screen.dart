@@ -17,6 +17,7 @@ class SellCourseDetailScreen extends StatefulWidget {
   final String price;
   final String rating;
   final String student;
+  final String grade;
 
   const SellCourseDetailScreen({
     super.key,
@@ -26,6 +27,7 @@ class SellCourseDetailScreen extends StatefulWidget {
     required this.student,
     required this.id,
     required this.img,
+    required this.grade,
   });
 
   @override
@@ -55,7 +57,7 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
       await wishlistManager.removeWishlistItem(widget.id);
     } else {
       await wishlistManager.addWishlistItem(widget.id, widget.img, widget.price,
-          widget.rating, widget.student, widget.title);
+          widget.rating, widget.student, widget.title, widget.grade);
     }
 
     setState(() {
@@ -72,6 +74,7 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       appBar: AppBar(
@@ -93,12 +96,59 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
-              SizedBox(
-                width: screenWidth,
-                child: Image.asset(
-                  "assets/images/banner_course.png",
-                  fit: BoxFit.contain,
-                ),
+              Stack(
+                children: [
+                  SizedBox(
+                    width: screenWidth,
+                    child: Image.asset(
+                      "assets/images/banner_course2.png",
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(width: screenWidth * 0.38),
+                      SizedBox(
+                        height: 182,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 170,
+                              child: Text(
+                                widget.title,
+                                style: const TextStyle(
+                                  fontFamily: 'GlikerSemiBold',
+                                  color: whiteColor,
+                                  fontSize: 22,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 7),
+                            Container(
+                              width: 170,
+                              height: 22,
+                              decoration: const BoxDecoration(
+                                  color: yellowColor,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8))),
+                              child: Center(
+                                child: Text(
+                                  widget.grade,
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
               const SizedBox(height: 10),
               Row(

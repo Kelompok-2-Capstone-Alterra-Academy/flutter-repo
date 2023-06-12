@@ -38,7 +38,9 @@ import 'package:staredu/views/screen/news/news_screen.dart';
 import 'package:staredu/views/screen/splash_welcome/splash_welcome_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/views/screen/wishlist/wishlist_screen.dart';
+import 'package:staredu/views/view_model/mentor/mentor_view_model.dart';
 import 'package:staredu/views/view_model/sell_course/sell_course_view_model.dart';
+import 'package:staredu/views/view_model/sell_course/voucher_view_model.dart';
 import 'package:staredu/widgets/bottom_navigation_bar/bottom_navigation_bar_view_model.dart';
 
 class PostHttpOverrides extends HttpOverrides {
@@ -62,6 +64,8 @@ void main() {
       ChangeNotifierProvider(create: (_) => LoginViewModel()),
       ChangeNotifierProvider(create: (_) => ForgotPasswordViewModel()),
       ChangeNotifierProvider(create: (context) => SellCourseViewModel()),
+      ChangeNotifierProvider(create: (context) => MentorViewModel()),
+      ChangeNotifierProvider(create: (context) => VoucherViewModel()),
     ],
     child: const StarEdu(),
   ));

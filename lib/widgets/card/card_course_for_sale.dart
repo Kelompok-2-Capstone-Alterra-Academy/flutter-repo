@@ -41,6 +41,7 @@ class CardCourseForSale extends StatelessWidget {
                 rating: rating,
                 student: student,
                 price: price,
+                grade: grade,
               ),
             ));
           },
