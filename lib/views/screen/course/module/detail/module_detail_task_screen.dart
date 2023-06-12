@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/http/http_utils.dart';
 import 'package:staredu/views/screen/course/module/module_send_task_screen.dart';
 
+import '../../../../../utils/animation/slide_animation3.dart';
 import '../../../../../utils/color/color.dart';
 
 class ModuleDetailTask extends StatefulWidget {
@@ -267,20 +268,7 @@ class _ModuleDetailTaskState extends State<ModuleDetailTask> {
                     ),
                     onPressed: () {
                       Navigator.of(context).push(
-                        PageRouteBuilder(
-                          pageBuilder:
-                              (context, animations, secondaryAnimations) =>
-                                  const ModuleSendTaskScreen(),
-                          transitionsBuilder: (context, animations,
-                              secondaryAnimations, childs) {
-                            final tween = Tween(begin: 0.0, end: 1.0);
-                            return FadeTransition(
-                              opacity: animations.drive(tween),
-                              child: childs,
-                            );
-                          },
-                        ),
-                      );
+                          SlideAnimation3(page: const ModuleSendTaskScreen()));
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(12),

@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/views/screen/course/course_taken_list_screen.dart';
 
+import '../../utils/animation/fade_animation2.dart';
+
 class ReviewDialog extends StatefulWidget {
   const ReviewDialog({super.key});
 
@@ -200,19 +202,7 @@ class _ReviewDialogState extends State<ReviewDialog> {
                       ),
                       onPressed: () {
                         Navigator.of(context).push(
-                          PageRouteBuilder(
-                            pageBuilder:
-                                (context, animations, secondaryAnimations) =>
-                                    const CourseTakenListScreen(),
-                            transitionsBuilder: (context, animations,
-                                secondaryAnimations, childs) {
-                              final tween = Tween(begin: 0.0, end: 1.0);
-                              return FadeTransition(
-                                opacity: animations.drive(tween),
-                                child: childs,
-                              );
-                            },
-                          ),
+                          FadeAnimation2(page: const CourseTakenListScreen()),
                         );
                       },
                       child: Text(

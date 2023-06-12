@@ -29,23 +29,23 @@ import 'package:staredu/views/screen/profile/profile_screen.dart';
 import 'package:staredu/views/screen/course/module/detail/module_quiz_detail_screen.dart';
 import 'package:staredu/views/screen/course/module/module_send_task_screen.dart';
 import 'package:staredu/views/screen/course/module/module_task_list_screen.dart';
-import 'package:staredu/views/screen/home/home_screen.dart';
 import 'package:staredu/views/screen/mentor/chat_mentor_screen.dart';
 import 'package:staredu/views/screen/mentor/mentor_screen.dart';
 import 'package:staredu/views/screen/mentor/search_chat_screen.dart';
 import 'package:staredu/views/screen/profile/profile_view_model.dart';
 import 'package:staredu/views/screen/sell_course/course_payment_screen.dart';
 import 'package:staredu/views/screen/sell_course/course_voucher_screen.dart';
-import 'package:staredu/views/screen/sell_course/sell_course_detail_screen.dart';
 import 'package:staredu/views/screen/sell_course/sell_course_screen.dart';
 import 'package:staredu/views/screen/post_feed/post_feed_screen.dart';
 import 'package:staredu/views/screen/live_session/schedule_course_screen.dart';
 import 'package:staredu/views/screen/course/module/detail/module_detail_ppt_screen.dart';
 import 'package:staredu/views/screen/news/news_screen.dart';
-import 'package:staredu/views/screen/live_session/schedule_course_screen.dart';
 import 'package:staredu/views/screen/splash_welcome/splash_welcome_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/views/screen/wishlist/wishlist_screen.dart';
+import 'package:staredu/views/view_model/mentor/mentor_view_model.dart';
+import 'package:staredu/views/view_model/sell_course/sell_course_view_model.dart';
+import 'package:staredu/views/view_model/sell_course/voucher_view_model.dart';
 import 'package:staredu/widgets/bottom_navigation_bar/bottom_navigation_bar_view_model.dart';
 
 class PostHttpOverrides extends HttpOverrides {

@@ -156,16 +156,16 @@ class _ProfileState extends State<Profile> {
                     ),
                     SectionProfile(
                         title: 'Kursus Saya',
-                        icon: Icons.collections_bookmark_outlined,
+                        icon: Icons.school_outlined,
                         press: () {}),
                     const SizedBox(
                       height: 20,
                     ),
                     SectionProfile(
                       title: 'Kontak CS',
-                      icon: Icons.contact_support_outlined,
+                      icon: Icons.phone,
                       press: () {},
-                      iconRight: Icons.phone_android_outlined,
+                      iconRight: Icons.call,
                     ),
                     const SizedBox(
                       height: 30,

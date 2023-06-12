@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/constant/sell_course_list.dart';
 import 'package:staredu/views/screen/course/course_taken_list_screen.dart';
 import 'package:staredu/views/screen/history/history_transaction_screen.dart';
+import '../../../utils/animation/fade_animation2.dart';
 import '../../../utils/color/color.dart';
 import '../../../widgets/sell_course/detail_payment.dart';
 
@@ -238,24 +239,8 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                                   color: Colors.transparent,
                                   child: InkWell(
                                     onTap: () {
-                                      Navigator.of(context).push(
-                                        PageRouteBuilder(
-                                          pageBuilder: (context, animations,
-                                                  secondaryAnimations) =>
-                                              const CourseTakenListScreen(),
-                                          transitionsBuilder: (context,
-                                              animations,
-                                              secondaryAnimations,
-                                              childs) {
-                                            final tween =
-                                                Tween(begin: 0.0, end: 1.0);
-                                            return FadeTransition(
-                                              opacity: animations.drive(tween),
-                                              child: childs,
-                                            );
-                                          },
-                                        ),
-                                      );
+                                      Navigator.of(context).push(FadeAnimation2(
+                                          page: const CourseTakenListScreen()));
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.only(
@@ -290,24 +275,9 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                                   color: Colors.transparent,
                                   child: InkWell(
                                     onTap: () {
-                                      Navigator.of(context).push(
-                                        PageRouteBuilder(
-                                          pageBuilder: (context, animations,
-                                                  secondaryAnimations) =>
-                                              const HistoryTransactionScreen(),
-                                          transitionsBuilder: (context,
-                                              animations,
-                                              secondaryAnimations,
-                                              childs) {
-                                            final tween =
-                                                Tween(begin: 0.0, end: 1.0);
-                                            return FadeTransition(
-                                              opacity: animations.drive(tween),
-                                              child: childs,
-                                            );
-                                          },
-                                        ),
-                                      );
+                                      Navigator.of(context).push(FadeAnimation2(
+                                          page:
+                                              const HistoryTransactionScreen()));
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.only(

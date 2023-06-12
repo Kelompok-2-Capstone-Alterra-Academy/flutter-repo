@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../utils/animation/fade_animation2.dart';
 import '../../utils/color/color.dart';
 import '../../views/screen/sell_course/sell_course_detail_screen.dart';
 
@@ -32,27 +33,17 @@ class CardCourseForSale extends StatelessWidget {
             Radius.circular(8),
           ),
           onTap: () {
-            Navigator.of(context).push(
-              PageRouteBuilder(
-                pageBuilder: (context, animations, secondaryAnimations) =>
-                    SellCourseDetailScreen(
-                  id: id,
-                  img: img,
-                  title: title,
-                  rating: rating,
-                  student: student,
-                  price: price,
-                ),
-                transitionsBuilder:
-                    (context, animations, secondaryAnimations, childs) {
-                  final tween = Tween(begin: 0.0, end: 1.0);
-                  return FadeTransition(
-                    opacity: animations.drive(tween),
-                    child: childs,
-                  );
-                },
+            Navigator.of(context).push(FadeAnimation2(
+              page: SellCourseDetailScreen(
+                id: id,
+                img: img,
+                title: title,
+                rating: rating,
+                student: student,
+                price: price,
+                grade: grade,
               ),
-            );
+            ));
           },
           child: Card(
             elevation: 2,
