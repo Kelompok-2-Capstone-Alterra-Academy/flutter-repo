@@ -27,7 +27,7 @@ List<SellCourseModel> sellCourses = [
       grade: "Kelas 10"),
   SellCourseModel(
       id: 4,
-      title: "Ekonomi",
+      title: "Sejarah Indonesia Merdeka",
       price: "Rp. 550.000",
       rating: "4.8",
       student: "8950 Siswa",

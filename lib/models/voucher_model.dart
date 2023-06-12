@@ -4,6 +4,8 @@ class VoucherModel {
   final String? expired;
   final String? description;
   final String? img;
+  final String? balance;
+  bool isClaim = false;
 
   VoucherModel({
     this.id,
@@ -11,5 +13,6 @@ class VoucherModel {
     this.expired,
     this.description,
     this.img,
+    this.balance,
   });
 }
