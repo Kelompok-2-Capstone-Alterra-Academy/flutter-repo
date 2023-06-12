@@ -9,7 +9,6 @@ import 'package:staredu/views/screen/mentor/mentor_screen.dart';
 import 'package:staredu/views/screen/news/news_screen.dart';
 import 'package:staredu/views/screen/notification/notification_screen.dart';
 import 'package:staredu/views/screen/post_feed/post_feed_screen.dart';
-import 'package:staredu/views/screen/profile/profile.dart';
 import 'package:staredu/views/screen/sell_course/sell_course_screen.dart';
 import 'package:staredu/views/screen/wishlist/wishlist_screen.dart';
 import 'package:staredu/widgets/bottom_navigation_bar/bottom_navigation_bar.dart';
@@ -21,6 +20,7 @@ import 'package:staredu/widgets/row/row_text.dart';
 
 import '../../../utils/animation/fade_animation2.dart';
 import '../../../utils/animation/slide_animation2.dart';
+import '../profile/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
