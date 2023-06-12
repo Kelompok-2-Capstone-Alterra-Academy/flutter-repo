@@ -36,4 +36,15 @@ class CourseAPI {
     //     .catchError((e) => handleErrorApi(e));
     return 'success';
   }
+
+  Future<dynamic> sendReview() async {
+    // final response = await Dio().post(
+    // data:{
+    // });
+
+    // return response
+    //     .then((value) => value.data)
+    //     .catchError((e) => handleErrorApi(e));
+    return 'success';
+  }
 }

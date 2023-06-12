@@ -7,9 +7,28 @@ class CourseTakenViewModel with ChangeNotifier {
   List<CourseTakenModel> _courseTaken = [];
   List<CourseTakenModel> get courseTaken => _courseTaken;
 
+  double _rating = 0;
+  double get rating => _rating;
+  bool _isRatingInputted = false;
+  bool get isRatingInputted => _isRatingInputted;
+
+  dynamic response;
+
   final CourseAPI courseApi = CourseAPI();
 
   MyState myState = MyState.initial;
+
+  void setRating(double value) {
+    _rating = value;
+    _isRatingInputted = true;
+    notifyListeners();
+  }
+
+  void clearRating() {
+    _rating = 0;
+    _isRatingInputted = false;
+    notifyListeners();
+  }
 
   Future getCourseTaken() async {
     myState = MyState.loading;
@@ -20,6 +39,19 @@ class CourseTakenViewModel with ChangeNotifier {
       notifyListeners();
     } catch (e) {
       myState = MyState.failed;
+    }
+  }
+
+  Future<String> sendReview() async {
+    myState = MyState.loading;
+
+    try {
+      response = await courseApi.sendReview();
+      myState = MyState.success;
+      return response;
+    } catch (e) {
+      myState = MyState.failed;
+      return 'failed';
     }
   }
 }
