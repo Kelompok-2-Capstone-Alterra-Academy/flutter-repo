@@ -101,8 +101,8 @@ class StarEdu extends StatelessWidget {
         ModuleListQuizScreen.routeName: (context) =>
             const ModuleListQuizScreen(),
         ModuleVideoScreen.routeName: (context) => const ModuleVideoScreen(),
-        ModulDetailPPTScreen.routeName: (context) =>
-            const ModulDetailPPTScreen(),
+        // ModulDetailPPTScreen.routeName: (context) =>
+        //     const ModulDetailPPTScreen(),
         ForgotPasswordScreen.routeName: (context) =>
             const ForgotPasswordScreen(),
         OtpVerificationScreen.routeName: (context) =>
