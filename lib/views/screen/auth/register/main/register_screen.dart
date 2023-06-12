@@ -58,15 +58,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return null;
   }
 
-  String? validateUsername(String value) {
-    if (value.isEmpty) {
-      return 'Username tidak boleh kosong';
-    } else if (value.length < 3) {
-      return 'Username minimal 3 karakter';
-    }
-    return null;
-  }
-
   String? validatePassword(String value) {
     if (value.isEmpty) {
       return 'Kata Sandi tidak boleh kosong';
@@ -78,8 +69,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
       return 'Kata Sandi harus mengandung 1 huruf kecil';
     } else if (!value.contains(RegExp(r'^(?=.*?[0-9])'))) {
       return 'Kata Sandi harus mengandung 1 angka';
-    } else if (!value.contains(RegExp(r'^(?=.*?[!@#\$&*~])'))) {
-      return 'Kata Sandi harus mengandung 1 karakter spesial';
     }
     return null;
   }

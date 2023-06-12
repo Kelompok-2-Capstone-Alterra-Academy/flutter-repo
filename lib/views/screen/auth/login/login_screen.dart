@@ -46,8 +46,9 @@ class _LoginScreenState extends State<LoginScreen> {
     return null;
   }
 
-  savePassword(String value) async {
-    preferencesUtils.savePreferencesString('password', value);
+  savePassword(String email, String password) async {
+    preferencesUtils.savePreferencesString('email', email);
+    preferencesUtils.savePreferencesString('password', password);
   }
 
   saveToken(String value) async {
@@ -315,10 +316,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                                     textColor: whiteColor,
                                                     press: () async {
                                                       await savePassword(
+                                                          _emailController.text,
                                                           _passwordController
                                                               .text);
                                                       // ignore: use_build_context_synchronously
-                                                      Navigator.push(
+                                                      Navigator.pushReplacement(
                                                           context,
                                                           FadeAnimation(
                                                               page:
@@ -333,11 +335,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                                     textColor: primaryColor,
                                                     borderColor: primaryColor,
                                                     press: () {
-                                                      Navigator.push(
+                                                      Navigator.pushAndRemoveUntil(
                                                           context,
-                                                          FadeAnimation(
+                                                          SlideAnimation(
                                                               page:
-                                                                  const HomeScreen()));
+                                                                  const HomeScreen()),
+                                                          (route) => false);
                                                     })
                                               ],
                                             ),
