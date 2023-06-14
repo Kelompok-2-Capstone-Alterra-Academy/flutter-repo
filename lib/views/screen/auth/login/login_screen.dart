@@ -267,7 +267,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         .login(_emailController.text,
                                             _passwordController.text);
                                 if (message.contains('success')) {
-                                  await saveToken(message);
+                                  await saveToken(message.split(' ')[1]);
                                   // ignore: use_build_context_synchronously
                                   showModalBottomSheet(
                                       context: context,
