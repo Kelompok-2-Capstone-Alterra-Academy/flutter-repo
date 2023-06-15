@@ -14,6 +14,9 @@ class ModuleListViewModel with ChangeNotifier {
   List<DetailTaskModel> _detailTask = [];
   List<DetailTaskModel> get detailTask => _detailTask;
 
+  List<QuizModel> _detailQuiz = [];
+  List<QuizModel> get detailQuiz => _detailQuiz;
+
   final ModuleApi moduleApi = ModuleApi();
 
   MyState myState = MyState.initial;
@@ -47,6 +50,18 @@ class ModuleListViewModel with ChangeNotifier {
 
     try {
       _detailTask = await moduleApi.getSectionTask();
+      myState = MyState.success;
+      notifyListeners();
+    } catch (e) {
+      myState = MyState.failed;
+    }
+  }
+
+  Future getQuiz() async {
+    myState = MyState.loading;
+
+    try {
+      _detailQuiz = await moduleApi.getSectionQuiz();
       myState = MyState.success;
       notifyListeners();
     } catch (e) {
