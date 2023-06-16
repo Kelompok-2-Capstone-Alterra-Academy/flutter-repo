@@ -269,6 +269,7 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
                 screenWidth: screenWidth,
                 title: "Ambil Kursus",
                 page: CoursePaymentScreen(
+                  courseId: widget.id,
                   title: widget.courseName,
                   price: widget.price,
                   liveSession: widget.liveSession,

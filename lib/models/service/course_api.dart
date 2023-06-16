@@ -5,6 +5,7 @@ import 'package:staredu/models/voucher_model.dart';
 import 'package:staredu/utils/constant/sell_course_list.dart';
 
 import '../../utils/constant/constant.dart';
+import '../../utils/constant/helper.dart';
 
 class CourseAPI {
   Dio dio = Dio();
@@ -57,5 +58,27 @@ class CourseAPI {
     } on DioError catch (_) {
       rethrow;
     }
+  }
+
+  Future<dynamic> payment(
+      int price, String courseId, int totalPayment /*, String token*/) async {
+    final response = dio.post(
+      '$BASE_URL_API/students/transaction',
+      data: {
+        'price': price,
+        'course_id': courseId,
+        'total_payment': totalPayment,
+        'admin_fees': 1000,
+      },
+      options: Options(
+        headers: {
+          'Authorization':
+              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Impvbm9AZ21haWwuY29tIiwiZXhwIjoxNjg2OTkwMDg3LCJpZCI6MSwicm9sZSI6InN0dWRlbnRzIn0.MIyTUF-c4umSZBubuvjVBVcdlk5Rmo_CU5rR-Wnfcbw'
+        },
+      ),
+    );
+    return response
+        .then((value) => value.data)
+        .catchError((e) => handleErrorApi(e));
   }
 }
