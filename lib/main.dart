@@ -70,6 +70,9 @@ void main() {
       ChangeNotifierProvider(create: (_) => ForgotPasswordViewModel()),
       ChangeNotifierProvider(create: (_) => ProfileViewModel()),
       ChangeNotifierProvider(create: (_) => EditProfileViewModel()),
+      ChangeNotifierProvider(create: (_) => MentorViewModel()),
+      ChangeNotifierProvider(create: (_) => SellCourseViewModel()),
+      ChangeNotifierProvider(create: (_) => VoucherViewModel()),
     ],
     child: const StarEdu(),
   ));

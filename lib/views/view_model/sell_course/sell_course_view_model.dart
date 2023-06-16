@@ -16,12 +16,12 @@ class SellCourseViewModel extends ChangeNotifier {
 
   MyState myState = MyState.initial;
 
-  Future getAllCourseForSale() async {
+  Future getAllCourseForSale(String? token) async {
     try {
       myState = MyState.loading;
       notifyListeners();
 
-      _courseForSale = await courseAPI.getCourseForSale();
+      _courseForSale = await courseAPI.getCourseForSale(token);
       _findCourse = _courseForSale;
 
       myState = MyState.success;
@@ -43,7 +43,7 @@ class SellCourseViewModel extends ChangeNotifier {
     } else {
       results = _courseForSale
           .where((user) =>
-              user.title!.toLowerCase().contains(enterKey.toLowerCase()))
+              user.courseName!.toLowerCase().contains(enterKey.toLowerCase()))
           .toList();
     }
     _findCourse = results;

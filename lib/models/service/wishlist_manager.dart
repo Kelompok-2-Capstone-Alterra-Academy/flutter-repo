@@ -30,12 +30,12 @@ class WishlistManager {
     if (!isCourseInWishlist) {
       wishlist.add(SellCourseModel(
         id: id,
-        img: img,
+        thumbnail: img,
         price: price,
-        rating: rating,
-        student: student,
-        title: title,
-        grade: grade,
+        // rating: rating,
+        // student: student,
+        courseName: title,
+        // grade: grade,
       ));
       await saveWishlist(wishlist);
     }

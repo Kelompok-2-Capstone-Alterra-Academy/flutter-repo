@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:staredu/utils/constant/voucher_list.dart';
+import 'package:staredu/utils/formater/date_format.dart';
 import 'package:staredu/views/view_model/sell_course/voucher_view_model.dart';
 import '../../../utils/color/color.dart';
+import '../../../utils/preferences/preferences_utils.dart';
 import '../../../utils/state/my_state.dart';
 
 class CourseVoucherScreen extends StatefulWidget {
@@ -16,17 +17,23 @@ class CourseVoucherScreen extends StatefulWidget {
 }
 
 class _CourseVoucherScreenState extends State<CourseVoucherScreen> {
+  late PreferencesUtils preferencesUtils;
+
   @override
   void initState() {
-    Future.delayed(
-      Duration.zero,
-      () {
-        final provider = Provider.of<VoucherViewModel>(context, listen: false);
-
-        provider.getAllVoucher();
-      },
-    );
     super.initState();
+    init();
+  }
+
+  void init() async {
+    preferencesUtils = PreferencesUtils();
+    await preferencesUtils.init();
+    String? token = preferencesUtils.getPreferencesString('token');
+
+    if (context.mounted) {
+      Provider.of<VoucherViewModel>(context, listen: false)
+          .getAllVoucher(token);
+    }
   }
 
   @override
@@ -107,8 +114,9 @@ class _CourseVoucherScreenState extends State<CourseVoucherScreen> {
                     child: Row(
                       children: [
                         SizedBox(
+                          width: 80,
                           child: Image.asset(
-                            value.courseVoucher[index].img!,
+                            "assets/images/promo.png",
                             fit: BoxFit.contain,
                           ),
                         ),
@@ -117,7 +125,7 @@ class _CourseVoucherScreenState extends State<CourseVoucherScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              value.courseVoucher[index].title!,
+                              value.courseVoucher[index].promoName!,
                               style: GoogleFonts.poppins(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w600,
@@ -134,7 +142,8 @@ class _CourseVoucherScreenState extends State<CourseVoucherScreen> {
                                   ),
                                 ),
                                 Text(
-                                  value.courseVoucher[index].expired!,
+                                  convertDateFormat(
+                                      value.courseVoucher[index].expiredDate!),
                                   style: GoogleFonts.poppins(
                                     fontSize: 13,
                                     fontWeight: FontWeight.w600,
@@ -147,7 +156,8 @@ class _CourseVoucherScreenState extends State<CourseVoucherScreen> {
                                 width: screenWidth * 0.55,
                                 child: Text(
                                   overflow: TextOverflow.clip,
-                                  value.courseVoucher[index].description!,
+                                  "Tes Descc",
+                                  // value.courseVoucher[index].description!,
                                   style: GoogleFonts.poppins(
                                     fontSize: 11,
                                     fontWeight: FontWeight.w400,

@@ -68,7 +68,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                   children: [
                     SizedBox(
                       child: Image.asset(
-                        item.img!,
+                        "assets/images/thumbnail/${item.thumbnail!}.png",
                         fit: BoxFit.contain,
                       ),
                     ),
@@ -77,7 +77,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          item.title!,
+                          item.courseName!,
                           style: GoogleFonts.poppins(
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
@@ -99,7 +99,8 @@ class _WishlistScreenState extends State<WishlistScreen> {
                             ),
                             const SizedBox(width: 7),
                             Text(
-                              item.rating!,
+                              // item.rating!,
+                              "4.9",
                               style: GoogleFonts.poppins(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w600,
@@ -115,7 +116,8 @@ class _WishlistScreenState extends State<WishlistScreen> {
                             ),
                             const SizedBox(width: 7),
                             Text(
-                              item.student!,
+                              // item.student!,
+                              "8945 Siswa",
                               style: GoogleFonts.poppins(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w600,
@@ -147,12 +149,19 @@ class _WishlistScreenState extends State<WishlistScreen> {
                                             secondaryAnimations) =>
                                         SellCourseDetailScreen(
                                       id: wishlistItems[index].id!,
-                                      img: wishlistItems[index].img!,
-                                      title: wishlistItems[index].title!,
-                                      rating: wishlistItems[index].rating!,
-                                      student: wishlistItems[index].student!,
+                                      thumbnail:
+                                          wishlistItems[index].thumbnail!,
+                                      courseName:
+                                          wishlistItems[index].courseName!,
+                                      // rating: wishlistItems[index].rating!,
+                                      // student: wishlistItems[index].student!,
+                                      rating: "4.8",
+                                      student: "8945 Siswa",
                                       price: wishlistItems[index].price!,
-                                      grade: wishlistItems[index].grade!,
+                                      // grade: wishlistItems[index].grade!,
+                                      grade: "Kelas 12",
+                                      liveSession:
+                                          wishlistItems[index].liveSessionWeek!,
                                     ),
                                     transitionsBuilder: (context, animations,
                                         secondaryAnimations, childs) {

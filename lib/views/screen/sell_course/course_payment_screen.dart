@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:staredu/utils/constant/sell_course_list.dart';
 import 'package:staredu/views/screen/course/course_taken_list_screen.dart';
 import 'package:staredu/views/screen/history/history_transaction_screen.dart';
 import '../../../utils/animation/fade_animation2.dart';
@@ -12,9 +11,13 @@ class CoursePaymentScreen extends StatefulWidget {
 
   final String title;
   final String price;
+  final String liveSession;
 
   const CoursePaymentScreen(
-      {super.key, required this.title, required this.price});
+      {super.key,
+      required this.title,
+      required this.price,
+      required this.liveSession});
 
   @override
   State<CoursePaymentScreen> createState() => _CoursePaymentScreenState();
@@ -85,10 +88,10 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                         subtitle: "10 Section",
                       ),
                       const SizedBox(height: 15),
-                      const DetailKursus(
+                      DetailKursus(
                         icon: Icons.laptop,
                         title: "Live Session",
-                        subtitle: "3x Seminggu",
+                        subtitle: widget.liveSession,
                       ),
                     ],
                   ),
