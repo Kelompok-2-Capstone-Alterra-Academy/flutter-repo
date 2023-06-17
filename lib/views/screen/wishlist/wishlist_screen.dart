@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/models/sell_course_model.dart';
-import 'package:staredu/utils/constant/sell_course_list.dart';
 import '../../../models/service/wishlist_manager.dart';
 import '../../../utils/color/color.dart';
 import '../sell_course/sell_course_detail_screen.dart';
@@ -162,6 +161,8 @@ class _WishlistScreenState extends State<WishlistScreen> {
                                       grade: "Kelas 12",
                                       liveSession:
                                           wishlistItems[index].liveSessionWeek!,
+                                      description:
+                                          wishlistItems[index].description!,
                                     ),
                                     transitionsBuilder: (context, animations,
                                         secondaryAnimations, childs) {

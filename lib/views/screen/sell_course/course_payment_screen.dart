@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:staredu/views/screen/course/course_taken_list_screen.dart';
-import 'package:staredu/views/screen/history/history_transaction_screen.dart';
+import 'package:staredu/utils/animation/slide_animation2.dart';
+import 'package:staredu/views/screen/sell_course/course_voucher_screen.dart';
 import 'package:staredu/views/screen/sell_course/payment_webview.dart';
 import 'package:staredu/views/view_model/sell_course/course_payment_view_model.dart';
-import '../../../utils/animation/fade_animation2.dart';
 import '../../../utils/color/color.dart';
 import '../../../utils/preferences/preferences_utils.dart';
 import '../../../utils/state/my_state.dart';
@@ -31,6 +30,39 @@ class CoursePaymentScreen extends StatefulWidget {
 }
 
 class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
+  late PreferencesUtils preferencesUtils;
+  double totalBayar = 0;
+  bool promoUse = false;
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  void init() async {
+    preferencesUtils = PreferencesUtils();
+    await preferencesUtils.init();
+    String? token = preferencesUtils.getPreferencesString('token');
+
+    if (context.mounted) {
+      Provider.of<CoursePaymentViewModel>(context, listen: false)
+          .setToken(token!);
+    }
+    setState(() {
+      totalBayar = double.parse(widget.price);
+    });
+  }
+
+  void discount(double discount) {
+    if (promoUse == false) {
+      setState(() {
+        totalBayar = (totalBayar / discount) + 500;
+        promoUse = true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Provider.of<CoursePaymentViewModel>(context, listen: false);
@@ -107,33 +139,43 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                 ),
               ),
               const SizedBox(height: 12),
-              Container(
-                width: screenWidth,
-                height: 52,
-                decoration: const BoxDecoration(
-                  color: searchBarColor,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(8),
+              InkWell(
+                onTap: () {
+                  Navigator.push(context,
+                      SlideAnimation2(page: const CourseVoucherScreen()));
+                  discount(2);
+                },
+                child: Container(
+                  width: screenWidth,
+                  height: 52,
+                  decoration: BoxDecoration(
+                    color: promoUse ? lightGreenColor : searchBarColor,
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(8),
+                    ),
                   ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(17.0),
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.verified_outlined,
-                        color: searchBarTextColor,
-                        size: 18,
-                      ),
-                      const SizedBox(width: 11),
-                      Text(
-                        "Gunakan Vouchermu Sekarang!",
-                        style: GoogleFonts.poppins(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w500,
-                            color: searchBarTextColor),
-                      ),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.all(17.0),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.verified_outlined,
+                          color: promoUse ? successColor : searchBarTextColor,
+                          size: 18,
+                        ),
+                        const SizedBox(width: 11),
+                        Text(
+                          promoUse
+                              ? "Voucher Promo Belajar Berhasil Terpakai"
+                              : "Gunakan Vouchermu Sekarang!",
+                          style: GoogleFonts.poppins(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w500,
+                              color:
+                                  promoUse ? blackColor : searchBarTextColor),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -178,7 +220,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                                 color: greyColor2),
                           ),
                           Text(
-                            "Rp. 750.000",
+                            totalBayar.toString(),
                             style: GoogleFonts.poppins(
                               fontSize: 11,
                               fontWeight: FontWeight.w500,
@@ -207,19 +249,22 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                       onTap: () async {
                         value.stateSet(MyState.loading);
                         String message = await value.payment(
-                            int.parse(widget.price),
-                            widget.courseId.toString(),
-                            int.parse(widget.price));
+                          int.parse(widget.price),
+                          widget.courseId.toString(),
+                          int.parse(widget.price),
+                          value.tokens!,
+                        );
 
                         if (message.contains('success')) {
                           // ignore: use_build_context_synchronously
-                          Navigator.push(
+                          Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
                               builder: (context) => PaymentWebview(
                                 url: value.response["redirectURL"],
                               ),
                             ),
+                            (route) => route.isFirst,
                           );
                         } else {
                           if (context.mounted) {

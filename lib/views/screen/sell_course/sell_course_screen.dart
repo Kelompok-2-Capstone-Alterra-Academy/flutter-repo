@@ -162,11 +162,16 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
                                       // student: value.findCourse[index].student!,
                                       rating: "4.9",
                                       student: "8945 Siswa",
-                                      price: value.findCourse[index].price!,
+                                      price:
+                                          value.findCourse[index].price!.isEmpty
+                                              ? "700000"
+                                              : value.findCourse[index].price!,
                                       // grade: value.findCourse[index].grade!,
                                       grade: "Kelas 10",
                                       liveSession: value
                                           .findCourse[index].liveSessionWeek!,
+                                      description:
+                                          value.findCourse[index].description!,
                                     )));
                                   },
                                   child: Card(
@@ -189,7 +194,11 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
                                           children: [
                                             SizedBox(
                                               child: Image.asset(
-                                                "assets/images/thumbnail/${value.findCourse[index].thumbnail!}.png",
+                                                value.findCourse[index]
+                                                            .thumbnail!.length >
+                                                        15
+                                                    ? "assets/images/thumbnail/pencil.png"
+                                                    : "assets/images/thumbnail/${value.findCourse[index].thumbnail!}.png",
                                                 fit: BoxFit.contain,
                                               ),
                                             ),
@@ -208,8 +217,10 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
                                                 ),
                                                 const SizedBox(height: 3),
                                                 Text(
-                                                  value
-                                                      .findCourse[index].price!,
+                                                  value.findCourse[index].price!
+                                                          .isEmpty
+                                                      ? "Rp. " "700000"
+                                                      : "Rp. ${value.findCourse[index].price!}",
                                                   style: GoogleFonts.poppins(
                                                     fontSize: 11,
                                                     fontWeight: FontWeight.w600,

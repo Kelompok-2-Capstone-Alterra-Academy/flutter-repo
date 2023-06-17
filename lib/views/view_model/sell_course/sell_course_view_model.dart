@@ -12,6 +12,8 @@ class SellCourseViewModel extends ChangeNotifier {
   List<SellCourseModel> _findCourse = [];
   List<SellCourseModel> get findCourse => _findCourse;
 
+  double totalBayar = 0;
+
   final CourseAPI courseAPI = CourseAPI();
 
   MyState myState = MyState.initial;
@@ -47,6 +49,11 @@ class SellCourseViewModel extends ChangeNotifier {
           .toList();
     }
     _findCourse = results;
+    notifyListeners();
+  }
+
+  void discount(double discount) {
+    totalBayar = (totalBayar / discount) + 500;
     notifyListeners();
   }
 }

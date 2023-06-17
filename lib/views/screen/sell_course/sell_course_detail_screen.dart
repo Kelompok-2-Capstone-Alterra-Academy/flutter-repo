@@ -18,6 +18,7 @@ class SellCourseDetailScreen extends StatefulWidget {
   final String student;
   final String grade;
   final String liveSession;
+  final String description;
 
   const SellCourseDetailScreen({
     super.key,
@@ -29,6 +30,7 @@ class SellCourseDetailScreen extends StatefulWidget {
     required this.thumbnail,
     required this.grade,
     required this.liveSession,
+    required this.description,
   });
 
   @override
@@ -64,7 +66,9 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
           widget.rating,
           widget.student,
           widget.courseName,
-          widget.grade);
+          widget.grade,
+          widget.description,
+          widget.liveSession);
     }
 
     setState(() {
@@ -214,7 +218,7 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
               ),
               const SizedBox(height: 10),
               Text(
-                widget.price,
+                "Rp. ${widget.price}",
                 style: GoogleFonts.poppins(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
@@ -230,7 +234,9 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
               ),
               const SizedBox(height: 10),
               Text(
-                "Dengan mengambil kursus ini dapat membuat kamu lebih memahami materi pelajaran dengan adanya video yang menarik, rangkuman pelajaran dan sesi tanya jawab dengan mentor",
+                widget.description.isEmpty || widget.description.length < 15
+                    ? "Dengan mengambil kursus ini dapat membuat kamu lebih memahami materi pelajaran dengan adanya video yang menarik, rangkuman pelajaran dan sesi tanya jawab dengan mentor"
+                    : widget.description,
                 style: GoogleFonts.poppins(
                     fontSize: 11,
                     fontWeight: FontWeight.w400,
