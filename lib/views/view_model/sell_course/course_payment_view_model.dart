@@ -4,17 +4,19 @@ import '../../../utils/state/my_state.dart';
 
 class CoursePaymentViewModel extends ChangeNotifier {
   dynamic response;
+  String? tokens;
 
   final CourseAPI courseAPI = CourseAPI();
 
   MyState myState = MyState.initial;
 
-  Future<String> payment(int price, String courseId, int totalPayment) async {
+  Future<String> payment(
+      int price, String courseId, int totalPayment, String token) async {
     try {
       myState = MyState.loading;
       notifyListeners();
 
-      response = await courseAPI.payment(price, courseId, totalPayment);
+      response = await courseAPI.payment(price, courseId, totalPayment, token);
 
       myState = MyState.success;
       notifyListeners();
@@ -38,6 +40,11 @@ class CoursePaymentViewModel extends ChangeNotifier {
 
   void stateSet(MyState myState) {
     myState = myState;
+    notifyListeners();
+  }
+
+  void setToken(String token) {
+    tokens = token;
     notifyListeners();
   }
 }

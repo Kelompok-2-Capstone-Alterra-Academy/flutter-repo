@@ -15,6 +15,7 @@ class CardCourseForSale extends StatelessWidget {
     required this.price,
     required this.grade,
     required this.liveSession,
+    required this.description,
   });
 
   final int id;
@@ -25,6 +26,7 @@ class CardCourseForSale extends StatelessWidget {
   final String student;
   final String price;
   final String liveSession;
+  final String description;
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +47,7 @@ class CardCourseForSale extends StatelessWidget {
                 price: price,
                 grade: grade,
                 liveSession: liveSession,
+                description: description,
               ),
             ));
           },

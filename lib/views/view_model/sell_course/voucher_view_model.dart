@@ -28,7 +28,7 @@ class VoucherViewModel extends ChangeNotifier {
   }
 
   void claimVoucher(int index) {
-    courseVoucher[index].isClaim = !courseVoucher[index].isClaim;
+    courseVoucher[index].isClaim = true;
     notifyListeners();
   }
 }

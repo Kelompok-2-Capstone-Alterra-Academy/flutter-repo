@@ -94,7 +94,9 @@ class _CourseVoucherScreenState extends State<CourseVoucherScreen> {
               return InkWell(
                 borderRadius: BorderRadius.circular(8),
                 onTap: () {
-                  value.claimVoucher(index);
+                  value.courseVoucher[index].isClaim == true
+                      ? null
+                      : value.claimVoucher(index);
                 },
                 child: Card(
                   elevation: 2,
@@ -113,10 +115,14 @@ class _CourseVoucherScreenState extends State<CourseVoucherScreen> {
                     ),
                     child: Row(
                       children: [
+                        const SizedBox(width: 15),
                         SizedBox(
                           width: 80,
                           child: Image.asset(
-                            "assets/images/promo.png",
+                            value.courseVoucher[index].thumbnail!
+                                    .contains("promo")
+                                ? "assets/images/${value.courseVoucher[index].thumbnail!}.png"
+                                : "assets/images/promo.png",
                             fit: BoxFit.contain,
                           ),
                         ),
@@ -156,8 +162,7 @@ class _CourseVoucherScreenState extends State<CourseVoucherScreen> {
                                 width: screenWidth * 0.55,
                                 child: Text(
                                   overflow: TextOverflow.clip,
-                                  "Tes Descc",
-                                  // value.courseVoucher[index].description!,
+                                  value.courseVoucher[index].description!,
                                   style: GoogleFonts.poppins(
                                     fontSize: 11,
                                     fontWeight: FontWeight.w400,
