@@ -5,6 +5,7 @@ import 'package:staredu/utils/http/http_utils.dart';
 import 'package:staredu/views/screen/course/module/module_send_task_screen.dart';
 import 'package:staredu/views/view_model/course/module_view_model.dart';
 
+import '../../../../../utils/animation/slide_animation3.dart';
 import '../../../../../utils/color/color.dart';
 
 class ModuleDetailTask extends StatefulWidget {
@@ -302,21 +303,22 @@ class _ModuleDetailTaskState extends State<ModuleDetailTask> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.of(context).push(
-                            PageRouteBuilder(
-                              pageBuilder:
-                                  (context, animations, secondaryAnimations) =>
-                                      const ModuleSendTaskScreen(),
-                              transitionsBuilder: (context, animations,
-                                  secondaryAnimations, childs) {
-                                final tween = Tween(begin: 0.0, end: 1.0);
-                                return FadeTransition(
-                                  opacity: animations.drive(tween),
-                                  child: childs,
-                                );
-                              },
-                            ),
-                          );
+                          Navigator.of(context).push(SlideAnimation3(
+                                  page: const ModuleSendTaskScreen())
+                              // PageRouteBuilder(
+                              //   pageBuilder:
+                              //       (context, animations, secondaryAnimations) =>
+                              //           const ModuleSendTaskScreen(),
+                              //   transitionsBuilder: (context, animations,
+                              //       secondaryAnimations, childs) {
+                              //     final tween = Tween(begin: 0.0, end: 1.0);
+                              //     return FadeTransition(
+                              //       opacity: animations.drive(tween),
+                              //       child: childs,
+                              //     );
+                              //   },
+                              // ),
+                              );
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(12),

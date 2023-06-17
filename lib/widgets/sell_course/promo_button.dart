@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:staredu/views/screen/sell_course/course_voucher_screen.dart';
 
+import '../../utils/animation/slide_animation2.dart';
 import '../../utils/color/color.dart';
 
 class PromoButton extends StatelessWidget {
@@ -38,10 +40,7 @@ class PromoButton extends StatelessWidget {
         child: InkWell(
           onTap: () {
             Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => pages,
-                ));
+                context, SlideAnimation2(page: const CourseVoucherScreen()));
           },
           child: Padding(
             padding: const EdgeInsets.only(left: 10, right: 12),

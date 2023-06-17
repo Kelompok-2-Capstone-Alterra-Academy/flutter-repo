@@ -6,6 +6,7 @@ import 'package:staredu/views/screen/course/module/detail/module_detail_ppt_scre
 import 'package:staredu/views/screen/course/module/detail/module_detail_task_screen.dart';
 import 'package:staredu/views/view_model/course/module_view_model.dart';
 
+import '../../utils/animation/fade_animation2.dart';
 import '../../utils/color/color.dart';
 
 class ModuleSectionCard extends StatelessWidget {
@@ -55,26 +56,33 @@ class ModuleSectionCard extends StatelessWidget {
                 builder: (context, value, child) {
                   return GestureDetector(
                     onTap: () {
-                      Navigator.of(context).push(
-                        PageRouteBuilder(
-                          pageBuilder:
-                              (context, animations, secondaryAnimations) =>
-                                  ModuleVideoScreen(
-                            courseId: id,
-                            sectionId: sectionId,
-                            courseName: courseName,
-                            sectionName: sectionName,
-                          ),
-                          transitionsBuilder: (context, animations,
-                              secondaryAnimations, childs) {
-                            final tween = Tween(begin: 0.0, end: 1.0);
-                            return FadeTransition(
-                              opacity: animations.drive(tween),
-                              child: childs,
-                            );
-                          },
+                      Navigator.of(context).push(FadeAnimation2(
+                        page: ModuleVideoScreen(
+                          courseId: id,
+                          sectionId: sectionId,
+                          courseName: courseName,
+                          sectionName: sectionName,
                         ),
-                      );
+                      )
+                          // PageRouteBuilder(
+                          //   pageBuilder:
+                          //       (context, animations, secondaryAnimations) =>
+                          //         ModuleVideoScreen(
+                          //   courseId: id,
+                          //   sectionId: sectionId,
+                          //   courseName: courseName,
+                          //   sectionName: sectionName,
+                          // ),
+                          //   transitionsBuilder: (context, animations,
+                          //       secondaryAnimations, childs) {
+                          //     final tween = Tween(begin: 0.0, end: 1.0);
+                          //     return FadeTransition(
+                          //       opacity: animations.drive(tween),
+                          //       child: childs,
+                          //     );
+                          //   },
+                          // ),
+                          );
                     },
                     child: Card(
                       elevation: 2,
@@ -242,10 +250,8 @@ class ModuleSectionCard extends StatelessWidget {
         isMaterialAvailable!
             ? GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    ModulDetailPPTScreen.routeName,
-                  );
+                  Navigator.push(context,
+                      FadeAnimation2(page: const ModulDetailPPTScreen()));
                 },
                 child: Card(
                   elevation: 2,
@@ -399,25 +405,32 @@ class ModuleSectionCard extends StatelessWidget {
         isAssignmentAvailable!
             ? GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(
-                    PageRouteBuilder(
-                      pageBuilder: (context, animations, secondaryAnimations) =>
-                          ModuleDetailTask(
-                        courseId: id,
-                        sectionId: sectionId,
-                        courseName: courseName,
-                        sectionName: sectionName,
-                      ),
-                      transitionsBuilder:
-                          (context, animations, secondaryAnimations, childs) {
-                        final tween = Tween(begin: 0.0, end: 1.0);
-                        return FadeTransition(
-                          opacity: animations.drive(tween),
-                          child: childs,
-                        );
-                      },
+                  Navigator.of(context).push(FadeAnimation2(
+                    page: ModuleDetailTask(
+                      courseId: id,
+                      sectionId: sectionId,
+                      courseName: courseName,
+                      sectionName: sectionName,
                     ),
-                  );
+                  )
+                      // PageRouteBuilder(
+                      //   pageBuilder: (context, animations, secondaryAnimations) =>
+                      //     ModuleDetailTask(
+                      //   courseId: id,
+                      //   sectionId: sectionId,
+                      //   courseName: courseName,
+                      //   sectionName: sectionName,
+                      // ),
+                      //   transitionsBuilder:
+                      //       (context, animations, secondaryAnimations, childs) {
+                      //     final tween = Tween(begin: 0.0, end: 1.0);
+                      //     return FadeTransition(
+                      //       opacity: animations.drive(tween),
+                      //       child: childs,
+                      //     );
+                      //   },
+                      // ),
+                      );
                 },
                 child: Card(
                   elevation: 2,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/color/color.dart';
 import '../../../models/schedule_model.dart';
+import '../../../utils/animation/fade_animation2.dart';
 import '../../../utils/constant/list_schedule_course.dart';
 import '../../../widgets/card_button.dart';
 import 'detail_schadule_screen.dart';
@@ -36,12 +37,10 @@ class _ScheduleCourseScreenState extends State<ScheduleCourseScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
         backgroundColor: whiteColor,
         elevation: 0,
         centerTitle: true,
         iconTheme: const IconThemeData(color: blackColor),
-
         title: Text(
           "Jadwal Pertemuan Kelas",
           style: GoogleFonts.poppins(
@@ -87,12 +86,10 @@ class _ScheduleCourseScreenState extends State<ScheduleCourseScreen> {
                   return GestureDetector(
                     onTap: () {
                       Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => DetailScheduleScreen(
-                              schedule: scheduleList[index]),
-                        ),
-                      );
+                          context,
+                          FadeAnimation2(
+                              page: DetailScheduleScreen(
+                                  schedule: scheduleList[index])));
                     },
                     child: Container(
                       // Styling Container

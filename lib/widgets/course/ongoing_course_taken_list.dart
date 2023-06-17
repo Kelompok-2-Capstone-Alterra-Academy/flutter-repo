@@ -5,6 +5,7 @@ import 'package:staredu/views/screen/course/module/module_list_screen.dart';
 import 'package:staredu/views/view_model/course/course_taken_view_model.dart';
 import 'package:staredu/widgets/course/filter_course_taken.dart';
 
+import '../../utils/animation/fade_animation2.dart';
 import '../../utils/color/color.dart';
 
 class OnGoingCourseTakenListScreen extends StatefulWidget {
@@ -55,25 +56,30 @@ class _OnGoingCourseTakenListScreenState
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () {
-                          Navigator.of(context).push(
-                            PageRouteBuilder(
-                              pageBuilder:
-                                  (context, animations, secondaryAnimations) =>
-                                      ModuleListScreen(
-                                courseName:
-                                    onGoingCourse[index].title.toString(),
-                                courseId: int.parse(onGoingCourse[index].id),
-                              ),
-                              transitionsBuilder: (context, animations,
-                                  secondaryAnimations, childs) {
-                                final tween = Tween(begin: 0.0, end: 1.0);
-                                return FadeTransition(
-                                  opacity: animations.drive(tween),
-                                  child: childs,
-                                );
-                              },
+                          Navigator.of(context).push(FadeAnimation2(
+                            page: ModuleListScreen(
+                              courseName: onGoingCourse[index].title.toString(),
+                              courseId: int.parse(onGoingCourse[index].id),
                             ),
-                          );
+                          )
+                              // PageRouteBuilder(
+                              //   pageBuilder:
+                              //       (context, animations, secondaryAnimations) =>
+                              //           ModuleListScreen(
+                              // courseName:
+                              //     onGoingCourse[index].title.toString(),
+                              // courseId: int.parse(onGoingCourse[index].id),
+                              //   ),
+                              //   transitionsBuilder: (context, animations,
+                              //       secondaryAnimations, childs) {
+                              //     final tween = Tween(begin: 0.0, end: 1.0);
+                              //     return FadeTransition(
+                              //       opacity: animations.drive(tween),
+                              //       child: childs,
+                              //     );
+                              //   },
+                              // ),
+                              );
                         },
                         child: Card(
                           elevation: 2,

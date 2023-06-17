@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:staredu/models/sell_course_model.dart';
+import 'package:provider/provider.dart';
 import 'package:staredu/views/screen/sell_course/course_voucher_screen.dart';
 import 'package:staredu/views/screen/sell_course/sell_course_detail_screen.dart';
+import 'package:staredu/views/view_model/sell_course/sell_course_view_model.dart';
+import '../../../utils/animation/fade_animation2.dart';
 import '../../../utils/color/color.dart';
-import '../../../utils/constant/sell_course_list.dart';
+import '../../../utils/preferences/preferences_utils.dart';
+import '../../../utils/state/my_state.dart';
 import '../../../widgets/sell_course/filter_button.dart';
 import '../../../widgets/sell_course/promo_button.dart';
 
@@ -18,32 +21,28 @@ class SellCourseScreen extends StatefulWidget {
 }
 
 class _SellCourseScreenState extends State<SellCourseScreen> {
-  List<SellCourseModel> findCourse = [];
+  late PreferencesUtils preferencesUtils;
 
   @override
   void initState() {
-    findCourse = sellCourses;
     super.initState();
+    init();
   }
 
-  //Fungsi untuk search kursus (belum di implementasikan ke provider)
-  void searching(String enterKey) {
-    List<SellCourseModel> results = [];
-    if (enterKey.isEmpty) {
-      results = sellCourses;
-    } else {
-      results = sellCourses
-          .where((user) =>
-              user.title!.toLowerCase().contains(enterKey.toLowerCase()))
-          .toList();
+  void init() async {
+    preferencesUtils = PreferencesUtils();
+    await preferencesUtils.init();
+    String? token = preferencesUtils.getPreferencesString('token');
+
+    if (context.mounted) {
+      Provider.of<SellCourseViewModel>(context, listen: false)
+          .getAllCourseForSale(token);
     }
-    setState(() {
-      findCourse = results;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<SellCourseViewModel>(context, listen: false);
     final double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -69,7 +68,7 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
                   fontSize: 11,
                 ),
                 cursorColor: greyColor,
-                onChanged: (value) => searching(value),
+                onChanged: (value) => provider.searching(value),
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: "Mau belajar apa hari ini? Cari di sini",
@@ -106,140 +105,186 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
               ],
             ),
             const SizedBox(height: 15),
-            Flexible(
-              child: findCourse.isNotEmpty
-                  ? ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: findCourse.length,
-                      itemBuilder: (context, index) {
-                        return Column(
-                          children: [
-                            InkWell(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(8),
-                              ),
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  PageRouteBuilder(
-                                    pageBuilder: (context, animations,
-                                            secondaryAnimations) =>
-                                        SellCourseDetailScreen(
-                                            id: findCourse[index].id!,
-                                            img: findCourse[index].img!,
-                                            title: findCourse[index].title!,
-                                            rating: findCourse[index].rating!,
-                                            student: findCourse[index].student!,
-                                            price: findCourse[index].price!),
-                                    transitionsBuilder: (context, animations,
-                                        secondaryAnimations, childs) {
-                                      final tween = Tween(begin: 0.0, end: 1.0);
-                                      return FadeTransition(
-                                        opacity: animations.drive(tween),
-                                        child: childs,
-                                      );
-                                    },
+            Consumer<SellCourseViewModel>(builder: (context, value, _) {
+              if (value.myState == MyState.loading) {
+                return Center(
+                    child: CircularProgressIndicator(
+                  color: Colors.blueAccent[100],
+                ));
+              } else if (value.myState == MyState.failed) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Oops, Something Went Wrong!',
+                        style: GoogleFonts.poppins(
+                          color: blackColor,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      Text(
+                        textAlign: TextAlign.center,
+                        'Make Sure Internet is Connected.',
+                        style: GoogleFonts.poppins(
+                          color: blackColor,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              } else if (value.myState == MyState.success) {
+                return Flexible(
+                  child: value.findCourse.isNotEmpty
+                      ? ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: value.findCourse.length,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                InkWell(
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(8),
                                   ),
-                                );
-                              },
-                              child: Card(
-                                elevation: 2,
-                                shape: const RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8))),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 16, horizontal: 20),
-                                  child: Container(
-                                    height: 80,
-                                    decoration: const BoxDecoration(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(8),
-                                      ),
-                                      color: whiteColor,
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          child: Image.asset(
-                                            findCourse[index].img!,
-                                            fit: BoxFit.contain,
+                                  onTap: () {
+                                    Navigator.of(context).push(FadeAnimation2(
+                                        page: SellCourseDetailScreen(
+                                      id: value.findCourse[index].id!,
+                                      thumbnail:
+                                          value.findCourse[index].thumbnail!,
+                                      courseName:
+                                          value.findCourse[index].courseName!,
+                                      // rating: value.findCourse[index]!,
+                                      // student: value.findCourse[index].student!,
+                                      rating: "4.9",
+                                      student: "8945 Siswa",
+                                      price: value.findCourse[index].price!,
+                                      // grade: value.findCourse[index].grade!,
+                                      grade: "Kelas 10",
+                                      liveSession: value
+                                          .findCourse[index].liveSessionWeek!,
+                                    )));
+                                  },
+                                  child: Card(
+                                    elevation: 2,
+                                    shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(8))),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 16, horizontal: 20),
+                                      child: Container(
+                                        height: 80,
+                                        decoration: const BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(8),
                                           ),
+                                          color: whiteColor,
                                         ),
-                                        const SizedBox(width: 31),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                        child: Row(
                                           children: [
-                                            Text(
-                                              findCourse[index].title!,
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 13,
-                                                fontWeight: FontWeight.w600,
+                                            SizedBox(
+                                              child: Image.asset(
+                                                "assets/images/thumbnail/${value.findCourse[index].thumbnail!}.png",
+                                                fit: BoxFit.contain,
                                               ),
                                             ),
-                                            const SizedBox(height: 3),
-                                            Text(
-                                              findCourse[index].price!,
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 11,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                            Row(
+                                            const SizedBox(width: 31),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
-                                                const Icon(
-                                                  Icons.star,
-                                                  color: warningColor,
-                                                ),
-                                                const SizedBox(width: 7),
                                                 Text(
-                                                  findCourse[index].rating!,
+                                                  value.findCourse[index]
+                                                      .courseName!,
                                                   style: GoogleFonts.poppins(
-                                                      fontSize: 11,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      color:
-                                                          searchBarTextColor),
-                                                ),
-                                                const SizedBox(width: 7),
-                                                Text(
-                                                  "|",
-                                                  style: GoogleFonts.poppins(
-                                                    fontSize: 25,
-                                                    fontWeight: FontWeight.w300,
+                                                    fontSize: 13,
+                                                    fontWeight: FontWeight.w600,
                                                   ),
                                                 ),
-                                                const SizedBox(width: 7),
+                                                const SizedBox(height: 3),
                                                 Text(
-                                                  findCourse[index].student!,
+                                                  value
+                                                      .findCourse[index].price!,
                                                   style: GoogleFonts.poppins(
-                                                      fontSize: 11,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      color:
-                                                          searchBarTextColor),
+                                                    fontSize: 11,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    const Icon(
+                                                      Icons.star,
+                                                      color: warningColor,
+                                                    ),
+                                                    const SizedBox(width: 7),
+                                                    Text(
+                                                      // value.findCourse[index]
+                                                      //     .rating!,
+                                                      "4.9",
+                                                      style: GoogleFonts.poppins(
+                                                          fontSize: 11,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          color:
+                                                              searchBarTextColor),
+                                                    ),
+                                                    const SizedBox(width: 7),
+                                                    Text(
+                                                      "|",
+                                                      style:
+                                                          GoogleFonts.poppins(
+                                                        fontSize: 25,
+                                                        fontWeight:
+                                                            FontWeight.w300,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(width: 7),
+                                                    Text(
+                                                      // value.findCourse[index]
+                                                      //     .student!,
+                                                      "8945 Siswa",
+                                                      style: GoogleFonts.poppins(
+                                                          fontSize: 11,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          color:
+                                                              searchBarTextColor),
+                                                    ),
+                                                  ],
                                                 ),
                                               ],
                                             ),
                                           ],
                                         ),
-                                      ],
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                          ],
-                        );
-                      },
-                    )
-                  : Text(
-                      'No results found',
-                      style: GoogleFonts.poppins(
-                          fontSize: 15, fontWeight: FontWeight.w600),
-                    ),
-            ),
+                                const SizedBox(height: 8),
+                              ],
+                            );
+                          },
+                        )
+                      : Text(
+                          'No results found',
+                          style: GoogleFonts.poppins(
+                              fontSize: 15, fontWeight: FontWeight.w600),
+                        ),
+                );
+              } else {
+                return const Center(
+                  child: Icon(
+                    Icons.warning_amber_rounded,
+                    color: Colors.red,
+                  ),
+                );
+              }
+            }),
           ],
         ),
       ),

@@ -23,18 +23,19 @@ class WishlistManager {
   }
 
   Future<void> addWishlistItem(int id, String img, String price, String rating,
-      String student, String title) async {
+      String student, String title, String grade) async {
     List<SellCourseModel> wishlist = await getWishlist();
     bool isCourseInWishlist = wishlist.any((item) => item.id == id);
 
     if (!isCourseInWishlist) {
       wishlist.add(SellCourseModel(
         id: id,
-        img: img,
+        thumbnail: img,
         price: price,
-        rating: rating,
-        student: student,
-        title: title,
+        // rating: rating,
+        // student: student,
+        courseName: title,
+        // grade: grade,
       ));
       await saveWishlist(wishlist);
     }

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:staredu/utils/animation/fade_animation.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/constant/list_post_feed.dart';
 import 'package:staredu/views/screen/home/home_view_model.dart';
 import 'package:staredu/views/screen/mentor/mentor_screen.dart';
 import 'package:staredu/views/screen/news/news_screen.dart';
+import 'package:staredu/views/screen/notification/notification_screen.dart';
 import 'package:staredu/views/screen/post_feed/post_feed_screen.dart';
 import 'package:staredu/views/screen/sell_course/sell_course_screen.dart';
 import 'package:staredu/views/screen/wishlist/wishlist_screen.dart';
@@ -15,6 +17,10 @@ import 'package:staredu/widgets/card/card_mentor.dart';
 import 'package:staredu/widgets/news/news.dart';
 import 'package:staredu/widgets/post_feed/post_feed.dart';
 import 'package:staredu/widgets/row/row_text.dart';
+
+import '../../../utils/animation/fade_animation2.dart';
+import '../../../utils/animation/slide_animation2.dart';
+import '../profile/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -34,8 +40,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-    // final TextEditingController _searchController = TextEditingController();
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -92,7 +96,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.pushNamed(context, '/profile');
+                                Navigator.push(context,
+                                    FadeAnimation(page: const Profile()));
                               },
                               child: Container(
                                 width: 32,
@@ -117,10 +122,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               onTap: () {
                                 Navigator.push(
                                     context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const SellCourseScreen(),
-                                    ));
+                                    FadeAnimation2(
+                                        page: const SellCourseScreen()));
                               },
                               child: Container(
                                 width: MediaQuery.of(context).size.width * 0.7,
@@ -143,41 +146,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ],
                                 ),
-                                // child: Form(
-                                //     child: TextFormField(
-                                //   controller: _searchController,
-                                //   decoration: InputDecoration(
-                                //     prefixIcon: const Icon(Icons.search),
-                                //     filled: true,
-                                //     fillColor: whiteColor,
-                                //     hintText: "Cari kelas yang kamu minati",
-                                //     hintStyle: GoogleFonts.poppins(
-                                //         fontSize: 12, color: blackColor),
-                                //     border: OutlineInputBorder(
-                                //       borderRadius: BorderRadius.circular(10),
-                                //       borderSide: const BorderSide(
-                                //           color: Colors.white, width: 1),
-                                //     ),
-                                //     enabledBorder: OutlineInputBorder(
-                                //       borderRadius: BorderRadius.circular(10),
-                                //       borderSide: const BorderSide(
-                                //           color: Colors.white, width: 1),
-                                //     ),
-                                //     focusedBorder: OutlineInputBorder(
-                                //       borderRadius: BorderRadius.circular(10),
-                                //       borderSide: const BorderSide(
-                                //           color: Colors.white, width: 1),
-                                //     ),
-                                //   ),
-                                // )),
                               ),
                             ),
                             SizedBox(
                                 height: 45,
                                 child: GestureDetector(
                                   onTap: () {
-                                    Navigator.pushNamed(
-                                        context, '/notification');
+                                    Navigator.push(
+                                        context,
+                                        SlideAnimation2(
+                                            page: const NotificationScreen()));
                                   },
                                   child: const Icon(Icons.notifications_none,
                                       color: whiteColor, size: 28),
@@ -188,10 +166,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   onTap: () {
                                     Navigator.push(
                                         context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const WishlistScreen(),
-                                        ));
+                                        SlideAnimation2(
+                                            page: const WishlistScreen()));
                                   },
                                   child: const Icon(
                                       Icons.collections_bookmark_outlined,
