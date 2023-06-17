@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:staredu/utils/constant/history_course_list.dart';
 import 'package:staredu/views/screen/auth/forgot_password/forgot_password_view_model.dart';
 import 'package:staredu/views/screen/auth/forgot_password/main/forgot_password_screen.dart';
 import 'package:staredu/views/screen/auth/forgot_password/otp_verification/otp_verification_screen.dart';
@@ -20,6 +21,7 @@ import 'package:staredu/views/screen/auth/register/main/register_screen.dart';
 import 'package:staredu/views/screen/edit_profile/edit_profile_screen.dart';
 import 'package:staredu/views/screen/edit_profile/edit_profile_view_model.dart';
 import 'package:staredu/views/screen/history/history_transaction_screen.dart';
+import 'package:staredu/views/screen/history/history_transaction_view_model.dart';
 import 'package:staredu/views/screen/history/note_transaction_screen.dart.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
 import 'package:staredu/views/screen/home/home_view_model.dart';
@@ -70,6 +72,7 @@ void main() {
       ChangeNotifierProvider(create: (_) => ForgotPasswordViewModel()),
       ChangeNotifierProvider(create: (_) => ProfileViewModel()),
       ChangeNotifierProvider(create: (_) => EditProfileViewModel()),
+      ChangeNotifierProvider(create: (_) => HistoryTransactionViewModel()),
     ],
     child: const StarEdu(),
   ));
@@ -87,7 +90,7 @@ class StarEdu extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.white,
       ),
-      initialRoute: SplashWelcomeScreen.routeName,
+      initialRoute: HistoryTransactionScreen.routeName,
       routes: {
         HomeScreen.routeName: (context) => const HomeScreen(),
         SplashWelcomeScreen.routeName: (context) => const SplashWelcomeScreen(),
@@ -128,6 +131,8 @@ class StarEdu extends StatelessWidget {
         TaskListScreen.routeName: (context) => const TaskListScreen(),
         ModuleDetailTask.routeName: (context) => const ModuleDetailTask(),
         WishlistScreen.routeName: (context) => const WishlistScreen(),
+        HistoryTransactionScreen.routeName: (context) =>
+            const HistoryTransactionScreen(),
       },
     );
   }
