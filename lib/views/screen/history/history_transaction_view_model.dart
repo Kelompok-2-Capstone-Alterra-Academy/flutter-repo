@@ -17,12 +17,12 @@ class HistoryTransactionViewModel extends ChangeNotifier {
   // }
   MyState myState = MyState.initial;
 
-  Future getAllHistory() async {
+  Future getHistory(String? token) async {
     try {
       myState = MyState.loading;
       notifyListeners();
 
-      _historyCourses = await historyAPI.getHistory();
+      _historyCourses = await historyAPI.getHistory(token);
 
       myState = MyState.success;
       notifyListeners();

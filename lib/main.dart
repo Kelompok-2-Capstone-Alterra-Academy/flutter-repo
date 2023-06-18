@@ -1,7 +1,5 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:staredu/utils/constant/history_course_list.dart';
 import 'package:staredu/views/screen/auth/forgot_password/forgot_password_view_model.dart';
 import 'package:staredu/views/screen/auth/forgot_password/main/forgot_password_screen.dart';
 import 'package:staredu/views/screen/auth/forgot_password/otp_verification/otp_verification_screen.dart';
@@ -90,7 +88,7 @@ class StarEdu extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.white,
       ),
-      initialRoute: HistoryTransactionScreen.routeName,
+      initialRoute: SplashWelcomeScreen.routeName,
       routes: {
         HomeScreen.routeName: (context) => const HomeScreen(),
         SplashWelcomeScreen.routeName: (context) => const SplashWelcomeScreen(),
