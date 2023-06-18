@@ -28,9 +28,7 @@ class _CourseTakenListScreenState extends State<CourseTakenListScreen> {
     PreferencesUtils preferencesUtils = PreferencesUtils();
     await preferencesUtils.init();
 
-    // String token = preferencesUtils.getPreferencesString('token') ?? "";
-    String token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Impvbm9AZ21haWwuY29tIiwiZXhwIjoxNjg3MDc1OTkwLCJpZCI6MSwicm9sZSI6InN0dWRlbnRzIn0.cnkLeVq7EhQYbshYMOjno3MpF02hstbpPMZoucpbPA4";
+    String token = preferencesUtils.getPreferencesString('token') ?? "";
 
     if (context.mounted) {
       Provider.of<CourseTakenViewModel>(context, listen: false)
