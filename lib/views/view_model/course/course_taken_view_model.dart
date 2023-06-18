@@ -4,8 +4,10 @@ import 'package:staredu/models/service/course_api.dart';
 import 'package:staredu/utils/state/my_state.dart';
 
 class CourseTakenViewModel with ChangeNotifier {
-  List<CourseTakenModel> _courseTaken = [];
-  List<CourseTakenModel> get courseTaken => _courseTaken;
+  List<InProgress> _inProgressCourseTaken = [];
+  List<InProgress> get inProgressCourseTaken => _inProgressCourseTaken;
+  List<InProgress> _completedCourseTaken = [];
+  List<InProgress> get completedCourseTaken => _completedCourseTaken;
 
   double _rating = 0;
   double get rating => _rating;
@@ -16,7 +18,8 @@ class CourseTakenViewModel with ChangeNotifier {
 
   final CourseAPI courseApi = CourseAPI();
 
-  MyState myState = MyState.initial;
+  MyState _state = MyState.initial;
+  MyState get state => _state;
 
   void setRating(double value) {
     _rating = value;
@@ -30,27 +33,39 @@ class CourseTakenViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future getCourseTaken() async {
-    myState = MyState.loading;
+  void setState(MyState state) {
+    _state = state;
+    notifyListeners();
+  }
+
+  Future getCourseTaken(String token) async {
+    setState(MyState.loading);
 
     try {
-      _courseTaken = await courseApi.getCourseTaken();
-      myState = MyState.success;
+      final data = await courseApi.getCourseTaken(token);
+
+      _inProgressCourseTaken =
+          CourseTakenModel.fromJson(data).data!.inProgress ?? [];
+      // print("inprogress : $_inProgressCourseTaken");
+      _completedCourseTaken =
+          CourseTakenModel.fromJson(data).data!.selesai ?? [];
+      // print("finished : $_completedCourseTaken");
+      setState(MyState.success);
       notifyListeners();
     } catch (e) {
-      myState = MyState.failed;
+      setState(MyState.failed);
     }
   }
 
   Future<String> sendReview() async {
-    myState = MyState.loading;
+    setState(MyState.loading);
 
     try {
       response = await courseApi.sendReview();
-      myState = MyState.success;
+      setState(MyState.success);
       return response;
     } catch (e) {
-      myState = MyState.failed;
+      setState(MyState.failed);
       return 'failed';
     }
   }

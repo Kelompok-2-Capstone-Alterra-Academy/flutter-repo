@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/utils/color/color.dart';
+import 'package:staredu/utils/preferences/preferences_utils.dart';
 import 'package:staredu/views/view_model/course/course_taken_view_model.dart';
 import 'package:staredu/widgets/course/finished_course_taken_list.dart';
 import 'package:staredu/widgets/course/ongoing_course_taken_list.dart';
@@ -20,7 +21,21 @@ class _CourseTakenListScreenState extends State<CourseTakenListScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<CourseTakenViewModel>(context, listen: false).getCourseTaken();
+    getCourse();
+  }
+
+  void getCourse() async {
+    PreferencesUtils preferencesUtils = PreferencesUtils();
+    await preferencesUtils.init();
+
+    // String token = preferencesUtils.getPreferencesString('token') ?? "";
+    String token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Impvbm9AZ21haWwuY29tIiwiZXhwIjoxNjg3MDc1OTkwLCJpZCI6MSwicm9sZSI6InN0dWRlbnRzIn0.cnkLeVq7EhQYbshYMOjno3MpF02hstbpPMZoucpbPA4";
+
+    if (context.mounted) {
+      Provider.of<CourseTakenViewModel>(context, listen: false)
+          .getCourseTaken(token);
+    }
   }
 
   @override
