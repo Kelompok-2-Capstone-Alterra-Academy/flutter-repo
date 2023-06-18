@@ -1,7 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:staredu/utils/color/color.dart';
+import 'package:staredu/views/view_model/course/task_view_model.dart';
 import 'package:staredu/widgets/module_course/module_send_task_done_dialog.dart';
 
 class ModuleSendTaskScreen extends StatefulWidget {
@@ -208,12 +212,23 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) =>
-                              const ModuleSendTaskDoneDialog(),
-                        );
+                      onPressed: () async {
+                        String msg = await Provider.of<TaskViewModel>(context,
+                                listen: false)
+                            .sendTask();
+                        if (msg.contains('success')) {
+                          showDialog(
+                            context: context,
+                            builder: (context) =>
+                                const ModuleSendTaskDoneDialog(),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Gagal mengirim tugas."),
+                            ),
+                          );
+                        }
                       },
                       child: Text(
                         "Submit",

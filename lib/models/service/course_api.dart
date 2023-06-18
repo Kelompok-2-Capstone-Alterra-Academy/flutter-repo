@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+import 'package:staredu/models/course_taken_model.dart';
 import 'package:staredu/models/type_course.dart';
 import 'package:dio/dio.dart';
 import 'package:staredu/models/sell_course_model.dart';
@@ -77,5 +79,40 @@ class CourseAPI {
     return response
         .then((value) => value.data)
         .catchError((e) => handleErrorApi(e));
+  }
+
+  Future<dynamic> getCourseTaken(String token) async {
+    final Dio dio = Dio();
+
+    dio.options.headers['Authorization'] = 'Bearer $token';
+
+    final response =
+        dio.get("http://3.26.234.145:8081/students/courses/status");
+
+    return response
+        .then((value) => value.data)
+        .catchError((e) => handleErrorApi(e));
+  }
+
+  Future<dynamic> sendTask() async {
+    // final response = await Dio().post(
+    // data:{
+    // });
+
+    // return response
+    //     .then((value) => value.data)
+    //     .catchError((e) => handleErrorApi(e));
+    return 'success';
+  }
+
+  Future<dynamic> sendReview() async {
+    // final response = await Dio().post(
+    // data:{
+    // });
+
+    // return response
+    //     .then((value) => value.data)
+    //     .catchError((e) => handleErrorApi(e));
+    return 'success';
   }
 }
