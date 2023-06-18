@@ -220,6 +220,8 @@ class _ProfileState extends State<Profile> {
             ],
           ),
         ),
-        bottomNavigationBar: const BottomNavigationBarComponent());
+        bottomNavigationBar: BottomNavigationBarComponent(
+          indexDefined: 4,
+        ));
   }
 }

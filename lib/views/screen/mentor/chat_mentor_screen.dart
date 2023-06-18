@@ -134,6 +134,6 @@ class _ChatMentorScreenState extends State<ChatMentorScreen> {
             );
           }
         }),
-        bottomNavigationBar: const BottomNavigationBarComponent());
+        bottomNavigationBar: BottomNavigationBarComponent());
   }
 }
