@@ -353,7 +353,7 @@ class Module {
   Section? section;
   int? attachmentId;
   Attachment? attachment;
-  dynamic tasks;
+  List<Task>? tasks;
   dynamic submission;
 
   Module({
@@ -502,5 +502,50 @@ class Section {
         "section_name": sectionName,
         "course_id": courseId,
         "course": course?.toJson(),
+      };
+}
+
+class Task {
+  int? id;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  dynamic deletedAt;
+  DateTime? dueDate;
+  String? moduleId;
+
+  Task({
+    this.id,
+    this.createdAt,
+    this.updatedAt,
+    this.deletedAt,
+    this.dueDate,
+    this.moduleId,
+  });
+
+  factory Task.fromRawJson(String str) => Task.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory Task.fromJson(Map<String, dynamic> json) => Task(
+        id: json["ID"],
+        createdAt: json["CreatedAt"] == null
+            ? null
+            : DateTime.parse(json["CreatedAt"]),
+        updatedAt: json["UpdatedAt"] == null
+            ? null
+            : DateTime.parse(json["UpdatedAt"]),
+        deletedAt: json["DeletedAt"],
+        dueDate:
+            json["due_date"] == null ? null : DateTime.parse(json["due_date"]),
+        moduleId: json["module_id"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "ID": id,
+        "CreatedAt": createdAt?.toIso8601String(),
+        "UpdatedAt": updatedAt?.toIso8601String(),
+        "DeletedAt": deletedAt,
+        "due_date": dueDate?.toIso8601String(),
+        "module_id": moduleId,
       };
 }

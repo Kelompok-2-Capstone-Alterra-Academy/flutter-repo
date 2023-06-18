@@ -19,8 +19,6 @@ class _TaskListScreenState extends State<TaskListScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<ModuleListViewModel>(context, listen: false).getModuleList();
-    Provider.of<ModuleListViewModel>(context, listen: false).getSectionTask();
   }
 
   @override

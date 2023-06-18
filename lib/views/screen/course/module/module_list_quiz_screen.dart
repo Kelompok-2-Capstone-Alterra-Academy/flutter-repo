@@ -19,8 +19,6 @@ class _ModuleListQuizScreenState extends State<ModuleListQuizScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<ModuleListViewModel>(context, listen: false).getQuiz();
-    Provider.of<ModuleListViewModel>(context, listen: false).getModuleList();
   }
 
   @override

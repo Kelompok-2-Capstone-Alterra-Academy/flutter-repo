@@ -21,6 +21,7 @@ class ModuleSectionCard extends StatelessWidget {
       this.isVideoAvailable,
       this.isMaterialAvailable,
       this.isAssignmentAvailable,
+      this.dueDate,
       this.isSectionFinished,
       this.linkModule,
       this.moduleDescription});
@@ -33,6 +34,7 @@ class ModuleSectionCard extends StatelessWidget {
   final bool? isVideoAvailable;
   final bool? isMaterialAvailable;
   final bool? isAssignmentAvailable;
+  final String? dueDate;
   final bool? isSectionFinished;
   final String? linkModule;
   final String? moduleDescription;

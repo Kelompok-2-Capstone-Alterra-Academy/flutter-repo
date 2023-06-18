@@ -2,6 +2,7 @@ import 'dart:js_interop';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl_browser.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/preferences/preferences_utils.dart';
@@ -194,12 +195,16 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                         isAssignmentAvailable: moduleViewModel
                                                 .courseModule[firstIndex]
                                                 .module![secondIndex]
-                                                .attachment!
-                                                .type!
-                                                .contains('assignment')
-                                                .isNull
+                                                .tasks!
+                                                .isEmpty
                                             ? false
                                             : true,
+                                        dueDate: moduleViewModel
+                                            .courseModule[firstIndex]
+                                            .module![secondIndex]
+                                            .tasks![firstIndex]
+                                            .dueDate
+                                            .toString(),
                                         isSectionFinished: false,
                                         linkModule: moduleViewModel
                                             .courseModule[firstIndex]
