@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:staredu/models/course_taken_model.dart';
 import 'package:staredu/models/type_course.dart';
@@ -33,15 +35,41 @@ class CourseAPI {
         .catchError((e) => handleErrorApi(e));
   }
 
-  Future<dynamic> sendTask() async {
-    // final response = await Dio().post(
-    // data:{
-    // });
+  Future<dynamic> sendTask({
+    required token,
+    required String moduleId,
+    required File data,
+    String? notes,
+  }) async {
+    final Dio dio = Dio();
 
-    // return response
-    //     .then((value) => value.data)
-    //     .catchError((e) => handleErrorApi(e));
-    return 'success';
+    dio.options.headers['Authorization'] = 'Bearer $token';
+
+    FormData formData = FormData();
+
+    formData.files.add(MapEntry(
+      'submission_source',
+      await MultipartFile.fromFile('path/to/file.jpg'),
+    ));
+
+    formData.fields.add(
+      MapEntry('module_id', moduleId),
+    );
+
+    formData.fields.add(
+      MapEntry('notes', notes ?? ""),
+    );
+
+    final response = dio.post(
+      "http://3.26.234.145:8081/students/courses/submission",
+      data: formData,
+    );
+
+    print("from api ${await response}");
+
+    return response
+        .then((value) => value.data)
+        .catchError((e) => handleErrorApi(e));
   }
 
   Future<dynamic> sendReview() async {

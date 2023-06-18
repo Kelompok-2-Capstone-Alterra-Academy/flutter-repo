@@ -1,10 +1,13 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/utils/color/color.dart';
+import 'package:staredu/utils/preferences/preferences_utils.dart';
 import 'package:staredu/views/view_model/course/task_view_model.dart';
 import 'package:staredu/widgets/module_course/module_send_task_done_dialog.dart';
 
@@ -17,7 +20,9 @@ class ModuleSendTaskScreen extends StatefulWidget {
 }
 
 class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
-  String fileName = "123321_Venny_Lat trigonometri.pdf";
+  String fileName = "-.pdf";
+  File taskFile = File("");
+  final TextEditingController _notesController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -130,8 +135,8 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
                                 await FilePicker.platform.pickFiles();
 
                             if (result != null) {
-                              //File file = File(result.files.single.path!);
                               setState(() {
+                                taskFile = File(result.files.single.path!);
                                 fileName = result.files.single.name;
                               });
                             } else {
@@ -179,6 +184,7 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
                   ),
                   TextFormField(
                     maxLines: 4,
+                    controller: _notesController,
                     decoration: InputDecoration(
                       hintText: "Tulis catatan..",
                       hintStyle: GoogleFonts.poppins(
@@ -213,9 +219,20 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
                         ),
                       ),
                       onPressed: () async {
+                        PreferencesUtils preferencesUtils = PreferencesUtils();
+                        await preferencesUtils.init();
+
+                        String token =
+                            preferencesUtils.getPreferencesString('token') ??
+                                "";
                         String msg = await Provider.of<TaskViewModel>(context,
                                 listen: false)
-                            .sendTask();
+                            .sendTask(
+                          token: token,
+                          moduleId: "3",
+                          data: taskFile,
+                          notes: _notesController.text,
+                        );
                         if (msg.contains('success')) {
                           showDialog(
                             context: context,
