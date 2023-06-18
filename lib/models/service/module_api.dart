@@ -8,6 +8,26 @@ import 'package:staredu/utils/constant/list_course_taken.dart';
 import 'package:staredu/utils/constant/module_list.dart';
 
 class ModuleApi {
+  Dio dio = Dio();
+
+  Future<List<NewCourseDetailModel>> getAllModule(
+      String? token, int? id) async {
+    try {
+      List<NewCourseDetailModel> courseModule = [];
+      final response =
+          await dio.get('$BASE_URL_API/students/courses/section/$id',
+              options: Options(
+                headers: {'Authorization': 'Bearer $token'},
+              ));
+      for (var element in response.data['data']) {
+        courseModule.add(NewCourseDetailModel.fromJson(element));
+      }
+      return courseModule;
+    } on DioError catch (_) {
+      rethrow;
+    }
+  }
+
   Future<List<ModuleListModel>> getModuleList() async {
     // final response = await Dio().get();
 

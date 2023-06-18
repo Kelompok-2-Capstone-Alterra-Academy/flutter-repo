@@ -369,8 +369,6 @@ class _CourseCertificateState extends State<CourseCertificate> {
   }
 }
 
-const pdfUrl = 'https://web.wpi.edu/Images/CMS/Provost/landscape.pdf';
-
 class DownloadService {
   static final _httpClient = HttpClient();
 

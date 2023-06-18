@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/utils/color/color.dart';
-import 'package:staredu/utils/constant/module_list.dart';
 import 'package:staredu/views/view_model/course/module_view_model.dart';
 import 'package:staredu/widgets/module_course/module_quiz_card.dart';
 
