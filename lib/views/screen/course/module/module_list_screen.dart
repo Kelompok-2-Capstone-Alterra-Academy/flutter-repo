@@ -53,7 +53,6 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
         Provider.of<ModuleListViewModel>(context, listen: false);
     final certificateViewModel =
         Provider.of<CertificateViewModel>(context, listen: false);
-    print(moduleViewModel.courseModule.isEmpty);
     final double screenWidth = MediaQuery.of(context).size.width;
 
     return DefaultTabController(

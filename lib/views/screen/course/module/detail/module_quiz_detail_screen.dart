@@ -10,7 +10,7 @@ class ModuleQuizDetailScreen extends StatefulWidget {
   static const String routeName = "/quizdetail";
   final QuizDetailModel quizDetail;
   final bool isLastIndex;
-  final String courseId;
+  final int courseId;
   const ModuleQuizDetailScreen({
     super.key,
     required this.quizDetail,
@@ -152,7 +152,7 @@ class _ModuleQuizDetailScreenState extends State<ModuleQuizDetailScreen> {
                               showDialog(
                                 context: context,
                                 builder: (context) => ReviewDialog(
-                                  courseId: widget.courseId.toString(),
+                                  courseId: widget.courseId,
                                 ),
                               );
                             } else {

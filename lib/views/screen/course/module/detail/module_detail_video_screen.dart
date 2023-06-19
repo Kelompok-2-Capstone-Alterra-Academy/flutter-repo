@@ -168,7 +168,7 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
                           showDialog(
                             context: context,
                             builder: (context) => ReviewDialog(
-                              courseId: widget.courseId.toString(),
+                              courseId: widget.courseId!,
                             ),
                           );
                         } else {

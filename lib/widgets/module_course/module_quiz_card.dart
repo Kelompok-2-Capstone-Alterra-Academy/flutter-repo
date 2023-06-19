@@ -31,7 +31,7 @@ class ModuleQuizCard extends StatelessWidget {
                     PageRouteBuilder(
                       pageBuilder: (context, animations, secondaryAnimations) =>
                           ModuleQuizDetailScreen(
-                        courseId: id.toString(),
+                        courseId: id!,
                         isLastIndex: false,
                         quizDetail: QuizDetailModel(),
                       ),
