@@ -23,6 +23,7 @@ import 'package:staredu/views/screen/history/history_transaction_view_model.dart
 import 'package:staredu/views/screen/home/home_screen.dart';
 import 'package:staredu/views/screen/home/home_view_model.dart';
 import 'package:staredu/views/screen/live_session/schedule_view_model.dart';
+import 'package:staredu/views/screen/news/news_view_model.dart';
 import 'package:staredu/views/screen/notification/notification_screen.dart';
 import 'package:staredu/views/screen/notification/notification_view_model.dart';
 import 'package:staredu/views/screen/profile/profile_screen.dart';
@@ -77,6 +78,7 @@ void main() {
       ChangeNotifierProvider(create: (_) => VoucherViewModel()),
       ChangeNotifierProvider(create: (_) => CoursePaymentViewModel()),
       ChangeNotifierProvider(create: (_) => ScheduleViewModel()),
+      ChangeNotifierProvider(create: (_) => NewsViewModel()),
     ],
     child: const StarEdu(),
   ));
