@@ -135,10 +135,11 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
                                 await FilePicker.platform.pickFiles();
 
                             if (result != null) {
-                              setState(() {
-                                taskFile = File(result.files.single.path!);
-                                fileName = result.files.single.name;
-                              });
+                              Provider.of<TaskViewModel>(context, listen: false)
+                                  .setAssignmentFile(
+                                name: result.files.single.name,
+                                path: result.files.single.path!,
+                              );
                             } else {
                               // User canceled the picker
                             }
@@ -230,7 +231,8 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
                             .sendTask(
                           token: token,
                           moduleId: "3",
-                          data: taskFile,
+                          filePath:
+                              Provider.of<TaskViewModel>(context).filePath,
                           notes: _notesController.text,
                         );
                         if (msg.contains('success')) {
@@ -241,8 +243,8 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
                           );
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text("Gagal mengirim tugas."),
+                            SnackBar(
+                              content: Text(msg),
                             ),
                           );
                         }

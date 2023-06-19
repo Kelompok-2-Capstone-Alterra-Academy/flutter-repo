@@ -38,7 +38,7 @@ class CourseAPI {
   Future<dynamic> sendTask({
     required token,
     required String moduleId,
-    required File data,
+    required String filePath,
     String? notes,
   }) async {
     final Dio dio = Dio();
@@ -49,7 +49,7 @@ class CourseAPI {
 
     formData.files.add(MapEntry(
       'submission_source',
-      await MultipartFile.fromFile('path/to/file.jpg'),
+      await MultipartFile.fromFile(filePath),
     ));
 
     formData.fields.add(
