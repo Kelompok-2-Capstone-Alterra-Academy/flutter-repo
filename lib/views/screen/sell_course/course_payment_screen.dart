@@ -63,15 +63,6 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
     }
   }
 
-  double setHarga() {
-    if (context.read<CoursePaymentViewModel>().promoUsed == true) {
-      return context.read<CoursePaymentViewModel>().totalBayar;
-    } else {
-      return context.read<CoursePaymentViewModel>().totalBayar =
-          double.parse(widget.price) + 500;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     Provider.of<CoursePaymentViewModel>(context, listen: false);
