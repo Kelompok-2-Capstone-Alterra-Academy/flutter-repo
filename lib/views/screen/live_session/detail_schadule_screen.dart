@@ -10,7 +10,6 @@ class DetailScheduleScreen extends StatefulWidget {
   static const routeName = '/detailschedule';
 
   final int index;
-
   const DetailScheduleScreen({Key? key, required this.index}) : super(key: key);
 
   @override

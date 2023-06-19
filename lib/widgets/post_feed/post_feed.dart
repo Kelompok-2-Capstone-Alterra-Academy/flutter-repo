@@ -6,8 +6,11 @@ import '../../utils/color/color.dart';
 import '../../views/screen/post_feed/post_detail_screen.dart';
 
 class PostFeed extends StatelessWidget {
+  final int index;
+
   const PostFeed({
     super.key,
+    required this.index,
     required this.postFeeds,
   });
 
@@ -21,7 +24,9 @@ class PostFeed extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => PostDetailScreen(postFeed: postFeed),
+            builder: (context) => PostDetailScreen(
+              index: index,
+            ),
           ),
         );
       },

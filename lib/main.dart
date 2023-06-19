@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:staredu/models/post_feed_model.dart';
 import 'package:staredu/views/screen/auth/forgot_password/forgot_password_view_model.dart';
 import 'package:staredu/views/screen/auth/forgot_password/main/forgot_password_screen.dart';
 import 'package:staredu/views/screen/auth/forgot_password/otp_verification/otp_verification_screen.dart';
@@ -26,6 +27,7 @@ import 'package:staredu/views/screen/live_session/schedule_view_model.dart';
 import 'package:staredu/views/screen/news/news_view_model.dart';
 import 'package:staredu/views/screen/notification/notification_screen.dart';
 import 'package:staredu/views/screen/notification/notification_view_model.dart';
+import 'package:staredu/views/screen/post_feed/post_feed_view_model.dart';
 import 'package:staredu/views/screen/profile/profile_screen.dart';
 import 'package:staredu/views/screen/course/module/detail/module_quiz_detail_screen.dart';
 import 'package:staredu/views/screen/course/module/module_send_task_screen.dart';
@@ -79,6 +81,7 @@ void main() {
       ChangeNotifierProvider(create: (_) => CoursePaymentViewModel()),
       ChangeNotifierProvider(create: (_) => ScheduleViewModel()),
       ChangeNotifierProvider(create: (_) => NewsViewModel()),
+      ChangeNotifierProvider(create: (_) => PostFeedViewModel()),
     ],
     child: const StarEdu(),
   ));
