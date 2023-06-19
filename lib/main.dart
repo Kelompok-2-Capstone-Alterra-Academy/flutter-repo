@@ -17,34 +17,39 @@ import 'package:staredu/views/screen/course/module/module_live_session_screen.da
 import 'package:staredu/views/screen/course/module/module_list_quiz_screen.dart';
 import 'package:staredu/views/screen/auth/register/account_verification/account_verification.dart';
 import 'package:staredu/views/screen/auth/register/main/register_screen.dart';
-import 'package:staredu/views/screen/edit_profile/edit_profile.dart';
+import 'package:staredu/views/screen/edit_profile/edit_profile_screen.dart';
+import 'package:staredu/views/screen/edit_profile/edit_profile_view_model.dart';
 import 'package:staredu/views/screen/history/history_transaction_screen.dart';
 import 'package:staredu/views/screen/history/note_transaction_screen.dart.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
 import 'package:staredu/views/screen/home/home_view_model.dart';
 import 'package:staredu/views/screen/notification/notification_screen.dart';
 import 'package:staredu/views/screen/notification/notification_view_model.dart';
-import 'package:staredu/views/screen/profile/profile.dart';
+import 'package:staredu/views/screen/profile/profile_screen.dart';
 import 'package:staredu/views/screen/course/module/detail/module_quiz_detail_screen.dart';
 import 'package:staredu/views/screen/course/module/module_send_task_screen.dart';
 import 'package:staredu/views/screen/course/module/module_task_list_screen.dart';
-import 'package:staredu/views/screen/home/home_screen.dart';
 import 'package:staredu/views/screen/mentor/chat_mentor_screen.dart';
 import 'package:staredu/views/screen/mentor/mentor_screen.dart';
 import 'package:staredu/views/screen/mentor/search_chat_screen.dart';
+import 'package:staredu/views/screen/profile/profile_view_model.dart';
 import 'package:staredu/views/screen/sell_course/course_payment_screen.dart';
 import 'package:staredu/views/screen/sell_course/course_voucher_screen.dart';
-import 'package:staredu/views/screen/sell_course/sell_course_detail_screen.dart';
 import 'package:staredu/views/screen/sell_course/sell_course_screen.dart';
 import 'package:staredu/views/screen/post_feed/post_feed_screen.dart';
 import 'package:staredu/views/screen/live_session/schedule_course_screen.dart';
 import 'package:staredu/views/screen/course/module/detail/module_detail_ppt_screen.dart';
 import 'package:staredu/views/screen/news/news_screen.dart';
-import 'package:staredu/views/screen/live_session/schedule_course_screen.dart';
 import 'package:staredu/views/screen/splash_welcome/splash_welcome_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/views/screen/wishlist/wishlist_screen.dart';
+import 'package:staredu/views/view_model/course/certificate_view_model.dart';
 import 'package:staredu/views/view_model/course/course_taken_view_model.dart';
+import 'package:staredu/views/view_model/course/module_view_model.dart';
+import 'package:staredu/views/view_model/mentor/mentor_view_model.dart';
+import 'package:staredu/views/view_model/sell_course/course_payment_view_model.dart';
+import 'package:staredu/views/view_model/sell_course/sell_course_view_model.dart';
+import 'package:staredu/views/view_model/sell_course/voucher_view_model.dart';
 import 'package:staredu/views/view_model/course/task_view_model.dart';
 import 'package:staredu/widgets/bottom_navigation_bar/bottom_navigation_bar_view_model.dart';
 
@@ -69,6 +74,14 @@ void main() {
       ChangeNotifierProvider(create: (_) => LoginViewModel()),
       ChangeNotifierProvider(create: (_) => ForgotPasswordViewModel()),
       ChangeNotifierProvider(create: (_) => CourseTakenViewModel()),
+      ChangeNotifierProvider(create: (_) => ModuleListViewModel()),
+      ChangeNotifierProvider(create: (_) => CertificateViewModel()),
+      ChangeNotifierProvider(create: (_) => ProfileViewModel()),
+      ChangeNotifierProvider(create: (_) => EditProfileViewModel()),
+      ChangeNotifierProvider(create: (_) => MentorViewModel()),
+      ChangeNotifierProvider(create: (_) => SellCourseViewModel()),
+      ChangeNotifierProvider(create: (_) => VoucherViewModel()),
+      ChangeNotifierProvider(create: (_) => CoursePaymentViewModel()),
       ChangeNotifierProvider(create: (_) => TaskViewModel()),
     ],
     child: const StarEdu(),

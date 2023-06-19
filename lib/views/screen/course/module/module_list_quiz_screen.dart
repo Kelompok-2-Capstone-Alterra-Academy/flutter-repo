@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:staredu/utils/color/color.dart';
-import 'package:staredu/utils/constant/module_section_list.dart';
+import 'package:staredu/views/view_model/course/module_view_model.dart';
 import 'package:staredu/widgets/module_course/module_quiz_card.dart';
 
 class ModuleListQuizScreen extends StatefulWidget {
@@ -16,7 +17,17 @@ class ModuleListQuizScreen extends StatefulWidget {
 
 class _ModuleListQuizScreenState extends State<ModuleListQuizScreen> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final moduleViewModel =
+        Provider.of<ModuleListViewModel>(context, listen: false);
+    final List quizList = moduleViewModel.moduleList
+        .where((moduleList) => moduleList.quiz == true)
+        .toList();
     final double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -63,21 +74,25 @@ class _ModuleListQuizScreenState extends State<ModuleListQuizScreen> {
               const SizedBox(
                 height: 12,
               ),
-              ListView.separated(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: moduleSection.length,
-                itemBuilder: (context, index) {
-                  return ModuleQuizCard(
-                    id: moduleSection[index].id!.toInt(),
-                    isQuizAvailable: moduleSection[index].quiz,
-                    title: moduleSection[index].title!.toString(),
-                    numbering: index.toString(),
-                  );
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  return const SizedBox(
-                    height: 2,
+              Consumer<ModuleListViewModel>(
+                builder: (context, value, child) {
+                  return ListView.separated(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: quizList.length,
+                    itemBuilder: (context, index) {
+                      return ModuleQuizCard(
+                        id: quizList[index].id!.toInt(),
+                        isQuizAvailable: quizList[index].quiz,
+                        title: quizList[index].title!.toString(),
+                        numbering: index.toString(),
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const SizedBox(
+                        height: 2,
+                      );
+                    },
                   );
                 },
               ),

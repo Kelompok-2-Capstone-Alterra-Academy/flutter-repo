@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:staredu/utils/animation/slide_animation.dart';
 import 'package:staredu/views/screen/post_feed/post_detail_screen.dart';
 import '../../../models/post_feed_model.dart';
+import '../../../utils/animation/slide_animation3.dart';
 import '../../../utils/color/color.dart';
 import '../../../utils/constant/list_post_feed.dart';
 import 'create_post_feed_screen.dart';
@@ -53,8 +55,7 @@ class _PostFeedScreenState extends State<PostFeedScreen> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => const CreatePostScreen()),
+                      SlideAnimation3(page: const CreatePostScreen()),
                     );
                   },
                   child: Container(

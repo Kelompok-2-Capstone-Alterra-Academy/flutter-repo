@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../utils/animation/slide_animation3.dart';
 import '../../utils/color/color.dart';
 
 //Button for Changing Page
@@ -32,11 +33,7 @@ class PrimaryButton extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => page,
-                ));
+            Navigator.push(context, SlideAnimation3(page: page));
           },
           child: Padding(
             padding: const EdgeInsets.only(left: 10, right: 12),

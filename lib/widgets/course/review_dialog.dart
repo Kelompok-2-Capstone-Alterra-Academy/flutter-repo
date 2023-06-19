@@ -9,6 +9,8 @@ import 'package:staredu/views/screen/course/course_taken_list_screen.dart';
 import 'package:staredu/views/screen/course/module/module_list_screen.dart';
 import 'package:staredu/views/view_model/course/course_taken_view_model.dart';
 
+import '../../utils/animation/fade_animation2.dart';
+
 class ReviewDialog extends StatefulWidget {
   const ReviewDialog({super.key});
 
@@ -245,19 +247,7 @@ class _ReviewDialogState extends State<ReviewDialog> {
                                 listen: false)
                             .clearRating();
                         Navigator.of(context).push(
-                          PageRouteBuilder(
-                            pageBuilder:
-                                (context, animations, secondaryAnimations) =>
-                                    const CourseTakenListScreen(),
-                            transitionsBuilder: (context, animations,
-                                secondaryAnimations, childs) {
-                              final tween = Tween(begin: 0.0, end: 1.0);
-                              return FadeTransition(
-                                opacity: animations.drive(tween),
-                                child: childs,
-                              );
-                            },
-                          ),
+                          FadeAnimation2(page: const CourseTakenListScreen()),
                         );
                       },
                       child: Text(

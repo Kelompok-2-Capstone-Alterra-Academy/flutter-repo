@@ -9,6 +9,7 @@ import 'package:staredu/widgets/course/filter_course_taken.dart';
 import 'package:staredu/widgets/loading/circular_progress.dart';
 import 'package:staredu/widgets/loading/opacity_progress.dart';
 
+import '../../utils/animation/fade_animation2.dart';
 import '../../utils/color/color.dart';
 
 class OnGoingCourseTakenListScreen extends StatefulWidget {
@@ -64,6 +65,7 @@ class _OnGoingCourseTakenListScreenState
                                     courseName: onGoingCourse[index]
                                         .courseName
                                         .toString(),
+                                    courseId: (onGoingCourse[index].id),
                                   ),
                                   transitionsBuilder: (context, animations,
                                       secondaryAnimations, childs) {
