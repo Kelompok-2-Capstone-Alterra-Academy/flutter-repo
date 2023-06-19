@@ -5,7 +5,7 @@ import 'package:staredu/utils/state/my_state.dart';
 class TaskViewModel with ChangeNotifier {
   dynamic response;
 
-  String _fileName = "nama_file.pdf/jpg";
+  String _fileName = "nama_file.pdf/doc/jpg";
   String get fileName => _fileName;
   String _filePath = "";
   String get filePath => _filePath;

@@ -134,7 +134,16 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
                               ),
                               onPressed: () async {
                                 FilePickerResult? result =
-                                    await FilePicker.platform.pickFiles();
+                                    await FilePicker.platform.pickFiles(
+                                  type: FileType.custom,
+                                  allowedExtensions: [
+                                    'pdf',
+                                    'doc',
+                                    'docx',
+                                    'jpg',
+                                    'jpeg',
+                                  ],
+                                );
 
                                 if (result != null) {
                                   Provider.of<TaskViewModel>(context,
