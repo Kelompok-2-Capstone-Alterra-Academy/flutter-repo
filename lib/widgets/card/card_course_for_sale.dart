@@ -8,21 +8,25 @@ class CardCourseForSale extends StatelessWidget {
   const CardCourseForSale({
     super.key,
     required this.id,
-    required this.img,
-    required this.title,
+    required this.thumbnail,
+    required this.courseName,
     required this.rating,
     required this.student,
     required this.price,
     required this.grade,
+    required this.liveSession,
+    required this.description,
   });
 
   final int id;
-  final String img;
-  final String title;
+  final String thumbnail;
+  final String courseName;
   final String grade;
   final String rating;
   final String student;
   final String price;
+  final String liveSession;
+  final String description;
 
   @override
   Widget build(BuildContext context) {
@@ -36,12 +40,14 @@ class CardCourseForSale extends StatelessWidget {
             Navigator.of(context).push(FadeAnimation2(
               page: SellCourseDetailScreen(
                 id: id,
-                img: img,
-                title: title,
+                thumbnail: thumbnail,
+                courseName: courseName,
                 rating: rating,
                 student: student,
                 price: price,
                 grade: grade,
+                liveSession: liveSession,
+                description: description,
               ),
             ));
           },
@@ -64,7 +70,7 @@ class CardCourseForSale extends StatelessWidget {
                   children: [
                     SizedBox(
                       child: Image.asset(
-                        img,
+                        "assets/images/thumbnail/$thumbnail.png",
                         fit: BoxFit.contain,
                       ),
                     ),
@@ -73,7 +79,7 @@ class CardCourseForSale extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          title,
+                          courseName,
                           style: GoogleFonts.poppins(
                             fontSize: 13,
                             fontWeight: FontWeight.w600,

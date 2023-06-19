@@ -12,16 +12,18 @@ class SellCourseViewModel extends ChangeNotifier {
   List<SellCourseModel> _findCourse = [];
   List<SellCourseModel> get findCourse => _findCourse;
 
+  double totalBayar = 0;
+
   final CourseAPI courseAPI = CourseAPI();
 
   MyState myState = MyState.initial;
 
-  Future getAllCourseForSale() async {
+  Future getAllCourseForSale(String? token) async {
     try {
       myState = MyState.loading;
       notifyListeners();
 
-      _courseForSale = await courseAPI.getCourseForSale();
+      _courseForSale = await courseAPI.getCourseForSale(token);
       _findCourse = _courseForSale;
 
       myState = MyState.success;
@@ -43,10 +45,15 @@ class SellCourseViewModel extends ChangeNotifier {
     } else {
       results = _courseForSale
           .where((user) =>
-              user.title!.toLowerCase().contains(enterKey.toLowerCase()))
+              user.courseName!.toLowerCase().contains(enterKey.toLowerCase()))
           .toList();
     }
     _findCourse = results;
+    notifyListeners();
+  }
+
+  void discount(double discount) {
+    totalBayar = (totalBayar / discount) + 500;
     notifyListeners();
   }
 }

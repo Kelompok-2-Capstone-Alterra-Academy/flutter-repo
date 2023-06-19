@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:staredu/utils/constant/voucher_list.dart';
+import 'package:staredu/utils/formater/date_format.dart';
 import 'package:staredu/views/view_model/sell_course/voucher_view_model.dart';
 import '../../../utils/color/color.dart';
+import '../../../utils/preferences/preferences_utils.dart';
 import '../../../utils/state/my_state.dart';
 
 class CourseVoucherScreen extends StatefulWidget {
@@ -16,17 +17,23 @@ class CourseVoucherScreen extends StatefulWidget {
 }
 
 class _CourseVoucherScreenState extends State<CourseVoucherScreen> {
+  late PreferencesUtils preferencesUtils;
+
   @override
   void initState() {
-    Future.delayed(
-      Duration.zero,
-      () {
-        final provider = Provider.of<VoucherViewModel>(context, listen: false);
-
-        provider.getAllVoucher();
-      },
-    );
     super.initState();
+    init();
+  }
+
+  void init() async {
+    preferencesUtils = PreferencesUtils();
+    await preferencesUtils.init();
+    String? token = preferencesUtils.getPreferencesString('token');
+
+    if (context.mounted) {
+      Provider.of<VoucherViewModel>(context, listen: false)
+          .getAllVoucher(token);
+    }
   }
 
   @override
@@ -87,7 +94,9 @@ class _CourseVoucherScreenState extends State<CourseVoucherScreen> {
               return InkWell(
                 borderRadius: BorderRadius.circular(8),
                 onTap: () {
-                  value.claimVoucher(index);
+                  value.courseVoucher[index].isClaim == true
+                      ? null
+                      : value.claimVoucher(index);
                 },
                 child: Card(
                   elevation: 2,
@@ -106,9 +115,14 @@ class _CourseVoucherScreenState extends State<CourseVoucherScreen> {
                     ),
                     child: Row(
                       children: [
+                        const SizedBox(width: 15),
                         SizedBox(
+                          width: 80,
                           child: Image.asset(
-                            value.courseVoucher[index].img!,
+                            value.courseVoucher[index].thumbnail!
+                                    .contains("promo")
+                                ? "assets/images/${value.courseVoucher[index].thumbnail!}.png"
+                                : "assets/images/promo.png",
                             fit: BoxFit.contain,
                           ),
                         ),
@@ -117,7 +131,7 @@ class _CourseVoucherScreenState extends State<CourseVoucherScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              value.courseVoucher[index].title!,
+                              value.courseVoucher[index].promoName!,
                               style: GoogleFonts.poppins(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w600,
@@ -134,7 +148,8 @@ class _CourseVoucherScreenState extends State<CourseVoucherScreen> {
                                   ),
                                 ),
                                 Text(
-                                  value.courseVoucher[index].expired!,
+                                  convertDateFormat(
+                                      value.courseVoucher[index].expiredDate!),
                                   style: GoogleFonts.poppins(
                                     fontSize: 13,
                                     fontWeight: FontWeight.w600,

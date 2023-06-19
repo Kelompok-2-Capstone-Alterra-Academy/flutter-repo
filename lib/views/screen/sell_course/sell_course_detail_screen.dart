@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/color/color.dart';
-import 'package:staredu/utils/constant/sell_course_list.dart';
 import 'package:staredu/views/screen/sell_course/course_payment_screen.dart';
 import '../../../models/sell_course_model.dart';
 import '../../../models/service/wishlist_manager.dart';
@@ -12,22 +11,26 @@ class SellCourseDetailScreen extends StatefulWidget {
   static const String routeName = "/sell_course_detail";
 
   final int id;
-  final String img;
-  final String title;
+  final String thumbnail;
+  final String courseName;
   final String price;
   final String rating;
   final String student;
   final String grade;
+  final String liveSession;
+  final String description;
 
   const SellCourseDetailScreen({
     super.key,
-    required this.title,
+    required this.courseName,
     required this.price,
     required this.rating,
     required this.student,
     required this.id,
-    required this.img,
+    required this.thumbnail,
     required this.grade,
+    required this.liveSession,
+    required this.description,
   });
 
   @override
@@ -56,8 +59,16 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
     if (isWishlistSelected) {
       await wishlistManager.removeWishlistItem(widget.id);
     } else {
-      await wishlistManager.addWishlistItem(widget.id, widget.img, widget.price,
-          widget.rating, widget.student, widget.title, widget.grade);
+      await wishlistManager.addWishlistItem(
+          widget.id,
+          widget.thumbnail,
+          widget.price,
+          widget.rating,
+          widget.student,
+          widget.courseName,
+          widget.grade,
+          widget.description,
+          widget.liveSession);
     }
 
     setState(() {
@@ -117,7 +128,7 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
                             SizedBox(
                               width: 170,
                               child: Text(
-                                widget.title,
+                                widget.courseName,
                                 style: const TextStyle(
                                   fontFamily: 'GlikerSemiBold',
                                   color: whiteColor,
@@ -155,7 +166,7 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    widget.title,
+                    widget.courseName,
                     style: GoogleFonts.poppins(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
@@ -207,7 +218,7 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
               ),
               const SizedBox(height: 10),
               Text(
-                widget.price,
+                "Rp. ${widget.price}",
                 style: GoogleFonts.poppins(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
@@ -223,7 +234,9 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
               ),
               const SizedBox(height: 10),
               Text(
-                "Dengan mengambil kursus ini dapat membuat kamu lebih memahami materi pelajaran dengan adanya video yang menarik, rangkuman pelajaran dan sesi tanya jawab dengan mentor",
+                widget.description.isEmpty || widget.description.length < 15
+                    ? "Dengan mengambil kursus ini dapat membuat kamu lebih memahami materi pelajaran dengan adanya video yang menarik, rangkuman pelajaran dan sesi tanya jawab dengan mentor"
+                    : widget.description,
                 style: GoogleFonts.poppins(
                     fontSize: 11,
                     fontWeight: FontWeight.w400,
@@ -238,9 +251,9 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
                 ),
               ),
               const SizedBox(height: 12),
-              const DetailKeuntungan(
+              DetailKeuntungan(
                 iconImg: "assets/images/live_session_icon.png",
-                text: "Live session 3x seminggu",
+                text: "Live session ${widget.liveSession}",
               ),
               const SizedBox(height: 15),
               const DetailKeuntungan(
@@ -262,8 +275,10 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
                 screenWidth: screenWidth,
                 title: "Ambil Kursus",
                 page: CoursePaymentScreen(
-                  title: widget.title,
+                  courseId: widget.id,
+                  title: widget.courseName,
                   price: widget.price,
+                  liveSession: widget.liveSession,
                 ),
               ),
             ],

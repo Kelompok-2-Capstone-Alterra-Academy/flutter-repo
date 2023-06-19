@@ -6,6 +6,7 @@ import 'package:staredu/views/screen/sell_course/sell_course_detail_screen.dart'
 import 'package:staredu/views/view_model/sell_course/sell_course_view_model.dart';
 import '../../../utils/animation/fade_animation2.dart';
 import '../../../utils/color/color.dart';
+import '../../../utils/preferences/preferences_utils.dart';
 import '../../../utils/state/my_state.dart';
 import '../../../widgets/sell_course/filter_button.dart';
 import '../../../widgets/sell_course/promo_button.dart';
@@ -20,18 +21,23 @@ class SellCourseScreen extends StatefulWidget {
 }
 
 class _SellCourseScreenState extends State<SellCourseScreen> {
+  late PreferencesUtils preferencesUtils;
+
   @override
   void initState() {
-    Future.delayed(
-      Duration.zero,
-      () {
-        final provider =
-            Provider.of<SellCourseViewModel>(context, listen: false);
-
-        provider.getAllCourseForSale();
-      },
-    );
     super.initState();
+    init();
+  }
+
+  void init() async {
+    preferencesUtils = PreferencesUtils();
+    await preferencesUtils.init();
+    String? token = preferencesUtils.getPreferencesString('token');
+
+    if (context.mounted) {
+      Provider.of<SellCourseViewModel>(context, listen: false)
+          .getAllCourseForSale(token);
+    }
   }
 
   @override
@@ -148,12 +154,24 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
                                     Navigator.of(context).push(FadeAnimation2(
                                         page: SellCourseDetailScreen(
                                       id: value.findCourse[index].id!,
-                                      img: value.findCourse[index].img!,
-                                      title: value.findCourse[index].title!,
-                                      rating: value.findCourse[index].rating!,
-                                      student: value.findCourse[index].student!,
-                                      price: value.findCourse[index].price!,
-                                      grade: value.findCourse[index].grade!,
+                                      thumbnail:
+                                          value.findCourse[index].thumbnail!,
+                                      courseName:
+                                          value.findCourse[index].courseName!,
+                                      // rating: value.findCourse[index]!,
+                                      // student: value.findCourse[index].student!,
+                                      rating: "4.9",
+                                      student: "8945 Siswa",
+                                      price:
+                                          value.findCourse[index].price!.isEmpty
+                                              ? "700000"
+                                              : value.findCourse[index].price!,
+                                      // grade: value.findCourse[index].grade!,
+                                      grade: "Kelas 10",
+                                      liveSession: value
+                                          .findCourse[index].liveSessionWeek!,
+                                      description:
+                                          value.findCourse[index].description!,
                                     )));
                                   },
                                   child: Card(
@@ -176,7 +194,11 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
                                           children: [
                                             SizedBox(
                                               child: Image.asset(
-                                                value.findCourse[index].img!,
+                                                value.findCourse[index]
+                                                            .thumbnail!.length >
+                                                        15
+                                                    ? "assets/images/thumbnail/pencil.png"
+                                                    : "assets/images/thumbnail/${value.findCourse[index].thumbnail!}.png",
                                                 fit: BoxFit.contain,
                                               ),
                                             ),
@@ -186,8 +208,8 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  value
-                                                      .findCourse[index].title!,
+                                                  value.findCourse[index]
+                                                      .courseName!,
                                                   style: GoogleFonts.poppins(
                                                     fontSize: 13,
                                                     fontWeight: FontWeight.w600,
@@ -195,8 +217,10 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
                                                 ),
                                                 const SizedBox(height: 3),
                                                 Text(
-                                                  value
-                                                      .findCourse[index].price!,
+                                                  value.findCourse[index].price!
+                                                          .isEmpty
+                                                      ? "Rp. " "700000"
+                                                      : "Rp. ${value.findCourse[index].price!}",
                                                   style: GoogleFonts.poppins(
                                                     fontSize: 11,
                                                     fontWeight: FontWeight.w600,
@@ -210,8 +234,9 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
                                                     ),
                                                     const SizedBox(width: 7),
                                                     Text(
-                                                      value.findCourse[index]
-                                                          .rating!,
+                                                      // value.findCourse[index]
+                                                      //     .rating!,
+                                                      "4.9",
                                                       style: GoogleFonts.poppins(
                                                           fontSize: 11,
                                                           fontWeight:
@@ -231,8 +256,9 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
                                                     ),
                                                     const SizedBox(width: 7),
                                                     Text(
-                                                      value.findCourse[index]
-                                                          .student!,
+                                                      // value.findCourse[index]
+                                                      //     .student!,
+                                                      "8945 Siswa",
                                                       style: GoogleFonts.poppins(
                                                           fontSize: 11,
                                                           fontWeight:
