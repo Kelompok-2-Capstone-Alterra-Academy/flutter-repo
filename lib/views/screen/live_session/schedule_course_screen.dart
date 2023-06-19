@@ -21,17 +21,16 @@ class ScheduleCourseScreen extends StatefulWidget {
 
 class _ScheduleCourseScreenState extends State<ScheduleCourseScreen> {
   String selectedFilter = 'Semua';
-  List<ScheduleCourseModel> filteredList = scheduleList;
   late PreferencesUtils preferencesUtils;
 
-  void applyFilter(String filter) {
+  void applyFilter(String filter, ScheduleViewModel value) {
     setState(() {
       selectedFilter = filter;
 
       if (filter == 'Semua') {
-        filteredList = scheduleList;
+        value.filteredList = value.scheduleList;
       } else {
-        filteredList = scheduleList
+        value.filteredList = value.scheduleList
             .where((schedule) => schedule.status == filter)
             .toList();
       }
@@ -78,17 +77,17 @@ class _ScheduleCourseScreenState extends State<ScheduleCourseScreen> {
                   children: [
                     ScheduleFilterButton(
                       text: 'Semua',
-                      onPressed: () => applyFilter('Semua'),
+                      onPressed: () => applyFilter('Semua', value),
                       isSelected: selectedFilter == 'Semua',
                     ),
                     ScheduleFilterButton(
                       text: 'Sudah Ikut',
-                      onPressed: () => applyFilter('Sudah Ikut'),
+                      onPressed: () => applyFilter('Sudah Ikut', value),
                       isSelected: selectedFilter == 'Sudah Ikut',
                     ),
                     ScheduleFilterButton(
                       text: 'Belum Ikut',
-                      onPressed: () => applyFilter('Belum Ikut'),
+                      onPressed: () => applyFilter('Belum Ikut', value),
                       isSelected: selectedFilter == 'Belum Ikut',
                     ),
                   ],
@@ -98,7 +97,7 @@ class _ScheduleCourseScreenState extends State<ScheduleCourseScreen> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 17.0),
                   child: ListView.builder(
-                    itemCount: value.scheduleList.length,
+                    itemCount: value.filteredList.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
@@ -119,7 +118,7 @@ class _ScheduleCourseScreenState extends State<ScheduleCourseScreen> {
                           ),
                           child: ListTile(
                             title: Text(
-                              value.scheduleList[index].date,
+                              value.filteredList[index].date,
                               style: GoogleFonts.poppins(
                                 color: Colors.white,
                                 fontSize: 12,
@@ -129,7 +128,7 @@ class _ScheduleCourseScreenState extends State<ScheduleCourseScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  value.scheduleList[index].course,
+                                  value.filteredList[index].course,
                                   style: GoogleFonts.poppins(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -144,14 +143,14 @@ class _ScheduleCourseScreenState extends State<ScheduleCourseScreen> {
                                 vertical: 6,
                               ),
                               decoration: BoxDecoration(
-                                color: value.scheduleList[index].status ==
+                                color: value.filteredList[index].status ==
                                         'Sudah Ikut'
                                     ? Colors.green
                                     : Colors.orange,
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
                               child: Text(
-                                value.scheduleList[index].status,
+                                value.filteredList[index].status,
                                 style: GoogleFonts.poppins(
                                   color: Colors.white,
                                   fontSize: 12,

@@ -8,6 +8,13 @@ class ScheduleViewModel extends ChangeNotifier {
   List<ScheduleCourseModel> _scheduleList = [];
   List<ScheduleCourseModel> get scheduleList => _scheduleList;
 
+  List<ScheduleCourseModel> _filteredList = [];
+  List<ScheduleCourseModel> get filteredList => _filteredList;
+  set filteredList(List<ScheduleCourseModel> value) {
+    _filteredList = value;
+    notifyListeners();
+  }
+
   final ScheduleAPI scheduleAPI = ScheduleAPI();
 
   MyState myState = MyState.initial;
@@ -18,6 +25,7 @@ class ScheduleViewModel extends ChangeNotifier {
       notifyListeners();
 
       _scheduleList = await scheduleAPI.getAllSchedule();
+      _filteredList = _scheduleList;
 
       myState = MyState.success;
       notifyListeners();

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/utils/color/color.dart';
+import 'package:staredu/views/screen/live_session/schedule_web_view.dart';
+import '../../../utils/constant/news_list.dart';
 import '../../../views/screen/live_session/schedule_view_model.dart';
 
 class DetailScheduleScreen extends StatefulWidget {
@@ -16,6 +18,15 @@ class DetailScheduleScreen extends StatefulWidget {
 }
 
 class _DetailScheduleScreenState extends State<DetailScheduleScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      final provider = Provider.of<ScheduleViewModel>(context, listen: false);
+      provider.getAllSchedule();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +74,7 @@ class _DetailScheduleScreenState extends State<DetailScheduleScreen> {
                   height: 15,
                 ),
                 Text(
-                  "Membahas seputar Matematika Dasar kelas 11 IPS dan sesi tanya jawab Matematika Dasar ",
+                  "Membahas seputar Materi dan sesi tanya jawab mengenai Materi yang di bahas. ",
                   style: GoogleFonts.poppins(
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
@@ -89,7 +100,15 @@ class _DetailScheduleScreenState extends State<DetailScheduleScreen> {
                 const SizedBox(height: 30),
                 Center(
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ScheduleWebView(
+                              url: value.scheduleList[widget.index].url),
+                        ),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
