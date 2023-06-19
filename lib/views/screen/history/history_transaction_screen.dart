@@ -167,15 +167,14 @@ class _HistoryTransactionScreenState extends State<HistoryTransactionScreen> {
                                           height: 80,
                                           width: 80,
                                           child: Image.asset(
-                                            'assets/images/thumbnail/apple.png',
-                                            // value
-                                            //         .historyCourses[index]
-                                            //         .transactionDetails![index]
-                                            //         .course!
-                                            //         .thumbnail!
-                                            //         .isEmpty
-                                            //     ? 'assets/images/thumbnail/apple.png'
-                                            //     : "assets/images/thumbnail/${value.historyCourses[index].transactionDetails![index].course!.thumbnail}.png",
+                                            value
+                                                    .historyCourses[index]
+                                                    .transactionDetails![index]
+                                                    .course!
+                                                    .thumbnail!
+                                                    .isEmpty
+                                                ? 'assets/images/thumbnail/apple.png'
+                                                : "assets/images/thumbnail/${value.historyCourses[index].transactionDetails![index].course!.thumbnail}.png",
                                             fit: BoxFit.contain,
                                           ),
                                         ),
@@ -185,12 +184,11 @@ class _HistoryTransactionScreenState extends State<HistoryTransactionScreen> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              "Matematika",
-                                              // value
-                                              //     .historyCourses[index]
-                                              //     .transactionDetails![index]
-                                              //     .course!
-                                              //     .courseName!,
+                                              value
+                                                  .historyCourses[index]
+                                                  .transactionDetails![index]
+                                                  .course!
+                                                  .courseName!,
                                               style: GoogleFonts.poppins(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w600,

@@ -76,6 +76,7 @@ void main() {
       ChangeNotifierProvider(create: (_) => VoucherViewModel()),
       ChangeNotifierProvider(create: (_) => CoursePaymentViewModel()),
       ChangeNotifierProvider(create: (_) => ClaimedVoucherViewModel()),
+      ChangeNotifierProvider(create: (_) => HistoryTransactionViewModel()),
     ],
     child: const StarEdu(),
   ));

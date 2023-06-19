@@ -185,6 +185,7 @@ class TransactionDetail {
   int? transactionId;
   Transaction? transaction;
   String? courseId;
+  Course? course;
 
   TransactionDetail({
     this.id,
@@ -195,6 +196,7 @@ class TransactionDetail {
     this.transactionId,
     this.transaction,
     this.courseId,
+    this.course,
   });
 
   factory TransactionDetail.fromRawJson(String str) =>
@@ -214,6 +216,7 @@ class TransactionDetail {
             ? null
             : Transaction.fromJson(json["transaction"]),
         courseId: json["course_id"],
+        course: json["course"] == null ? null : Course.fromJson(json["course"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -225,6 +228,171 @@ class TransactionDetail {
         "transaction_id": transactionId,
         "transaction": transaction?.toJson(),
         "course_id": courseId,
+        "course": course?.toJson(),
+      };
+}
+
+class Course {
+  int? id;
+  String? createdAt;
+  String? updatedAt;
+  dynamic deletedAt;
+  int? categoryId;
+  Category? category;
+  int? classId;
+  Class? courseClass;
+  int? mentorId;
+  Student? user;
+  int? majorId;
+  Major? major;
+  String? courseName;
+  String? price;
+  String? duration;
+  String? status;
+  String? description;
+  String? thumbnail;
+  String? liveSessionWeek;
+  int? numStudents;
+  int? scores;
+
+  Course({
+    this.id,
+    this.createdAt,
+    this.updatedAt,
+    this.deletedAt,
+    this.categoryId,
+    this.category,
+    this.classId,
+    this.courseClass,
+    this.mentorId,
+    this.user,
+    this.majorId,
+    this.major,
+    this.courseName,
+    this.price,
+    this.duration,
+    this.status,
+    this.description,
+    this.thumbnail,
+    this.liveSessionWeek,
+    this.numStudents,
+    this.scores,
+  });
+
+  factory Course.fromRawJson(String str) => Course.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory Course.fromJson(Map<String, dynamic> json) => Course(
+        id: json["ID"],
+        createdAt: json["CreatedAt"],
+        updatedAt: json["UpdatedAt"],
+        deletedAt: json["DeletedAt"],
+        categoryId: json["category_id"],
+        category: json["category"] == null
+            ? null
+            : Category.fromJson(json["category"]),
+        classId: json["class_id"],
+        courseClass:
+            json["class"] == null ? null : Class.fromJson(json["class"]),
+        mentorId: json["mentor_id"],
+        user: json["user"] == null ? null : Student.fromJson(json["user"]),
+        majorId: json["major_id"],
+        major: json["major"] == null ? null : Major.fromJson(json["major"]),
+        courseName: json["course_name"],
+        price: json["price"],
+        duration: json["duration"],
+        status: json["status"],
+        description: json["description"],
+        thumbnail: json["thumbnail"],
+        liveSessionWeek: json["live_session_week"],
+        numStudents: json["num_students"],
+        scores: json["scores"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "ID": id,
+        "CreatedAt": createdAt,
+        "UpdatedAt": updatedAt,
+        "DeletedAt": deletedAt,
+        "category_id": categoryId,
+        "category": category?.toJson(),
+        "class_id": classId,
+        "class": courseClass?.toJson(),
+        "mentor_id": mentorId,
+        "user": user?.toJson(),
+        "major_id": majorId,
+        "major": major?.toJson(),
+        "course_name": courseName,
+        "price": price,
+        "duration": duration,
+        "status": status,
+        "description": description,
+        "thumbnail": thumbnail,
+        "live_session_week": liveSessionWeek,
+        "num_students": numStudents,
+        "scores": scores,
+      };
+}
+
+class Category {
+  String? categoryName;
+
+  Category({
+    this.categoryName,
+  });
+
+  factory Category.fromRawJson(String str) =>
+      Category.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory Category.fromJson(Map<String, dynamic> json) => Category(
+        categoryName: json["category_name"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "category_name": categoryName,
+      };
+}
+
+class Class {
+  String? className;
+
+  Class({
+    this.className,
+  });
+
+  factory Class.fromRawJson(String str) => Class.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory Class.fromJson(Map<String, dynamic> json) => Class(
+        className: json["class_name"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "class_name": className,
+      };
+}
+
+class Major {
+  String? majorName;
+
+  Major({
+    this.majorName,
+  });
+
+  factory Major.fromRawJson(String str) => Major.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory Major.fromJson(Map<String, dynamic> json) => Major(
+        majorName: json["major_name"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "major_name": majorName,
       };
 }
 
