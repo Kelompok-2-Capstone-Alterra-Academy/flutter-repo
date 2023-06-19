@@ -13,7 +13,7 @@ class ModuleQuizCard extends StatelessWidget {
     this.numbering,
   });
 
-  final int? id;
+  final String? id;
   final String? title;
   final bool? isQuizAvailable;
   final String? numbering;

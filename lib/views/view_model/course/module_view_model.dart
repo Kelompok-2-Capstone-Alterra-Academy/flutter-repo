@@ -33,20 +33,35 @@ class ModuleListViewModel with ChangeNotifier {
   Future getCourseModule(String? token, int? courseId) async {
     setState(MyState.loading);
 
+    // try {
+    // _courseModule = await moduleApi.getAllModule(token, courseId);
+    // final data = await moduleApi.getAllModule(token, courseId);
+    // for (var i in data) {
+    //   for (var j in i.module!) {
+    //     if (j.attachment!.type!.contains('quiz')) {
+    //       _courseQuiz.add(i);
+    //     } else {
+    //       _courseModule.add(i);
+    //     }
+    //   }
+    // }
+    final List<NewCourseDetailModel> tempCourseQuiz = [];
+    final List<NewCourseDetailModel> tempCourseModule = [];
+
     try {
-      final data = await moduleApi.getAllModule2(token, courseId);
+      final data = await moduleApi.getAllModule(token, courseId);
       for (var i in data) {
-        if (NewCourseDetailModel.fromJson(data)
-            .module![i]
-            .attachment!
-            .type!
-            .contains('quiz')) {
-          _courseQuiz.add(NewCourseDetailModel.fromJson(data));
-        } else {
-          _courseModule.add(NewCourseDetailModel.fromJson(data));
+        for (var j in i.module!) {
+          if (j.attachment!.type!.contains('quiz')) {
+            tempCourseQuiz.add(i);
+          } else {
+            tempCourseModule.add(i);
+          }
         }
       }
 
+      _courseModule = tempCourseModule;
+      _courseQuiz = tempCourseQuiz;
       setState(MyState.success);
       notifyListeners();
     } catch (e) {

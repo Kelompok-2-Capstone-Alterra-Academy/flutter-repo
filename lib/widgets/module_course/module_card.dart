@@ -17,6 +17,7 @@ class ModuleCard extends StatelessWidget {
     this.sectionId,
     this.sectionName,
     this.courseName,
+    this.moduleName,
     this.numbering,
     this.isVideoAvailable,
     this.isMaterialAvailable,
@@ -32,6 +33,7 @@ class ModuleCard extends StatelessWidget {
   final int? sectionId;
   final String? sectionName;
   final String? courseName;
+  final String? moduleName;
   final int? numbering;
   final bool? isVideoAvailable;
   final bool? isMaterialAvailable;
@@ -44,6 +46,8 @@ class ModuleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(courseName.toString());
+    print(moduleName.toString());
     return Column(
       crossAxisAlignment: CrossAxisAlignment.baseline,
       textBaseline: TextBaseline.alphabetic,
@@ -59,6 +63,7 @@ class ModuleCard extends StatelessWidget {
                           courseId: id,
                           sectionId: sectionId,
                           courseName: courseName,
+                          moduleName: moduleName,
                           sectionName: sectionName,
                           linkModule: linkModule,
                           description: moduleDescription,

@@ -195,11 +195,14 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                                 sectionName: moduleViewModel
                                                     .courseModule[firstIndex]
                                                     .sectionName,
-                                                courseName: moduleViewModel
+                                                courseName: widget.courseName
+                                                    .toString(),
+                                                moduleName: moduleViewModel
                                                     .courseModule[firstIndex]
                                                     .module![secondIndex]
                                                     .attachment!
-                                                    .attachmentName,
+                                                    .attachmentName
+                                                    .toString(),
                                                 numbering: secondIndex + 1,
                                                 isVideoAvailable:
                                                     moduleViewModel
@@ -261,11 +264,14 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                               sectionName: moduleViewModel
                                                   .courseModule[firstIndex]
                                                   .sectionName,
-                                              courseName: moduleViewModel
+                                              courseName:
+                                                  widget.courseName.toString(),
+                                              moduleName: moduleViewModel
                                                   .courseModule[firstIndex]
                                                   .module![secondIndex]
                                                   .attachment!
-                                                  .attachmentName,
+                                                  .attachmentName
+                                                  .toString(),
                                               numbering: secondIndex + 1,
                                               isVideoAvailable: moduleViewModel
                                                       .courseModule[firstIndex]
@@ -343,11 +349,14 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                             sectionName: moduleViewModel
                                                 .courseModule[firstIndex]
                                                 .sectionName,
-                                            courseName: moduleViewModel
+                                            courseName:
+                                                widget.courseName.toString(),
+                                            moduleName: moduleViewModel
                                                 .courseModule[firstIndex]
                                                 .module![secondIndex]
                                                 .attachment!
-                                                .attachmentName,
+                                                .attachmentName
+                                                .toString(),
                                             numbering: secondIndex + 1,
                                             isVideoAvailable: moduleViewModel
                                                     .courseModule[firstIndex]

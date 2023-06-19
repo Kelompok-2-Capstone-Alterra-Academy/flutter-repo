@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/utils/color/color.dart';
+import 'package:staredu/utils/constant/module_list.dart';
 import 'package:staredu/views/view_model/course/module_view_model.dart';
 import 'package:staredu/widgets/module_course/module_quiz_card.dart';
 
@@ -25,7 +26,7 @@ class _ModuleListQuizScreenState extends State<ModuleListQuizScreen> {
   Widget build(BuildContext context) {
     final moduleViewModel =
         Provider.of<ModuleListViewModel>(context, listen: false);
-    final List quizList = moduleViewModel.courseQuiz;
+    // final List quizList = moduleViewModel.courseQuiz;
     final double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -77,13 +78,30 @@ class _ModuleListQuizScreenState extends State<ModuleListQuizScreen> {
                   return ListView.separated(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: quizList.length,
-                    itemBuilder: (context, index) {
-                      return ModuleQuizCard(
-                        id: quizList[index].id!.toInt(),
-                        isQuizAvailable: quizList[index].quiz,
-                        title: quizList[index].title!.toString(),
-                        numbering: index.toString(),
+                    itemCount: moduleViewModel.courseQuiz.length,
+                    itemBuilder: (context, firstIndex) {
+                      return ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: moduleViewModel
+                            .courseQuiz[firstIndex].module!.length,
+                        itemBuilder: (context, secondIndex) {
+                          return ModuleQuizCard(
+                            id: moduleViewModel
+                                .courseModule[firstIndex].courseId,
+                            isQuizAvailable: moduleViewModel
+                                    .courseQuiz[firstIndex]
+                                    .module![secondIndex]
+                                    .attachment!
+                                    .type!
+                                    .contains('quiz')
+                                ? true
+                                : false,
+                            title: moduleViewModel
+                                .courseQuiz[firstIndex].sectionName,
+                            numbering: (secondIndex + 1).toString(),
+                          );
+                        },
                       );
                     },
                     separatorBuilder: (BuildContext context, int index) {
