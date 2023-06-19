@@ -194,7 +194,7 @@ class _ReviewDialogState extends State<ReviewDialog> {
                                 context,
                                 listen: false)
                             .sendReview(
-                          "Course ID",
+                          widget.courseId,
                           context
                               .read<CourseTakenViewModel>()
                               .rating
@@ -202,12 +202,13 @@ class _ReviewDialogState extends State<ReviewDialog> {
                           _notesController.text,
                         );
                         if (msg.contains('success')) {
+                          Navigator.pop(context);
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text("Ulasanmu sudah kami rekam"),
                             ),
                           );
-                          Navigator.of(context).push(
+                          Navigator.of(context).pushReplacement(
                             PageRouteBuilder(
                               pageBuilder:
                                   (context, animations, secondaryAnimations) =>
