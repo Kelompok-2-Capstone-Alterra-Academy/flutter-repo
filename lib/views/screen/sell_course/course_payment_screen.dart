@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/utils/animation/slide_animation2.dart';
-import 'package:staredu/views/screen/sell_course/course_voucher_screen.dart';
+import 'package:staredu/views/screen/sell_course/claimed_voucher_screen.dart';
 import 'package:staredu/views/screen/sell_course/payment_webview.dart';
+import 'package:staredu/views/view_model/sell_course/claimed_voucher_view_model.dart';
 import 'package:staredu/views/view_model/sell_course/course_payment_view_model.dart';
 import '../../../utils/color/color.dart';
 import '../../../utils/preferences/preferences_utils.dart';
@@ -31,8 +32,6 @@ class CoursePaymentScreen extends StatefulWidget {
 
 class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
   late PreferencesUtils preferencesUtils;
-  double totalBayar = 0;
-  bool promoUse = false;
 
   @override
   void initState() {
@@ -49,17 +48,27 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
       Provider.of<CoursePaymentViewModel>(context, listen: false)
           .setToken(token!);
     }
-    setState(() {
-      totalBayar = double.parse(widget.price);
-    });
+
+    if (context.mounted) {
+      context.read<CoursePaymentViewModel>().promoUsed =
+          context.read<ClaimedVoucherViewModel>().activeVoucher;
+      context.read<CoursePaymentViewModel>().hargaAwal =
+          double.parse(widget.price) + 500;
+
+      if (context.read<CoursePaymentViewModel>().promoUsed == true) {
+      } else {
+        context.read<CoursePaymentViewModel>().totalBayar =
+            context.read<CoursePaymentViewModel>().hargaAwal;
+      }
+    }
   }
 
-  void discount(double discount) {
-    if (promoUse == false) {
-      setState(() {
-        totalBayar = (totalBayar / discount) + 500;
-        promoUse = true;
-      });
+  double setHarga() {
+    if (context.read<CoursePaymentViewModel>().promoUsed == true) {
+      return context.read<CoursePaymentViewModel>().totalBayar;
+    } else {
+      return context.read<CoursePaymentViewModel>().totalBayar =
+          double.parse(widget.price) + 500;
     }
   }
 
@@ -69,8 +78,6 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
 
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-
-    bool isChecked = false;
 
     return Scaffold(
       appBar: AppBar(
@@ -139,46 +146,50 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                 ),
               ),
               const SizedBox(height: 12),
-              InkWell(
-                onTap: () {
-                  Navigator.push(context,
-                      SlideAnimation2(page: const CourseVoucherScreen()));
-                  discount(2);
-                },
-                child: Container(
-                  width: screenWidth,
-                  height: 52,
-                  decoration: BoxDecoration(
-                    color: promoUse ? lightGreenColor : searchBarColor,
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(8),
+              Consumer<CoursePaymentViewModel>(builder: (context, value, _) {
+                return InkWell(
+                  onTap: () {
+                    Navigator.push(context,
+                        SlideAnimation2(page: const ClaimedVoucherScreen()));
+                  },
+                  child: Container(
+                    width: screenWidth,
+                    height: 52,
+                    decoration: BoxDecoration(
+                      color: value.promoUsed ? lightGreenColor : searchBarColor,
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(8),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(17.0),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.verified_outlined,
+                            color: value.promoUsed
+                                ? successColor
+                                : searchBarTextColor,
+                            size: 18,
+                          ),
+                          const SizedBox(width: 11),
+                          Text(
+                            value.promoUsed
+                                ? "Voucher Promo Belajar Berhasil Terpakai"
+                                : "Gunakan Vouchermu Sekarang!",
+                            style: GoogleFonts.poppins(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w500,
+                                color: value.promoUsed
+                                    ? blackColor
+                                    : searchBarTextColor),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(17.0),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.verified_outlined,
-                          color: promoUse ? successColor : searchBarTextColor,
-                          size: 18,
-                        ),
-                        const SizedBox(width: 11),
-                        Text(
-                          promoUse
-                              ? "Voucher Promo Belajar Berhasil Terpakai"
-                              : "Gunakan Vouchermu Sekarang!",
-                          style: GoogleFonts.poppins(
-                              fontSize: 11,
-                              fontWeight: FontWeight.w500,
-                              color:
-                                  promoUse ? blackColor : searchBarTextColor),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+                );
+              }),
               const SizedBox(height: 12),
               Container(
                 width: screenWidth,
@@ -209,25 +220,28 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                         thickness: 2,
                       ),
                       const SizedBox(height: 15),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Total Pembayaran",
-                            style: GoogleFonts.poppins(
+                      Consumer<CoursePaymentViewModel>(
+                          builder: (context, value, _) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Total Pembayaran",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w500,
+                                  color: greyColor2),
+                            ),
+                            Text(
+                              "Rp. ${value.totalBayar.round().toString()}",
+                              style: GoogleFonts.poppins(
                                 fontSize: 11,
                                 fontWeight: FontWeight.w500,
-                                color: greyColor2),
-                          ),
-                          Text(
-                            totalBayar.toString(),
-                            style: GoogleFonts.poppins(
-                              fontSize: 11,
-                              fontWeight: FontWeight.w500,
+                              ),
                             ),
-                          ),
-                        ],
-                      )
+                          ],
+                        );
+                      })
                     ],
                   ),
                 ),
@@ -251,7 +265,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                         String message = await value.payment(
                           int.parse(widget.price),
                           widget.courseId.toString(),
-                          int.parse(widget.price),
+                          int.parse(value.totalBayar.round().toString()),
                           value.tokens!,
                         );
 

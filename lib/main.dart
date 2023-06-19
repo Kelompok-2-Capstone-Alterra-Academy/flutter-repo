@@ -44,6 +44,7 @@ import 'package:staredu/views/screen/splash_welcome/splash_welcome_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/views/screen/wishlist/wishlist_screen.dart';
 import 'package:staredu/views/view_model/mentor/mentor_view_model.dart';
+import 'package:staredu/views/view_model/sell_course/claimed_voucher_view_model.dart';
 import 'package:staredu/views/view_model/sell_course/course_payment_view_model.dart';
 import 'package:staredu/views/view_model/sell_course/sell_course_view_model.dart';
 import 'package:staredu/views/view_model/sell_course/voucher_view_model.dart';
@@ -75,6 +76,7 @@ void main() {
       ChangeNotifierProvider(create: (_) => SellCourseViewModel()),
       ChangeNotifierProvider(create: (_) => VoucherViewModel()),
       ChangeNotifierProvider(create: (_) => CoursePaymentViewModel()),
+      ChangeNotifierProvider(create: (_) => ClaimedVoucherViewModel()),
     ],
     child: const StarEdu(),
   ));

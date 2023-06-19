@@ -34,11 +34,16 @@ class DetailKursus extends StatelessWidget {
             ),
           ],
         ),
-        Text(
-          subtitle,
-          style: GoogleFonts.poppins(
-            fontSize: 11,
-            fontWeight: FontWeight.w500,
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 0.5,
+          child: Text(
+            textAlign: TextAlign.end,
+            overflow: TextOverflow.ellipsis,
+            subtitle,
+            style: GoogleFonts.poppins(
+              fontSize: 11,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
       ],
