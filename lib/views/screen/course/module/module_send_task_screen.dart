@@ -140,8 +140,6 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
                                     'pdf',
                                     'doc',
                                     'docx',
-                                    'jpg',
-                                    'jpeg',
                                   ],
                                 );
 
