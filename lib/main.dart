@@ -115,7 +115,7 @@ class StarEdu extends StatelessWidget {
         LiveSessionScreen.routeName: (context) => const LiveSessionScreen(),
         ModuleListQuizScreen.routeName: (context) =>
             const ModuleListQuizScreen(),
-        ModuleVideoScreen.routeName: (context) => const ModuleVideoScreen(),
+        // ModuleVideoScreen.routeName: (context) => const ModuleVideoScreen(),
         // ModulDetailPPTScreen.routeName: (context) =>
         //     const ModulDetailPPTScreen(),
         ForgotPasswordScreen.routeName: (context) =>
@@ -130,8 +130,8 @@ class StarEdu extends StatelessWidget {
         NotificationScreen.routeName: (context) => const NotificationScreen(),
         // ModuleQuizDetailScreen.routeName: (context) =>
         //     const ModuleQuizDetailScreen(),
-        ModuleSendTaskScreen.routeName: (context) =>
-            const ModuleSendTaskScreen(),
+        // ModuleSendTaskScreen.routeName: (context) =>
+        // const ModuleSendTaskScreen(),
         NewsScreen.routeName: (context) => const NewsScreen(),
         SellCourseScreen.routeName: (context) => const SellCourseScreen(),
         CourseVoucherScreen.routeName: (context) => const CourseVoucherScreen(),
@@ -139,7 +139,7 @@ class StarEdu extends StatelessWidget {
         ChatMentorScreen.routeName: (context) => const ChatMentorScreen(),
         SearchChatScreen.routeName: (context) => const SearchChatScreen(),
         TaskListScreen.routeName: (context) => const TaskListScreen(),
-        ModuleDetailTask.routeName: (context) => const ModuleDetailTask(),
+        // ModuleDetailTask.routeName: (context) => const ModuleDetailTask(),
         WishlistScreen.routeName: (context) => const WishlistScreen(),
       },
     );

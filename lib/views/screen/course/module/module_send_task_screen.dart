@@ -8,13 +8,20 @@ import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/preferences/preferences_utils.dart';
 import 'package:staredu/utils/state/my_state.dart';
 import 'package:staredu/views/view_model/course/task_view_model.dart';
+import 'package:staredu/widgets/course/review_dialog.dart';
 import 'package:staredu/widgets/loading/circular_progress.dart';
 import 'package:staredu/widgets/loading/opacity_progress.dart';
 import 'package:staredu/widgets/module_course/module_send_task_done_dialog.dart';
 
 class ModuleSendTaskScreen extends StatefulWidget {
   static const String routeName = "/sendtask";
-  const ModuleSendTaskScreen({super.key});
+  final bool isLastIndex;
+  final String courseId;
+  const ModuleSendTaskScreen({
+    super.key,
+    required this.isLastIndex,
+    required this.courseId,
+  });
 
   @override
   State<ModuleSendTaskScreen> createState() => _ModuleSendTaskScreenState();
@@ -259,11 +266,20 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
                               notes: _notesController.text,
                             );
                             if (msg.contains('success')) {
-                              showDialog(
-                                context: context,
-                                builder: (context) =>
-                                    const ModuleSendTaskDoneDialog(),
-                              );
+                              if (widget.isLastIndex) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => ReviewDialog(
+                                    courseId: widget.courseId,
+                                  ),
+                                );
+                              } else {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) =>
+                                      const ModuleSendTaskDoneDialog(),
+                                );
+                              }
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(

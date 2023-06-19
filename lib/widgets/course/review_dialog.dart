@@ -12,7 +12,11 @@ import 'package:staredu/views/view_model/course/course_taken_view_model.dart';
 import '../../utils/animation/fade_animation2.dart';
 
 class ReviewDialog extends StatefulWidget {
-  const ReviewDialog({super.key});
+  final String courseId;
+  const ReviewDialog({
+    super.key,
+    required this.courseId,
+  });
 
   @override
   State<ReviewDialog> createState() => _ReviewDialogState();
@@ -24,6 +28,7 @@ class _ReviewDialogState extends State<ReviewDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController _notesController = TextEditingController();
     final width = MediaQuery.of(context).size.width;
 
     return Dialog(
@@ -136,6 +141,7 @@ class _ReviewDialogState extends State<ReviewDialog> {
                           ),
                           TextFormField(
                             maxLines: 3,
+                            controller: _notesController,
                             decoration: InputDecoration(
                               hintText: "Tulis Ulasan..",
                               hintStyle: GoogleFonts.poppins(
@@ -187,7 +193,14 @@ class _ReviewDialogState extends State<ReviewDialog> {
                         String msg = await Provider.of<CourseTakenViewModel>(
                                 context,
                                 listen: false)
-                            .sendReview();
+                            .sendReview(
+                          "Course ID",
+                          context
+                              .read<CourseTakenViewModel>()
+                              .rating
+                              .toString(),
+                          _notesController.text,
+                        );
                         if (msg.contains('success')) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(

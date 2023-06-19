@@ -14,8 +14,11 @@ class ModuleListViewModel with ChangeNotifier {
   List<DetailTaskModel> get detailTask => _detailTask;
   List<QuizModel> _detailQuiz = [];
   List<QuizModel> get detailQuiz => _detailQuiz;
+
   List<NewCourseDetailModel> _courseModule = [];
   List<NewCourseDetailModel> get courseModule => _courseModule;
+  List<NewCourseDetailModel> _courseQuiz = [];
+  List<NewCourseDetailModel> get courseQuiz => _courseQuiz;
 
   final ModuleApi moduleApi = ModuleApi();
 
@@ -31,7 +34,18 @@ class ModuleListViewModel with ChangeNotifier {
     setState(MyState.loading);
 
     try {
-      _courseModule = await moduleApi.getAllModule(token, courseId);
+      final data = await moduleApi.getAllModule2(token, courseId);
+      for (var i in data) {
+        if (NewCourseDetailModel.fromJson(data)
+            .module![i]
+            .attachment!
+            .type!
+            .contains('quiz')) {
+          _courseQuiz.add(NewCourseDetailModel.fromJson(data));
+        } else {
+          _courseModule.add(NewCourseDetailModel.fromJson(data));
+        }
+      }
 
       setState(MyState.success);
       notifyListeners();

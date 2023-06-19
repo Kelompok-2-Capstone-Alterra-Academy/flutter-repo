@@ -4,8 +4,6 @@ import 'package:staredu/models/quiz_model.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/views/screen/course/module/detail/module_quiz_detail_screen.dart';
 
-import '../../utils/animation/fade_animation2.dart';
-
 class ModuleQuizCard extends StatelessWidget {
   const ModuleQuizCard({
     super.key,
@@ -33,6 +31,8 @@ class ModuleQuizCard extends StatelessWidget {
                     PageRouteBuilder(
                       pageBuilder: (context, animations, secondaryAnimations) =>
                           ModuleQuizDetailScreen(
+                        courseId: id.toString(),
+                        isLastIndex: false,
                         quizDetail: QuizDetailModel(),
                       ),
                       transitionsBuilder:

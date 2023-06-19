@@ -88,8 +88,7 @@ class CourseAPI {
 
     dio.options.headers['Authorization'] = 'Bearer $token';
 
-    final response =
-        dio.get("http://3.26.234.145:8081/students/courses/status");
+    final response = dio.get("$BASE_URL_API/students/courses/status");
 
     return response
         .then((value) => value.data)
@@ -122,25 +121,24 @@ class CourseAPI {
     );
 
     final response = dio.post(
-      "http://3.26.234.145:8081/students/courses/submission",
+      "$BASE_URL_API/students/courses/submission",
       data: formData,
     );
-
-    print("from api ${await response}");
 
     return response
         .then((value) => value.data)
         .catchError((e) => handleErrorApi(e));
   }
 
-  Future<dynamic> sendReview() async {
-    // final response = await Dio().post(
-    // data:{
-    // });
+  Future<dynamic> sendReview(String courseId, String rating, String notes) {
+    final response = Dio().post("$BASE_URL_API/students/rate-course", data: {
+      'course_id': courseId,
+      'rating': rating,
+      'comment': notes,
+    });
 
-    // return response
-    //     .then((value) => value.data)
-    //     .catchError((e) => handleErrorApi(e));
-    return 'success';
+    return response
+        .then((value) => value.data)
+        .catchError((e) => handleErrorApi(e));
   }
 }

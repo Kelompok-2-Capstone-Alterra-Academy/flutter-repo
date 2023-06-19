@@ -2,15 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/models/quiz_model.dart';
 import 'package:staredu/utils/color/color.dart';
+import 'package:staredu/widgets/course/review_dialog.dart';
 import 'package:staredu/widgets/module_course/module_quiz_detail_done_dialog.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class ModuleQuizDetailScreen extends StatefulWidget {
   static const String routeName = "/quizdetail";
   final QuizDetailModel quizDetail;
+  final bool isLastIndex;
+  final String courseId;
   const ModuleQuizDetailScreen({
     super.key,
     required this.quizDetail,
+    required this.isLastIndex,
+    required this.courseId,
   });
 
   @override
@@ -143,11 +148,20 @@ class _ModuleQuizDetailScreenState extends State<ModuleQuizDetailScreen> {
                             ),
                           ),
                           onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) =>
-                                  const ModuleQuizDetailDoneDialog(),
-                            );
+                            if (widget.isLastIndex) {
+                              showDialog(
+                                context: context,
+                                builder: (context) => ReviewDialog(
+                                  courseId: widget.courseId.toString(),
+                                ),
+                              );
+                            } else {
+                              showDialog(
+                                context: context,
+                                builder: (context) =>
+                                    const ModuleQuizDetailDoneDialog(),
+                              );
+                            }
                           },
                           child: Text(
                             "Selesai",
