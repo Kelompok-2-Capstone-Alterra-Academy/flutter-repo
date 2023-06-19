@@ -4,21 +4,21 @@ import '../schedule_model.dart';
 
 class ScheduleAPI {
   final Dio dio = Dio();
-  Future<List<ScheduleCourseModel>> getSchedule() async {
-    final List<ScheduleCourseModel> data = [
-      ScheduleCourseModel(
-        course: 'Matematika Dasar - Materi 2',
-        date: 'Senin, 18 April 2023, 13:00 - 16:00',
-        status: 'Sudah Ikut',
-      ),
-      ScheduleCourseModel(
-        course: 'Matematika Dasar - Materi 2',
-        date: 'Senin, 18 April 2023, 13:00 - 16:00',
-        status: 'Sudah Ikut',
-      ),
-    ];
-    return data;
-  }
+  // Future<List<ScheduleCourseModel>> getSchedule() async {
+  //   final List<ScheduleCourseModel> data = [
+  //     ScheduleCourseModel(
+  //       course: 'Matematika Dasar - Materi 2',
+  //       date: 'Senin, 18 April 2023, 13:00 - 16:00',
+  //       status: 'Sudah Ikut',
+  //     ),
+  //     ScheduleCourseModel(
+  //       course: 'Matematika Dasar - Materi 2',
+  //       date: 'Senin, 18 April 2023, 13:00 - 16:00',
+  //       status: 'Sudah Ikut',
+  //     ),
+  //   ];
+  //   return data;
+  // }
 
   Future<List<ScheduleCourseModel>> getAllSchedule() async {
     try {

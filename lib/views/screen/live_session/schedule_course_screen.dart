@@ -64,113 +64,110 @@ class _ScheduleCourseScreenState extends State<ScheduleCourseScreen> {
           ),
         ),
       ),
-      body: ChangeNotifierProvider(
-        create: (context) => ScheduleViewModel(),
-        child: Consumer<ScheduleViewModel>(
-          builder: (context, value, _) {
-            return Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0,
-                    vertical: 8.0,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ScheduleFilterButton(
-                        text: 'Semua',
-                        onPressed: () => applyFilter('Semua'),
-                        isSelected: selectedFilter == 'Semua',
-                      ),
-                      ScheduleFilterButton(
-                        text: 'Sudah Ikut',
-                        onPressed: () => applyFilter('Sudah Ikut'),
-                        isSelected: selectedFilter == 'Sudah Ikut',
-                      ),
-                      ScheduleFilterButton(
-                        text: 'Belum Ikut',
-                        onPressed: () => applyFilter('Belum Ikut'),
-                        isSelected: selectedFilter == 'Belum Ikut',
-                      ),
-                    ],
-                  ),
+      body: Consumer<ScheduleViewModel>(
+        builder: (context, value, _) {
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 8.0,
                 ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 17.0),
-                    child: ListView.builder(
-                      itemCount: value.scheduleList.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              FadeAnimation2(
-                                page: DetailScheduleScreen(
-                                  schedule: scheduleList[index],
-                                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ScheduleFilterButton(
+                      text: 'Semua',
+                      onPressed: () => applyFilter('Semua'),
+                      isSelected: selectedFilter == 'Semua',
+                    ),
+                    ScheduleFilterButton(
+                      text: 'Sudah Ikut',
+                      onPressed: () => applyFilter('Sudah Ikut'),
+                      isSelected: selectedFilter == 'Sudah Ikut',
+                    ),
+                    ScheduleFilterButton(
+                      text: 'Belum Ikut',
+                      onPressed: () => applyFilter('Belum Ikut'),
+                      isSelected: selectedFilter == 'Belum Ikut',
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 17.0),
+                  child: ListView.builder(
+                    itemCount: value.scheduleList.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            FadeAnimation2(
+                              page: DetailScheduleScreen(
+                                index: index,
                               ),
-                            );
-                          },
-                          child: Container(
-                            margin: const EdgeInsets.only(bottom: 10.0),
-                            decoration: BoxDecoration(
-                              color: primaryColor,
-                              borderRadius: BorderRadius.circular(8.0),
                             ),
-                            child: ListTile(
-                              title: Text(
-                                value.scheduleList[index].date,
+                          );
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.only(bottom: 10.0),
+                          decoration: BoxDecoration(
+                            color: primaryColor,
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: ListTile(
+                            title: Text(
+                              value.scheduleList[index].date,
+                              style: GoogleFonts.poppins(
+                                color: Colors.white,
+                                fontSize: 12,
+                              ),
+                            ),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  value.scheduleList[index].course,
+                                  style: GoogleFonts.poppins(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            trailing: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20.0,
+                                vertical: 6,
+                              ),
+                              decoration: BoxDecoration(
+                                color: value.scheduleList[index].status ==
+                                        'Sudah Ikut'
+                                    ? Colors.green
+                                    : Colors.orange,
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              child: Text(
+                                value.scheduleList[index].status,
                                 style: GoogleFonts.poppins(
                                   color: Colors.white,
                                   fontSize: 12,
                                 ),
                               ),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    value.scheduleList[index].course,
-                                    style: GoogleFonts.poppins(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              trailing: Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0,
-                                  vertical: 6,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: value.scheduleList[index].status ==
-                                          'Sudah Ikut'
-                                      ? Colors.green
-                                      : Colors.orange,
-                                  borderRadius: BorderRadius.circular(12.0),
-                                ),
-                                child: Text(
-                                  value.scheduleList[index].status,
-                                  style: GoogleFonts.poppins(
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                              ),
                             ),
                           ),
-                        );
-                      },
-                    ),
+                        ),
+                      );
+                    },
                   ),
                 ),
-              ],
-            );
-          },
-        ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
