@@ -17,7 +17,6 @@ class HistoryAPI {
 
       if (response.statusCode == 200) {
         final List datas = response.data["data"]["transaction"];
-        print(datas);
         return datas.map((e) => CourseHistoryModel.fromJson(e)).toList();
       } else {
         throw "get history not successfully";
