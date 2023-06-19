@@ -20,7 +20,6 @@ import 'package:staredu/views/screen/edit_profile/edit_profile_screen.dart';
 import 'package:staredu/views/screen/edit_profile/edit_profile_view_model.dart';
 import 'package:staredu/views/screen/history/history_transaction_screen.dart';
 import 'package:staredu/views/screen/history/history_transaction_view_model.dart';
-import 'package:staredu/views/screen/history/note_transaction_screen.dart.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
 import 'package:staredu/views/screen/home/home_view_model.dart';
 import 'package:staredu/views/screen/notification/notification_screen.dart';
