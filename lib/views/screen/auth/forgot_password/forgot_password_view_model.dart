@@ -31,13 +31,13 @@ class ForgotPasswordViewModel extends ChangeNotifier {
 
   Future<String> verifyOtp(String email, String otp) async {
     response = await AuthAPI.verifyOtp(email, otp);
-
+    
     if (response == null) {
       setStateOtp(MyState.failed);
       return 'Verify OTP Failed';
     }
 
-    if (response["data"]["token"] != null) {
+    if (response["data"] != null && response["data"]["token"] != null) {
       setStateOtp(MyState.success);
       return 'success ${response["data"]["token"]}';
     } else {
