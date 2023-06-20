@@ -42,7 +42,7 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
   WishlistManager wishlistManager = WishlistManager();
 
   Future<void> checkWishlistStatus() async {
-    List<SellCourseModel> wishlist = await wishlistManager.getWishlist();
+    List wishlist = await wishlistManager.getWishlist();
 
     setState(() {
       isWishlistSelected = wishlist.any((item) => item.id == widget.id);
