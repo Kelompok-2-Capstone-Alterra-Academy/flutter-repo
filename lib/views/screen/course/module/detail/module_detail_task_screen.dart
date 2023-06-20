@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:staredu/utils/http/http_utils.dart';
 import 'package:staredu/views/screen/course/module/module_send_task_screen.dart';
 import 'package:staredu/views/view_model/course/module_view_model.dart';
+import 'package:staredu/widgets/course/review_dialog.dart';
 
 import '../../../../../utils/animation/slide_animation3.dart';
 import '../../../../../utils/color/color.dart';
@@ -17,6 +18,7 @@ class ModuleDetailTask extends StatefulWidget {
   final String? sectionName;
   final String? linkModule;
   final String? description;
+  final bool isLastIndex;
 
   const ModuleDetailTask({
     super.key,
@@ -26,6 +28,7 @@ class ModuleDetailTask extends StatefulWidget {
     this.sectionName,
     this.linkModule,
     this.description,
+    required this.isLastIndex,
   });
 
   @override
@@ -304,8 +307,19 @@ class _ModuleDetailTaskState extends State<ModuleDetailTask> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.of(context).push(SlideAnimation3(
-                              page: const ModuleSendTaskScreen()));
+                          if (widget.isLastIndex) {
+                            Navigator.of(context).push(SlideAnimation3(
+                                page: ModuleSendTaskScreen(
+                              courseId: widget.courseId!,
+                              isLastIndex: widget.isLastIndex,
+                            )));
+                          } else {
+                            Navigator.of(context).push(SlideAnimation3(
+                                page: ModuleSendTaskScreen(
+                              isLastIndex: false,
+                              courseId: widget.courseId!,
+                            )));
+                          }
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(12),

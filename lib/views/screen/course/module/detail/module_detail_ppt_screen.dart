@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/models/ppt_model.dart';
+import 'package:staredu/utils/animation/fade_animation.dart';
+import 'package:staredu/views/screen/course/module/module_list_screen.dart';
 import 'package:staredu/widgets/course/review_dialog.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -9,9 +11,15 @@ import '../../../../../utils/color/color.dart';
 class ModulDetailPPTScreen extends StatefulWidget {
   static const String routeName = "/moduledetailppt";
   final PPTDetailModel pptDetailModel;
+  final int? courseId;
+  final String? courseName;
+  final bool isLastIndex;
   const ModulDetailPPTScreen({
     super.key,
     required this.pptDetailModel,
+    this.courseId,
+    this.courseName,
+    required this.isLastIndex,
   });
 
   @override
@@ -29,7 +37,7 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
       ..enableZoom(true)
       ..loadRequest(
         Uri.parse(widget.pptDetailModel.url ??
-            'https://docs.google.com/presentation/d/e/2PACX-1vRRDKMvy3-fmD-y2qmVI5FrSpgRSEA8NPwSBJWfyx9Nku7hRgKnnyVnTxdsJRikQlVRySqQ0OlHxnkX/embed?frameborder&amp;usp=embed_googleplus'),
+            '${widget.pptDetailModel.url}/embed?frameborder&amp;usp=embed_googleplus'),
       );
   }
 
@@ -125,11 +133,24 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                                     ),
                                   ),
                                   onPressed: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) =>
-                                          const ReviewDialog(),
-                                    );
+                                    if (widget.isLastIndex) {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => ReviewDialog(
+                                          courseId: widget.courseId!,
+                                        ),
+                                      );
+                                    } else {
+                                      Navigator.pushReplacement(
+                                        context,
+                                        FadeAnimation(
+                                          page: ModuleListScreen(
+                                            courseId: widget.courseId,
+                                            courseName: widget.courseName,
+                                          ),
+                                        ),
+                                      );
+                                    }
                                   },
                                   child: Text(
                                     "Selesai",
@@ -237,10 +258,24 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                                   ),
                                 ),
                                 onPressed: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) => const ReviewDialog(),
-                                  );
+                                  if (widget.isLastIndex) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => ReviewDialog(
+                                        courseId: widget.courseId!,
+                                      ),
+                                    );
+                                  } else {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      FadeAnimation(
+                                        page: ModuleListScreen(
+                                          courseId: widget.courseId,
+                                          courseName: widget.courseName,
+                                        ),
+                                      ),
+                                    );
+                                  }
                                 },
                                 child: Text(
                                   "Selesai",
