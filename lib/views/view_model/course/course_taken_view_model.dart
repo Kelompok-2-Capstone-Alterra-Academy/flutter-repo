@@ -4,22 +4,69 @@ import 'package:staredu/models/service/course_api.dart';
 import 'package:staredu/utils/state/my_state.dart';
 
 class CourseTakenViewModel with ChangeNotifier {
-  List<CourseTakenModel> _courseTaken = [];
-  List<CourseTakenModel> get courseTaken => _courseTaken;
+  List<InProgress> _inProgressCourseTaken = [];
+  List<InProgress> get inProgressCourseTaken => _inProgressCourseTaken;
+  List<InProgress> _completedCourseTaken = [];
+  List<InProgress> get completedCourseTaken => _completedCourseTaken;
+
+  double _rating = 0;
+  double get rating => _rating;
+  bool _isRatingInputted = false;
+  bool get isRatingInputted => _isRatingInputted;
+
+  dynamic response;
 
   final CourseAPI courseApi = CourseAPI();
 
-  MyState myState = MyState.initial;
+  MyState _state = MyState.initial;
+  MyState get state => _state;
 
-  Future getCourseTaken() async {
-    myState = MyState.loading;
+  void setRating(double value) {
+    _rating = value;
+    _isRatingInputted = true;
+    notifyListeners();
+  }
+
+  void clearRating() {
+    _rating = 0;
+    _isRatingInputted = false;
+    notifyListeners();
+  }
+
+  void setState(MyState state) {
+    _state = state;
+    notifyListeners();
+  }
+
+  Future getCourseTaken(String token) async {
+    setState(MyState.loading);
 
     try {
-      _courseTaken = await courseApi.getCourseTaken();
-      myState = MyState.success;
+      final data = await courseApi.getCourseTaken(token);
+
+      _inProgressCourseTaken =
+          CourseTakenModel.fromJson(data).data!.inProgress ?? [];
+      // print("inprogress : $_inProgressCourseTaken");
+      _completedCourseTaken =
+          CourseTakenModel.fromJson(data).data!.selesai ?? [];
+      // print("finished : $_completedCourseTaken");
+      setState(MyState.success);
       notifyListeners();
     } catch (e) {
-      myState = MyState.failed;
+      setState(MyState.failed);
+    }
+  }
+
+  Future<String> sendReview() async {
+    setState(MyState.loading);
+
+    try {
+      response = await courseApi.sendReview();
+      setState(MyState.success);
+      return response;
+    } catch (e) {
+      setState(MyState.failed);
+      return 'failed';
     }
   }
 }

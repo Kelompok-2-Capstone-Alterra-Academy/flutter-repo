@@ -101,8 +101,8 @@ class StarEdu extends StatelessWidget {
         ModuleListQuizScreen.routeName: (context) =>
             const ModuleListQuizScreen(),
         ModuleVideoScreen.routeName: (context) => const ModuleVideoScreen(),
-        ModulDetailPPTScreen.routeName: (context) =>
-            const ModulDetailPPTScreen(),
+        // ModulDetailPPTScreen.routeName: (context) =>
+        //     const ModulDetailPPTScreen(),
         ForgotPasswordScreen.routeName: (context) =>
             const ForgotPasswordScreen(),
         OtpVerificationScreen.routeName: (context) =>
@@ -113,8 +113,8 @@ class StarEdu extends StatelessWidget {
         Profile.routeName: (context) => const Profile(),
         EditProfile.routeName: (context) => const EditProfile(),
         NotificationScreen.routeName: (context) => const NotificationScreen(),
-        ModuleQuizDetailScreen.routeName: (context) =>
-            const ModuleQuizDetailScreen(),
+        // ModuleQuizDetailScreen.routeName: (context) =>
+        //     const ModuleQuizDetailScreen(),
         ModuleSendTaskScreen.routeName: (context) =>
             const ModuleSendTaskScreen(),
         NewsScreen.routeName: (context) => const NewsScreen(),

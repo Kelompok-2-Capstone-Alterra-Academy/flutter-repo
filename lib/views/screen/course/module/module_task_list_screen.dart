@@ -59,7 +59,8 @@ class _TaskListScreenState extends State<TaskListScreen> {
                       shrinkWrap: true,
                       itemCount: moduleSection.length,
                       itemBuilder: (context, indexSection) {
-                        String? courseName = courseTaken[indexCourse].title;
+                        // String? courseName = courseTaken[indexCourse].title;
+                        String? courseName = "Course Name";
                         return ModuleTaskCard(
                           courseName: courseName,
                           sectionName: moduleSection[indexSection].title,
@@ -80,7 +81,7 @@ class _TaskListScreenState extends State<TaskListScreen> {
                       height: 2,
                     );
                   },
-                  itemCount: courseTaken.length)
+                  itemCount: 1)
             ],
           ),
         ),
