@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:staredu/views/view_model/sell_course/sell_course_view_model.dart';
 
 import '../../utils/color/color.dart';
 
@@ -37,6 +39,9 @@ class _FilterButtonState extends State<FilterButton> {
   bool toggle4 = false; //Button TKJ
   bool toggle5 = false; //Button RPL
   bool toggle6 = false; //Button Umum
+
+  String classFilter = "";
+  String majorFilter = "";
 
   @override
   Widget build(BuildContext context) {
@@ -117,6 +122,11 @@ class _FilterButtonState extends State<FilterButton> {
                                         toggleButton6 == true) {
                                     } else {
                                       setState(() {
+                                        if (toggleButton1 == false) {
+                                          classFilter = "10";
+                                        } else {
+                                          classFilter = "";
+                                        }
                                         toggleButton1 = !toggleButton1;
                                       });
                                     }
@@ -158,6 +168,11 @@ class _FilterButtonState extends State<FilterButton> {
                                         toggleButton6 == true) {
                                     } else {
                                       setState(() {
+                                        if (toggleButton2 == false) {
+                                          classFilter = "11";
+                                        } else {
+                                          classFilter = "";
+                                        }
                                         toggleButton2 = !toggleButton2;
                                       });
                                     }
@@ -199,6 +214,11 @@ class _FilterButtonState extends State<FilterButton> {
                                         toggleButton6 == true) {
                                     } else {
                                       setState(() {
+                                        if (toggleButton3 == false) {
+                                          classFilter = "12";
+                                        } else {
+                                          classFilter = "";
+                                        }
                                         toggleButton3 = !toggleButton3;
                                       });
                                     }
@@ -245,6 +265,11 @@ class _FilterButtonState extends State<FilterButton> {
                                         toggleButton6 == true) {
                                     } else {
                                       setState(() {
+                                        if (toggleButton4 == false) {
+                                          classFilter = "10 smk";
+                                        } else {
+                                          classFilter = "";
+                                        }
                                         toggleButton4 = !toggleButton4;
                                       });
                                     }
@@ -286,6 +311,11 @@ class _FilterButtonState extends State<FilterButton> {
                                         toggleButton6 == true) {
                                     } else {
                                       setState(() {
+                                        if (toggleButton5 == false) {
+                                          classFilter = "11 smk";
+                                        } else {
+                                          classFilter = "";
+                                        }
                                         toggleButton5 = !toggleButton5;
                                       });
                                     }
@@ -327,6 +357,11 @@ class _FilterButtonState extends State<FilterButton> {
                                         toggleButton5 == true) {
                                     } else {
                                       setState(() {
+                                        if (toggleButton6 == false) {
+                                          classFilter = "12 smk";
+                                        } else {
+                                          classFilter = "";
+                                        }
                                         toggleButton6 = !toggleButton6;
                                       });
                                     }
@@ -382,6 +417,11 @@ class _FilterButtonState extends State<FilterButton> {
                                         toggle6 == true) {
                                     } else {
                                       setState(() {
+                                        if (toggle1 == false) {
+                                          majorFilter = "ipa";
+                                        } else {
+                                          majorFilter = "";
+                                        }
                                         toggle1 = !toggle1;
                                       });
                                     }
@@ -422,6 +462,11 @@ class _FilterButtonState extends State<FilterButton> {
                                         toggle6 == true) {
                                     } else {
                                       setState(() {
+                                        if (toggle2 == false) {
+                                          majorFilter = "ips";
+                                        } else {
+                                          majorFilter = "";
+                                        }
                                         toggle2 = !toggle2;
                                       });
                                     }
@@ -462,6 +507,11 @@ class _FilterButtonState extends State<FilterButton> {
                                         toggle6 == true) {
                                     } else {
                                       setState(() {
+                                        if (toggle3 == false) {
+                                          majorFilter = "multimedia";
+                                        } else {
+                                          majorFilter = "";
+                                        }
                                         toggle3 = !toggle3;
                                       });
                                     }
@@ -507,6 +557,12 @@ class _FilterButtonState extends State<FilterButton> {
                                         toggle6 == true) {
                                     } else {
                                       setState(() {
+                                        if (toggle4 == false) {
+                                          majorFilter = "tkj";
+                                        } else {
+                                          majorFilter = "";
+                                        }
+
                                         toggle4 = !toggle4;
                                       });
                                     }
@@ -547,6 +603,11 @@ class _FilterButtonState extends State<FilterButton> {
                                         toggle6 == true) {
                                     } else {
                                       setState(() {
+                                        if (toggle5 == false) {
+                                          majorFilter = "rpl";
+                                        } else {
+                                          majorFilter = "";
+                                        }
                                         toggle5 = !toggle5;
                                       });
                                     }
@@ -587,6 +648,11 @@ class _FilterButtonState extends State<FilterButton> {
                                         toggle5 == true) {
                                     } else {
                                       setState(() {
+                                        if (toggle6 == false) {
+                                          majorFilter = "umum";
+                                        } else {
+                                          majorFilter = "";
+                                        }
                                         toggle6 = !toggle6;
                                       });
                                     }
@@ -623,6 +689,37 @@ class _FilterButtonState extends State<FilterButton> {
                               color: Colors.transparent,
                               child: InkWell(
                                 onTap: () {
+                                  if (classFilter.isNotEmpty &&
+                                      majorFilter.isNotEmpty) {
+                                    context
+                                        .read<SellCourseViewModel>()
+                                        .filterCourse(
+                                            filterBy: 'both',
+                                            classFilter: classFilter,
+                                            majorFilter: majorFilter);
+                                  }
+                                  if (classFilter.isEmpty &&
+                                      majorFilter.isNotEmpty) {
+                                    context
+                                        .read<SellCourseViewModel>()
+                                        .filterCourse(
+                                            filterBy: 'major',
+                                            majorFilter: majorFilter);
+                                  }
+                                  if (majorFilter.isEmpty &&
+                                      classFilter.isNotEmpty) {
+                                    context
+                                        .read<SellCourseViewModel>()
+                                        .filterCourse(
+                                            filterBy: 'class',
+                                            classFilter: classFilter);
+                                  }
+                                  if (classFilter.isEmpty &&
+                                      majorFilter.isEmpty) {
+                                    context
+                                        .read<SellCourseViewModel>()
+                                        .resetFilterCourse();
+                                  }
                                   Navigator.pop(context);
                                 },
                                 child: Padding(
