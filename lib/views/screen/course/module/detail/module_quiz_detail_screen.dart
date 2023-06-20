@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:staredu/models/quiz_model.dart';
 import 'package:staredu/utils/color/color.dart';
+import 'package:staredu/widgets/course/review_dialog.dart';
 import 'package:staredu/widgets/module_course/module_quiz_detail_done_dialog.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class ModuleQuizDetailScreen extends StatefulWidget {
   static const String routeName = "/quizdetail";
-  const ModuleQuizDetailScreen({super.key});
+  final QuizDetailModel quizDetail;
+  final bool isLastIndex;
+  final int courseId;
+  const ModuleQuizDetailScreen({
+    super.key,
+    required this.quizDetail,
+    required this.isLastIndex,
+    required this.courseId,
+  });
 
   @override
   State<ModuleQuizDetailScreen> createState() => _ModuleQuizDetailScreenState();
@@ -22,7 +32,9 @@ class _ModuleQuizDetailScreenState extends State<ModuleQuizDetailScreen> {
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..loadRequest(
         Uri.parse(
-            'https://docs.google.com/forms/d/e/1FAIpQLSdzKOirkmbwCFED1bTIfY2mJqu6UfGdA4y9CI-3kud-UUBRsg/viewform?usp=sf_link'),
+          widget.quizDetail.url ??
+              'https://docs.google.com/forms/d/e/1FAIpQLSdzKOirkmbwCFED1bTIfY2mJqu6UfGdA4y9CI-3kud-UUBRsg/viewform?usp=sf_link',
+        ),
       );
   }
 
@@ -35,7 +47,7 @@ class _ModuleQuizDetailScreenState extends State<ModuleQuizDetailScreen> {
         foregroundColor: blackColor,
         elevation: 0,
         title: Text(
-          "Quiz Section 1",
+          widget.quizDetail.section ?? "Quiz Section 1",
           style: GoogleFonts.poppins(
             fontStyle: FontStyle.normal,
             fontWeight: FontWeight.w600,
@@ -58,7 +70,8 @@ class _ModuleQuizDetailScreenState extends State<ModuleQuizDetailScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Text(
-                    "Matematika Dasar - Fungsi Trigonometri",
+                    widget.quizDetail.lesson ??
+                        "Matematika Dasar - Fungsi Trigonometri",
                     style: GoogleFonts.poppins(
                       fontStyle: FontStyle.normal,
                       fontWeight: FontWeight.w600,
@@ -90,38 +103,76 @@ class _ModuleQuizDetailScreenState extends State<ModuleQuizDetailScreen> {
                   child: WebViewWidget(controller: controller),
                 ),
                 const Spacer(),
-                Container(
-                  width: constraints.maxWidth,
-                  margin: const EdgeInsets.only(
-                    bottom: 16,
-                    left: 16,
-                    right: 16,
-                  ),
-                  child: OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: whiteColor,
-                      backgroundColor: primaryColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                widget.quizDetail.status ?? false
+                    ? Container(
+                        width: constraints.maxWidth,
+                        margin: const EdgeInsets.only(
+                          bottom: 16,
+                          left: 16,
+                          right: 16,
+                        ),
+                        child: OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: greyColor2,
+                            backgroundColor: greyColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          onPressed: () {
+                            //already did the quiz
+                          },
+                          child: Text(
+                            "Selesai",
+                            style: GoogleFonts.poppins(
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 13,
+                            ),
+                          ),
+                        ),
+                      )
+                    : Container(
+                        width: constraints.maxWidth,
+                        margin: const EdgeInsets.only(
+                          bottom: 16,
+                          left: 16,
+                          right: 16,
+                        ),
+                        child: OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: whiteColor,
+                            backgroundColor: primaryColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          onPressed: () {
+                            if (widget.isLastIndex) {
+                              showDialog(
+                                context: context,
+                                builder: (context) => ReviewDialog(
+                                  courseId: widget.courseId,
+                                ),
+                              );
+                            } else {
+                              showDialog(
+                                context: context,
+                                builder: (context) =>
+                                    const ModuleQuizDetailDoneDialog(),
+                              );
+                            }
+                          },
+                          child: Text(
+                            "Selesai",
+                            style: GoogleFonts.poppins(
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 13,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) =>
-                            const ModuleQuizDetailDoneDialog(),
-                      );
-                    },
-                    child: Text(
-                      "Selesai",
-                      style: GoogleFonts.poppins(
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 13,
-                      ),
-                    ),
-                  ),
-                ),
               ],
             ),
           );
