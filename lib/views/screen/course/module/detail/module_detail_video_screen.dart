@@ -5,6 +5,7 @@ import 'package:staredu/utils/animation/fade_animation.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/views/screen/course/module/module_list_screen.dart';
 import 'package:staredu/views/view_model/course/module_view_model.dart';
+import 'package:staredu/widgets/course/review_dialog.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class ModuleVideoScreen extends StatefulWidget {
@@ -16,6 +17,7 @@ class ModuleVideoScreen extends StatefulWidget {
   final String? sectionName;
   final String? linkModule;
   final String? description;
+  final bool isLastIndex;
 
   const ModuleVideoScreen({
     super.key,
@@ -25,6 +27,7 @@ class ModuleVideoScreen extends StatefulWidget {
     this.sectionName,
     this.linkModule,
     this.description,
+    required this.isLastIndex,
   });
 
   @override
@@ -161,14 +164,24 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          FadeAnimation(
+                        if (widget.isLastIndex) {
+                          showDialog(
+                            context: context,
+                            builder: (context) => ReviewDialog(
+                              courseId: widget.courseId!,
+                            ),
+                          );
+                        } else {
+                          Navigator.pushReplacement(
+                            context,
+                            FadeAnimation(
                               page: ModuleListScreen(
-                            courseId: widget.courseId,
-                            courseName: widget.courseName,
-                          )),
-                        );
+                                courseId: widget.courseId,
+                                courseName: widget.courseName,
+                              ),
+                            ),
+                          );
+                        }
                       },
                       child: Text(
                         "Selesai",

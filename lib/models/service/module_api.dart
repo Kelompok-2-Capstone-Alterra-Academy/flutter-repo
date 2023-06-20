@@ -27,4 +27,19 @@ class ModuleApi {
       rethrow;
     }
   }
+
+  Future<dynamic> getAllModule2(String? token, int? id) async {
+    try {
+      final response = dio.get('$BASE_URL_API/students/courses/section/$id',
+          options: Options(
+            headers: {'Authorization': 'Bearer $token'},
+          ));
+
+      return response
+          .then((value) => value.data)
+          .catchError((e) => handleErrorApi(e));
+    } on DioError catch (_) {
+      rethrow;
+    }
+  }
 }

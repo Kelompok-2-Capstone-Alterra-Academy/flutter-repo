@@ -25,9 +25,7 @@ class _ModuleListQuizScreenState extends State<ModuleListQuizScreen> {
   Widget build(BuildContext context) {
     final moduleViewModel =
         Provider.of<ModuleListViewModel>(context, listen: false);
-    final List quizList = moduleViewModel.moduleList
-        .where((moduleList) => moduleList.quiz == true)
-        .toList();
+    final List quizList = moduleViewModel.courseQuiz;
     final double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(

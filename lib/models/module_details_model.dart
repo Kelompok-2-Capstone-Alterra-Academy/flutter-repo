@@ -97,10 +97,45 @@ class QuizModel {
 
 // To parse this JSON data, do
 //
+//
+//
 //     final newCourseDetailModel = newCourseDetailModelFromJson(jsonString);
+
+// class NewCourseDetailModel {
+//   List<NewCourseDetailModel>? data;
+//   int? statusCode;
+
+//   NewCourseDetailModel({
+//     this.data,
+//     this.statusCode,
+//   });
+
+//   factory NewCourseDetailModel.fromRawJson(String str) =>
+//       NewCourseDetailModel.fromJson(json.decode(str));
+
+//   String toRawJson() => json.encode(toJson());
+
+//   factory NewCourseDetailModel.fromJson(Map<String, dynamic> json) =>
+//       NewCourseDetailModel(
+//         data: json["data"] == null
+//             ? []
+//             : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+//         statusCode: json["status code"],
+//       );
+
+//   Map<String, dynamic> toJson() => {
+//         "data": data == null
+//             ? []
+//             : List<dynamic>.from(data!.map((x) => x.toJson())),
+//         "status code": statusCode,
+//       };
+// }
 
 class NewCourseDetailModel {
   int? id;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  dynamic deletedAt;
   String? sectionName;
   String? courseId;
   Course? course;
@@ -108,6 +143,9 @@ class NewCourseDetailModel {
 
   NewCourseDetailModel({
     this.id,
+    this.createdAt,
+    this.updatedAt,
+    this.deletedAt,
     this.sectionName,
     this.courseId,
     this.course,
@@ -122,6 +160,13 @@ class NewCourseDetailModel {
   factory NewCourseDetailModel.fromJson(Map<String, dynamic> json) =>
       NewCourseDetailModel(
         id: json["ID"],
+        createdAt: json["CreatedAt"] == null
+            ? null
+            : DateTime.parse(json["CreatedAt"]),
+        updatedAt: json["UpdatedAt"] == null
+            ? null
+            : DateTime.parse(json["UpdatedAt"]),
+        deletedAt: json["DeletedAt"],
         sectionName: json["section_name"],
         courseId: json["course_id"],
         course: json["course"] == null ? null : Course.fromJson(json["course"]),
@@ -132,6 +177,9 @@ class NewCourseDetailModel {
 
   Map<String, dynamic> toJson() => {
         "ID": id,
+        "CreatedAt": createdAt?.toIso8601String(),
+        "UpdatedAt": updatedAt?.toIso8601String(),
+        "DeletedAt": deletedAt,
         "section_name": sectionName,
         "course_id": courseId,
         "course": course?.toJson(),
@@ -142,14 +190,13 @@ class NewCourseDetailModel {
 }
 
 class Course {
-  int? id;
   dynamic categoryId;
   Category? category;
-  int? classId;
+  dynamic classId;
   Class? courseClass;
   int? mentorId;
   User? user;
-  int? majorId;
+  dynamic majorId;
   Major? major;
   String? courseName;
   String? price;
@@ -162,7 +209,6 @@ class Course {
   int? scores;
 
   Course({
-    this.id,
     this.categoryId,
     this.category,
     this.classId,
@@ -187,7 +233,6 @@ class Course {
   String toRawJson() => json.encode(toJson());
 
   factory Course.fromJson(Map<String, dynamic> json) => Course(
-        id: json["ID"],
         categoryId: json["category_id"],
         category: json["category"] == null
             ? null
@@ -211,7 +256,6 @@ class Course {
       );
 
   Map<String, dynamic> toJson() => {
-        "ID": id,
         "category_id": categoryId,
         "category": category?.toJson(),
         "class_id": classId,
@@ -303,6 +347,7 @@ class User {
   String? schoolName;
   String? userClass;
   String? gender;
+  String? profile;
 
   User({
     this.name,
@@ -314,6 +359,7 @@ class User {
     this.schoolName,
     this.userClass,
     this.gender,
+    this.profile,
   });
 
   factory User.fromRawJson(String str) => User.fromJson(json.decode(str));
@@ -330,6 +376,7 @@ class User {
         schoolName: json["school_name"],
         userClass: json["class"],
         gender: json["gender"],
+        profile: json["profile"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -342,11 +389,15 @@ class User {
         "school_name": schoolName,
         "class": userClass,
         "gender": gender,
+        "profile": profile,
       };
 }
 
 class Module {
   int? id;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  dynamic deletedAt;
   String? moduleName;
   String? description;
   int? sectionId;
@@ -358,6 +409,9 @@ class Module {
 
   Module({
     this.id,
+    this.createdAt,
+    this.updatedAt,
+    this.deletedAt,
     this.moduleName,
     this.description,
     this.sectionId,
@@ -374,6 +428,13 @@ class Module {
 
   factory Module.fromJson(Map<String, dynamic> json) => Module(
         id: json["ID"],
+        createdAt: json["CreatedAt"] == null
+            ? null
+            : DateTime.parse(json["CreatedAt"]),
+        updatedAt: json["UpdatedAt"] == null
+            ? null
+            : DateTime.parse(json["UpdatedAt"]),
+        deletedAt: json["DeletedAt"],
         moduleName: json["module_name"],
         description: json["description"],
         sectionId: json["section_id"],
@@ -383,25 +444,35 @@ class Module {
         attachment: json["attachment"] == null
             ? null
             : Attachment.fromJson(json["attachment"]),
-        tasks: json["tasks"],
+        tasks: json["tasks"] == null
+            ? []
+            : List<Task>.from(json["tasks"]!.map((x) => Task.fromJson(x))),
         submission: json["submission"],
       );
 
   Map<String, dynamic> toJson() => {
         "ID": id,
+        "CreatedAt": createdAt?.toIso8601String(),
+        "UpdatedAt": updatedAt?.toIso8601String(),
+        "DeletedAt": deletedAt,
         "module_name": moduleName,
         "description": description,
         "section_id": sectionId,
         "section": section?.toJson(),
         "attachment_id": attachmentId,
         "attachment": attachment?.toJson(),
-        "tasks": tasks,
+        "tasks": tasks == null
+            ? []
+            : List<dynamic>.from(tasks!.map((x) => x.toJson())),
         "submission": submission,
       };
 }
 
 class Attachment {
   int? id;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  dynamic deletedAt;
   String? attachmentName;
   String? description;
   String? type;
@@ -412,6 +483,9 @@ class Attachment {
 
   Attachment({
     this.id,
+    this.createdAt,
+    this.updatedAt,
+    this.deletedAt,
     this.attachmentName,
     this.description,
     this.type,
@@ -428,6 +502,13 @@ class Attachment {
 
   factory Attachment.fromJson(Map<String, dynamic> json) => Attachment(
         id: json["ID"],
+        createdAt: json["CreatedAt"] == null
+            ? null
+            : DateTime.parse(json["CreatedAt"]),
+        updatedAt: json["UpdatedAt"] == null
+            ? null
+            : DateTime.parse(json["UpdatedAt"]),
+        deletedAt: json["DeletedAt"],
         attachmentName: json["attachment_name"],
         description: json["description"],
         type: json["type"],
@@ -439,6 +520,9 @@ class Attachment {
 
   Map<String, dynamic> toJson() => {
         "ID": id,
+        "CreatedAt": createdAt?.toIso8601String(),
+        "UpdatedAt": updatedAt?.toIso8601String(),
+        "DeletedAt": deletedAt,
         "attachment_name": attachmentName,
         "description": description,
         "type": type,
