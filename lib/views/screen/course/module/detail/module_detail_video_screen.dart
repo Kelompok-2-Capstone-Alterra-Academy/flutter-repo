@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/utils/animation/fade_animation.dart';
 import 'package:staredu/utils/color/color.dart';
+import 'package:staredu/utils/preferences/preferences_utils.dart';
 import 'package:staredu/views/screen/course/module/module_list_screen.dart';
 import 'package:staredu/views/view_model/course/module_view_model.dart';
 import 'package:staredu/widgets/course/review_dialog.dart';
@@ -166,23 +167,51 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         if (widget.isLastIndex) {
-                          showDialog(
-                            context: context,
-                            builder: (context) => ReviewDialog(
-                              courseId: widget.courseId!,
-                            ),
+                          PreferencesUtils preferencesUtils =
+                              PreferencesUtils();
+                          await preferencesUtils.init();
+                          //get current section
+                          int currentSection = preferencesUtils.getPreferencesInt(
+                                  'total_section_course_${widget.courseId}') ??
+                              0;
+                          //increment the current section value
+                          preferencesUtils.savePreferencesInt(
+                            'total_section_course_${widget.courseId}',
+                            currentSection++,
                           );
+                          if (context.mounted) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => ReviewDialog(
+                                courseId: widget.courseId!,
+                              ),
+                            );
+                          }
                         } else {
-                          Navigator.pushReplacement(
-                            context,
-                            FadeAnimation(
-                              page: ModuleListScreen(
-                                  courseId: widget.courseId,
-                                  courseName: widget.courseName),
-                            ),
+                          PreferencesUtils preferencesUtils =
+                              PreferencesUtils();
+                          await preferencesUtils.init();
+                          //get current section
+                          int currentSection = preferencesUtils.getPreferencesInt(
+                                  'total_section_course_${widget.courseId}') ??
+                              0;
+                          //increment the current section value
+                          preferencesUtils.savePreferencesInt(
+                            'total_section_course_${widget.courseId}',
+                            currentSection++,
                           );
+                          if (context.mounted) {
+                            Navigator.pushReplacement(
+                              context,
+                              FadeAnimation(
+                                page: ModuleListScreen(
+                                    courseId: widget.courseId,
+                                    courseName: widget.courseName),
+                              ),
+                            );
+                          }
                         }
                       },
                       child: Text(

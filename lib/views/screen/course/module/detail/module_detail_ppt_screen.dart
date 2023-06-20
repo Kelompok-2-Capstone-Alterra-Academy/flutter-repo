@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/models/ppt_model.dart';
 import 'package:staredu/utils/animation/fade_animation.dart';
+import 'package:staredu/utils/preferences/preferences_utils.dart';
 import 'package:staredu/views/screen/course/module/module_list_screen.dart';
 import 'package:staredu/widgets/course/review_dialog.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -132,24 +133,54 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                   ),
-                                  onPressed: () {
+                                  onPressed: () async {
                                     if (widget.isLastIndex) {
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) => ReviewDialog(
-                                          courseId: widget.courseId!,
-                                        ),
+                                      PreferencesUtils preferencesUtils =
+                                          PreferencesUtils();
+                                      await preferencesUtils.init();
+                                      //get current section
+                                      int currentSection =
+                                          preferencesUtils.getPreferencesInt(
+                                                  'total_section_course_${widget.courseId}') ??
+                                              0;
+                                      //increment the current section value
+                                      preferencesUtils.savePreferencesInt(
+                                        'total_section_course_${widget.courseId}',
+                                        currentSection++,
                                       );
-                                    } else {
-                                      Navigator.pushReplacement(
-                                        context,
-                                        FadeAnimation(
-                                          page: ModuleListScreen(
-                                            courseId: widget.courseId,
-                                            courseName: widget.courseName,
+                                      if (context.mounted) {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) => ReviewDialog(
+                                            courseId: widget.courseId!,
                                           ),
-                                        ),
+                                        );
+                                      }
+                                    } else {
+                                      PreferencesUtils preferencesUtils =
+                                          PreferencesUtils();
+                                      await preferencesUtils.init();
+                                      //get current section
+                                      int currentSection =
+                                          preferencesUtils.getPreferencesInt(
+                                                  'total_section_course_${widget.courseId}') ??
+                                              0;
+                                      //increment the current section value
+                                      preferencesUtils.savePreferencesInt(
+                                        'total_section_course_${widget.courseId}',
+                                        currentSection++,
                                       );
+                                      if (context.mounted) {
+                                        Navigator.pushReplacement(
+                                          context,
+                                          FadeAnimation(
+                                            page: ModuleListScreen(
+                                              courseId: widget.courseId,
+                                              courseName: widget.courseName,
+                                            ),
+                                          ),
+                                        );
+                                      }
                                     }
                                   },
                                   child: Text(
@@ -257,24 +288,54 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                 ),
-                                onPressed: () {
+                                onPressed: () async {
                                   if (widget.isLastIndex) {
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => ReviewDialog(
-                                        courseId: widget.courseId!,
-                                      ),
+                                    PreferencesUtils preferencesUtils =
+                                        PreferencesUtils();
+                                    await preferencesUtils.init();
+                                    //get current section
+                                    int currentSection =
+                                        preferencesUtils.getPreferencesInt(
+                                                'total_section_course_${widget.courseId}') ??
+                                            0;
+                                    //increment the current section value
+                                    preferencesUtils.savePreferencesInt(
+                                      'total_section_course_${widget.courseId}',
+                                      currentSection++,
                                     );
-                                  } else {
-                                    Navigator.pushReplacement(
-                                      context,
-                                      FadeAnimation(
-                                        page: ModuleListScreen(
-                                          courseId: widget.courseId,
-                                          courseName: widget.courseName,
+                                    if (context.mounted) {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => ReviewDialog(
+                                          courseId: widget.courseId!,
                                         ),
-                                      ),
+                                      );
+                                    }
+                                  } else {
+                                    PreferencesUtils preferencesUtils =
+                                        PreferencesUtils();
+                                    await preferencesUtils.init();
+                                    //get current section
+                                    int currentSection =
+                                        preferencesUtils.getPreferencesInt(
+                                                'total_section_course_${widget.courseId}') ??
+                                            0;
+                                    //increment the current section value
+                                    preferencesUtils.savePreferencesInt(
+                                      'total_section_course_${widget.courseId}',
+                                      currentSection++,
                                     );
+                                    if (context.mounted) {
+                                      Navigator.pushReplacement(
+                                        context,
+                                        FadeAnimation(
+                                          page: ModuleListScreen(
+                                            courseId: widget.courseId,
+                                            courseName: widget.courseName,
+                                          ),
+                                        ),
+                                      );
+                                    }
                                   }
                                 },
                                 child: Text(
