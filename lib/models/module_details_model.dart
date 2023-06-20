@@ -63,3 +63,32 @@ class DetailTaskModel {
     };
   }
 }
+
+class QuizModel {
+  final int? id;
+  final int? sectionId;
+  final int? courseId;
+
+  QuizModel({
+    this.id,
+    this.sectionId,
+    this.courseId,
+  });
+
+  QuizModel.fromJson(
+      Map<String, dynamic> json, this.id, this.sectionId, this.courseId) {
+    QuizModel(
+      id: json['id'],
+      sectionId: json['sectionId'],
+      courseId: json['courseId'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'sectionId': sectionId,
+      'courseId': courseId,
+    };
+  }
+}

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/constant/list_course_taken.dart';
 import 'package:staredu/utils/constant/module_list.dart';
+import 'package:staredu/views/view_model/course/module_view_model.dart';
 import 'package:staredu/widgets/module_course/module_task_card.dart';
 
 class TaskListScreen extends StatefulWidget {
@@ -14,6 +16,12 @@ class TaskListScreen extends StatefulWidget {
 }
 
 class _TaskListScreenState extends State<TaskListScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<ModuleListViewModel>(context, listen: false).getSectionTask();
+  }
+
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;

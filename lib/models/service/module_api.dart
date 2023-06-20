@@ -46,7 +46,7 @@ class ModuleApi {
         finished: false,
       ),
       ModuleListModel(
-          id: 1,
+          id: 4,
           courseId: 2,
           title: "Pengenalan courseId 2",
           video: true,
@@ -55,7 +55,7 @@ class ModuleApi {
           quiz: false,
           finished: true),
       ModuleListModel(
-        id: 2,
+        id: 5,
         courseId: 2,
         title: "List 2 courseId 2",
         video: true,
@@ -65,7 +65,7 @@ class ModuleApi {
         finished: true,
       ),
       ModuleListModel(
-        id: 3,
+        id: 6,
         courseId: 2,
         title: "List 3 courseId 2",
         video: true,
@@ -75,7 +75,7 @@ class ModuleApi {
         finished: false,
       ),
       ModuleListModel(
-          id: 1,
+          id: 7,
           courseId: 3,
           title: "Pengenalan courseId 3",
           video: true,
@@ -84,7 +84,7 @@ class ModuleApi {
           quiz: false,
           finished: true),
       ModuleListModel(
-        id: 2,
+        id: 8,
         courseId: 3,
         title: "List 2 courseId 3",
         video: true,
@@ -94,7 +94,7 @@ class ModuleApi {
         finished: true,
       ),
       ModuleListModel(
-        id: 3,
+        id: 9,
         courseId: 3,
         title: "List 3 courseId 3",
         video: true,
@@ -150,6 +150,62 @@ class ModuleApi {
         id: 1,
         sectionId: 2,
         courseId: 1,
+      ),
+    ];
+    return data;
+  }
+
+  Future<List<QuizModel>> getSectionQuiz() async {
+    // final response = await Dio().get();
+
+    // return response
+    //     .then((value) => value.data)
+    //     .catchError((e) => handleErrorApi(e));
+    final List<QuizModel> data = [
+      QuizModel(
+        id: 1,
+        sectionId: 1,
+        courseId: 1,
+      ),
+      QuizModel(
+        id: 2,
+        sectionId: 2,
+        courseId: 1,
+      ),
+      QuizModel(
+        id: 3,
+        sectionId: 3,
+        courseId: 1,
+      ),
+      QuizModel(
+        id: 4,
+        sectionId: 4,
+        courseId: 2,
+      ),
+      QuizModel(
+        id: 5,
+        sectionId: 5,
+        courseId: 2,
+      ),
+      QuizModel(
+        id: 6,
+        sectionId: 6,
+        courseId: 2,
+      ),
+      QuizModel(
+        id: 7,
+        sectionId: 7,
+        courseId: 3,
+      ),
+      QuizModel(
+        id: 8,
+        sectionId: 8,
+        courseId: 3,
+      ),
+      QuizModel(
+        id: 9,
+        sectionId: 9,
+        courseId: 3,
       ),
     ];
     return data;
