@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:staredu/views/screen/post_feed/post_feed_view_model.dart';
 
 import '../../../utils/color/color.dart';
 
 class CreatePostScreen extends StatefulWidget {
-  const CreatePostScreen({super.key});
+  final Function(String) onPostSubmitted;
+
+  const CreatePostScreen({Key? key, required this.onPostSubmitted})
+      : super(key: key);
 
   @override
   State<CreatePostScreen> createState() => _CreatePostScreenState();
 }
 
 class _CreatePostScreenState extends State<CreatePostScreen> {
+  final TextEditingController postContentController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +37,13 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.send),
-            onPressed: () {},
+            onPressed: () {
+              widget.onPostSubmitted(postContentController.text);
+              Navigator.pop(context);
+              final provider =
+                  Provider.of<PostFeedViewModel>(context, listen: false);
+              provider.getAllPostFeed();
+            },
           ),
         ],
       ),
@@ -38,9 +51,10 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: const [
+          children: [
             TextField(
-              decoration: InputDecoration(
+              controller: postContentController,
+              decoration: const InputDecoration(
                 hintText: "Ceritakan pengalamanmu",
                 border: OutlineInputBorder(
                   borderSide: BorderSide(

@@ -9,10 +9,10 @@ import '../../views/screen/live_session/detail_schadule_screen.dart';
 
 class CardLiveSession extends StatelessWidget {
   const CardLiveSession({
-    super.key,
+    Key? key,
     required this.schedule,
     required this.index,
-  });
+  }) : super(key: key);
 
   final ScheduleCourseModel schedule;
   final int index;
@@ -22,9 +22,11 @@ class CardLiveSession extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-            context,
-            FadeAnimation2(
-                page: DetailScheduleScreen(schedule: scheduleList[index])));
+          context,
+          FadeAnimation2(
+            page: DetailScheduleScreen(index: index),
+          ),
+        );
       },
       child: Container(
         // Styling Container

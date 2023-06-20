@@ -1,6 +1,6 @@
 import '../../models/post_feed_model.dart';
 
-List<PostFeedModel> postFeedsData = [
+List<PostFeedModel> postFeedsList = [
   PostFeedModel(
     name: 'Jung Jaehyun',
     time: '20 April 2023, 12:37',
