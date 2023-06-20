@@ -97,4 +97,23 @@ class CourseAPI {
       rethrow;
     }
   }
+
+  Future<dynamic> payment2(
+      int price, String courseId, int totalPayment, String token) async {
+    final response = dio.post(
+      '$BASE_URL_API/students/transaction',
+      data: {
+        'price': price,
+        'course_id': courseId,
+        'total_payment': totalPayment,
+        'admin_fees': 1000,
+      },
+      options: Options(
+        headers: {'Authorization': 'Bearer $token'},
+      ),
+    );
+    return response
+        .then((value) => value.data)
+        .catchError((e) => handleErrorApi(e));
+  }
 }
