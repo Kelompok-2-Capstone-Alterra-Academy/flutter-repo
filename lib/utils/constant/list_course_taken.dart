@@ -1,39 +1,58 @@
-import '../../models/course_taken_model.dart';
+import 'package:staredu/models/course_taken_model_dummy.dart';
 
-List<CourseTakenModel> courseTaken = [
-  CourseTakenModel(
+List<CourseTakenModelDummy> courseTaken = [
+  CourseTakenModelDummy(
       id: "1",
       img: "assets/images/calculator.jpg",
       title: "Matematika Dasar",
       currentSection: "9",
       totalSection: "11",
-      progress: 80),
-  CourseTakenModel(
+      progress: 80,
+      score: "0",
+      certificateStatus: false),
+  CourseTakenModelDummy(
       id: "2",
       img: "assets/images/idea.jpg",
       title: "Fisika",
       currentSection: "9",
       totalSection: "11",
-      progress: 100),
-  CourseTakenModel(
+      progress: 100,
+      score: "95",
+      certificateStatus: true),
+  CourseTakenModelDummy(
       id: "3",
       img: "assets/images/pencil.jpg",
       title: "Sejarah Indonesia",
       currentSection: "9",
       totalSection: "11",
-      progress: 30),
-  CourseTakenModel(
+      progress: 100,
+      score: "100",
+      certificateStatus: true),
+  CourseTakenModelDummy(
+      id: "3",
+      img: "assets/images/pencil.jpg",
+      title: "Sejarah Indonesia",
+      currentSection: "9",
+      totalSection: "11",
+      progress: 30,
+      score: "0",
+      certificateStatus: false),
+  CourseTakenModelDummy(
       id: "1",
       img: "assets/images/notebook.jpg",
       title: "Komputasi Dasar",
       currentSection: "9",
       totalSection: "11",
-      progress: 50),
-  CourseTakenModel(
+      progress: 50,
+      score: "0",
+      certificateStatus: false),
+  CourseTakenModelDummy(
       id: "1",
       img: "assets/images/camera.jpg",
       title: "Videografi",
       currentSection: "9",
       totalSection: "11",
-      progress: 0),
+      progress: 0,
+      score: "0",
+      certificateStatus: false),
 ];

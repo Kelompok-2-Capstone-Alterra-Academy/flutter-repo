@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:staredu/views/view_model/course/course_taken_view_model.dart';
 
 import '../../utils/color/color.dart';
 
@@ -22,6 +24,9 @@ class _FilterCourseTakenState extends State<FilterCourseTaken> {
   bool toggle4 = false; //Button TKJ
   bool toggle5 = false; //Button RPL
   bool toggle6 = false; //Button Umum
+
+  String classFilter = "";
+  String majorFilter = "";
 
   @override
   Widget build(BuildContext context) {
@@ -84,9 +89,19 @@ class _FilterCourseTakenState extends State<FilterCourseTaken> {
                           ),
                           child: TextButton(
                             onPressed: () {
-                              setState(() {
-                                toggleButton1 = !toggleButton1;
-                              });
+                              // if (toggleButton2 ||
+                              //     toggleButton3 ||
+                              //     toggleButton4 == true) {
+                              // } else {
+                              //   setState(() {
+                              //     if (toggleButton1 == false) {
+                              //       classFilter = "segera_selesai";
+                              //     } else {
+                              //       classFilter = "";
+                              //     }
+                              //     toggleButton1 = !toggleButton1;
+                              //   });
+                              // }
                             },
                             child: Text(
                               "Segera Selesai",
@@ -117,9 +132,19 @@ class _FilterCourseTakenState extends State<FilterCourseTaken> {
                           ),
                           child: TextButton(
                             onPressed: () {
-                              setState(() {
-                                toggleButton2 = !toggleButton2;
-                              });
+                              // if (toggleButton1 ||
+                              //     toggleButton3 ||
+                              //     toggleButton4 == true) {
+                              // } else {
+                              //   setState(() {
+                              //     if (toggleButton2 == false) {
+                              //       classFilter = "kursus_baru";
+                              //     } else {
+                              //       classFilter = "";
+                              //     }
+                              //     toggleButton2 = !toggleButton2;
+                              //   });
+                              // }
                             },
                             child: Text(
                               "Kursus Baru",
@@ -158,9 +183,19 @@ class _FilterCourseTakenState extends State<FilterCourseTaken> {
                           ),
                           child: TextButton(
                             onPressed: () {
-                              setState(() {
-                                toggleButton3 = !toggleButton3;
-                              });
+                              // if (toggleButton1 ||
+                              //     toggleButton2 ||
+                              //     toggleButton4 == true) {
+                              // } else {
+                              //   setState(() {
+                              //     if (toggleButton3 == false) {
+                              //       classFilter = "kelas_atas";
+                              //     } else {
+                              //       classFilter = "";
+                              //     }
+                              //     toggleButton3 = !toggleButton3;
+                              //   });
+                              // }
                             },
                             child: Text(
                               "Kelas Bawah",
@@ -191,9 +226,19 @@ class _FilterCourseTakenState extends State<FilterCourseTaken> {
                           ),
                           child: TextButton(
                             onPressed: () {
-                              setState(() {
-                                toggleButton4 = !toggleButton4;
-                              });
+                              // if (toggleButton1 ||
+                              //     toggleButton2 ||
+                              //     toggleButton3 == true) {
+                              // } else {
+                              //   setState(() {
+                              //     if (toggleButton4 == false) {
+                              //       classFilter = "kelas_bawah";
+                              //     } else {
+                              //       classFilter = "";
+                              //     }
+                              //     toggleButton4 = !toggleButton4;
+                              //   });
+                              // }
                             },
                             child: Text(
                               "Kelas Atas",
@@ -231,9 +276,21 @@ class _FilterCourseTakenState extends State<FilterCourseTaken> {
                           ),
                           child: TextButton(
                             onPressed: () {
-                              setState(() {
-                                toggle1 = !toggle1;
-                              });
+                              if (toggle2 ||
+                                  toggle3 ||
+                                  toggle4 ||
+                                  toggle5 ||
+                                  toggle6 == true) {
+                              } else {
+                                setState(() {
+                                  if (toggle1 == false) {
+                                    majorFilter = "ipa";
+                                  } else {
+                                    majorFilter = "";
+                                  }
+                                  toggle1 = !toggle1;
+                                });
+                              }
                             },
                             child: Text(
                               "IPA",
@@ -263,9 +320,21 @@ class _FilterCourseTakenState extends State<FilterCourseTaken> {
                           ),
                           child: TextButton(
                             onPressed: () {
-                              setState(() {
-                                toggle2 = !toggle2;
-                              });
+                              if (toggle1 ||
+                                  toggle3 ||
+                                  toggle4 ||
+                                  toggle5 ||
+                                  toggle6 == true) {
+                              } else {
+                                setState(() {
+                                  if (toggle2 == false) {
+                                    majorFilter = "ips";
+                                  } else {
+                                    majorFilter = "";
+                                  }
+                                  toggle2 = !toggle2;
+                                });
+                              }
                             },
                             child: Text(
                               "IPS",
@@ -299,9 +368,21 @@ class _FilterCourseTakenState extends State<FilterCourseTaken> {
                                   MaterialStatePropertyAll(Colors.transparent),
                             ),
                             onPressed: () {
-                              setState(() {
-                                toggle3 = !toggle3;
-                              });
+                              if (toggle1 ||
+                                  toggle2 ||
+                                  toggle4 ||
+                                  toggle5 ||
+                                  toggle6 == true) {
+                              } else {
+                                setState(() {
+                                  if (toggle3 == false) {
+                                    majorFilter = "multimedia";
+                                  } else {
+                                    majorFilter = "";
+                                  }
+                                  toggle3 = !toggle3;
+                                });
+                              }
                             },
                             child: Text(
                               "Multi Media",
@@ -338,9 +419,22 @@ class _FilterCourseTakenState extends State<FilterCourseTaken> {
                           ),
                           child: TextButton(
                             onPressed: () {
-                              setState(() {
-                                toggle4 = !toggle4;
-                              });
+                              if (toggle1 ||
+                                  toggle2 ||
+                                  toggle3 ||
+                                  toggle5 ||
+                                  toggle6 == true) {
+                              } else {
+                                setState(() {
+                                  if (toggle4 == false) {
+                                    majorFilter = "tkj";
+                                  } else {
+                                    majorFilter = "";
+                                  }
+
+                                  toggle4 = !toggle4;
+                                });
+                              }
                             },
                             child: Text(
                               "Teknik Komputer dan Jaringan",
@@ -376,9 +470,21 @@ class _FilterCourseTakenState extends State<FilterCourseTaken> {
                           ),
                           child: TextButton(
                             onPressed: () {
-                              setState(() {
-                                toggle5 = !toggle5;
-                              });
+                              if (toggle1 ||
+                                  toggle2 ||
+                                  toggle3 ||
+                                  toggle4 ||
+                                  toggle6 == true) {
+                              } else {
+                                setState(() {
+                                  if (toggle5 == false) {
+                                    majorFilter = "rpl";
+                                  } else {
+                                    majorFilter = "";
+                                  }
+                                  toggle5 = !toggle5;
+                                });
+                              }
                             },
                             child: Text(
                               "Rekayasa Perangkat Lunak",
@@ -411,9 +517,21 @@ class _FilterCourseTakenState extends State<FilterCourseTaken> {
                           ),
                           child: TextButton(
                             onPressed: () {
-                              setState(() {
-                                toggle6 = !toggle6;
-                              });
+                              if (toggle1 ||
+                                  toggle2 ||
+                                  toggle3 ||
+                                  toggle4 ||
+                                  toggle5 == true) {
+                              } else {
+                                setState(() {
+                                  if (toggle6 == false) {
+                                    majorFilter = "umum";
+                                  } else {
+                                    majorFilter = "";
+                                  }
+                                  toggle6 = !toggle6;
+                                });
+                              }
                             },
                             child: Text(
                               "Umum",
@@ -430,24 +548,47 @@ class _FilterCourseTakenState extends State<FilterCourseTaken> {
                     ),
                     const Spacer(),
                     ElevatedButton(
-                        style: ButtonStyle(
-                          shape: MaterialStatePropertyAll(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
+                      style: ButtonStyle(
+                        shape: MaterialStatePropertyAll(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
                           ),
                         ),
-                        onPressed: () {},
-                        child: Center(
-                          child: Text(
-                            'Simpan',
-                            style: GoogleFonts.poppins(
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
-                            ),
+                      ),
+                      onPressed: () {
+                        if (classFilter.isNotEmpty && majorFilter.isNotEmpty) {
+                          context.read<CourseTakenViewModel>().filterCourse(
+                              filterBy: 'both',
+                              classFilter: classFilter,
+                              majorFilter: majorFilter);
+                        }
+                        if (classFilter.isEmpty && majorFilter.isNotEmpty) {
+                          context.read<CourseTakenViewModel>().filterCourse(
+                              filterBy: 'major', majorFilter: majorFilter);
+                        }
+                        if (majorFilter.isEmpty && classFilter.isNotEmpty) {
+                          context.read<CourseTakenViewModel>().filterCourse(
+                              filterBy: 'class', classFilter: classFilter);
+                        }
+                        if (classFilter.isEmpty && majorFilter.isEmpty) {
+                          context
+                              .read<CourseTakenViewModel>()
+                              .resetFilterCourse();
+                        }
+
+                        Navigator.pop(context);
+                      },
+                      child: Center(
+                        child: Text(
+                          'Simpan',
+                          style: GoogleFonts.poppins(
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
                           ),
-                        )),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               );
