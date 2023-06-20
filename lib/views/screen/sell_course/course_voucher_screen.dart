@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:staredu/utils/constant/claimed_voucher_list.dart';
 import 'package:staredu/utils/formater/date_format.dart';
 import 'package:staredu/views/view_model/sell_course/voucher_view_model.dart';
 import '../../../utils/color/color.dart';
@@ -91,6 +92,11 @@ class _CourseVoucherScreenState extends State<CourseVoucherScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) {
+              for (var element in claimedVoucherList) {
+                if (element.promoName == value.courseVoucher[index].promoName) {
+                  value.courseVoucher[index].isClaim = true;
+                }
+              }
               return InkWell(
                 borderRadius: BorderRadius.circular(8),
                 onTap: () {

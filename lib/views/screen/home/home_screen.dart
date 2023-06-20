@@ -36,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     Provider.of<HomeViewModel>(context, listen: false).getAllTypeCourse();
     Provider.of<HomeViewModel>(context, listen: false).getAllMentor();
+    Provider.of<HomeViewModel>(context, listen: false).getPostFeed();
   }
 
   @override
@@ -253,7 +254,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             left: 'Yuk, sharing sama pengguna lain',
                             right: 'Lihat Semua',
                             page: PostFeedScreen()),
-                        PostFeed(postFeeds: postFeedsData),
+                        PostFeed(
+                          index: 0,
+                          postFeeds: postFeedsList,
+                        ),
                       ],
                     ),
                   ),
@@ -262,6 +266,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         )),
-        bottomNavigationBar: const BottomNavigationBarComponent());
+        bottomNavigationBar: BottomNavigationBarComponent(
+          indexDefined: 0,
+        ));
   }
 }

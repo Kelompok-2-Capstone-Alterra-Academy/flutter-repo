@@ -6,6 +6,7 @@ import 'package:staredu/models/type_course.dart';
 import 'package:dio/dio.dart';
 import 'package:staredu/models/sell_course_model.dart';
 import 'package:staredu/models/voucher_model.dart';
+import 'package:staredu/utils/constant/claimed_voucher_list.dart';
 import 'package:staredu/utils/constant/sell_course_list.dart';
 
 import '../../utils/constant/constant.dart';
@@ -65,6 +66,43 @@ class CourseAPI {
   }
 
   Future<dynamic> payment(
+      int price, String courseId, int totalPayment, String token) async {
+    final response = dio.post(
+      '$BASE_URL_API/students/transaction',
+      data: {
+        'price': price,
+        'course_id': courseId,
+        'total_payment': totalPayment,
+        'admin_fees': 1000,
+      },
+      options: Options(
+        headers: {'Authorization': 'Bearer $token'},
+      ),
+    );
+    return response
+        .then((value) => value.data)
+        .catchError((e) => handleErrorApi(e));
+  }
+
+  Future<List<VoucherModel>> getClaimedVoucher() async {
+    try {
+      // List<VoucherModel> listVoucher = [];
+      // final response = await dio.get(
+      //   '$BASE_URL_API/students/promos',
+      //   options: Options(
+      //     headers: {'Authorization': 'Bearer $token'},
+      //   ),
+      // );
+      // for (var element in response.data['data']) {
+      //   listVoucher.add(VoucherModel.fromJson(element));
+      // }
+      return claimedVoucherList;
+    } on DioError catch (_) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> payment2(
       int price, String courseId, int totalPayment, String token) async {
     final response = dio.post(
       '$BASE_URL_API/students/transaction',

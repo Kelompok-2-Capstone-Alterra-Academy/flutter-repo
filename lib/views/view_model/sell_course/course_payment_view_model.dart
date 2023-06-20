@@ -6,6 +6,11 @@ class CoursePaymentViewModel extends ChangeNotifier {
   dynamic response;
   String? tokens;
 
+  double totalBayar = 0;
+  bool promoUsed = false;
+
+  double hargaAwal = 0;
+
   final CourseAPI courseAPI = CourseAPI();
 
   MyState myState = MyState.initial;
@@ -45,6 +50,17 @@ class CoursePaymentViewModel extends ChangeNotifier {
 
   void setToken(String token) {
     tokens = token;
+    notifyListeners();
+  }
+
+  void discount(double discount) {
+    if (promoUsed == false) {
+      totalBayar = (totalBayar / discount);
+      promoUsed = true;
+    } else {
+      totalBayar = hargaAwal;
+      promoUsed = false;
+    }
     notifyListeners();
   }
 }

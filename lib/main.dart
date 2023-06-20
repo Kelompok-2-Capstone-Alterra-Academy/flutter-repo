@@ -1,6 +1,6 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:staredu/models/post_feed_model.dart';
 import 'package:staredu/views/screen/auth/forgot_password/forgot_password_view_model.dart';
 import 'package:staredu/views/screen/auth/forgot_password/main/forgot_password_screen.dart';
 import 'package:staredu/views/screen/auth/forgot_password/otp_verification/otp_verification_screen.dart';
@@ -20,11 +20,14 @@ import 'package:staredu/views/screen/auth/register/main/register_screen.dart';
 import 'package:staredu/views/screen/edit_profile/edit_profile_screen.dart';
 import 'package:staredu/views/screen/edit_profile/edit_profile_view_model.dart';
 import 'package:staredu/views/screen/history/history_transaction_screen.dart';
-import 'package:staredu/views/screen/history/note_transaction_screen.dart.dart';
+import 'package:staredu/views/screen/history/history_transaction_view_model.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
 import 'package:staredu/views/screen/home/home_view_model.dart';
+import 'package:staredu/views/screen/live_session/schedule_view_model.dart';
+import 'package:staredu/views/screen/news/news_view_model.dart';
 import 'package:staredu/views/screen/notification/notification_screen.dart';
 import 'package:staredu/views/screen/notification/notification_view_model.dart';
+import 'package:staredu/views/screen/post_feed/post_feed_view_model.dart';
 import 'package:staredu/views/screen/profile/profile_screen.dart';
 import 'package:staredu/views/screen/course/module/detail/module_quiz_detail_screen.dart';
 import 'package:staredu/views/screen/course/module/module_send_task_screen.dart';
@@ -47,6 +50,7 @@ import 'package:staredu/views/view_model/course/certificate_view_model.dart';
 import 'package:staredu/views/view_model/course/course_taken_view_model.dart';
 import 'package:staredu/views/view_model/course/module_view_model.dart';
 import 'package:staredu/views/view_model/mentor/mentor_view_model.dart';
+import 'package:staredu/views/view_model/sell_course/claimed_voucher_view_model.dart';
 import 'package:staredu/views/view_model/sell_course/course_payment_view_model.dart';
 import 'package:staredu/views/view_model/sell_course/sell_course_view_model.dart';
 import 'package:staredu/views/view_model/sell_course/voucher_view_model.dart';
@@ -83,6 +87,11 @@ void main() {
       ChangeNotifierProvider(create: (_) => VoucherViewModel()),
       ChangeNotifierProvider(create: (_) => CoursePaymentViewModel()),
       ChangeNotifierProvider(create: (_) => TaskViewModel()),
+      ChangeNotifierProvider(create: (_) => ScheduleViewModel()),
+      ChangeNotifierProvider(create: (_) => NewsViewModel()),
+      ChangeNotifierProvider(create: (_) => PostFeedViewModel()),
+      ChangeNotifierProvider(create: (_) => ClaimedVoucherViewModel()),
+      ChangeNotifierProvider(create: (_) => HistoryTransactionViewModel()),
     ],
     child: const StarEdu(),
   ));
@@ -141,6 +150,8 @@ class StarEdu extends StatelessWidget {
         TaskListScreen.routeName: (context) => const TaskListScreen(),
         // ModuleDetailTask.routeName: (context) => const ModuleDetailTask(),
         WishlistScreen.routeName: (context) => const WishlistScreen(),
+        HistoryTransactionScreen.routeName: (context) =>
+            const HistoryTransactionScreen(),
       },
     );
   }

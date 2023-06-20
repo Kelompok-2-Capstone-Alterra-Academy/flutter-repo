@@ -87,8 +87,9 @@ class _ModuleListQuizScreenState extends State<ModuleListQuizScreen> {
                             .courseQuiz[firstIndex].module!.length,
                         itemBuilder: (context, secondIndex) {
                           return ModuleQuizCard(
-                            id: moduleViewModel
-                                .courseModule[firstIndex].courseId,
+                            id: int.parse(moduleViewModel
+                                .courseModule[firstIndex].courseId
+                                .toString()),
                             isQuizAvailable: moduleViewModel
                                     .courseQuiz[firstIndex]
                                     .module![secondIndex]

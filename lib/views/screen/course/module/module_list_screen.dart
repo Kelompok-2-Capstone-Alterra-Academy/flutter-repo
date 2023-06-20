@@ -442,7 +442,7 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
               );
             },
           ),
-          bottomNavigationBar: const BottomNavigationBarComponent()),
+          bottomNavigationBar: BottomNavigationBarComponent()),
     );
   }
 }

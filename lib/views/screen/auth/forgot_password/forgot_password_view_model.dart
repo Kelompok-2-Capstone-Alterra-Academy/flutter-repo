@@ -37,17 +37,18 @@ class ForgotPasswordViewModel extends ChangeNotifier {
       return 'Verify OTP Failed';
     }
 
-    if (response['status_code'] == 201) {
+    if (response["data"]["token"] != null) {
       setStateOtp(MyState.success);
-      return 'success ${response['token']}';
+      return 'success ${response["data"]["token"]}';
     } else {
       setStateOtp(MyState.failed);
       return response['message'] ?? 'Verify OTP Failed';
     }
   }
 
-  Future<String> resetPassword(String token, String password) async {
-    response = await AuthAPI.resetPassword(token, password);
+  Future<String> resetPassword(
+      String token, String otp, String password) async {
+    response = await AuthAPI.resetPassword(token, otp, password);
 
     if (response == null) {
       setStateResetPassword(MyState.failed);
