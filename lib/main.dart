@@ -45,6 +45,7 @@ import 'package:staredu/views/screen/live_session/schedule_course_screen.dart';
 import 'package:staredu/views/screen/splash_welcome/splash_welcome_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/views/screen/wishlist/wishlist_screen.dart';
+import 'package:staredu/views/view_model/course/certificate_view_model.dart';
 import 'package:staredu/views/view_model/course/course_taken_view_model.dart';
 import 'package:staredu/views/view_model/course/module_view_model.dart';
 import 'package:staredu/widgets/bottom_navigation_bar/bottom_navigation_bar_view_model.dart';
@@ -71,6 +72,7 @@ void main() {
       ChangeNotifierProvider(create: (_) => ForgotPasswordViewModel()),
       ChangeNotifierProvider(create: (_) => CourseTakenViewModel()),
       ChangeNotifierProvider(create: (_) => ModuleListViewModel()),
+      ChangeNotifierProvider(create: (_) => CertificateViewModel()),
     ],
     child: const StarEdu(),
   ));

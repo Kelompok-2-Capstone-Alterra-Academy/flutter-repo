@@ -18,13 +18,11 @@ class ModuleListViewModel with ChangeNotifier {
 
   MyState myState = MyState.initial;
 
-  ModuleApi api = ModuleApi();
-
   Future getModuleList() async {
     myState = MyState.loading;
 
     try {
-      _moduleList = await api.getModuleList();
+      _moduleList = await moduleApi.getModuleList();
       myState = MyState.success;
       notifyListeners();
     } catch (e) {
@@ -36,7 +34,7 @@ class ModuleListViewModel with ChangeNotifier {
     myState = MyState.loading;
 
     try {
-      _detailVideo = await api.getSectionVideo();
+      _detailVideo = await moduleApi.getSectionVideo();
       myState = MyState.success;
       notifyListeners();
     } catch (e) {
@@ -48,7 +46,7 @@ class ModuleListViewModel with ChangeNotifier {
     myState = MyState.loading;
 
     try {
-      _detailTask = await api.getSectionTask();
+      _detailTask = await moduleApi.getSectionTask();
       myState = MyState.success;
       notifyListeners();
     } catch (e) {
