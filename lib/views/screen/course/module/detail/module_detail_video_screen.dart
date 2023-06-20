@@ -1,11 +1,11 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:staredu/models/module_details_model.dart';
+import 'package:staredu/utils/animation/fade_animation.dart';
 import 'package:staredu/utils/color/color.dart';
+import 'package:staredu/views/screen/course/module/module_list_screen.dart';
 import 'package:staredu/views/view_model/course/module_view_model.dart';
+import 'package:staredu/widgets/course/review_dialog.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class ModuleVideoScreen extends StatefulWidget {
@@ -15,13 +15,22 @@ class ModuleVideoScreen extends StatefulWidget {
   final int? sectionId;
   final String? courseName;
   final String? sectionName;
+  final String? moduleName;
+  final String? linkModule;
+  final String? description;
+  final bool isLastIndex;
 
-  const ModuleVideoScreen(
-      {super.key,
-      this.courseId,
-      this.sectionId,
-      this.courseName,
-      this.sectionName});
+  const ModuleVideoScreen({
+    super.key,
+    this.courseId,
+    this.sectionId,
+    this.courseName,
+    this.sectionName,
+    this.moduleName,
+    this.linkModule,
+    this.description,
+    required this.isLastIndex,
+  });
 
   @override
   State<ModuleVideoScreen> createState() => _ModuleVideoScreenState();
@@ -34,9 +43,10 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<ModuleListViewModel>(context, listen: false).getSectionVideo();
+    String newId =
+        YoutubePlayer.convertUrlToId(widget.linkModule.toString()).toString();
     _videoController = YoutubePlayerController(
-      initialVideoId: 'tATNYnFTetg',
+      initialVideoId: newId,
       flags: const YoutubePlayerFlags(
         mute: false,
         autoPlay: false,
@@ -49,14 +59,10 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.courseName.toString());
     final double screenWidth = MediaQuery.of(context).size.width;
-    final moduleViewModel =
-        Provider.of<ModuleListViewModel>(context, listen: false);
-    final linkVideo = moduleViewModel.detailVideo
-        .where((detailVideo) =>
-            detailVideo.courseId == widget.courseId &&
-            detailVideo.sectionId == widget.sectionId)
-        .toList();
+    final String linkVideo =
+        YoutubePlayer.convertUrlToId(widget.linkModule.toString()).toString();
     return Consumer<ModuleListViewModel>(
       builder: (context, value, _) {
         return Scaffold(
@@ -93,7 +99,7 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
                       bufferedColor: Colors.redAccent,
                     ),
                     onReady: () {
-                      _videoController.load(linkVideo[index].link.toString());
+                      _videoController.load(linkVideo);
                     },
                     topActions: <Widget>[
                       const SizedBox(width: 8.0),
@@ -118,7 +124,7 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
               Padding(
                 padding: const EdgeInsets.only(left: 16, right: 16),
                 child: Text(
-                  '${widget.courseName} - ${widget.sectionName}',
+                  '${widget.courseName.toString()} - ${widget.sectionName}',
                   style: GoogleFonts.poppins(
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.w600,
@@ -135,7 +141,7 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
                   child: ListView(
                     children: [
                       Text(
-                        'testing description : Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent arcu enim, pretium in justo et, fringilla sagittis dui. Cras mauris nibh, pretium ut dignissim id, iaculis consequat ligula. Nulla non pulvinar turpis, id maximus nisl. Ut condimentum enim ligula. Morbi dui erat, laoreet sodales feugiat eu, lobortis fringilla massa. Nam pretium arcu quis eros volutpat interdum. Proin hendrerit tellus non arcu sollicitudin, at sollicitudin nibh imperdiet. Aliquam semper feugiat nisl et ultrices. Mauris consequat elementum lectus, sed sollicitudin ipsum. Aenean consequat tellus vel sapien facilisis, non venenatis velit laoreet. Etiam non venenatis ante. Vivamus vel quam iaculis diam consectetur molestie et in nulla. Aenean ultrices, ex sit amet dignissim interdum, libero augue commodo urna, tincidunt mattis eros magna sed turpis. Vestibulum aliquet nibh massa, a auctor arcu tristique in. Integer imperdiet vestibulum lacus quis tristique. Quisque scelerisque nisi convallis enim hendrerit consectetur.',
+                        widget.description.toString(),
                         style: GoogleFonts.poppins(
                           fontStyle: FontStyle.normal,
                           fontWeight: FontWeight.w400,
@@ -160,7 +166,25 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        if (widget.isLastIndex) {
+                          showDialog(
+                            context: context,
+                            builder: (context) => ReviewDialog(
+                              courseId: widget.courseId!,
+                            ),
+                          );
+                        } else {
+                          Navigator.pushReplacement(
+                            context,
+                            FadeAnimation(
+                              page: ModuleListScreen(
+                                  courseId: widget.courseId,
+                                  courseName: widget.courseName),
+                            ),
+                          );
+                        }
+                      },
                       child: Text(
                         "Selesai",
                         style: GoogleFonts.poppins(
@@ -199,143 +223,6 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
           ),
         );
       },
-      // child: YoutubePlayerBuilder(
-      //   player: YoutubePlayer(
-      //     controller: _videoController,
-      //     width: screenWidth,
-      //     showVideoProgressIndicator: true,
-      //     progressIndicatorColor: Colors.redAccent,
-      //     progressColors: const ProgressBarColors(
-      //       playedColor: Colors.red,
-      //       handleColor: Colors.red,
-      //       bufferedColor: Colors.redAccent,
-      //     ),
-      //     onReady: () {
-      //       // _videoController.load(linkVideo.toString());
-      //       print(linkVideo?.link);
-      //     },
-      //     topActions: <Widget>[
-      //       const SizedBox(width: 8.0),
-      //       Expanded(
-      //         child: Text(
-      //           _videoController.metadata.title,
-      //           style: GoogleFonts.poppins(
-      //             color: Colors.white,
-      //             fontSize: 18.0,
-      //           ),
-      //           overflow: TextOverflow.ellipsis,
-      //           maxLines: 1,
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      //   builder: (context, player) => Scaffold(
-      //     appBar: AppBar(
-      //       centerTitle: true,
-      //       backgroundColor: whiteColor,
-      //       foregroundColor: blackColor,
-      //       elevation: 0,
-      //       title: Text(
-      //         "Video Pembelajaran",
-      //         style: GoogleFonts.poppins(
-      //           fontStyle: FontStyle.normal,
-      //           fontWeight: FontWeight.w600,
-      //           fontSize: 17,
-      //         ),
-      //       ),
-      //     ),
-      //     body: Column(
-      //       mainAxisAlignment: MainAxisAlignment.start,
-      //       crossAxisAlignment: CrossAxisAlignment.start,
-      //       children: [
-      //         player,
-      //         const SizedBox(
-      //           height: 20,
-      //         ),
-      //         Padding(
-      //           padding: const EdgeInsets.only(left: 16, right: 16),
-      //           child: Text(
-      //             '${widget.courseName} - ${widget.sectionName}',
-      //             style: GoogleFonts.poppins(
-      //               fontStyle: FontStyle.normal,
-      //               fontWeight: FontWeight.w600,
-      //               fontSize: 14,
-      //             ),
-      //           ),
-      //         ),
-      //         const SizedBox(
-      //           height: 12,
-      //         ),
-      //         Expanded(
-      //           child: Container(
-      //             padding: const EdgeInsets.only(left: 16, right: 16),
-      //             child: ListView(
-      //               children: [
-      //                 Text(
-      //                   'testing description : Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent arcu enim, pretium in justo et, fringilla sagittis dui. Cras mauris nibh, pretium ut dignissim id, iaculis consequat ligula. Nulla non pulvinar turpis, id maximus nisl. Ut condimentum enim ligula. Morbi dui erat, laoreet sodales feugiat eu, lobortis fringilla massa. Nam pretium arcu quis eros volutpat interdum. Proin hendrerit tellus non arcu sollicitudin, at sollicitudin nibh imperdiet. Aliquam semper feugiat nisl et ultrices. Mauris consequat elementum lectus, sed sollicitudin ipsum. Aenean consequat tellus vel sapien facilisis, non venenatis velit laoreet. Etiam non venenatis ante. Vivamus vel quam iaculis diam consectetur molestie et in nulla. Aenean ultrices, ex sit amet dignissim interdum, libero augue commodo urna, tincidunt mattis eros magna sed turpis. Vestibulum aliquet nibh massa, a auctor arcu tristique in. Integer imperdiet vestibulum lacus quis tristique. Quisque scelerisque nisi convallis enim hendrerit consectetur.',
-      //                   style: GoogleFonts.poppins(
-      //                     fontStyle: FontStyle.normal,
-      //                     fontWeight: FontWeight.w400,
-      //                     fontSize: 11,
-      //                   ),
-      //                 ),
-      //               ],
-      //             ),
-      //           ),
-      //         ),
-      //         Row(
-      //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      //           children: [
-      //             Container(
-      //               width: MediaQuery.of(context).size.width / 2.3,
-      //               margin: const EdgeInsets.only(bottom: 16),
-      //               child: OutlinedButton(
-      //                 style: OutlinedButton.styleFrom(
-      //                   foregroundColor: whiteColor,
-      //                   backgroundColor: primaryColor,
-      //                   shape: RoundedRectangleBorder(
-      //                     borderRadius: BorderRadius.circular(8),
-      //                   ),
-      //                 ),
-      //                 onPressed: () {},
-      //                 child: Text(
-      //                   "Selesai",
-      //                   style: GoogleFonts.poppins(
-      //                     fontStyle: FontStyle.normal,
-      //                     fontWeight: FontWeight.w600,
-      //                     fontSize: 13,
-      //                   ),
-      //                 ),
-      //               ),
-      //             ),
-      //             Container(
-      //               width: MediaQuery.of(context).size.width / 2.3,
-      //               margin: const EdgeInsets.only(bottom: 16),
-      //               child: OutlinedButton(
-      //                 style: OutlinedButton.styleFrom(
-      //                   foregroundColor: primaryColor,
-      //                   side: const BorderSide(color: primaryColor),
-      //                   shape: RoundedRectangleBorder(
-      //                     borderRadius: BorderRadius.circular(8),
-      //                   ),
-      //                 ),
-      //                 onPressed: () {},
-      //                 child: Text(
-      //                   "Tanya Mentor",
-      //                   style: GoogleFonts.poppins(
-      //                     fontStyle: FontStyle.normal,
-      //                     fontWeight: FontWeight.w600,
-      //                     fontSize: 13,
-      //                   ),
-      //                 ),
-      //               ),
-      //             ),
-      //           ],
-      //         ),
-      //       ],
-      //     ),
-      //   ),
-      // ),
     );
   }
 }

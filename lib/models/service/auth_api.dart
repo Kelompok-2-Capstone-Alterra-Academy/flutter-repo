@@ -28,16 +28,15 @@ class AuthAPI {
       '$BASE_URL_API/verify-otp',
       data: {
         'email': email,
-        'token': otp,
+        'otp': otp,
       },
     );
-    return response
-        .then((value) => value.data)
-        .catchError((e) => handleErrorApi(e));
+    return response.then((value) {
+      return value.data;
+    }).catchError((e) => handleErrorApi(e));
   }
 
   static Future<dynamic> login(String email, String password) async {
-    print('email: $email');
     final response = Dio().post(
       '$BASE_URL_API/login',
       data: {

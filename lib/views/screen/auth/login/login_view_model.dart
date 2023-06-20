@@ -16,8 +16,6 @@ class LoginViewModel extends ChangeNotifier {
         setState(MyState.failed);
         return 'Login Failed';
       }
-      print('test');
-      print(response);
       if (response["data"]["token"] != null) {
         setState(MyState.success);
         return 'success ${response["data"]["token"]}';
@@ -27,7 +25,7 @@ class LoginViewModel extends ChangeNotifier {
       }
     } catch (e) {
       setState(MyState.failed);
-      return 'Login Failed';
+      return response["message"] ?? 'Login Failed';
     }
   }
 

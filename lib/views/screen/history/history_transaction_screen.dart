@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../utils/animation/fade_animation2.dart';
 import '../../../utils/color/color.dart';
 import '../../../utils/constant/history_course_list.dart';
 import '../../../widgets/bottom_navigation_bar/bottom_navigation_bar.dart';
@@ -147,12 +148,10 @@ class _HistoryTransactionScreenState extends State<HistoryTransactionScreen> {
                                               BorderRadius.circular(8),
                                           onTap: () {
                                             Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    NoteTransactionScreen(),
-                                              ),
-                                            );
+                                                context,
+                                                FadeAnimation2(
+                                                    page:
+                                                        const NoteTransactionScreen()));
                                           },
                                           child: Center(
                                             child: Text(

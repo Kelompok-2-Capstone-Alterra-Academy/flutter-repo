@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/utils/color/color.dart';
-import 'package:staredu/utils/constant/module_list.dart';
+import 'package:staredu/utils/preferences/preferences_utils.dart';
+import 'package:staredu/utils/state/my_state.dart';
 import 'package:staredu/views/view_model/course/certificate_view_model.dart';
-// import 'package:staredu/utils/constant/module_list.dart';
 import 'package:staredu/views/view_model/course/module_view_model.dart';
 import 'package:staredu/widgets/course/course_certificate.dart';
+import 'package:staredu/widgets/loading/circular_progress.dart';
+import 'package:staredu/widgets/loading/opacity_progress.dart';
 import 'package:staredu/widgets/module_course/module_button.dart';
+import 'package:staredu/widgets/module_course/module_card.dart';
 import 'package:staredu/widgets/module_course/module_section_card.dart';
 
 import '../../../../widgets/bottom_navigation_bar/bottom_navigation_bar.dart';
@@ -28,8 +31,20 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<ModuleListViewModel>(context, listen: false).getModuleList();
+    getCourseModule();
     Provider.of<CertificateViewModel>(context, listen: false).getCertificate();
+  }
+
+  void getCourseModule() async {
+    PreferencesUtils preferencesUtils = PreferencesUtils();
+    await preferencesUtils.init();
+
+    String token = preferencesUtils.getPreferencesString('token') ?? "";
+
+    if (context.mounted) {
+      Provider.of<ModuleListViewModel>(context, listen: false)
+          .getCourseModule(token, widget.courseId);
+    }
   }
 
   @override
@@ -38,9 +53,6 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
         Provider.of<ModuleListViewModel>(context, listen: false);
     final certificateViewModel =
         Provider.of<CertificateViewModel>(context, listen: false);
-    final List filteredModuleList = moduleViewModel.moduleList
-        .where((moduleList) => moduleList.courseId == widget.courseId)
-        .toList();
     final double screenWidth = MediaQuery.of(context).size.width;
 
     return DefaultTabController(
@@ -97,73 +109,321 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
             builder: (context, value, child) {
               return TabBarView(
                 children: [
-                  SingleChildScrollView(
-                    child: Container(
-                      color: whiteColor,
-                      padding: const EdgeInsets.only(
-                        left: 16,
-                        right: 16,
-                        top: 24,
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  Stack(
+                    children: [
+                      SingleChildScrollView(
+                        child: Container(
+                          color: whiteColor,
+                          padding: const EdgeInsets.only(
+                            left: 16,
+                            right: 16,
+                            top: 24,
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              ModuleButton(
-                                courseName: widget.courseName.toString(),
-                                width: screenWidth,
-                                text: "Live Session",
-                                borderColor: primaryColor,
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  ModuleButton(
+                                    courseName: widget.courseName.toString(),
+                                    width: screenWidth,
+                                    text: "Live Session",
+                                    borderColor: primaryColor,
+                                  ),
+                                  ModuleButton(
+                                    courseName: widget.courseName.toString(),
+                                    width: screenWidth,
+                                    text: "Quiz",
+                                    borderColor: primaryColor,
+                                  ),
+                                  ModuleButton(
+                                    courseName: widget.courseName.toString(),
+                                    width: screenWidth,
+                                    text: "Tanya Mentor",
+                                    borderColor: primaryColor,
+                                  ),
+                                ],
                               ),
-                              ModuleButton(
-                                courseName: widget.courseName.toString(),
-                                width: screenWidth,
-                                text: "Quiz",
-                                borderColor: primaryColor,
+                              const SizedBox(
+                                height: 16,
                               ),
-                              ModuleButton(
-                                courseName: widget.courseName.toString(),
-                                width: screenWidth,
-                                text: "Tanya Mentor",
-                                borderColor: primaryColor,
+                              ListView.separated(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: moduleViewModel.courseModule.length,
+                                itemBuilder: (context, firstIndex) {
+                                  //if its the last section by index
+                                  if (firstIndex ==
+                                      moduleViewModel.courseModule.length - 1) {
+                                    return Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        ModuleSectionCard(
+                                          id: firstIndex + 1,
+                                          sectionName: moduleViewModel
+                                              .courseModule[firstIndex]
+                                              .sectionName,
+                                        ),
+                                        ListView.builder(
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          shrinkWrap: true,
+                                          itemCount: moduleViewModel
+                                              .courseModule[firstIndex]
+                                              .module!
+                                              .length,
+                                          itemBuilder: (context, secondIndex) {
+                                            //last index in last section
+                                            if (secondIndex ==
+                                                moduleViewModel
+                                                        .courseModule[
+                                                            firstIndex]
+                                                        .module!
+                                                        .length -
+                                                    1) {
+                                              return ModuleCard(
+                                                isLastIndex: true,
+                                                id: widget.courseId,
+                                                sectionId: moduleViewModel
+                                                    .courseModule[firstIndex]
+                                                    .module![secondIndex]
+                                                    .sectionId,
+                                                sectionName: moduleViewModel
+                                                    .courseModule[firstIndex]
+                                                    .sectionName,
+                                                courseName: widget.courseName
+                                                    .toString(),
+                                                moduleName: moduleViewModel
+                                                    .courseModule[firstIndex]
+                                                    .module![secondIndex]
+                                                    .attachment!
+                                                    .attachmentName
+                                                    .toString(),
+                                                numbering: secondIndex + 1,
+                                                isVideoAvailable:
+                                                    moduleViewModel
+                                                            .courseModule[
+                                                                firstIndex]
+                                                            .module![
+                                                                secondIndex]
+                                                            .attachment!
+                                                            .type!
+                                                            .contains('video')
+                                                        ? true
+                                                        : false,
+                                                isMaterialAvailable:
+                                                    moduleViewModel
+                                                            .courseModule[
+                                                                firstIndex]
+                                                            .module![
+                                                                secondIndex]
+                                                            .attachment!
+                                                            .type!
+                                                            .contains(
+                                                                'document')
+                                                        ? true
+                                                        : false,
+                                                isAssignmentAvailable:
+                                                    moduleViewModel
+                                                            .courseModule[
+                                                                firstIndex]
+                                                            .module![
+                                                                secondIndex]
+                                                            .tasks!
+                                                            .isEmpty
+                                                        ? false
+                                                        : true,
+                                                dueDate:
+                                                    DateTime.now().toString(),
+                                                isSectionFinished: false,
+                                                linkModule: moduleViewModel
+                                                    .courseModule[firstIndex]
+                                                    .module![secondIndex]
+                                                    .attachment!
+                                                    .attachmentSource,
+                                                moduleDescription:
+                                                    moduleViewModel
+                                                        .courseModule[
+                                                            firstIndex]
+                                                        .module![secondIndex]
+                                                        .attachment!
+                                                        .description,
+                                              );
+                                            }
+                                            return ModuleCard(
+                                              isLastIndex: false,
+                                              id: widget.courseId,
+                                              sectionId: moduleViewModel
+                                                  .courseModule[firstIndex]
+                                                  .module![secondIndex]
+                                                  .sectionId,
+                                              sectionName: moduleViewModel
+                                                  .courseModule[firstIndex]
+                                                  .sectionName,
+                                              courseName:
+                                                  widget.courseName.toString(),
+                                              moduleName: moduleViewModel
+                                                  .courseModule[firstIndex]
+                                                  .module![secondIndex]
+                                                  .attachment!
+                                                  .attachmentName
+                                                  .toString(),
+                                              numbering: secondIndex + 1,
+                                              isVideoAvailable: moduleViewModel
+                                                      .courseModule[firstIndex]
+                                                      .module![secondIndex]
+                                                      .attachment!
+                                                      .type!
+                                                      .contains('video')
+                                                  ? true
+                                                  : false,
+                                              isMaterialAvailable:
+                                                  moduleViewModel
+                                                          .courseModule[
+                                                              firstIndex]
+                                                          .module![secondIndex]
+                                                          .attachment!
+                                                          .type!
+                                                          .contains('document')
+                                                      ? true
+                                                      : false,
+                                              isAssignmentAvailable:
+                                                  moduleViewModel
+                                                          .courseModule[
+                                                              firstIndex]
+                                                          .module![secondIndex]
+                                                          .tasks!
+                                                          .isEmpty
+                                                      ? false
+                                                      : true,
+                                              dueDate:
+                                                  DateTime.now().toString(),
+                                              isSectionFinished: false,
+                                              linkModule: moduleViewModel
+                                                  .courseModule[firstIndex]
+                                                  .module![secondIndex]
+                                                  .attachment!
+                                                  .attachmentSource,
+                                              moduleDescription: moduleViewModel
+                                                  .courseModule[firstIndex]
+                                                  .module![secondIndex]
+                                                  .attachment!
+                                                  .description,
+                                            );
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  }
+                                  //if not last section by index
+                                  return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      ModuleSectionCard(
+                                        id: firstIndex + 1,
+                                        sectionName: moduleViewModel
+                                            .courseModule[firstIndex]
+                                            .sectionName,
+                                      ),
+                                      ListView.builder(
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        shrinkWrap: true,
+                                        itemCount: moduleViewModel
+                                            .courseModule[firstIndex]
+                                            .module!
+                                            .length,
+                                        itemBuilder: (context, secondIndex) {
+                                          return ModuleCard(
+                                            isLastIndex: false,
+                                            id: widget.courseId,
+                                            sectionId: moduleViewModel
+                                                .courseModule[firstIndex]
+                                                .module![secondIndex]
+                                                .sectionId,
+                                            sectionName: moduleViewModel
+                                                .courseModule[firstIndex]
+                                                .sectionName,
+                                            courseName:
+                                                widget.courseName.toString(),
+                                            moduleName: moduleViewModel
+                                                .courseModule[firstIndex]
+                                                .module![secondIndex]
+                                                .attachment!
+                                                .attachmentName
+                                                .toString(),
+                                            numbering: secondIndex + 1,
+                                            isVideoAvailable: moduleViewModel
+                                                    .courseModule[firstIndex]
+                                                    .module![secondIndex]
+                                                    .attachment!
+                                                    .type!
+                                                    .contains('video')
+                                                ? true
+                                                : false,
+                                            isMaterialAvailable: moduleViewModel
+                                                    .courseModule[firstIndex]
+                                                    .module![secondIndex]
+                                                    .attachment!
+                                                    .type!
+                                                    .contains('document')
+                                                ? true
+                                                : false,
+                                            isAssignmentAvailable:
+                                                moduleViewModel
+                                                        .courseModule[
+                                                            firstIndex]
+                                                        .module![secondIndex]
+                                                        .tasks!
+                                                        .isEmpty
+                                                    ? false
+                                                    : true,
+                                            dueDate: DateTime.now().toString(),
+                                            isSectionFinished: false,
+                                            linkModule: moduleViewModel
+                                                .courseModule[firstIndex]
+                                                .module![secondIndex]
+                                                .attachment!
+                                                .attachmentSource,
+                                            moduleDescription: moduleViewModel
+                                                .courseModule[firstIndex]
+                                                .module![secondIndex]
+                                                .attachment!
+                                                .description,
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                                separatorBuilder:
+                                    (BuildContext context, int index) {
+                                  return const SizedBox(
+                                    height: 2,
+                                  );
+                                },
                               ),
                             ],
                           ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          ListView.separated(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: filteredModuleList.length,
-                            itemBuilder: (context, index) {
-                              return ModuleSectionCard(
-                                id: filteredModuleList[index].id,
-                                sectionId: filteredModuleList[index].id,
-                                sectionName: filteredModuleList[index].title,
-                                courseName: widget.courseName.toString(),
-                                isVideoAvailable:
-                                    filteredModuleList[index].video,
-                                isMaterialAvailable:
-                                    filteredModuleList[index].material,
-                                isAssignmentAvailable:
-                                    filteredModuleList[index].assignment,
-                                isSectionFinished:
-                                    filteredModuleList[index].finished,
-                              );
-                            },
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return const SizedBox(
-                                height: 2,
-                              );
-                            },
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
+                      Consumer<ModuleListViewModel>(
+                        builder: (context, value, child) =>
+                            value.myState == MyState.loading
+                                ? const OpacityProgressComponent()
+                                : const SizedBox.shrink(),
+                      ),
+                      Consumer<ModuleListViewModel>(
+                        builder: (context, value, child) =>
+                            value.myState == MyState.loading
+                                ? const CircularProgressComponent()
+                                : const SizedBox.shrink(),
+                      )
+                    ],
                   ),
                   Consumer<CertificateViewModel>(
                     builder: (context, value, child) {

@@ -1,19 +1,30 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:staredu/utils/color/color.dart';
+import 'package:staredu/utils/preferences/preferences_utils.dart';
 import 'package:staredu/views/screen/course/course_taken_list_screen.dart';
+import 'package:staredu/views/screen/course/module/module_list_screen.dart';
+import 'package:staredu/views/view_model/course/course_taken_view_model.dart';
+
+import '../../utils/animation/fade_animation2.dart';
 
 class ReviewDialog extends StatefulWidget {
-  const ReviewDialog({super.key});
+  final int courseId;
+  const ReviewDialog({
+    super.key,
+    required this.courseId,
+  });
 
   @override
   State<ReviewDialog> createState() => _ReviewDialogState();
 }
 
 class _ReviewDialogState extends State<ReviewDialog> {
-  bool isRatingInputted = false;
-  double rating = 0.0;
+  final TextEditingController _notesController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -92,24 +103,25 @@ class _ReviewDialogState extends State<ReviewDialog> {
                   color: starReviewColor,
                 ),
                 onRatingUpdate: (value) {
-                  //based on changed rating
-                  setState(() {
-                    isRatingInputted = true;
-                    rating = value;
-                  });
+                  Provider.of<CourseTakenViewModel>(context, listen: false)
+                      .setRating(value);
                 },
               ),
               const SizedBox(
                 height: 24,
               ),
               AnimatedContainer(
-                height: isRatingInputted ? 146 : 0, // Set the desired height
+                height:
+                    Provider.of<CourseTakenViewModel>(context).isRatingInputted
+                        ? 146
+                        : 0, // Set the desired height
                 duration: const Duration(milliseconds: 200),
                 child: Container(
                   height: 146,
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: Visibility(
-                    visible: isRatingInputted,
+                    visible: Provider.of<CourseTakenViewModel>(context)
+                        .isRatingInputted,
                     child: SingleChildScrollView(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
@@ -128,6 +140,7 @@ class _ReviewDialogState extends State<ReviewDialog> {
                           ),
                           TextFormField(
                             maxLines: 3,
+                            controller: _notesController,
                             decoration: InputDecoration(
                               hintText: "Tulis Ulasan..",
                               hintStyle: GoogleFonts.poppins(
@@ -172,7 +185,59 @@ class _ReviewDialogState extends State<ReviewDialog> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () async {
+                        //get token
+                        PreferencesUtils preferencesUtils = PreferencesUtils();
+                        await preferencesUtils.init();
+
+                        String token =
+                            preferencesUtils.getPreferencesString('token') ??
+                                "";
+
+                        //send rating
+                        Provider.of<CourseTakenViewModel>(context,
+                                listen: false)
+                            .clearRating();
+                        String msg = await Provider.of<CourseTakenViewModel>(
+                                context,
+                                listen: false)
+                            .sendReview(
+                          token,
+                          widget.courseId,
+                          context.read<CourseTakenViewModel>().rating.toInt(),
+                          _notesController.text,
+                        );
+                        if (msg.contains('success')) {
+                          print(msg);
+                          Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Ulasanmu sudah kami rekam"),
+                            ),
+                          );
+                          Navigator.of(context).pushReplacement(
+                            PageRouteBuilder(
+                              pageBuilder:
+                                  (context, animations, secondaryAnimations) =>
+                                      const ModuleListScreen(),
+                              transitionsBuilder: (context, animations,
+                                  secondaryAnimations, childs) {
+                                final tween = Tween(begin: 0.0, end: 1.0);
+                                return FadeTransition(
+                                  opacity: animations.drive(tween),
+                                  child: childs,
+                                );
+                              },
+                            ),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Gagal mengirim ulasan."),
+                            ),
+                          );
+                        }
+                      },
                       child: Text(
                         "Kirim Ulasan",
                         style: GoogleFonts.poppins(
@@ -199,20 +264,11 @@ class _ReviewDialogState extends State<ReviewDialog> {
                         ),
                       ),
                       onPressed: () {
+                        Provider.of<CourseTakenViewModel>(context,
+                                listen: false)
+                            .clearRating();
                         Navigator.of(context).push(
-                          PageRouteBuilder(
-                            pageBuilder:
-                                (context, animations, secondaryAnimations) =>
-                                    const CourseTakenListScreen(),
-                            transitionsBuilder: (context, animations,
-                                secondaryAnimations, childs) {
-                              final tween = Tween(begin: 0.0, end: 1.0);
-                              return FadeTransition(
-                                opacity: animations.drive(tween),
-                                child: childs,
-                              );
-                            },
-                          ),
+                          FadeAnimation2(page: const CourseTakenListScreen()),
                         );
                       },
                       child: Text(

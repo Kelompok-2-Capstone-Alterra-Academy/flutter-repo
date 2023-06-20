@@ -4,7 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:staredu/utils/http/http_utils.dart';
 import 'package:staredu/views/screen/course/module/module_send_task_screen.dart';
 import 'package:staredu/views/view_model/course/module_view_model.dart';
+import 'package:staredu/widgets/course/review_dialog.dart';
 
+import '../../../../../utils/animation/slide_animation3.dart';
 import '../../../../../utils/color/color.dart';
 
 class ModuleDetailTask extends StatefulWidget {
@@ -14,7 +16,9 @@ class ModuleDetailTask extends StatefulWidget {
   final int? sectionId;
   final String? courseName;
   final String? sectionName;
-  final int? numbering;
+  final String? linkModule;
+  final String? description;
+  final bool isLastIndex;
 
   const ModuleDetailTask({
     super.key,
@@ -22,7 +26,9 @@ class ModuleDetailTask extends StatefulWidget {
     this.sectionId,
     this.courseName,
     this.sectionName,
-    this.numbering,
+    this.linkModule,
+    this.description,
+    required this.isLastIndex,
   });
 
   @override
@@ -34,29 +40,20 @@ class _ModuleDetailTaskState extends State<ModuleDetailTask> {
   late Future<String> fileType;
   late Future<int> fileSize;
   bool isLoading = false;
-  String fileUrl = 'https://web.wpi.edu/Images/CMS/Provost/landscape.pdf';
+  // String widget.linkModule.toString() = 'https://web.wpi.edu/Images/CMS/Provost/landscape.pdf';
 
   @override
   void initState() {
     super.initState();
-    fileName = getFileNameFromUrl(fileUrl);
-    //fileType = getFileType(fileUrl);
+    fileName = getFileNameFromUrl(widget.linkModule.toString());
+    //fileType = getFileType(widget.linkModule.toString());
     //print(fileType);
-    fileSize = getFileSize(fileUrl);
-    Provider.of<ModuleListViewModel>(context, listen: false).getSectionTask();
+    fileSize = getFileSize(widget.linkModule.toString());
   }
 
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-
-    final moduleViewModel =
-        Provider.of<ModuleListViewModel>(context, listen: false);
-    final sectionTask = moduleViewModel.detailTask
-        .where((detailTask) =>
-            detailTask.courseId == widget.courseId &&
-            detailTask.sectionId == widget.sectionId)
-        .toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -105,21 +102,28 @@ class _ModuleDetailTaskState extends State<ModuleDetailTask> {
                       const SizedBox(
                         height: 8,
                       ),
-                      // TODO : Cuma berfungsi di section pertama course taken pertama (?), gatau kenapa di yang lain ga mau, palingan courseid dan sectionid yang kurang tepat, menunggu api yang sudah jadi saja.
-                      ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: sectionTask.isEmpty ? 0 : 1,
-                        itemBuilder: (context, index) {
-                          return Text(
-                            sectionTask[index].deskripsi.toString(),
-                            style: GoogleFonts.poppins(
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 11,
-                            ),
-                          );
-                        },
+                      Text(
+                        widget.description.toString(),
+                        style: GoogleFonts.poppins(
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 11,
+                        ),
                       ),
+                      // ListView.builder(
+                      //   shrinkWrap: true,
+                      //   itemCount: sectionTask.isEmpty ? 0 : 1,
+                      //   itemBuilder: (context, index) {
+                      //     return Text(
+                      //       widget.description.toString(),
+                      //       style: GoogleFonts.poppins(
+                      //         fontStyle: FontStyle.normal,
+                      //         fontWeight: FontWeight.w400,
+                      //         fontSize: 11,
+                      //       ),
+                      //     );
+                      //   },
+                      // ),
                       Text(
                         "Kerjakan Tugas Matematika Dasar pada dokumen dibawah ini. Jawaban di tulis tangan kemudian diFoto/discan dan kemudian diupload dalam bentuk pdf Nama file (no induk_nama_jenis latihan)",
                         style: GoogleFonts.poppins(
@@ -137,7 +141,8 @@ class _ModuleDetailTaskState extends State<ModuleDetailTask> {
                             isLoading = !isLoading;
                           });
 
-                          await downloadFile(fileUrl, fileName);
+                          await downloadFile(
+                              widget.linkModule.toString(), fileName);
 
                           if (context.mounted) {
                             setState(() {
@@ -170,9 +175,9 @@ class _ModuleDetailTaskState extends State<ModuleDetailTask> {
                           width: 200,
                           child: Column(
                             children: [
-                              const Row(
+                              Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
+                                children: const [
                                   Image(
                                     image: AssetImage(
                                         'assets/images/file_dot.png'),
@@ -302,21 +307,19 @@ class _ModuleDetailTaskState extends State<ModuleDetailTask> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.of(context).push(
-                            PageRouteBuilder(
-                              pageBuilder:
-                                  (context, animations, secondaryAnimations) =>
-                                      const ModuleSendTaskScreen(),
-                              transitionsBuilder: (context, animations,
-                                  secondaryAnimations, childs) {
-                                final tween = Tween(begin: 0.0, end: 1.0);
-                                return FadeTransition(
-                                  opacity: animations.drive(tween),
-                                  child: childs,
-                                );
-                              },
-                            ),
-                          );
+                          if (widget.isLastIndex) {
+                            Navigator.of(context).push(SlideAnimation3(
+                                page: ModuleSendTaskScreen(
+                              courseId: widget.courseId!,
+                              isLastIndex: widget.isLastIndex,
+                            )));
+                          } else {
+                            Navigator.of(context).push(SlideAnimation3(
+                                page: ModuleSendTaskScreen(
+                              isLastIndex: false,
+                              courseId: widget.courseId!,
+                            )));
+                          }
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(12),

@@ -20,17 +20,13 @@ class _ModuleListQuizScreenState extends State<ModuleListQuizScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<ModuleListViewModel>(context, listen: false).getQuiz();
-    Provider.of<ModuleListViewModel>(context, listen: false).getModuleList();
   }
 
   @override
   Widget build(BuildContext context) {
     final moduleViewModel =
         Provider.of<ModuleListViewModel>(context, listen: false);
-    final List quizList = moduleViewModel.moduleList
-        .where((moduleList) => moduleList.quiz == true)
-        .toList();
+    // final List quizList = moduleViewModel.courseQuiz;
     final double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -82,13 +78,30 @@ class _ModuleListQuizScreenState extends State<ModuleListQuizScreen> {
                   return ListView.separated(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: quizList.length,
-                    itemBuilder: (context, index) {
-                      return ModuleQuizCard(
-                        id: quizList[index].id!.toInt(),
-                        isQuizAvailable: quizList[index].quiz,
-                        title: quizList[index].title!.toString(),
-                        numbering: index.toString(),
+                    itemCount: moduleViewModel.courseQuiz.length,
+                    itemBuilder: (context, firstIndex) {
+                      return ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: moduleViewModel
+                            .courseQuiz[firstIndex].module!.length,
+                        itemBuilder: (context, secondIndex) {
+                          return ModuleQuizCard(
+                            id: moduleViewModel
+                                .courseModule[firstIndex].courseId,
+                            isQuizAvailable: moduleViewModel
+                                    .courseQuiz[firstIndex]
+                                    .module![secondIndex]
+                                    .attachment!
+                                    .type!
+                                    .contains('quiz')
+                                ? true
+                                : false,
+                            title: moduleViewModel
+                                .courseQuiz[firstIndex].sectionName,
+                            numbering: (secondIndex + 1).toString(),
+                          );
+                        },
                       );
                     },
                     separatorBuilder: (BuildContext context, int index) {

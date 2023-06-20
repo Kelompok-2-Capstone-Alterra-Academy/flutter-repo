@@ -19,11 +19,15 @@ class _TaskListScreenState extends State<TaskListScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<ModuleListViewModel>(context, listen: false).getSectionTask();
   }
 
   @override
   Widget build(BuildContext context) {
+    final moduleViewModel =
+        Provider.of<ModuleListViewModel>(context, listen: false);
+    final List taskList = moduleViewModel.moduleList
+        .where((moduleList) => moduleList.assignment == true)
+        .toList();
     final double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
@@ -58,22 +62,31 @@ class _TaskListScreenState extends State<TaskListScreen> {
               const SizedBox(
                 height: 12,
               ),
-              ListView.separated(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemBuilder: (context, indexCourse) {
-                    return ListView.separated(
+              Consumer<ModuleListViewModel>(
+                builder: (context, value, child) {
+                  return ListView.separated(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: moduleList.length,
-                      itemBuilder: (context, indexSection) {
-                        String? courseName = courseTaken[indexCourse].title;
-                        return ModuleTaskCard(
-                          courseName: courseName,
-                          sectionName: moduleList[indexSection].title,
-                          sectionNumbering: indexSection.toInt(),
-                          isAssignmentAvailable:
-                              moduleList[indexSection].assignment,
+                      itemBuilder: (context, indexCourse) {
+                        return ListView.separated(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: taskList.length,
+                          itemBuilder: (context, indexSection) {
+                            String? courseName = courseTaken[indexCourse].title;
+                            return ModuleTaskCard(
+                              courseName: courseName,
+                              sectionName: taskList[indexSection].title,
+                              sectionNumbering: indexSection.toInt(),
+                              isAssignmentAvailable:
+                                  taskList[indexSection].assignment,
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return const SizedBox(
+                              height: 2,
+                            );
+                          },
                         );
                       },
                       separatorBuilder: (BuildContext context, int index) {
@@ -81,14 +94,9 @@ class _TaskListScreenState extends State<TaskListScreen> {
                           height: 2,
                         );
                       },
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(
-                      height: 2,
-                    );
-                  },
-                  itemCount: courseTaken.length)
+                      itemCount: courseTaken.length);
+                },
+              )
             ],
           ),
         ),

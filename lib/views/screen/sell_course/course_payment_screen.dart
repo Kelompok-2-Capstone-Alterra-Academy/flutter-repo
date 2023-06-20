@@ -1,27 +1,72 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:staredu/utils/constant/sell_course_list.dart';
-import 'package:staredu/views/screen/course/course_taken_list_screen.dart';
-import 'package:staredu/views/screen/history/history_transaction_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:staredu/utils/animation/slide_animation2.dart';
+import 'package:staredu/views/screen/sell_course/course_voucher_screen.dart';
+import 'package:staredu/views/screen/sell_course/payment_webview.dart';
+import 'package:staredu/views/view_model/sell_course/course_payment_view_model.dart';
 import '../../../utils/color/color.dart';
+import '../../../utils/preferences/preferences_utils.dart';
+import '../../../utils/state/my_state.dart';
 import '../../../widgets/sell_course/detail_payment.dart';
 
 class CoursePaymentScreen extends StatefulWidget {
   static const String routeName = "/course_payment";
 
+  final int courseId;
   final String title;
   final String price;
+  final String liveSession;
 
   const CoursePaymentScreen(
-      {super.key, required this.title, required this.price});
+      {super.key,
+      required this.title,
+      required this.price,
+      required this.liveSession,
+      required this.courseId});
 
   @override
   State<CoursePaymentScreen> createState() => _CoursePaymentScreenState();
 }
 
 class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
+  late PreferencesUtils preferencesUtils;
+  double totalBayar = 0;
+  bool promoUse = false;
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  void init() async {
+    preferencesUtils = PreferencesUtils();
+    await preferencesUtils.init();
+    String? token = preferencesUtils.getPreferencesString('token');
+
+    if (context.mounted) {
+      Provider.of<CoursePaymentViewModel>(context, listen: false)
+          .setToken(token!);
+    }
+    setState(() {
+      totalBayar = double.parse(widget.price);
+    });
+  }
+
+  void discount(double discount) {
+    if (promoUse == false) {
+      setState(() {
+        totalBayar = (totalBayar / discount) + 500;
+        promoUse = true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    Provider.of<CoursePaymentViewModel>(context, listen: false);
+
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
@@ -84,43 +129,53 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                         subtitle: "10 Section",
                       ),
                       const SizedBox(height: 15),
-                      const DetailKursus(
+                      DetailKursus(
                         icon: Icons.laptop,
                         title: "Live Session",
-                        subtitle: "3x Seminggu",
+                        subtitle: widget.liveSession,
                       ),
                     ],
                   ),
                 ),
               ),
               const SizedBox(height: 12),
-              Container(
-                width: screenWidth,
-                height: 52,
-                decoration: const BoxDecoration(
-                  color: searchBarColor,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(8),
+              InkWell(
+                onTap: () {
+                  Navigator.push(context,
+                      SlideAnimation2(page: const CourseVoucherScreen()));
+                  discount(2);
+                },
+                child: Container(
+                  width: screenWidth,
+                  height: 52,
+                  decoration: BoxDecoration(
+                    color: promoUse ? lightGreenColor : searchBarColor,
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(8),
+                    ),
                   ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(17.0),
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.verified_outlined,
-                        color: searchBarTextColor,
-                        size: 18,
-                      ),
-                      const SizedBox(width: 11),
-                      Text(
-                        "Gunakan Vouchermu Sekarang!",
-                        style: GoogleFonts.poppins(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w500,
-                            color: searchBarTextColor),
-                      ),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.all(17.0),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.verified_outlined,
+                          color: promoUse ? successColor : searchBarTextColor,
+                          size: 18,
+                        ),
+                        const SizedBox(width: 11),
+                        Text(
+                          promoUse
+                              ? "Voucher Promo Belajar Berhasil Terpakai"
+                              : "Gunakan Vouchermu Sekarang!",
+                          style: GoogleFonts.poppins(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w500,
+                              color:
+                                  promoUse ? blackColor : searchBarTextColor),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -165,7 +220,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                                 color: greyColor2),
                           ),
                           Text(
-                            "Rp. 750.000",
+                            totalBayar.toString(),
                             style: GoogleFonts.poppins(
                               fontSize: 11,
                               fontWeight: FontWeight.w500,
@@ -178,173 +233,171 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                 ),
               ),
               SizedBox(height: screenHeight * 0.25),
-              Container(
-                height: 42,
-                width: screenWidth,
-                decoration: const BoxDecoration(
-                  color: primaryColor,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(8),
+              Consumer<CoursePaymentViewModel>(builder: (context, value, _) {
+                return Container(
+                  height: 42,
+                  width: screenWidth,
+                  decoration: const BoxDecoration(
+                    color: primaryColor,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(8),
+                    ),
                   ),
-                ),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          shape: const RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(16))),
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const SizedBox(height: 50),
-                              SizedBox(
-                                child: Image.asset(
-                                    "assets/images/new_course_popup.png"),
-                              ),
-                              const SizedBox(height: 24),
-                              Text(
-                                "Yeay, Kamu Punya Kursus Baru!",
-                                style: GoogleFonts.poppins(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
-                                    color: blackColor),
-                              ),
-                              const SizedBox(height: 12),
-                              Text(
-                                textAlign: TextAlign.center,
-                                "Pembayaran kamu sukses dan kamu bisa segera memulai pembelajaran",
-                                style: GoogleFonts.poppins(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w400,
-                                    color: blackColor),
-                              ),
-                              const SizedBox(height: 12),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () async {
+                        value.stateSet(MyState.loading);
+                        String message = await value.payment(
+                          int.parse(widget.price),
+                          widget.courseId.toString(),
+                          int.parse(widget.price),
+                          value.tokens!,
+                        );
 
-                              //Button Lihat Modul
-                              Container(
-                                height: 42,
-                                width: screenWidth,
-                                decoration: const BoxDecoration(
-                                  color: primaryColor,
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(8),
-                                  ),
-                                ),
-                                child: Material(
-                                  color: Colors.transparent,
-                                  child: InkWell(
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                        PageRouteBuilder(
-                                          pageBuilder: (context, animations,
-                                                  secondaryAnimations) =>
-                                              const CourseTakenListScreen(),
-                                          transitionsBuilder: (context,
-                                              animations,
-                                              secondaryAnimations,
-                                              childs) {
-                                            final tween =
-                                                Tween(begin: 0.0, end: 1.0);
-                                            return FadeTransition(
-                                              opacity: animations.drive(tween),
-                                              child: childs,
-                                            );
-                                          },
-                                        ),
-                                      );
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 10, right: 12),
-                                      child: Center(
-                                        child: Text(
-                                          "Lihat Modul",
-                                          style: GoogleFonts.poppins(
-                                              color: whiteColor,
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                        if (message.contains('success')) {
+                          // ignore: use_build_context_synchronously
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PaymentWebview(
+                                url: value.response["redirectURL"],
                               ),
-                              const SizedBox(height: 10),
+                            ),
+                            (route) => route.isFirst,
+                          );
+                        } else {
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(message),
+                            ));
+                          }
+                        }
 
-                              //Button Riwayat Transaksi
-                              Container(
-                                height: 42,
-                                width: screenWidth,
-                                decoration: BoxDecoration(
-                                  color: whiteColor,
-                                  border: Border.all(color: primaryColor),
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(8),
-                                  ),
-                                ),
-                                child: Material(
-                                  color: Colors.transparent,
-                                  child: InkWell(
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                        PageRouteBuilder(
-                                          pageBuilder: (context, animations,
-                                                  secondaryAnimations) =>
-                                              const HistoryTransactionScreen(),
-                                          transitionsBuilder: (context,
-                                              animations,
-                                              secondaryAnimations,
-                                              childs) {
-                                            final tween =
-                                                Tween(begin: 0.0, end: 1.0);
-                                            return FadeTransition(
-                                              opacity: animations.drive(tween),
-                                              child: childs,
-                                            );
-                                          },
-                                        ),
-                                      );
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 10, right: 12),
-                                      child: Center(
-                                        child: Text(
-                                          "Riwayat Transaksi",
-                                          style: GoogleFonts.poppins(
-                                              color: primaryColor,
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
+                        // showDialog(
+                        //   context: context,
+                        //   builder: (context) => AlertDialog(
+                        //     shape: const RoundedRectangleBorder(
+                        //         borderRadius:
+                        //             BorderRadius.all(Radius.circular(16))),
+                        //     content: Column(
+                        //       mainAxisSize: MainAxisSize.min,
+                        //       children: [
+                        //         const SizedBox(height: 50),
+                        //         SizedBox(
+                        //           child: Image.asset(
+                        //               "assets/images/new_course_popup.png"),
+                        //         ),
+                        //         const SizedBox(height: 24),
+                        //         Text(
+                        //           "Yeay, Kamu Punya Kursus Baru!",
+                        //           style: GoogleFonts.poppins(
+                        //               fontSize: 15,
+                        //               fontWeight: FontWeight.w600,
+                        //               color: blackColor),
+                        //         ),
+                        //         const SizedBox(height: 12),
+                        //         Text(
+                        //           textAlign: TextAlign.center,
+                        //           "Pembayaran kamu sukses dan kamu bisa segera memulai pembelajaran",
+                        //           style: GoogleFonts.poppins(
+                        //               fontSize: 11,
+                        //               fontWeight: FontWeight.w400,
+                        //               color: blackColor),
+                        //         ),
+                        //         const SizedBox(height: 12),
+
+                        //         //Button Lihat Modul
+                        //         Container(
+                        //           height: 42,
+                        //           width: screenWidth,
+                        //           decoration: const BoxDecoration(
+                        //             color: primaryColor,
+                        //             borderRadius: BorderRadius.all(
+                        //               Radius.circular(8),
+                        //             ),
+                        //           ),
+                        //           child: Material(
+                        //             color: Colors.transparent,
+                        //             child: InkWell(
+                        //               onTap: () {
+                        //                 Navigator.of(context).push(FadeAnimation2(
+                        //                     page: const CourseTakenListScreen()));
+                        //               },
+                        //               child: Padding(
+                        //                 padding: const EdgeInsets.only(
+                        //                     left: 10, right: 12),
+                        //                 child: Center(
+                        //                   child: Text(
+                        //                     "Lihat Modul",
+                        //                     style: GoogleFonts.poppins(
+                        //                         color: whiteColor,
+                        //                         fontSize: 13,
+                        //                         fontWeight: FontWeight.w600),
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //           ),
+                        //         ),
+                        //         const SizedBox(height: 10),
+
+                        //         //Button Riwayat Transaksi
+                        //         Container(
+                        //           height: 42,
+                        //           width: screenWidth,
+                        //           decoration: BoxDecoration(
+                        //             color: whiteColor,
+                        //             border: Border.all(color: primaryColor),
+                        //             borderRadius: const BorderRadius.all(
+                        //               Radius.circular(8),
+                        //             ),
+                        //           ),
+                        //           child: Material(
+                        //             color: Colors.transparent,
+                        //             child: InkWell(
+                        //               onTap: () {
+                        //                 Navigator.of(context).push(FadeAnimation2(
+                        //                     page:
+                        //                         const HistoryTransactionScreen()));
+                        //               },
+                        //               child: Padding(
+                        //                 padding: const EdgeInsets.only(
+                        //                     left: 10, right: 12),
+                        //                 child: Center(
+                        //                   child: Text(
+                        //                     "Riwayat Transaksi",
+                        //                     style: GoogleFonts.poppins(
+                        //                         color: primaryColor,
+                        //                         fontSize: 13,
+                        //                         fontWeight: FontWeight.w600),
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //           ),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   ),
+                        // );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10, right: 12),
+                        child: Center(
+                          child: Text(
+                            "Checkout",
+                            style: GoogleFonts.poppins(
+                                color: whiteColor,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600),
                           ),
-                        ),
-                      );
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 12),
-                      child: Center(
-                        child: Text(
-                          "Checkout",
-                          style: GoogleFonts.poppins(
-                              color: whiteColor,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ),
+                );
+              }),
             ],
           ),
         ),
