@@ -13,7 +13,8 @@ import 'package:staredu/widgets/bottom_navigation_bar/bottom_navigation_bar_view
 import '../../utils/animation/fade_animation2.dart';
 
 class BottomNavigationBarComponent extends StatefulWidget {
-  const BottomNavigationBarComponent({super.key});
+  int? indexDefined;
+  BottomNavigationBarComponent({this.indexDefined});
 
   @override
   State<BottomNavigationBarComponent> createState() =>
@@ -86,7 +87,7 @@ class _BottomNavigationBarComponentState
             child: Consumer<BottomNavigationBarComponentViewModel>(
                 builder: (context, model, child) {
               return BottomNavigationBar(
-                currentIndex: model.currentIndex,
+                currentIndex: widget.indexDefined ?? model.currentIndex,
                 backgroundColor: whiteColor,
                 type: BottomNavigationBarType.fixed,
                 onTap: (index) {

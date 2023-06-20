@@ -139,8 +139,11 @@ class _ProfileState extends State<Profile> {
                             title: 'Edit Profile',
                             icon: Icons.person_outline,
                             press: () {
-                              Navigator.push(context,
-                                  SlideAnimation(page: const EditProfile(), arguments: user));
+                              Navigator.push(
+                                  context,
+                                  SlideAnimation(
+                                      page: const EditProfile(),
+                                      arguments: user));
                             });
                       },
                     ),
@@ -217,6 +220,8 @@ class _ProfileState extends State<Profile> {
             ],
           ),
         ),
-        bottomNavigationBar: const BottomNavigationBarComponent());
+        bottomNavigationBar: BottomNavigationBarComponent(
+          indexDefined: 4,
+        ));
   }
 }

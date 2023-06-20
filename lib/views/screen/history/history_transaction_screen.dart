@@ -259,6 +259,6 @@ class _HistoryTransactionScreenState extends State<HistoryTransactionScreen> {
             ],
           ),
         ),
-        bottomNavigationBar: const BottomNavigationBarComponent());
+        bottomNavigationBar: BottomNavigationBarComponent());
   }
 }
