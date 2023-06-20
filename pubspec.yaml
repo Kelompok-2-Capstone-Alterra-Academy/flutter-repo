@@ -57,6 +57,7 @@ dependencies:
   permission_handler: ^9.2.0
   flutter_downloader: ^1.10.4
   pdf_thumbnail: ^0.1.5+1
+  jwt_decoder: ^2.0.1
 
 dev_dependencies:
   flutter_test:

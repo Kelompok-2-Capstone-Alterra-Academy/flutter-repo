@@ -63,13 +63,20 @@ class AuthAPI {
 
   static Future<dynamic> resetPassword(
     String token,
+    String otp,
     String password,
   ) async {
     final response = Dio().post(
-      '$BASE_URL_API/reset-password',
+      '$BASE_URL_API/students/new-password',
+      options: Options(
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      ),
       data: {
-        'token': token,
+        'token': otp,
         'password': password,
+        'repassword': password,
       },
     );
     return response
