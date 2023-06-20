@@ -130,8 +130,13 @@ class CourseAPI {
         .catchError((e) => handleErrorApi(e));
   }
 
-  Future<dynamic> sendReview(String courseId, String rating, String notes) {
-    final response = Dio().post("$BASE_URL_API/students/rate-course", data: {
+  Future<dynamic> sendReview(
+      String token, int courseId, int rating, String notes) {
+    final Dio dio = Dio();
+
+    dio.options.headers['Authorization'] = 'Bearer $token';
+
+    final response = dio.post("$BASE_URL_API/students/rate-course", data: {
       'course_id': courseId,
       'rating': rating,
       'comment': notes,

@@ -125,17 +125,18 @@ class CourseTakenViewModel with ChangeNotifier {
   }
 
   Future<String> sendReview(
-      String courseId, String rating, String notes) async {
+      String token, int courseId, int rating, String notes) async {
     setState(MyState.loading);
 
     try {
-      await courseApi.sendReview(
+      response = await courseApi.sendReview(
+        token,
         courseId,
         rating,
         notes,
       );
       setState(MyState.success);
-      return 'success';
+      return 'success $response';
     } catch (e) {
       setState(MyState.failed);
       return 'failed';

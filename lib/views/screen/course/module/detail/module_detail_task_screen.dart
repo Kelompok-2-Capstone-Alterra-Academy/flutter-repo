@@ -310,14 +310,14 @@ class _ModuleDetailTaskState extends State<ModuleDetailTask> {
                           if (widget.isLastIndex) {
                             Navigator.of(context).push(SlideAnimation3(
                                 page: ModuleSendTaskScreen(
-                              courseId: widget.courseId.toString(),
+                              courseId: widget.courseId!,
                               isLastIndex: widget.isLastIndex,
                             )));
                           } else {
                             Navigator.of(context).push(SlideAnimation3(
                                 page: ModuleSendTaskScreen(
                               isLastIndex: false,
-                              courseId: widget.courseId.toString(),
+                              courseId: widget.courseId!,
                             )));
                           }
                         },

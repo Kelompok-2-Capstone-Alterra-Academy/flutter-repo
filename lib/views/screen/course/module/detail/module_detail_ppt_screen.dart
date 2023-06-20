@@ -137,7 +137,7 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                                       showDialog(
                                         context: context,
                                         builder: (context) => ReviewDialog(
-                                          courseId: widget.courseId.toString(),
+                                          courseId: widget.courseId!,
                                         ),
                                       );
                                     } else {
@@ -262,7 +262,7 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                                     showDialog(
                                       context: context,
                                       builder: (context) => ReviewDialog(
-                                        courseId: widget.courseId.toString(),
+                                        courseId: widget.courseId!,
                                       ),
                                     );
                                   } else {

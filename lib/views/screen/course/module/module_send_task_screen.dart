@@ -16,7 +16,7 @@ import 'package:staredu/widgets/module_course/module_send_task_done_dialog.dart'
 class ModuleSendTaskScreen extends StatefulWidget {
   static const String routeName = "/sendtask";
   final bool isLastIndex;
-  final String courseId;
+  final int courseId;
   const ModuleSendTaskScreen({
     super.key,
     required this.isLastIndex,
@@ -147,8 +147,6 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
                                     'pdf',
                                     'doc',
                                     'docx',
-                                    'jpg',
-                                    'jpeg',
                                   ],
                                 );
 
