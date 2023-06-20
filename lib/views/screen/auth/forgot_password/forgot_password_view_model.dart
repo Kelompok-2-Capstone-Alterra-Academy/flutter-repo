@@ -31,9 +31,6 @@ class ForgotPasswordViewModel extends ChangeNotifier {
 
   Future<String> verifyOtp(String email, String otp) async {
     response = await AuthAPI.verifyOtp(email, otp);
-    print(email);
-    print(otp);
-    print(response);
 
     if (response == null) {
       setStateOtp(MyState.failed);
@@ -52,9 +49,6 @@ class ForgotPasswordViewModel extends ChangeNotifier {
   Future<String> resetPassword(
       String token, String otp, String password) async {
     response = await AuthAPI.resetPassword(token, otp, password);
-    print(token);
-    print(password);
-    print(response);
 
     if (response == null) {
       setStateResetPassword(MyState.failed);

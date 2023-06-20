@@ -262,6 +262,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         )),
-        bottomNavigationBar: const BottomNavigationBarComponent());
+        bottomNavigationBar: BottomNavigationBarComponent(
+          indexDefined: 0,
+        ));
   }
 }
