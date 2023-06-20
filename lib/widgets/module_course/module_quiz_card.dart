@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:staredu/models/quiz_model.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/views/screen/course/module/detail/module_quiz_detail_screen.dart';
 
@@ -29,7 +30,9 @@ class ModuleQuizCard extends StatelessWidget {
                   Navigator.of(context).push(
                     PageRouteBuilder(
                       pageBuilder: (context, animations, secondaryAnimations) =>
-                          const ModuleQuizDetailScreen(),
+                          ModuleQuizDetailScreen(
+                        quizDetail: QuizDetailModel(),
+                      ),
                       transitionsBuilder:
                           (context, animations, secondaryAnimations, childs) {
                         final tween = Tween(begin: 0.0, end: 1.0);
