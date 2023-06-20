@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:staredu/utils/constant/mentor_list.dart';
 import 'package:staredu/views/view_model/mentor/mentor_view_model.dart';
-
-import '../../../models/mentor_model.dart';
 import '../../../utils/color/color.dart';
+import '../../../utils/preferences/preferences_utils.dart';
 import '../../../utils/state/my_state.dart';
 import '../../../widgets/bottom_navigation_bar/bottom_navigation_bar.dart';
 
@@ -18,17 +16,22 @@ class SearchChatScreen extends StatefulWidget {
 }
 
 class _SearchChatScreenState extends State<SearchChatScreen> {
+  late PreferencesUtils preferencesUtils;
+
   @override
   void initState() {
-    Future.delayed(
-      Duration.zero,
-      () {
-        final provider = Provider.of<MentorViewModel>(context, listen: false);
-
-        provider.getAllMentor();
-      },
-    );
     super.initState();
+    init();
+  }
+
+  void init() async {
+    preferencesUtils = PreferencesUtils();
+    await preferencesUtils.init();
+    String? token = preferencesUtils.getPreferencesString('token');
+
+    if (context.mounted) {
+      Provider.of<MentorViewModel>(context, listen: false).getAllMentor(token!);
+    }
   }
 
   @override
@@ -119,7 +122,15 @@ class _SearchChatScreenState extends State<SearchChatScreen> {
                     ? ListView.builder(
                         itemCount: value.findMentor.length,
                         itemBuilder: (context, index) => ListTile(
-                          leading: Image.asset(value.findMentor[index].pic!),
+                          leading: Image.asset(
+                            value.mentorList[index].profile!
+                                        .contains('noimage') ||
+                                    value.mentorList[index].profile!.length >
+                                        20 ||
+                                    value.mentorList[index].profile!.isEmpty
+                                ? "assets/images/mentor_pic.png"
+                                : "assets/images/${value.mentorList[index].profile!}",
+                          ),
                           title: Text(
                             value.findMentor[index].name!,
                             style: GoogleFonts.poppins(
@@ -137,7 +148,7 @@ class _SearchChatScreenState extends State<SearchChatScreen> {
                                 ),
                               ),
                               child: Text(
-                                value.findMentor[index].subject!,
+                                value.findMentor[index].mentorModelClass!,
                                 style: GoogleFonts.poppins(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w600,
@@ -148,7 +159,14 @@ class _SearchChatScreenState extends State<SearchChatScreen> {
                           ),
                           trailing: SizedBox(
                             child: InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                value.launchWhatsapp(
+                                  context,
+                                  value.mentorList[index].phoneNumber!.isEmpty
+                                      ? "0895848484848"
+                                      : value.mentorList[index].phoneNumber!,
+                                );
+                              },
                               child: Image.asset(
                                   'assets/images/whatsapp_icon.png'),
                             ),
