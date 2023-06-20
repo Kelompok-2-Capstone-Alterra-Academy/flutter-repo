@@ -1,5 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:staredu/models/course_taken_model.dart';
 import 'package:staredu/models/type_course.dart';
+import 'package:staredu/utils/constant/constant.dart';
+import 'package:staredu/utils/constant/helper.dart';
 import 'package:staredu/utils/constant/list_course_taken.dart';
 
 class CourseAPI {
@@ -17,13 +20,17 @@ class CourseAPI {
     return data;
   }
 
-  Future<List<CourseTakenModel>> getCourseTaken() async {
-    // final response = await Dio().get();
+  Future<dynamic> getCourseTaken(String token) async {
+    final Dio dio = Dio();
 
-    // return response
-    //     .then((value) => value.data)
-    //     .catchError((e) => handleErrorApi(e));
-    return courseTaken;
+    dio.options.headers['Authorization'] = 'Bearer $token';
+
+    final response =
+        dio.get("http://3.26.234.145:8081/students/courses/status");
+
+    return response
+        .then((value) => value.data)
+        .catchError((e) => handleErrorApi(e));
   }
 
   Future<dynamic> sendTask() async {
