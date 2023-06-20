@@ -30,3 +30,36 @@ class DetailVideoModel {
     };
   }
 }
+
+class DetailTaskModel {
+  final String? deskripsi;
+  final int? id;
+  final int? sectionId;
+  final int? courseId;
+
+  DetailTaskModel({
+    this.deskripsi,
+    this.id,
+    this.sectionId,
+    this.courseId,
+  });
+
+  DetailTaskModel.fromJson(Map<String, dynamic> json, this.deskripsi, this.id,
+      this.sectionId, this.courseId) {
+    DetailTaskModel(
+      deskripsi: json['deskripsi'],
+      id: json['id'],
+      sectionId: json['sectionId'],
+      courseId: json['courseId'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'deskripsi': deskripsi,
+      'id': id,
+      'sectionId': sectionId,
+      'courseId': courseId,
+    };
+  }
+}
