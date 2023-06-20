@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/constant/module_list.dart';
 // import 'package:staredu/utils/constant/module_list.dart';
-import 'package:staredu/views/view_model/course/module_list_view_model.dart';
+import 'package:staredu/views/view_model/course/module_view_model.dart';
 import 'package:staredu/widgets/course/course_certificate.dart';
 import 'package:staredu/widgets/module_course/module_button.dart';
 import 'package:staredu/widgets/module_course/module_section_card.dart';
@@ -136,6 +136,7 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                             itemBuilder: (context, index) {
                               return ModuleSectionCard(
                                 id: filteredModuleList[index].id,
+                                sectionId: filteredModuleList[index].id,
                                 sectionName: filteredModuleList[index].title,
                                 courseName: widget.courseName.toString(),
                                 isVideoAvailable:
