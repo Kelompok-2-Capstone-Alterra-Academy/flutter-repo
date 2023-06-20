@@ -85,7 +85,7 @@ class StarEdu extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.white,
       ),
-      initialRoute: ModulDetailPPTScreen.routeName,
+      initialRoute: SplashWelcomeScreen.routeName,
       routes: {
         HomeScreen.routeName: (context) => const HomeScreen(),
         SplashWelcomeScreen.routeName: (context) => const SplashWelcomeScreen(),
@@ -101,8 +101,8 @@ class StarEdu extends StatelessWidget {
         ModuleListQuizScreen.routeName: (context) =>
             const ModuleListQuizScreen(),
         ModuleVideoScreen.routeName: (context) => const ModuleVideoScreen(),
-        ModulDetailPPTScreen.routeName: (context) =>
-            const ModulDetailPPTScreen(),
+        // ModulDetailPPTScreen.routeName: (context) =>
+        //     const ModulDetailPPTScreen(),
         ForgotPasswordScreen.routeName: (context) =>
             const ForgotPasswordScreen(),
         OtpVerificationScreen.routeName: (context) =>

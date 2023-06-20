@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:staredu/models/ppt_model.dart';
 import 'package:staredu/widgets/course/review_dialog.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -7,7 +8,11 @@ import '../../../../../utils/color/color.dart';
 
 class ModulDetailPPTScreen extends StatefulWidget {
   static const String routeName = "/moduledetailppt";
-  const ModulDetailPPTScreen({super.key});
+  final PPTDetailModel pptDetailModel;
+  const ModulDetailPPTScreen({
+    super.key,
+    required this.pptDetailModel,
+  });
 
   @override
   State<ModulDetailPPTScreen> createState() => _ModulDetailPPTScreenState();
@@ -23,7 +28,7 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..enableZoom(true)
       ..loadRequest(
-        Uri.parse(
+        Uri.parse(widget.pptDetailModel.url ??
             'https://docs.google.com/presentation/d/e/2PACX-1vRRDKMvy3-fmD-y2qmVI5FrSpgRSEA8NPwSBJWfyx9Nku7hRgKnnyVnTxdsJRikQlVRySqQ0OlHxnkX/embed?frameborder&amp;usp=embed_googleplus'),
       );
   }
@@ -78,7 +83,8 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Text(
-                            "Matematika Dasar - Fungsi Trigonometri",
+                            widget.pptDetailModel.lesson ??
+                                "Matematika Dasar - Fungsi Trigonometri",
                             style: GoogleFonts.poppins(
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w600,
@@ -90,7 +96,8 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16, vertical: 8),
                           child: Text(
-                            "Mengenal Fungsi Trigonometri",
+                            widget.pptDetailModel.lessonDescription ??
+                                "Mengenal Fungsi Trigonometri",
                             style: GoogleFonts.poppins(
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w400,
@@ -171,7 +178,7 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                         color: primaryColor,
                         child: WebViewWidget(controller: controller),
                       ),
-                      Container(
+                      SizedBox(
                         height: MediaQuery.of(context).size.height -
                             353 -
                             AppBar().preferredSize.height,
