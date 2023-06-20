@@ -125,11 +125,11 @@ class _ModuleQuizDetailScreenState extends State<ModuleQuizDetailScreen> {
                         await preferencesUtils.init();
                         //get current section
                         int currentSection = preferencesUtils.getPreferencesInt(
-                                'total_section_course_${widget.courseId}') ??
+                                'current_section_course_${widget.courseId}') ??
                             0;
                         //increment the current section value
                         preferencesUtils.savePreferencesInt(
-                          'total_section_course_${widget.courseId}',
+                          'current_section_course_${widget.courseId}',
                           currentSection++,
                         );
                         if (context.mounted) {
@@ -145,11 +145,11 @@ class _ModuleQuizDetailScreenState extends State<ModuleQuizDetailScreen> {
                         await preferencesUtils.init();
                         //get current section
                         int currentSection = preferencesUtils.getPreferencesInt(
-                                'total_section_course_${widget.courseId}') ??
+                                'current_section_course_${widget.courseId}') ??
                             0;
                         //increment the current section value
                         preferencesUtils.savePreferencesInt(
-                          'total_section_course_${widget.courseId}',
+                          'current_section_course_${widget.courseId}',
                           currentSection++,
                         );
                         if (context.mounted) {

@@ -269,11 +269,11 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
                                 //get current section
                                 int currentSection =
                                     preferencesUtils.getPreferencesInt(
-                                            'total_section_course_${widget.courseId}') ??
+                                            'current_section_course_${widget.courseId}') ??
                                         0;
                                 //increment the current section value
                                 preferencesUtils.savePreferencesInt(
-                                  'total_section_course_${widget.courseId}',
+                                  'current_section_course_${widget.courseId}',
                                   currentSection++,
                                 );
                                 if (context.mounted) {
@@ -288,11 +288,11 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
                                 //get current section
                                 int currentSection =
                                     preferencesUtils.getPreferencesInt(
-                                            'total_section_course_${widget.courseId}') ??
+                                            'current_section_course_${widget.courseId}') ??
                                         0;
                                 //increment the current section value
                                 preferencesUtils.savePreferencesInt(
-                                  'total_section_course_${widget.courseId}',
+                                  'current_section_course_${widget.courseId}',
                                   currentSection++,
                                 );
                                 showDialog(
