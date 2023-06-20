@@ -25,6 +25,12 @@ class _AccountVerificationState extends State<AccountVerification> {
   final TextEditingController _otpController2 = TextEditingController();
   final TextEditingController _otpController3 = TextEditingController();
   final TextEditingController _otpController4 = TextEditingController();
+
+  final FocusNode _otpFocus1 = FocusNode();
+  final FocusNode _otpFocus2 = FocusNode();
+  final FocusNode _otpFocus3 = FocusNode();
+  final FocusNode _otpFocus4 = FocusNode();
+
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   late PreferencesUtils preferencesUtils;
   int _start = 60;
@@ -49,6 +55,10 @@ class _AccountVerificationState extends State<AccountVerification> {
     _otpController2.dispose();
     _otpController3.dispose();
     _otpController4.dispose();
+    _otpFocus1.dispose();
+    _otpFocus2.dispose();
+    _otpFocus3.dispose();
+    _otpFocus4.dispose();
     super.dispose();
   }
 
@@ -160,6 +170,13 @@ class _AccountVerificationState extends State<AccountVerification> {
                               width: 60,
                               child: TextFormField(
                                 maxLength: 1,
+                                focusNode: _otpFocus1,
+                                onChanged: (value) {
+                                  if (value.length == 1) {
+                                    FocusScope.of(context)
+                                        .requestFocus(_otpFocus2);
+                                  }
+                                },
                                 buildCounter: (BuildContext context,
                                         {int? currentLength,
                                         int? maxLength,
@@ -187,6 +204,13 @@ class _AccountVerificationState extends State<AccountVerification> {
                               width: 60,
                               child: TextFormField(
                                 maxLength: 1,
+                                focusNode: _otpFocus2,
+                                onChanged: (value) {
+                                  if (value.length == 1) {
+                                    FocusScope.of(context)
+                                        .requestFocus(_otpFocus3);
+                                  }
+                                },
                                 buildCounter: (BuildContext context,
                                         {int? currentLength,
                                         int? maxLength,
@@ -214,6 +238,13 @@ class _AccountVerificationState extends State<AccountVerification> {
                               width: 60,
                               child: TextFormField(
                                 maxLength: 1,
+                                focusNode: _otpFocus3,
+                                onChanged: (value) {
+                                  if (value.length == 1) {
+                                    FocusScope.of(context)
+                                        .requestFocus(_otpFocus4);
+                                  }
+                                },
                                 buildCounter: (BuildContext context,
                                         {int? currentLength,
                                         int? maxLength,
@@ -242,6 +273,12 @@ class _AccountVerificationState extends State<AccountVerification> {
                               child: TextFormField(
                                 controller: _otpController4,
                                 maxLength: 1,
+                                focusNode: _otpFocus4,
+                                onChanged: (value) {
+                                  if (value.length == 1) {
+                                    _otpFocus4.unfocus();
+                                  }
+                                },
                                 buildCounter: (BuildContext context,
                                         {int? currentLength,
                                         int? maxLength,
