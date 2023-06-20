@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:staredu/utils/constant/claimed_voucher_list.dart';
 import 'package:staredu/utils/formater/date_format.dart';
 import 'package:staredu/views/view_model/sell_course/voucher_view_model.dart';
 import '../../../utils/color/color.dart';
@@ -91,10 +92,17 @@ class _CourseVoucherScreenState extends State<CourseVoucherScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) {
+              for (var element in claimedVoucherList) {
+                if (element.promoName == value.courseVoucher[index].promoName) {
+                  value.courseVoucher[index].isClaim = true;
+                }
+              }
               return InkWell(
                 borderRadius: BorderRadius.circular(8),
                 onTap: () {
-                  value.claimVoucher(index);
+                  value.courseVoucher[index].isClaim == true
+                      ? null
+                      : value.claimVoucher(index);
                 },
                 child: Card(
                   elevation: 2,
@@ -113,10 +121,14 @@ class _CourseVoucherScreenState extends State<CourseVoucherScreen> {
                     ),
                     child: Row(
                       children: [
+                        const SizedBox(width: 15),
                         SizedBox(
                           width: 80,
                           child: Image.asset(
-                            "assets/images/promo.png",
+                            value.courseVoucher[index].thumbnail!
+                                    .contains("promo")
+                                ? "assets/images/${value.courseVoucher[index].thumbnail!}.png"
+                                : "assets/images/promo.png",
                             fit: BoxFit.contain,
                           ),
                         ),
@@ -156,8 +168,7 @@ class _CourseVoucherScreenState extends State<CourseVoucherScreen> {
                                 width: screenWidth * 0.55,
                                 child: Text(
                                   overflow: TextOverflow.clip,
-                                  "Tes Descc",
-                                  // value.courseVoucher[index].description!,
+                                  value.courseVoucher[index].description!,
                                   style: GoogleFonts.poppins(
                                     fontSize: 11,
                                     fontWeight: FontWeight.w400,

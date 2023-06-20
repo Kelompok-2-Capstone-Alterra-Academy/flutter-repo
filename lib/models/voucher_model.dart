@@ -16,11 +16,6 @@
 //     this.balance,
 //   });
 // }
-
-// To parse this JSON data, do
-//
-//     final voucherModel = voucherModelFromJson(jsonString);
-
 // To parse this JSON data, do
 //
 //     final sellCourseModel = sellCourseModelFromJson(jsonString);
@@ -32,9 +27,10 @@ class VoucherModel {
   String? promoName;
   String? description;
   String? expiredDate;
-  int? totalPromo;
+  double? totalPromo;
   String? thumbnail;
   bool isClaim = false;
+  bool promoUse = false;
 
   VoucherModel({
     this.id,
@@ -55,7 +51,7 @@ class VoucherModel {
         promoName: json["promo_name"],
         description: json["description"],
         expiredDate: json["expired_date"],
-        totalPromo: json["total_promo"],
+        totalPromo: json["total_promo"]?.toDouble(),
         thumbnail: json["thumbnail"],
       );
 

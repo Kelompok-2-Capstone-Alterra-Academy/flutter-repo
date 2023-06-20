@@ -10,21 +10,23 @@ class CardCourseForSale extends StatelessWidget {
     required this.id,
     required this.thumbnail,
     required this.courseName,
-    required this.rating,
-    required this.student,
     required this.price,
-    required this.grade,
     required this.liveSession,
+    required this.description,
+    required this.className,
+    required this.scores,
+    required this.numStudent,
   });
 
   final int id;
   final String thumbnail;
   final String courseName;
-  final String grade;
-  final String rating;
-  final String student;
+  final String className;
+  final double scores;
+  final int numStudent;
   final String price;
   final String liveSession;
+  final String description;
 
   @override
   Widget build(BuildContext context) {
@@ -40,11 +42,12 @@ class CardCourseForSale extends StatelessWidget {
                 id: id,
                 thumbnail: thumbnail,
                 courseName: courseName,
-                rating: rating,
-                student: student,
+                rating: scores,
+                student: numStudent,
                 price: price,
-                grade: grade,
+                grade: className,
                 liveSession: liveSession,
+                description: description,
               ),
             ));
           },
@@ -92,7 +95,7 @@ class CardCourseForSale extends StatelessWidget {
                         ),
                         const SizedBox(height: 3),
                         Text(
-                          grade,
+                          className,
                           style: GoogleFonts.poppins(
                               fontSize: 11,
                               fontWeight: FontWeight.w600,
@@ -106,7 +109,7 @@ class CardCourseForSale extends StatelessWidget {
                             ),
                             const SizedBox(width: 7),
                             Text(
-                              rating,
+                              scores.toString(),
                               style: GoogleFonts.poppins(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w600,
@@ -122,7 +125,7 @@ class CardCourseForSale extends StatelessWidget {
                             ),
                             const SizedBox(width: 7),
                             Text(
-                              student,
+                              "${numStudent.toString()} Siswa",
                               style: GoogleFonts.poppins(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w600,

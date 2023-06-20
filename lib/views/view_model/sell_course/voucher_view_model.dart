@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:staredu/models/voucher_model.dart';
+import 'package:staredu/utils/constant/claimed_voucher_list.dart';
 import '../../../models/service/course_api.dart';
 import '../../../utils/state/my_state.dart';
 
@@ -28,7 +29,15 @@ class VoucherViewModel extends ChangeNotifier {
   }
 
   void claimVoucher(int index) {
-    courseVoucher[index].isClaim = !courseVoucher[index].isClaim;
+    courseVoucher[index].isClaim = true;
+    claimedVoucherList.add(VoucherModel(
+      id: courseVoucher[index].id,
+      thumbnail: courseVoucher[index].thumbnail,
+      promoName: courseVoucher[index].promoName,
+      expiredDate: courseVoucher[index].expiredDate,
+      description: courseVoucher[index].description,
+      totalPromo: courseVoucher[index].totalPromo,
+    ));
     notifyListeners();
   }
 }
