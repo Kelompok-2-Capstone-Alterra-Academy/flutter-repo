@@ -42,8 +42,16 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
     String token = preferencesUtils.getPreferencesString('token') ?? "";
 
     if (context.mounted) {
-      Provider.of<ModuleListViewModel>(context, listen: false)
+      await Provider.of<ModuleListViewModel>(context, listen: false)
           .getCourseModule(token, widget.courseId);
+      if (context.mounted) {
+        String totalCourse =
+            context.read<ModuleListViewModel>().courseModule.length.toString();
+        preferencesUtils.savePreferencesString(
+          'total_section_course_${widget.courseId}',
+          totalCourse,
+        );
+      }
     }
   }
 

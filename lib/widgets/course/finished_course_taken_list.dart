@@ -112,7 +112,7 @@ class _FinishedCourseTakenListScreenState
                                                 finishedCourse[index]
                                                         .scores
                                                         ?.toString() ??
-                                                    "0",
+                                                    "A",
                                                 style: GoogleFonts.poppins(
                                                   fontStyle: FontStyle.normal,
                                                   fontWeight: FontWeight.w600,

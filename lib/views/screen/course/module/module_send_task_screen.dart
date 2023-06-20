@@ -252,6 +252,7 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
                             String token = preferencesUtils
                                     .getPreferencesString('token') ??
                                 "";
+
                             String msg = await Provider.of<TaskViewModel>(
                                     context,
                                     listen: false)
@@ -265,13 +266,35 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
                             );
                             if (msg.contains('success')) {
                               if (widget.isLastIndex) {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) => ReviewDialog(
-                                    courseId: widget.courseId,
-                                  ),
+                                //get current section
+                                int currentSection =
+                                    preferencesUtils.getPreferencesInt(
+                                            'current_section_course_${widget.courseId}') ??
+                                        0;
+                                //increment the current section value
+                                preferencesUtils.savePreferencesInt(
+                                  'current_section_course_${widget.courseId}',
+                                  currentSection++,
                                 );
+                                if (context.mounted) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => ReviewDialog(
+                                      courseId: widget.courseId,
+                                    ),
+                                  );
+                                }
                               } else {
+                                //get current section
+                                int currentSection =
+                                    preferencesUtils.getPreferencesInt(
+                                            'current_section_course_${widget.courseId}') ??
+                                        0;
+                                //increment the current section value
+                                preferencesUtils.savePreferencesInt(
+                                  'current_section_course_${widget.courseId}',
+                                  currentSection++,
+                                );
                                 showDialog(
                                   context: context,
                                   builder: (context) =>

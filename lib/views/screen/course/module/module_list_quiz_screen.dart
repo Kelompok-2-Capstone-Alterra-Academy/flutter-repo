@@ -101,6 +101,11 @@ class _ModuleListQuizScreenState extends State<ModuleListQuizScreen> {
                             title: moduleViewModel
                                 .courseQuiz[firstIndex].sectionName,
                             numbering: (secondIndex + 1).toString(),
+                            url: moduleViewModel
+                                .courseQuiz[firstIndex]
+                                .module![secondIndex]
+                                .attachment!
+                                .attachmentSource,
                           );
                         },
                       );
