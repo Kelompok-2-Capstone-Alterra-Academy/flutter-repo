@@ -216,14 +216,21 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                                         : false,
                                                 isMaterialAvailable:
                                                     moduleViewModel
-                                                            .courseModule[
-                                                                firstIndex]
-                                                            .module![
-                                                                secondIndex]
-                                                            .attachment!
-                                                            .type!
-                                                            .contains(
-                                                                'document')
+                                                                .courseModule[
+                                                                    firstIndex]
+                                                                .module![
+                                                                    secondIndex]
+                                                                .attachment!
+                                                                .type!
+                                                                .contains(
+                                                                    'document') &&
+                                                            moduleViewModel
+                                                                .courseModule[
+                                                                    firstIndex]
+                                                                .module![
+                                                                    secondIndex]
+                                                                .tasks!
+                                                                .isEmpty
                                                         ? true
                                                         : false,
                                                 isAssignmentAvailable:
@@ -282,12 +289,21 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                                   : false,
                                               isMaterialAvailable:
                                                   moduleViewModel
-                                                          .courseModule[
-                                                              firstIndex]
-                                                          .module![secondIndex]
-                                                          .attachment!
-                                                          .type!
-                                                          .contains('document')
+                                                              .courseModule[
+                                                                  firstIndex]
+                                                              .module![
+                                                                  secondIndex]
+                                                              .attachment!
+                                                              .type!
+                                                              .contains(
+                                                                  'document') &&
+                                                          moduleViewModel
+                                                              .courseModule[
+                                                                  firstIndex]
+                                                              .module![
+                                                                  secondIndex]
+                                                              .tasks!
+                                                              .isEmpty
                                                       ? true
                                                       : false,
                                               isAssignmentAvailable:
@@ -366,11 +382,18 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                                 ? true
                                                 : false,
                                             isMaterialAvailable: moduleViewModel
-                                                    .courseModule[firstIndex]
-                                                    .module![secondIndex]
-                                                    .attachment!
-                                                    .type!
-                                                    .contains('document')
+                                                        .courseModule[
+                                                            firstIndex]
+                                                        .module![secondIndex]
+                                                        .attachment!
+                                                        .type!
+                                                        .contains('document') &&
+                                                    moduleViewModel
+                                                        .courseModule[
+                                                            firstIndex]
+                                                        .module![secondIndex]
+                                                        .tasks!
+                                                        .isEmpty
                                                 ? true
                                                 : false,
                                             isAssignmentAvailable:

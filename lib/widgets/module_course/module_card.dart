@@ -46,8 +46,6 @@ class ModuleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(courseName.toString());
-    print(moduleName.toString());
     return Column(
       crossAxisAlignment: CrossAxisAlignment.baseline,
       textBaseline: TextBaseline.alphabetic,
@@ -98,7 +96,9 @@ class ModuleCard extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(8)),
                               child: Center(
                                 child: Text(
-                                  "0$numbering",
+                                  numbering! < 10
+                                      ? "0$numbering"
+                                      : numbering.toString(),
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.poppins(
                                     color: whiteColor,
@@ -129,7 +129,7 @@ class ModuleCard extends StatelessWidget {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            "Materi $courseName ",
+                                            "Materi $moduleName ",
                                             style: GoogleFonts.poppins(
                                               fontStyle: FontStyle.normal,
                                               fontWeight: FontWeight.w600,
@@ -272,7 +272,9 @@ class ModuleCard extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8)),
                           child: Center(
                             child: Text(
-                              "0$numbering",
+                              numbering! < 10
+                                  ? "0$numbering"
+                                  : numbering.toString(),
                               textAlign: TextAlign.center,
                               style: GoogleFonts.poppins(
                                 color: whiteColor,
@@ -301,7 +303,7 @@ class ModuleCard extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        "Materi $courseName ",
+                                        "Materi $moduleName ",
                                         style: GoogleFonts.poppins(
                                           fontStyle: FontStyle.normal,
                                           fontWeight: FontWeight.w600,
@@ -436,7 +438,9 @@ class ModuleCard extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8)),
                           child: Center(
                             child: Text(
-                              "0$numbering",
+                              numbering! < 10
+                                  ? "0$numbering"
+                                  : numbering.toString(),
                               textAlign: TextAlign.center,
                               style: GoogleFonts.poppins(
                                 color: whiteColor,
@@ -465,7 +469,7 @@ class ModuleCard extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        "Materi $courseName",
+                                        "Materi $moduleName",
                                         style: GoogleFonts.poppins(
                                           fontStyle: FontStyle.normal,
                                           fontWeight: FontWeight.w600,
@@ -557,9 +561,6 @@ class ModuleCard extends StatelessWidget {
                 ),
               )
             : const SizedBox.shrink(),
-        const SizedBox(
-          height: 16,
-        ),
       ],
     );
   }
