@@ -49,16 +49,14 @@ class ModuleListViewModel with ChangeNotifier {
 
       _courseModule = tempCourseModule;
       _courseQuiz = tempCourseQuiz;
-
+      
       setState(MyState.success);
       notifyListeners();
     } catch (e) {
       if (e is DioError) {
         e.response?.statusCode;
       }
-
       setState(MyState.failed);
-      notifyListeners();
     }
   }
 }

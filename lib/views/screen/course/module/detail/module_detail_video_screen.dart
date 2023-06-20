@@ -15,6 +15,7 @@ class ModuleVideoScreen extends StatefulWidget {
   final int? sectionId;
   final String? courseName;
   final String? sectionName;
+  final String? moduleName;
   final String? linkModule;
   final String? description;
   final bool isLastIndex;
@@ -25,6 +26,7 @@ class ModuleVideoScreen extends StatefulWidget {
     this.sectionId,
     this.courseName,
     this.sectionName,
+    this.moduleName,
     this.linkModule,
     this.description,
     required this.isLastIndex,
@@ -57,6 +59,7 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.courseName.toString());
     final double screenWidth = MediaQuery.of(context).size.width;
     final String linkVideo =
         YoutubePlayer.convertUrlToId(widget.linkModule.toString()).toString();
@@ -121,7 +124,7 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
               Padding(
                 padding: const EdgeInsets.only(left: 16, right: 16),
                 child: Text(
-                  '${widget.courseName} - ${widget.sectionName}',
+                  '${widget.courseName.toString()} - ${widget.sectionName}',
                   style: GoogleFonts.poppins(
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.w600,
@@ -176,9 +179,8 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
                             context,
                             FadeAnimation(
                               page: ModuleListScreen(
-                                courseId: widget.courseId,
-                                courseName: widget.courseName,
-                              ),
+                                  courseId: widget.courseId,
+                                  courseName: widget.courseName),
                             ),
                           );
                         }
