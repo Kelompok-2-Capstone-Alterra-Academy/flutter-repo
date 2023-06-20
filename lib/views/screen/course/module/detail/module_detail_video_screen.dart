@@ -20,6 +20,7 @@ class ModuleVideoScreen extends StatefulWidget {
   final String? linkModule;
   final String? description;
   final bool isLastIndex;
+  final int? moduleId;
 
   const ModuleVideoScreen({
     super.key,
@@ -31,6 +32,7 @@ class ModuleVideoScreen extends StatefulWidget {
     this.linkModule,
     this.description,
     required this.isLastIndex,
+    this.moduleId,
   });
 
   @override

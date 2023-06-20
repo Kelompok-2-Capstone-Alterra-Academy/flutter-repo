@@ -266,6 +266,11 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                                         .module![secondIndex]
                                                         .attachment!
                                                         .description,
+                                                moduleId: moduleViewModel
+                                                    .courseModule[firstIndex]
+                                                    .module![secondIndex]
+                                                    .id!
+                                                    .toInt(),
                                               );
                                             }
                                             return ModuleCard(
@@ -336,6 +341,11 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                                   .module![secondIndex]
                                                   .attachment!
                                                   .description,
+                                              moduleId: moduleViewModel
+                                                  .courseModule[firstIndex]
+                                                  .module![secondIndex]
+                                                  .id!
+                                                  .toInt(),
                                             );
                                           },
                                         ),
@@ -425,6 +435,11 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                                 .module![secondIndex]
                                                 .attachment!
                                                 .description,
+                                            moduleId: moduleViewModel
+                                                .courseModule[firstIndex]
+                                                .module![secondIndex]
+                                                .id!
+                                                .toInt(),
                                           );
                                         },
                                       ),

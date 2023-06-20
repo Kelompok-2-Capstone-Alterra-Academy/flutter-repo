@@ -106,6 +106,9 @@ class _ModuleListQuizScreenState extends State<ModuleListQuizScreen> {
                                 .module![secondIndex]
                                 .attachment!
                                 .attachmentSource,
+                            moduleId: moduleViewModel
+                                .courseQuiz[firstIndex].module![secondIndex].id!
+                                .toInt(),
                           );
                         },
                       );

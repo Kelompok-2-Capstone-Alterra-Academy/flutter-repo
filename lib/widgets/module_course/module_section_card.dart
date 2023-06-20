@@ -11,20 +11,21 @@ import '../../utils/animation/fade_animation2.dart';
 import '../../utils/color/color.dart';
 
 class ModuleSectionCard extends StatelessWidget {
-  const ModuleSectionCard(
-      {super.key,
-      this.id,
-      this.sectionId,
-      this.sectionName,
-      this.courseName,
-      this.numbering,
-      this.isVideoAvailable,
-      this.isMaterialAvailable,
-      this.isAssignmentAvailable,
-      this.dueDate,
-      this.isSectionFinished,
-      this.linkModule,
-      this.moduleDescription});
+  const ModuleSectionCard({
+    super.key,
+    this.id,
+    this.sectionId,
+    this.sectionName,
+    this.courseName,
+    this.numbering,
+    this.isVideoAvailable,
+    this.isMaterialAvailable,
+    this.isAssignmentAvailable,
+    this.dueDate,
+    this.isSectionFinished,
+    this.linkModule,
+    this.moduleDescription,
+  });
 
   final int? id;
   final int? sectionId;

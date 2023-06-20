@@ -19,6 +19,7 @@ class ModuleDetailTask extends StatefulWidget {
   final String? linkModule;
   final String? description;
   final bool isLastIndex;
+  final int? moduleId;
 
   const ModuleDetailTask({
     super.key,
@@ -29,6 +30,7 @@ class ModuleDetailTask extends StatefulWidget {
     this.linkModule,
     this.description,
     required this.isLastIndex,
+    this.moduleId,
   });
 
   @override

@@ -12,11 +12,13 @@ class ModuleQuizDetailScreen extends StatefulWidget {
   final QuizDetailModel quizDetail;
   final bool isLastIndex;
   final int courseId;
+  final int moduleId;
   const ModuleQuizDetailScreen({
     super.key,
     required this.quizDetail,
     required this.isLastIndex,
     required this.courseId,
+    required this.moduleId,
   });
 
   @override

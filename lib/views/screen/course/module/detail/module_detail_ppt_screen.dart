@@ -15,12 +15,14 @@ class ModulDetailPPTScreen extends StatefulWidget {
   final int? courseId;
   final String? courseName;
   final bool isLastIndex;
+  final int? moduleId;
   const ModulDetailPPTScreen({
     super.key,
     required this.pptDetailModel,
     this.courseId,
     this.courseName,
     required this.isLastIndex,
+    this.moduleId,
   });
 
   @override
