@@ -41,15 +41,16 @@ class ModuleListViewModel with ChangeNotifier {
         for (var j in i.module!) {
           if (j.attachment!.type!.contains('quiz')) {
             tempCourseQuiz.add(i);
-          } else {
-            tempCourseModule.add(i);
           }
+          // else {
+          //   tempCourseModule.add(i);
+          // }
         }
       }
 
-      _courseModule = tempCourseModule;
+      _courseModule = data;
       _courseQuiz = tempCourseQuiz;
-      
+
       setState(MyState.success);
       notifyListeners();
     } catch (e) {
