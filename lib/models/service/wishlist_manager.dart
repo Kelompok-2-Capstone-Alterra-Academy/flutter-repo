@@ -26,10 +26,10 @@ class WishlistManager {
       int id,
       String thumbnail,
       String price,
-      String rating,
-      String student,
+      double rating,
+      int student,
       String title,
-      String grade,
+      dynamic grade,
       String liveSession,
       String description) async {
     List<SellCourseModel> wishlist = await getWishlist();
@@ -40,10 +40,10 @@ class WishlistManager {
           id: id,
           thumbnail: thumbnail,
           price: price,
-          // rating: rating,
-          // student: student,
+          scores: rating,
+          numStudents: student,
           courseName: title,
-          // grade: grade,
+          sellCourseModelClass: grade,
           liveSessionWeek: liveSession,
           description: description));
       await saveWishlist(wishlist);

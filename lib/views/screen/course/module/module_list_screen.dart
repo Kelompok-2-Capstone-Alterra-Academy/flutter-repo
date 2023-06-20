@@ -142,7 +142,7 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
               const CourseCertificate()
             ],
           ),
-          bottomNavigationBar: const BottomNavigationBarComponent()),
+          bottomNavigationBar: BottomNavigationBarComponent()),
     );
   }
 }

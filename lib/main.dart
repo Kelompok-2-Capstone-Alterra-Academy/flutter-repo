@@ -47,6 +47,7 @@ import 'package:staredu/views/screen/splash_welcome/splash_welcome_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/views/screen/wishlist/wishlist_screen.dart';
 import 'package:staredu/views/view_model/mentor/mentor_view_model.dart';
+import 'package:staredu/views/view_model/sell_course/claimed_voucher_view_model.dart';
 import 'package:staredu/views/view_model/sell_course/course_payment_view_model.dart';
 import 'package:staredu/views/view_model/sell_course/sell_course_view_model.dart';
 import 'package:staredu/views/view_model/sell_course/voucher_view_model.dart';
@@ -74,7 +75,6 @@ void main() {
       ChangeNotifierProvider(create: (_) => ForgotPasswordViewModel()),
       ChangeNotifierProvider(create: (_) => ProfileViewModel()),
       ChangeNotifierProvider(create: (_) => EditProfileViewModel()),
-      ChangeNotifierProvider(create: (_) => HistoryTransactionViewModel()),
       ChangeNotifierProvider(create: (_) => MentorViewModel()),
       ChangeNotifierProvider(create: (_) => SellCourseViewModel()),
       ChangeNotifierProvider(create: (_) => VoucherViewModel()),
@@ -82,6 +82,9 @@ void main() {
       ChangeNotifierProvider(create: (_) => ScheduleViewModel()),
       ChangeNotifierProvider(create: (_) => NewsViewModel()),
       ChangeNotifierProvider(create: (_) => PostFeedViewModel()),
+      ChangeNotifierProvider(create: (_) => ClaimedVoucherViewModel()),
+      ChangeNotifierProvider(create: (_) => HistoryTransactionViewModel()),
+
     ],
     child: const StarEdu(),
   ));

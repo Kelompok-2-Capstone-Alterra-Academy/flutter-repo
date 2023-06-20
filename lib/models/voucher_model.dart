@@ -30,6 +30,7 @@ class VoucherModel {
   double? totalPromo;
   String? thumbnail;
   bool isClaim = false;
+  bool promoUse = false;
 
   VoucherModel({
     this.id,

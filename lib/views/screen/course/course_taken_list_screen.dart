@@ -73,7 +73,7 @@ class _CourseTakenListScreenState extends State<CourseTakenListScreen> {
               FinishedCourseTakenListScreen(),
             ],
           ),
-          bottomNavigationBar: const BottomNavigationBarComponent()),
+          bottomNavigationBar: BottomNavigationBarComponent() ),
     );
   }
 }

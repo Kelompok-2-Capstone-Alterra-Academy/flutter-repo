@@ -59,19 +59,8 @@ class _EditProfileState extends State<EditProfile> {
     return null;
   }
 
-  String? validateEmail(String value) {
-    if (value.isEmpty) {
-      return 'Email tidak boleh kosong';
-    } else if (!value.contains('@')) {
-      return 'Email tidak valid';
-    }
-    return null;
-  }
-
   String? validatePhone(String value) {
-    if (value.isEmpty) {
-      return 'Nomor Handphone tidak boleh kosong';
-    } else if (value.length < 10) {
+    if (value.length < 10) {
       return 'Nomor Handphone minimal 10 karakter';
     } else if (!value.startsWith('0')) {
       return 'Nomor Handphone harus diawali dengan 0';
@@ -80,52 +69,35 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   String? validateAddress(String value) {
-    if (value.isEmpty) {
-      return 'Alamat tidak boleh kosong';
-    } else if (value.length < 5) {
+    if (value.isNotEmpty && value.length < 5) {
       return 'Alamat minimal 5 karakter';
     }
     return null;
   }
 
   String? validateDate(String value) {
-    if (value.isEmpty) {
-      return 'Tanggal Lahir tidak boleh kosong';
-    }
     return null;
   }
 
   String? validateGender(String value) {
-    if (value.isEmpty) {
-      return 'Jenis Kelamin tidak boleh kosong';
-    }
     return null;
   }
 
   String? validateSchoolName(String value) {
-    if (value.isEmpty) {
-      return 'Nama Sekolah tidak boleh kosong';
-    }
     return null;
   }
 
   String? validateMajor(String value) {
-    if (value.isEmpty) {
-      return 'Jurusan tidak boleh kosong';
-    }
     return null;
   }
 
   String? validateClasses(String value) {
-    if (value.isEmpty) {
-      return 'Kelas tidak boleh kosong';
-    }
     return null;
   }
 
   @override
   Widget build(BuildContext context) {
-    final User user = ModalRoute.of(context)!.settings.arguments as User;
+    User user = ModalRoute.of(context)!.settings.arguments as User;
     return Scaffold(
       appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.black),
@@ -177,7 +149,7 @@ class _EditProfileState extends State<EditProfile> {
                                   width: 250,
                                   child: TextFormField(
                                     controller: nameController
-                                      ..text = user.name,
+                                      ..text = user.name!,
                                     validator: (value) => validateName(value!),
                                     keyboardType: TextInputType.text,
                                     autocorrect: false,
@@ -198,9 +170,9 @@ class _EditProfileState extends State<EditProfile> {
                                 SizedBox(
                                   width: 250,
                                   child: TextFormField(
+                                    enabled: false,
                                     controller: emailController
-                                      ..text = user.email,
-                                    validator: (value) => validateEmail(value!),
+                                      ..text = user.email!,
                                     keyboardType: TextInputType.emailAddress,
                                     autocorrect: false,
                                     textInputAction: TextInputAction.next,
@@ -221,7 +193,7 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                     const SizedBox(height: 10),
                     TextFormField(
-                      controller: dateController..text = user.dob,
+                      controller: dateController..text = user.dob ?? '',
                       validator: (value) => validateDate(value!),
                       keyboardType: TextInputType.datetime,
                       autocorrect: false,
@@ -242,7 +214,7 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                     const SizedBox(height: 10),
                     TextFormField(
-                      controller: addressController..text = user.city,
+                      controller: addressController..text = user.city ?? '',
                       validator: (value) => validateAddress(value!),
                       keyboardType: TextInputType.text,
                       autocorrect: false,
@@ -259,7 +231,8 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                     const SizedBox(height: 10),
                     TextFormField(
-                      controller: phoneController..text = user.phoneNumber,
+                      controller: phoneController
+                        ..text = user.phoneNumber ?? '',
                       validator: (value) => validatePhone(value!),
                       keyboardType: TextInputType.phone,
                       autocorrect: false,
@@ -277,7 +250,7 @@ class _EditProfileState extends State<EditProfile> {
                     const SizedBox(height: 10),
                     //gender
                     TextFormField(
-                      controller: genderController..text = user.gender,
+                      controller: genderController..text = user.gender ?? '',
                       validator: (value) => validateGender(value!),
                       keyboardType: TextInputType.text,
                       autocorrect: false,
@@ -299,7 +272,7 @@ class _EditProfileState extends State<EditProfile> {
                     const SizedBox(height: 10),
                     // grade
                     TextFormField(
-                      controller: gradeController..text = user.classes,
+                      controller: gradeController..text = user.classes ?? '',
                       validator: (value) => validateClasses(value!),
                       keyboardType: TextInputType.text,
                       autocorrect: false,
@@ -320,7 +293,8 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                     const SizedBox(height: 10),
                     TextFormField(
-                      controller: schoolNameController..text = user.schoolName,
+                      controller: schoolNameController
+                        ..text = user.schoolName ?? '',
                       validator: (value) => validateSchoolName(value!),
                       keyboardType: TextInputType.text,
                       autocorrect: false,
@@ -337,7 +311,7 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                     const SizedBox(height: 10),
                     TextFormField(
-                      controller: majorController..text = user.major,
+                      controller: majorController..text = user.major ?? '',
                       validator: (value) => validateMajor(value!),
                       keyboardType: TextInputType.text,
                       autocorrect: false,
@@ -377,10 +351,36 @@ class _EditProfileState extends State<EditProfile> {
                         onPressed: () async {
                           if (_formkey.currentState!.validate()) {
                             // ignore: use_build_context_synchronously
+                            User newUser = User.fromJson({
+                              'name': nameController.text == ''
+                                  ? null
+                                  : nameController.text,
+                              'dob': dateController.text == ''
+                                  ? null
+                                  : dateController.text,
+                              'city': addressController.text == ''
+                                  ? null
+                                  : addressController.text,
+                              'phone_number': phoneController.text == ''
+                                  ? null
+                                  : phoneController.text,
+                              'major': majorController.text == ''
+                                  ? null
+                                  : majorController.text,
+                              'school_name': schoolNameController.text == ''
+                                  ? null
+                                  : schoolNameController.text,
+                              'class': gradeController.text == ''
+                                  ? null
+                                  : gradeController.text,
+                              'gender': genderController.text == ''
+                                  ? null
+                                  : genderController.text,
+                            });
                             User? updateUser =
                                 await Provider.of<EditProfileViewModel>(context,
                                         listen: false)
-                                    .updateUserDetail(user, token);
+                                    .updateUserDetail(newUser, token, user.id!);
                             if (updateUser != null) {
                               // ignore: use_build_context_synchronously
                               Navigator.pushAndRemoveUntil(

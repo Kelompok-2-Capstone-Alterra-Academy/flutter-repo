@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:staredu/views/view_model/sell_course/sell_course_view_model.dart';
 import '../../../utils/animation/fade_animation2.dart';
 import '../../../utils/color/color.dart';
 import '../../../utils/preferences/preferences_utils.dart';
@@ -166,7 +167,14 @@ class _HistoryTransactionScreenState extends State<HistoryTransactionScreen> {
                                           height: 80,
                                           width: 80,
                                           child: Image.asset(
-                                            "assets/images/thumbnail/${value.historyCourses[index].transactionDetails![index].course!.thumbnail}.png",
+                                            value
+                                                    .historyCourses[index]
+                                                    .transactionDetails![index]
+                                                    .course!
+                                                    .thumbnail!
+                                                    .isEmpty
+                                                ? 'assets/images/thumbnail/apple.png'
+                                                : "assets/images/thumbnail/${value.historyCourses[index].transactionDetails![index].course!.thumbnail}.png",
                                             fit: BoxFit.contain,
                                           ),
                                         ),
@@ -251,6 +259,6 @@ class _HistoryTransactionScreenState extends State<HistoryTransactionScreen> {
             ],
           ),
         ),
-        bottomNavigationBar: const BottomNavigationBarComponent());
+        bottomNavigationBar: BottomNavigationBarComponent());
   }
 }

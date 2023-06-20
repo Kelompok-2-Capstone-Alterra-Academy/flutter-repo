@@ -11,7 +11,6 @@ class LoginViewModel extends ChangeNotifier {
   Future<String> login(String email, String password) async {
     try {
       response = await AuthAPI.login(email, password);
-
       if (response == null) {
         setState(MyState.failed);
         return 'Login Failed';

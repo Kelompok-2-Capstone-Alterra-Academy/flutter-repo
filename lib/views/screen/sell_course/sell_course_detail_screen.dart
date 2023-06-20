@@ -14,8 +14,8 @@ class SellCourseDetailScreen extends StatefulWidget {
   final String thumbnail;
   final String courseName;
   final String price;
-  final String rating;
-  final String student;
+  final double rating;
+  final int student;
   final String grade;
   final String liveSession;
   final String description;
@@ -146,7 +146,7 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
                                       BorderRadius.all(Radius.circular(8))),
                               child: Center(
                                 child: Text(
-                                  widget.grade,
+                                  " Kelas ${widget.grade}",
                                   style: GoogleFonts.poppins(
                                     fontSize: 13,
                                     fontWeight: FontWeight.w600,
@@ -192,7 +192,7 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
                   ),
                   const SizedBox(width: 7),
                   Text(
-                    widget.rating,
+                    widget.rating.toString(),
                     style: GoogleFonts.poppins(
                         fontSize: 11,
                         fontWeight: FontWeight.w600,
@@ -208,7 +208,7 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
                   ),
                   const SizedBox(width: 7),
                   Text(
-                    widget.student,
+                    "${widget.student.toString()} Siswa",
                     style: GoogleFonts.poppins(
                         fontSize: 11,
                         fontWeight: FontWeight.w600,

@@ -118,6 +118,12 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                               SizedBox(
                                 width: 60,
                                 child: TextFormField(
+                                  maxLength: 1,
+                                  buildCounter: (BuildContext context,
+                                          {int? currentLength,
+                                          int? maxLength,
+                                          bool? isFocused}) =>
+                                      null,
                                   controller: _otpController1,
                                   validator: (value) => validateOtp(value),
                                   keyboardType: TextInputType.number,
@@ -139,6 +145,12 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                               SizedBox(
                                 width: 60,
                                 child: TextFormField(
+                                  maxLength: 1,
+                                  buildCounter: (BuildContext context,
+                                          {int? currentLength,
+                                          int? maxLength,
+                                          bool? isFocused}) =>
+                                      null,
                                   controller: _otpController2,
                                   validator: (value) => validateOtp(value),
                                   keyboardType: TextInputType.number,
@@ -160,6 +172,12 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                               SizedBox(
                                 width: 60,
                                 child: TextFormField(
+                                  maxLength: 1,
+                                  buildCounter: (BuildContext context,
+                                          {int? currentLength,
+                                          int? maxLength,
+                                          bool? isFocused}) =>
+                                      null,
                                   controller: _otpController3,
                                   validator: (value) => validateOtp(value),
                                   keyboardType: TextInputType.number,
@@ -181,6 +199,12 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                               SizedBox(
                                 width: 60,
                                 child: TextFormField(
+                                  maxLength: 1,
+                                  buildCounter: (BuildContext context,
+                                          {int? currentLength,
+                                          int? maxLength,
+                                          bool? isFocused}) =>
+                                      null,
                                   controller: _otpController4,
                                   validator: (value) => validateOtp(value),
                                   keyboardType: TextInputType.number,
@@ -255,11 +279,18 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                                               _otpController4.text);
                               if (message.contains('success')) {
                                 // ignore: use_build_context_synchronously
+                                dynamic args = {
+                                  'token': message.split(' ')[1],
+                                  'otp': _otpController1.text +
+                                      _otpController2.text +
+                                      _otpController3.text +
+                                      _otpController4.text
+                                };
                                 Navigator.push(
                                     context,
                                     FadeAnimation(
                                         page: const ResetPasswordScreen(),
-                                        arguments: message.split(' ')[1]));
+                                        arguments: args));
                               } else {
                                 // ignore: use_build_context_synchronously
                                 ScaffoldMessenger.of(context)

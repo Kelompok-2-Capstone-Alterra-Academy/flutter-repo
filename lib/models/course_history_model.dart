@@ -130,6 +130,7 @@ class Student {
   String? schoolName;
   String? studentClass;
   String? gender;
+  String? profile;
 
   Student({
     this.name,
@@ -141,6 +142,7 @@ class Student {
     this.schoolName,
     this.studentClass,
     this.gender,
+    this.profile,
   });
 
   factory Student.fromRawJson(String str) => Student.fromJson(json.decode(str));
@@ -157,6 +159,7 @@ class Student {
         schoolName: json["school_name"],
         studentClass: json["class"],
         gender: json["gender"],
+        profile: json["profile"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -169,6 +172,7 @@ class Student {
         "school_name": schoolName,
         "class": studentClass,
         "gender": gender,
+        "profile": profile,
       };
 }
 
@@ -233,7 +237,7 @@ class Course {
   String? createdAt;
   String? updatedAt;
   dynamic deletedAt;
-  dynamic categoryId;
+  int? categoryId;
   Category? category;
   int? classId;
   Class? courseClass;

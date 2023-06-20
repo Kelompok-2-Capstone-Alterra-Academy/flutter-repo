@@ -11,6 +11,7 @@ class WishlistScreen extends StatefulWidget {
   const WishlistScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _WishlistScreenState createState() => _WishlistScreenState();
 }
 
@@ -98,8 +99,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                             ),
                             const SizedBox(width: 7),
                             Text(
-                              // item.rating!,
-                              "4.9",
+                              item.scores!.toString(),
                               style: GoogleFonts.poppins(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w600,
@@ -115,8 +115,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                             ),
                             const SizedBox(width: 7),
                             Text(
-                              // item.student!,
-                              "8945 Siswa",
+                              "${item.numStudents!.toString()} Siswa",
                               style: GoogleFonts.poppins(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w600,
@@ -152,13 +151,13 @@ class _WishlistScreenState extends State<WishlistScreen> {
                                           wishlistItems[index].thumbnail!,
                                       courseName:
                                           wishlistItems[index].courseName!,
-                                      // rating: wishlistItems[index].rating!,
-                                      // student: wishlistItems[index].student!,
-                                      rating: "4.8",
-                                      student: "8945 Siswa",
+                                      rating: wishlistItems[index].scores!,
+                                      student:
+                                          wishlistItems[index].numStudents!,
                                       price: wishlistItems[index].price!,
-                                      // grade: wishlistItems[index].grade!,
-                                      grade: "Kelas 12",
+                                      grade: wishlistItems[index]
+                                          .sellCourseModelClass!
+                                          .className!,
                                       liveSession:
                                           wishlistItems[index].liveSessionWeek!,
                                       description:
