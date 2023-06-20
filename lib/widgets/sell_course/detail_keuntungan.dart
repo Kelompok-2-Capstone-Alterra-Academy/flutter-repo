@@ -20,11 +20,14 @@ class DetailKeuntungan extends StatelessWidget {
           child: Image.asset(iconImg),
         ),
         const SizedBox(width: 10),
-        Text(
-          text,
-          style: GoogleFonts.poppins(
-            fontSize: 11,
-            fontWeight: FontWeight.w400,
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 0.807,
+          child: Text(
+            text,
+            style: GoogleFonts.poppins(
+              fontSize: 11,
+              fontWeight: FontWeight.w400,
+            ),
           ),
         ),
       ],

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:staredu/views/screen/auth/forgot_password/forgot_password_view_model.dart';
 import 'package:staredu/views/screen/auth/forgot_password/main/forgot_password_screen.dart';
@@ -20,7 +19,7 @@ import 'package:staredu/views/screen/auth/register/main/register_screen.dart';
 import 'package:staredu/views/screen/edit_profile/edit_profile_screen.dart';
 import 'package:staredu/views/screen/edit_profile/edit_profile_view_model.dart';
 import 'package:staredu/views/screen/history/history_transaction_screen.dart';
-import 'package:staredu/views/screen/history/note_transaction_screen.dart.dart';
+import 'package:staredu/views/screen/history/history_transaction_view_model.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
 import 'package:staredu/views/screen/home/home_view_model.dart';
 import 'package:staredu/views/screen/notification/notification_screen.dart';
@@ -44,6 +43,8 @@ import 'package:staredu/views/screen/splash_welcome/splash_welcome_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/views/screen/wishlist/wishlist_screen.dart';
 import 'package:staredu/views/view_model/mentor/mentor_view_model.dart';
+import 'package:staredu/views/view_model/sell_course/claimed_voucher_view_model.dart';
+import 'package:staredu/views/view_model/sell_course/course_payment_view_model.dart';
 import 'package:staredu/views/view_model/sell_course/sell_course_view_model.dart';
 import 'package:staredu/views/view_model/sell_course/voucher_view_model.dart';
 import 'package:staredu/widgets/bottom_navigation_bar/bottom_navigation_bar_view_model.dart';
@@ -70,6 +71,12 @@ void main() {
       ChangeNotifierProvider(create: (_) => ForgotPasswordViewModel()),
       ChangeNotifierProvider(create: (_) => ProfileViewModel()),
       ChangeNotifierProvider(create: (_) => EditProfileViewModel()),
+      ChangeNotifierProvider(create: (_) => MentorViewModel()),
+      ChangeNotifierProvider(create: (_) => SellCourseViewModel()),
+      ChangeNotifierProvider(create: (_) => VoucherViewModel()),
+      ChangeNotifierProvider(create: (_) => CoursePaymentViewModel()),
+      ChangeNotifierProvider(create: (_) => ClaimedVoucherViewModel()),
+      ChangeNotifierProvider(create: (_) => HistoryTransactionViewModel()),
     ],
     child: const StarEdu(),
   ));
@@ -128,6 +135,8 @@ class StarEdu extends StatelessWidget {
         TaskListScreen.routeName: (context) => const TaskListScreen(),
         ModuleDetailTask.routeName: (context) => const ModuleDetailTask(),
         WishlistScreen.routeName: (context) => const WishlistScreen(),
+        HistoryTransactionScreen.routeName: (context) =>
+            const HistoryTransactionScreen(),
       },
     );
   }

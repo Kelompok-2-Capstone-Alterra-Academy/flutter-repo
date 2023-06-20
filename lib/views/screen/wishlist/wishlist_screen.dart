@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/models/sell_course_model.dart';
-import 'package:staredu/utils/constant/sell_course_list.dart';
 import '../../../models/service/wishlist_manager.dart';
 import '../../../utils/color/color.dart';
 import '../sell_course/sell_course_detail_screen.dart';
@@ -12,6 +11,7 @@ class WishlistScreen extends StatefulWidget {
   const WishlistScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _WishlistScreenState createState() => _WishlistScreenState();
 }
 
@@ -68,7 +68,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                   children: [
                     SizedBox(
                       child: Image.asset(
-                        item.img!,
+                        "assets/images/thumbnail/${item.thumbnail!}.png",
                         fit: BoxFit.contain,
                       ),
                     ),
@@ -77,7 +77,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          item.title!,
+                          item.courseName!,
                           style: GoogleFonts.poppins(
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
@@ -99,7 +99,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                             ),
                             const SizedBox(width: 7),
                             Text(
-                              item.rating!,
+                              item.scores!.toString(),
                               style: GoogleFonts.poppins(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w600,
@@ -115,7 +115,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                             ),
                             const SizedBox(width: 7),
                             Text(
-                              item.student!,
+                              "${item.numStudents!.toString()} Siswa",
                               style: GoogleFonts.poppins(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w600,
@@ -147,12 +147,21 @@ class _WishlistScreenState extends State<WishlistScreen> {
                                             secondaryAnimations) =>
                                         SellCourseDetailScreen(
                                       id: wishlistItems[index].id!,
-                                      img: wishlistItems[index].img!,
-                                      title: wishlistItems[index].title!,
-                                      rating: wishlistItems[index].rating!,
-                                      student: wishlistItems[index].student!,
+                                      thumbnail:
+                                          wishlistItems[index].thumbnail!,
+                                      courseName:
+                                          wishlistItems[index].courseName!,
+                                      rating: wishlistItems[index].scores!,
+                                      student:
+                                          wishlistItems[index].numStudents!,
                                       price: wishlistItems[index].price!,
-                                      grade: wishlistItems[index].grade!,
+                                      grade: wishlistItems[index]
+                                          .sellCourseModelClass!
+                                          .className!,
+                                      liveSession:
+                                          wishlistItems[index].liveSessionWeek!,
+                                      description:
+                                          wishlistItems[index].description!,
                                     ),
                                     transitionsBuilder: (context, animations,
                                         secondaryAnimations, childs) {

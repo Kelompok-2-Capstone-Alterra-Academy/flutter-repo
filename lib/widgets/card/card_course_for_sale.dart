@@ -8,21 +8,25 @@ class CardCourseForSale extends StatelessWidget {
   const CardCourseForSale({
     super.key,
     required this.id,
-    required this.img,
-    required this.title,
-    required this.rating,
-    required this.student,
+    required this.thumbnail,
+    required this.courseName,
     required this.price,
-    required this.grade,
+    required this.liveSession,
+    required this.description,
+    required this.className,
+    required this.scores,
+    required this.numStudent,
   });
 
   final int id;
-  final String img;
-  final String title;
-  final String grade;
-  final String rating;
-  final String student;
+  final String thumbnail;
+  final String courseName;
+  final String className;
+  final double scores;
+  final int numStudent;
   final String price;
+  final String liveSession;
+  final String description;
 
   @override
   Widget build(BuildContext context) {
@@ -36,12 +40,14 @@ class CardCourseForSale extends StatelessWidget {
             Navigator.of(context).push(FadeAnimation2(
               page: SellCourseDetailScreen(
                 id: id,
-                img: img,
-                title: title,
-                rating: rating,
-                student: student,
+                thumbnail: thumbnail,
+                courseName: courseName,
+                rating: scores,
+                student: numStudent,
                 price: price,
-                grade: grade,
+                grade: className,
+                liveSession: liveSession,
+                description: description,
               ),
             ));
           },
@@ -64,7 +70,7 @@ class CardCourseForSale extends StatelessWidget {
                   children: [
                     SizedBox(
                       child: Image.asset(
-                        img,
+                        "assets/images/thumbnail/$thumbnail.png",
                         fit: BoxFit.contain,
                       ),
                     ),
@@ -73,7 +79,7 @@ class CardCourseForSale extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          title,
+                          courseName,
                           style: GoogleFonts.poppins(
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
@@ -89,7 +95,7 @@ class CardCourseForSale extends StatelessWidget {
                         ),
                         const SizedBox(height: 3),
                         Text(
-                          grade,
+                          className,
                           style: GoogleFonts.poppins(
                               fontSize: 11,
                               fontWeight: FontWeight.w600,
@@ -103,7 +109,7 @@ class CardCourseForSale extends StatelessWidget {
                             ),
                             const SizedBox(width: 7),
                             Text(
-                              rating,
+                              scores.toString(),
                               style: GoogleFonts.poppins(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w600,
@@ -119,7 +125,7 @@ class CardCourseForSale extends StatelessWidget {
                             ),
                             const SizedBox(width: 7),
                             Text(
-                              student,
+                              "${numStudent.toString()} Siswa",
                               style: GoogleFonts.poppins(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w600,
