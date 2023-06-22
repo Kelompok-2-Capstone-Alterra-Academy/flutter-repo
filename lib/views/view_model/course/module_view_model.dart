@@ -34,7 +34,7 @@ class ModuleListViewModel with ChangeNotifier {
       final data = await moduleApi.getAllModule(token, courseId);
       for (var i in data) {
         for (var j in i.module!) {
-          if (j.attachment!.type! == Type.QUIZ) {
+          if (j.attachment!.type!.contains('quiz')) {
             tempCourseQuiz.add(i);
           }
         }

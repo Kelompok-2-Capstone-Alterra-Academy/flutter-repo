@@ -1,51 +1,13 @@
-// To parse this JSON data, do
-//
-//     final newModuleListModel = newModuleListModelFromJson(jsonString);
-
 import 'dart:convert';
-
-// class NewModuleListModel {
-//   List<Datum>? data;
-//   String? message;
-//   int? statusCode;
-
-//   NewModuleListModel({
-//     this.data,
-//     this.message,
-//     this.statusCode,
-//   });
-
-//   factory NewModuleListModel.fromRawJson(String str) =>
-//       NewModuleListModel.fromJson(json.decode(str));
-
-//   String toRawJson() => json.encode(toJson());
-
-//   factory NewModuleListModel.fromJson(Map<String, dynamic> json) =>
-//       NewModuleListModel(
-//         data: json["data"] == null
-//             ? []
-//             : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
-//         message: json["message"],
-//         statusCode: json["status code"],
-//       );
-
-//   Map<String, dynamic> toJson() => {
-//         "data": data == null
-//             ? []
-//             : List<dynamic>.from(data!.map((x) => x.toJson())),
-//         "message": message,
-//         "status code": statusCode,
-//       };
-// }
 
 class NewModuleListModel {
   int? id;
-  DateTime? createdAt;
-  DateTime? updatedAt;
+  String? createdAt;
+  String? updatedAt;
   dynamic deletedAt;
   String? sectionName;
   String? courseId;
-  Course? course;
+  NewModuleListModelCourse? course;
   List<Module>? module;
 
   NewModuleListModel({
@@ -67,16 +29,14 @@ class NewModuleListModel {
   factory NewModuleListModel.fromJson(Map<String, dynamic> json) =>
       NewModuleListModel(
         id: json["ID"],
-        createdAt: json["CreatedAt"] == null
-            ? null
-            : DateTime.parse(json["CreatedAt"]),
-        updatedAt: json["UpdatedAt"] == null
-            ? null
-            : DateTime.parse(json["UpdatedAt"]),
+        createdAt: json["CreatedAt"],
+        updatedAt: json["UpdatedAt"],
         deletedAt: json["DeletedAt"],
         sectionName: json["section_name"],
         courseId: json["course_id"],
-        course: json["course"] == null ? null : Course.fromJson(json["course"]),
+        course: json["course"] == null
+            ? null
+            : NewModuleListModelCourse.fromJson(json["course"]),
         module: json["module"] == null
             ? []
             : List<Module>.from(json["module"]!.map((x) => Module.fromJson(x))),
@@ -84,8 +44,8 @@ class NewModuleListModel {
 
   Map<String, dynamic> toJson() => {
         "ID": id,
-        "CreatedAt": createdAt?.toIso8601String(),
-        "UpdatedAt": updatedAt?.toIso8601String(),
+        "CreatedAt": createdAt,
+        "UpdatedAt": updatedAt,
         "DeletedAt": deletedAt,
         "section_name": sectionName,
         "course_id": courseId,
@@ -96,14 +56,18 @@ class NewModuleListModel {
       };
 }
 
-class Course {
+class NewModuleListModelCourse {
+  int? id;
+  String? createdAt;
+  String? updatedAt;
+  dynamic deletedAt;
   dynamic categoryId;
   Category? category;
-  dynamic classId;
+  int? classId;
   Class? courseClass;
   int? mentorId;
   User? user;
-  dynamic majorId;
+  int? majorId;
   Major? major;
   String? courseName;
   String? price;
@@ -115,7 +79,11 @@ class Course {
   int? numStudents;
   int? scores;
 
-  Course({
+  NewModuleListModelCourse({
+    this.id,
+    this.createdAt,
+    this.updatedAt,
+    this.deletedAt,
     this.categoryId,
     this.category,
     this.classId,
@@ -135,11 +103,17 @@ class Course {
     this.scores,
   });
 
-  factory Course.fromRawJson(String str) => Course.fromJson(json.decode(str));
+  factory NewModuleListModelCourse.fromRawJson(String str) =>
+      NewModuleListModelCourse.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory Course.fromJson(Map<String, dynamic> json) => Course(
+  factory NewModuleListModelCourse.fromJson(Map<String, dynamic> json) =>
+      NewModuleListModelCourse(
+        id: json["ID"],
+        createdAt: json["CreatedAt"],
+        updatedAt: json["UpdatedAt"],
+        deletedAt: json["DeletedAt"],
         categoryId: json["category_id"],
         category: json["category"] == null
             ? null
@@ -163,6 +137,10 @@ class Course {
       );
 
   Map<String, dynamic> toJson() => {
+        "ID": id,
+        "CreatedAt": createdAt,
+        "UpdatedAt": updatedAt,
+        "DeletedAt": deletedAt,
         "category_id": categoryId,
         "category": category?.toJson(),
         "class_id": classId,
@@ -302,8 +280,8 @@ class User {
 
 class Module {
   int? id;
-  DateTime? createdAt;
-  DateTime? updatedAt;
+  String? createdAt;
+  String? updatedAt;
   dynamic deletedAt;
   String? moduleName;
   String? description;
@@ -335,12 +313,8 @@ class Module {
 
   factory Module.fromJson(Map<String, dynamic> json) => Module(
         id: json["ID"],
-        createdAt: json["CreatedAt"] == null
-            ? null
-            : DateTime.parse(json["CreatedAt"]),
-        updatedAt: json["UpdatedAt"] == null
-            ? null
-            : DateTime.parse(json["UpdatedAt"]),
+        createdAt: json["CreatedAt"],
+        updatedAt: json["UpdatedAt"],
         deletedAt: json["DeletedAt"],
         moduleName: json["module_name"],
         description: json["description"],
@@ -359,8 +333,8 @@ class Module {
 
   Map<String, dynamic> toJson() => {
         "ID": id,
-        "CreatedAt": createdAt?.toIso8601String(),
-        "UpdatedAt": updatedAt?.toIso8601String(),
+        "CreatedAt": createdAt,
+        "UpdatedAt": updatedAt,
         "DeletedAt": deletedAt,
         "module_name": moduleName,
         "description": description,
@@ -377,14 +351,14 @@ class Module {
 
 class Attachment {
   int? id;
-  DateTime? createdAt;
-  DateTime? updatedAt;
+  String? createdAt;
+  String? updatedAt;
   dynamic deletedAt;
   String? attachmentName;
-  Description? description;
-  Type? type;
+  String? description;
+  String? type;
   String? attachmentSource;
-  Status? status;
+  String? status;
   String? folderId;
   Folder? folder;
 
@@ -409,52 +383,32 @@ class Attachment {
 
   factory Attachment.fromJson(Map<String, dynamic> json) => Attachment(
         id: json["ID"],
-        createdAt: json["CreatedAt"] == null
-            ? null
-            : DateTime.parse(json["CreatedAt"]),
-        updatedAt: json["UpdatedAt"] == null
-            ? null
-            : DateTime.parse(json["UpdatedAt"]),
+        createdAt: json["CreatedAt"],
+        updatedAt: json["UpdatedAt"],
         deletedAt: json["DeletedAt"],
         attachmentName: json["attachment_name"],
-        description: descriptionValues.map[json["description"]]!,
-        type: typeValues.map[json["type"]]!,
+        description: json["description"],
+        type: json["type"],
         attachmentSource: json["attachment_source"],
-        status: statusValues.map[json["status"]]!,
+        status: json["status"],
         folderId: json["folder_id"],
         folder: json["folder"] == null ? null : Folder.fromJson(json["folder"]),
       );
 
   Map<String, dynamic> toJson() => {
         "ID": id,
-        "CreatedAt": createdAt?.toIso8601String(),
-        "UpdatedAt": updatedAt?.toIso8601String(),
+        "CreatedAt": createdAt,
+        "UpdatedAt": updatedAt,
         "DeletedAt": deletedAt,
         "attachment_name": attachmentName,
-        "description": descriptionValues.reverse[description],
-        "type": typeValues.reverse[type],
+        "description": description,
+        "type": type,
         "attachment_source": attachmentSource,
-        "status": statusValues.reverse[status],
+        "status": status,
         "folder_id": folderId,
         "folder": folder?.toJson(),
       };
 }
-
-enum Description {
-  EMPTY,
-  INI_ADALAH_PENJELASAN_DASAR_MENGENAI_IPA,
-  VIDEO_INI_IISINYA_LAGU_TAYLOR_SWIFT,
-  TES
-}
-
-final descriptionValues = EnumValues({
-  "": Description.EMPTY,
-  "ini adalah penjelasan dasar mengenai ipa ":
-      Description.INI_ADALAH_PENJELASAN_DASAR_MENGENAI_IPA,
-  "Tes": Description.TES,
-  "video ini iisinya lagu taylor swift":
-      Description.VIDEO_INI_IISINYA_LAGU_TAYLOR_SWIFT
-});
 
 class Folder {
   String? folderName;
@@ -484,24 +438,10 @@ class Folder {
       };
 }
 
-enum Status { DRAFT, EMPTY, STUDENTS }
-
-final statusValues = EnumValues(
-    {"draft": Status.DRAFT, "": Status.EMPTY, "students": Status.STUDENTS});
-
-enum Type { EMPTY, DOCUMENT, VIDEO, QUIZ }
-
-final typeValues = EnumValues({
-  "document": Type.DOCUMENT,
-  "": Type.EMPTY,
-  "quiz": Type.QUIZ,
-  "video": Type.VIDEO
-});
-
 class Section {
   String? sectionName;
   String? courseId;
-  Course? course;
+  SectionCourse? course;
 
   Section({
     this.sectionName,
@@ -516,7 +456,9 @@ class Section {
   factory Section.fromJson(Map<String, dynamic> json) => Section(
         sectionName: json["section_name"],
         courseId: json["course_id"],
-        course: json["course"] == null ? null : Course.fromJson(json["course"]),
+        course: json["course"] == null
+            ? null
+            : SectionCourse.fromJson(json["course"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -526,12 +468,100 @@ class Section {
       };
 }
 
+class SectionCourse {
+  dynamic categoryId;
+  Category? category;
+  dynamic classId;
+  Class? courseClass;
+  int? mentorId;
+  User? user;
+  dynamic majorId;
+  Major? major;
+  String? courseName;
+  String? price;
+  String? duration;
+  String? status;
+  String? description;
+  String? thumbnail;
+  String? liveSessionWeek;
+  int? numStudents;
+  int? scores;
+
+  SectionCourse({
+    this.categoryId,
+    this.category,
+    this.classId,
+    this.courseClass,
+    this.mentorId,
+    this.user,
+    this.majorId,
+    this.major,
+    this.courseName,
+    this.price,
+    this.duration,
+    this.status,
+    this.description,
+    this.thumbnail,
+    this.liveSessionWeek,
+    this.numStudents,
+    this.scores,
+  });
+
+  factory SectionCourse.fromRawJson(String str) =>
+      SectionCourse.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory SectionCourse.fromJson(Map<String, dynamic> json) => SectionCourse(
+        categoryId: json["category_id"],
+        category: json["category"] == null
+            ? null
+            : Category.fromJson(json["category"]),
+        classId: json["class_id"],
+        courseClass:
+            json["class"] == null ? null : Class.fromJson(json["class"]),
+        mentorId: json["mentor_id"],
+        user: json["user"] == null ? null : User.fromJson(json["user"]),
+        majorId: json["major_id"],
+        major: json["major"] == null ? null : Major.fromJson(json["major"]),
+        courseName: json["course_name"],
+        price: json["price"],
+        duration: json["duration"],
+        status: json["status"],
+        description: json["description"],
+        thumbnail: json["thumbnail"],
+        liveSessionWeek: json["live_session_week"],
+        numStudents: json["num_students"],
+        scores: json["scores"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "category_id": categoryId,
+        "category": category?.toJson(),
+        "class_id": classId,
+        "class": courseClass?.toJson(),
+        "mentor_id": mentorId,
+        "user": user?.toJson(),
+        "major_id": majorId,
+        "major": major?.toJson(),
+        "course_name": courseName,
+        "price": price,
+        "duration": duration,
+        "status": status,
+        "description": description,
+        "thumbnail": thumbnail,
+        "live_session_week": liveSessionWeek,
+        "num_students": numStudents,
+        "scores": scores,
+      };
+}
+
 class Task {
   int? id;
-  DateTime? createdAt;
-  DateTime? updatedAt;
+  String? createdAt;
+  String? updatedAt;
   dynamic deletedAt;
-  DateTime? dueDate;
+  String? dueDate;
   String? moduleId;
 
   Task({
@@ -549,36 +579,19 @@ class Task {
 
   factory Task.fromJson(Map<String, dynamic> json) => Task(
         id: json["ID"],
-        createdAt: json["CreatedAt"] == null
-            ? null
-            : DateTime.parse(json["CreatedAt"]),
-        updatedAt: json["UpdatedAt"] == null
-            ? null
-            : DateTime.parse(json["UpdatedAt"]),
+        createdAt: json["CreatedAt"],
+        updatedAt: json["UpdatedAt"],
         deletedAt: json["DeletedAt"],
-        dueDate:
-            json["due_date"] == null ? null : DateTime.parse(json["due_date"]),
+        dueDate: json["due_date"],
         moduleId: json["module_id"],
       );
 
   Map<String, dynamic> toJson() => {
         "ID": id,
-        "CreatedAt": createdAt?.toIso8601String(),
-        "UpdatedAt": updatedAt?.toIso8601String(),
+        "CreatedAt": createdAt,
+        "UpdatedAt": updatedAt,
         "DeletedAt": deletedAt,
-        "due_date": dueDate?.toIso8601String(),
+        "due_date": dueDate,
         "module_id": moduleId,
       };
-}
-
-class EnumValues<T> {
-  Map<String, T> map;
-  late Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    reverseMap = map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
-  }
 }
