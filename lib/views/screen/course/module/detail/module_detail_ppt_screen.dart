@@ -40,8 +40,22 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
       ..enableZoom(true)
       ..loadRequest(
         Uri.parse(widget.pptDetailModel.url ??
-            '${widget.pptDetailModel.url}/embed?frameborder&amp;usp=embed_googleplus'),
+            'https://docs.google.com/presentation/d/17LfZZORMeVzL3B-kFybmeK0pHyX4q61OPOpX-x3EHNo/embed?frameborder&amp;usp=embed_googleplus'),
       );
+  }
+
+  Future<void> saveSectionProgress() async {
+    PreferencesUtils preferencesUtils = PreferencesUtils();
+    await preferencesUtils.init();
+    //get current section
+    int currentSection = preferencesUtils
+            .getPreferencesInt('current_section_course_${widget.courseId}') ??
+        0;
+    //increment the current section value
+    await preferencesUtils.savePreferencesInt(
+      'current_section_course_${widget.courseId}',
+      currentSection + 1,
+    );
   }
 
   @override
@@ -137,19 +151,7 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                                   ),
                                   onPressed: () async {
                                     if (widget.isLastIndex) {
-                                      PreferencesUtils preferencesUtils =
-                                          PreferencesUtils();
-                                      await preferencesUtils.init();
-                                      //get current section
-                                      int currentSection =
-                                          preferencesUtils.getPreferencesInt(
-                                                  'current_section_course_${widget.courseId}') ??
-                                              0;
-                                      //increment the current section value
-                                      preferencesUtils.savePreferencesInt(
-                                        'current_section_course_${widget.courseId}',
-                                        currentSection++,
-                                      );
+                                      saveSectionProgress();
                                       if (context.mounted) {
                                         showDialog(
                                           context: context,
@@ -159,19 +161,7 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                                         );
                                       }
                                     } else {
-                                      PreferencesUtils preferencesUtils =
-                                          PreferencesUtils();
-                                      await preferencesUtils.init();
-                                      //get current section
-                                      int currentSection =
-                                          preferencesUtils.getPreferencesInt(
-                                                  'current_section_course_${widget.courseId}') ??
-                                              0;
-                                      //increment the current section value
-                                      preferencesUtils.savePreferencesInt(
-                                        'current_section_course_${widget.courseId}',
-                                        currentSection++,
-                                      );
+                                      saveSectionProgress();
                                       if (context.mounted) {
                                         Navigator.pushReplacement(
                                           context,
@@ -292,19 +282,7 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                                 ),
                                 onPressed: () async {
                                   if (widget.isLastIndex) {
-                                    PreferencesUtils preferencesUtils =
-                                        PreferencesUtils();
-                                    await preferencesUtils.init();
-                                    //get current section
-                                    int currentSection =
-                                        preferencesUtils.getPreferencesInt(
-                                                'current_section_course_${widget.courseId}') ??
-                                            0;
-                                    //increment the current section value
-                                    preferencesUtils.savePreferencesInt(
-                                      'current_section_course_${widget.courseId}',
-                                      currentSection++,
-                                    );
+                                    saveSectionProgress();
                                     if (context.mounted) {
                                       showDialog(
                                         context: context,
@@ -314,19 +292,7 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                                       );
                                     }
                                   } else {
-                                    PreferencesUtils preferencesUtils =
-                                        PreferencesUtils();
-                                    await preferencesUtils.init();
-                                    //get current section
-                                    int currentSection =
-                                        preferencesUtils.getPreferencesInt(
-                                                'current_section_course_${widget.courseId}') ??
-                                            0;
-                                    //increment the current section value
-                                    preferencesUtils.savePreferencesInt(
-                                      'current_section_course_${widget.courseId}',
-                                      currentSection++,
-                                    );
+                                    saveSectionProgress();
                                     if (context.mounted) {
                                       Navigator.pushReplacement(
                                         context,

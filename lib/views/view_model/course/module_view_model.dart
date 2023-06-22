@@ -2,23 +2,18 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:staredu/models/module_details_model.dart';
 import 'package:staredu/models/module_list_model.dart';
+import 'package:staredu/models/new_module_list_model.dart';
 import 'package:staredu/models/service/module_api.dart';
 import 'package:staredu/utils/state/my_state.dart';
 
 class ModuleListViewModel with ChangeNotifier {
   List<ModuleListModel> _moduleList = [];
   List<ModuleListModel> get moduleList => _moduleList;
-  List<DetailVideoModel> _detailVideo = [];
-  List<DetailVideoModel> get detailVideo => _detailVideo;
-  List<DetailTaskModel> _detailTask = [];
-  List<DetailTaskModel> get detailTask => _detailTask;
-  List<QuizModel> _detailQuiz = [];
-  List<QuizModel> get detailQuiz => _detailQuiz;
 
-  List<NewCourseDetailModel> _courseModule = [];
-  List<NewCourseDetailModel> get courseModule => _courseModule;
-  List<NewCourseDetailModel> _courseQuiz = [];
-  List<NewCourseDetailModel> get courseQuiz => _courseQuiz;
+  List<NewModuleListModel> _courseModule = [];
+  List<NewModuleListModel> get courseModule => _courseModule;
+  List<NewModuleListModel> _courseQuiz = [];
+  List<NewModuleListModel> get courseQuiz => _courseQuiz;
 
   final ModuleApi moduleApi = ModuleApi();
 
@@ -32,14 +27,14 @@ class ModuleListViewModel with ChangeNotifier {
 
   Future getCourseModule(String? token, int? courseId) async {
     setState(MyState.loading);
-    final List<NewCourseDetailModel> tempCourseQuiz = [];
-    final List<NewCourseDetailModel> tempCourseModule = [];
+
+    final List<NewModuleListModel> tempCourseQuiz = [];
 
     try {
       final data = await moduleApi.getAllModule(token, courseId);
       for (var i in data) {
         for (var j in i.module!) {
-          if (j.attachment!.type!.contains('quiz')) {
+          if (j.attachment!.type! == Type.QUIZ) {
             tempCourseQuiz.add(i);
           }
           // else {

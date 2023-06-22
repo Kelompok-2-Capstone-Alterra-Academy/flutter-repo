@@ -74,7 +74,7 @@ class _FinishedCourseTakenListScreenState
                                         left: 10, right: 18),
                                     child: Image(
                                       image: AssetImage(
-                                          "assets/images/${finishedCourse[index].thumbnail ?? "idea"}.png"),
+                                          "assets/images/thumbnail/${finishedCourse[index].thumbnail ?? "idea"}.png"),
                                       height: 70,
                                     ),
                                   ),
