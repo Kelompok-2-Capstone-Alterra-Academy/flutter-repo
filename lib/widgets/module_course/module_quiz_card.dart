@@ -14,6 +14,8 @@ class ModuleQuizCard extends StatelessWidget {
     this.url,
     this.isLastModule,
     this.moduleId,
+    this.sectionFinished,
+    this.courseName,
   });
 
   final int? id;
@@ -23,6 +25,8 @@ class ModuleQuizCard extends StatelessWidget {
   final String? url;
   final bool? isLastModule;
   final int? moduleId;
+  final bool? sectionFinished;
+  final String? courseName;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +47,8 @@ class ModuleQuizCard extends StatelessWidget {
                           isLastIndex: true,
                           quizDetail: QuizDetailModel(url: url),
                           moduleId: moduleId!,
+                          isFinished: sectionFinished,
+                          courseName: courseName,
                         ),
                         transitionsBuilder:
                             (context, animations, secondaryAnimations, childs) {
@@ -64,6 +70,8 @@ class ModuleQuizCard extends StatelessWidget {
                           isLastIndex: false,
                           quizDetail: QuizDetailModel(url: url),
                           moduleId: moduleId!,
+                          isFinished: sectionFinished,
+                          courseName: courseName,
                         ),
                         transitionsBuilder:
                             (context, animations, secondaryAnimations, childs) {
@@ -115,15 +123,17 @@ class ModuleQuizCard extends StatelessWidget {
                                       fontSize: 14,
                                     ),
                                   ),
-                                  Text(
-                                    "100 Point",
-                                    textAlign: TextAlign.right,
-                                    style: GoogleFonts.poppins(
-                                      fontStyle: FontStyle.normal,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 9,
-                                    ),
-                                  ),
+                                  sectionFinished!
+                                      ? Icon(Icons.check_circle_outlined)
+                                      : Text(
+                                          "100 Point",
+                                          textAlign: TextAlign.right,
+                                          style: GoogleFonts.poppins(
+                                            fontStyle: FontStyle.normal,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 9,
+                                          ),
+                                        ),
                                 ],
                               ),
                             ),

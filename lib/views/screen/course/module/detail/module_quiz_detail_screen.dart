@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/models/quiz_model.dart';
+import 'package:staredu/utils/animation/fade_animation2.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/preferences/preferences_utils.dart';
+import 'package:staredu/views/screen/course/course_taken_list_screen.dart';
+import 'package:staredu/views/screen/course/module/module_list_quiz_screen.dart';
 import 'package:staredu/widgets/course/review_dialog.dart';
 import 'package:staredu/widgets/module_course/module_quiz_detail_done_dialog.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -14,6 +17,7 @@ class ModuleQuizDetailScreen extends StatefulWidget {
   final int courseId;
   final int moduleId;
   final bool? isFinished;
+  final String? courseName;
   const ModuleQuizDetailScreen({
     super.key,
     required this.quizDetail,
@@ -21,6 +25,7 @@ class ModuleQuizDetailScreen extends StatefulWidget {
     required this.courseId,
     required this.moduleId,
     this.isFinished,
+    this.courseName,
   });
 
   @override
@@ -85,6 +90,19 @@ class _ModuleQuizDetailScreenState extends State<ModuleQuizDetailScreen> {
             fontSize: 17,
           ),
         ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushAndRemoveUntil(
+                context,
+                FadeAnimation2(
+                    page: ModuleListQuizScreen(
+                  courseId: widget.courseId,
+                  courseName: widget.courseName,
+                )),
+                (route) => false);
+          },
+        ),
       ),
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
@@ -144,8 +162,8 @@ class _ModuleQuizDetailScreenState extends State<ModuleQuizDetailScreen> {
                   child: widget.isFinished!
                       ? OutlinedButton(
                           style: OutlinedButton.styleFrom(
-                            foregroundColor: whiteColor,
-                            backgroundColor: primaryColor,
+                            foregroundColor: searchBarTextColor,
+                            backgroundColor: searchBarColor,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
@@ -187,7 +205,9 @@ class _ModuleQuizDetailScreenState extends State<ModuleQuizDetailScreen> {
                                 showDialog(
                                   context: context,
                                   builder: (context) =>
-                                      const ModuleQuizDetailDoneDialog(),
+                                      ModuleQuizDetailDoneDialog(
+                                          courseId: widget.courseId,
+                                          courseName: widget.courseName),
                                 );
                               }
                             }

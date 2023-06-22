@@ -90,8 +90,6 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-    final String linkVideo =
-        YoutubePlayer.convertUrlToId(widget.linkModule.toString()).toString();
     return Consumer<ModuleListViewModel>(
       builder: (context, value, _) {
         return Scaffold(
