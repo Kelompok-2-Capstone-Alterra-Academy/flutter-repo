@@ -43,7 +43,7 @@ class WishlistManager {
           scores: rating,
           numStudents: student,
           courseName: title,
-          sellCourseModelClass: grade,
+          status: grade,
           liveSessionWeek: liveSession,
           description: description));
       await saveWishlist(wishlist);

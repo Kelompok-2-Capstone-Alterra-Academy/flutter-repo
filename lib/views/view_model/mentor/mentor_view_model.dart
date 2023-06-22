@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:staredu/models/mentor_model.dart';
 import 'package:staredu/models/service/mentor_api.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../utils/state/my_state.dart';
 
 class MentorViewModel extends ChangeNotifier {
@@ -15,12 +16,12 @@ class MentorViewModel extends ChangeNotifier {
 
   MyState myState = MyState.initial;
 
-  Future getAllMentor() async {
+  Future getAllMentor(String token) async {
     try {
       myState = MyState.loading;
       notifyListeners();
 
-      _mentorList = await mentorAPI.getMentor();
+      _mentorList = await mentorAPI.getMentor(token);
       _findMentor = _mentorList;
 
       myState = MyState.success;
@@ -47,5 +48,20 @@ class MentorViewModel extends ChangeNotifier {
     }
     _findMentor = results;
     notifyListeners();
+  }
+
+  launchWhatsapp(BuildContext context, String whatsapp) async {
+    var whatsappAndroid =
+        Uri.parse("whatsapp://send?phone=$whatsapp&text=hello");
+    if (await canLaunchUrl(whatsappAndroid)) {
+      await launchUrl(whatsappAndroid);
+    } else {
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("WhatsApp is not installed on the device"),
+        ),
+      );
+    }
   }
 }

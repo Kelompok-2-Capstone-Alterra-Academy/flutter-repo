@@ -3,6 +3,8 @@ import 'package:staredu/models/mentor.dart';
 import 'package:staredu/models/mentor_model.dart';
 import 'package:staredu/utils/constant/mentor_list.dart';
 
+import '../../utils/constant/constant.dart';
+
 class MentorAPI {
   final Dio dio = Dio();
 
@@ -18,15 +20,19 @@ class MentorAPI {
     return data;
   }
 
-  Future<List<MentorModel>> getMentor() async {
+  Future<List<MentorModel>> getMentor(String? token) async {
     try {
-      // List<SellCourseModel> listSellCourse = [];
-      // final response = await dio.get();
-
-      // for (var element in response.data) {
-      //   listSellCourse.add(SellCourseModel.fromJson(element));
-      // }
-      return mentorList;
+      List<MentorModel> listMentor = [];
+      final response = await dio.get(
+        '$BASE_URL_API/students/mentors',
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'},
+        ),
+      );
+      for (var element in response.data['data']) {
+        listMentor.add(MentorModel.fromJson(element));
+      }
+      return listMentor;
     } on DioError catch (_) {
       rethrow;
     }

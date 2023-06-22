@@ -159,6 +159,7 @@ class _AccountVerificationState extends State<AccountVerification> {
                             SizedBox(
                               width: 60,
                               child: TextFormField(
+                                textAlign: TextAlign.center,
                                 maxLength: 1,
                                 buildCounter: (BuildContext context,
                                         {int? currentLength,
@@ -186,6 +187,7 @@ class _AccountVerificationState extends State<AccountVerification> {
                             SizedBox(
                               width: 60,
                               child: TextFormField(
+                                textAlign: TextAlign.center,
                                 maxLength: 1,
                                 buildCounter: (BuildContext context,
                                         {int? currentLength,
@@ -213,6 +215,7 @@ class _AccountVerificationState extends State<AccountVerification> {
                             SizedBox(
                               width: 60,
                               child: TextFormField(
+                                textAlign: TextAlign.center,
                                 maxLength: 1,
                                 buildCounter: (BuildContext context,
                                         {int? currentLength,
@@ -240,6 +243,7 @@ class _AccountVerificationState extends State<AccountVerification> {
                             SizedBox(
                               width: 60,
                               child: TextFormField(
+                                textAlign: TextAlign.center,
                                 controller: _otpController4,
                                 maxLength: 1,
                                 buildCounter: (BuildContext context,
@@ -370,7 +374,7 @@ class _AccountVerificationState extends State<AccountVerification> {
                               _otpController4.clear();
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
-                                content: Text(message),
+                                content: Text("Wrong or $message"),
                               ));
                             }
                           }
