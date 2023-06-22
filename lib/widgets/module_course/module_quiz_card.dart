@@ -12,6 +12,7 @@ class ModuleQuizCard extends StatelessWidget {
     this.isQuizAvailable,
     this.numbering,
     this.url,
+    this.isLastModule,
   });
 
   final int? id;
@@ -19,6 +20,7 @@ class ModuleQuizCard extends StatelessWidget {
   final bool? isQuizAvailable;
   final String? numbering;
   final String? url;
+  final bool? isLastModule;
 
   @override
   Widget build(BuildContext context) {
@@ -29,24 +31,47 @@ class ModuleQuizCard extends StatelessWidget {
         isQuizAvailable!
             ? GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(
-                    PageRouteBuilder(
-                      pageBuilder: (context, animations, secondaryAnimations) =>
-                          ModuleQuizDetailScreen(
-                        courseId: id!,
-                        isLastIndex: false,
-                        quizDetail: QuizDetailModel(url: url),
+                  if (isLastModule == true) {
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        pageBuilder:
+                            (context, animations, secondaryAnimations) =>
+                                ModuleQuizDetailScreen(
+                          courseId: id!,
+                          isLastIndex: true,
+                          quizDetail: QuizDetailModel(url: url),
+                        ),
+                        transitionsBuilder:
+                            (context, animations, secondaryAnimations, childs) {
+                          final tween = Tween(begin: 0.0, end: 1.0);
+                          return FadeTransition(
+                            opacity: animations.drive(tween),
+                            child: childs,
+                          );
+                        },
                       ),
-                      transitionsBuilder:
-                          (context, animations, secondaryAnimations, childs) {
-                        final tween = Tween(begin: 0.0, end: 1.0);
-                        return FadeTransition(
-                          opacity: animations.drive(tween),
-                          child: childs,
-                        );
-                      },
-                    ),
-                  );
+                    );
+                  } else {
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        pageBuilder:
+                            (context, animations, secondaryAnimations) =>
+                                ModuleQuizDetailScreen(
+                          courseId: id!,
+                          isLastIndex: false,
+                          quizDetail: QuizDetailModel(url: url),
+                        ),
+                        transitionsBuilder:
+                            (context, animations, secondaryAnimations, childs) {
+                          final tween = Tween(begin: 0.0, end: 1.0);
+                          return FadeTransition(
+                            opacity: animations.drive(tween),
+                            child: childs,
+                          );
+                        },
+                      ),
+                    );
+                  }
                 },
                 child: Card(
                   elevation: 0,
