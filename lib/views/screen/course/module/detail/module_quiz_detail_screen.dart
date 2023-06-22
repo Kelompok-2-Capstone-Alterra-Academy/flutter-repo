@@ -39,6 +39,22 @@ class _ModuleQuizDetailScreenState extends State<ModuleQuizDetailScreen> {
       );
   }
 
+  Future<void> saveSectionProgress() async {
+    PreferencesUtils preferencesUtils = PreferencesUtils();
+    await preferencesUtils.init();
+    //get current user
+    String email = preferencesUtils.getPreferencesString("user_email") ?? "";
+    //get current section
+    int currentSection = preferencesUtils.getPreferencesInt(
+            'current_section_course_${widget.courseId}_$email') ??
+        0;
+    //increment the current section value
+    await preferencesUtils.savePreferencesInt(
+      'current_section_course_${widget.courseId}_$email',
+      currentSection + 1,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,17 +137,7 @@ class _ModuleQuizDetailScreenState extends State<ModuleQuizDetailScreen> {
                     ),
                     onPressed: () async {
                       if (widget.isLastIndex) {
-                        PreferencesUtils preferencesUtils = PreferencesUtils();
-                        await preferencesUtils.init();
-                        //get current section
-                        int currentSection = preferencesUtils.getPreferencesInt(
-                                'current_section_course_${widget.courseId}') ??
-                            0;
-                        //increment the current section value
-                        preferencesUtils.savePreferencesInt(
-                          'current_section_course_${widget.courseId}',
-                          currentSection++,
-                        );
+                        saveSectionProgress();
                         if (context.mounted) {
                           showDialog(
                             context: context,
@@ -141,17 +147,7 @@ class _ModuleQuizDetailScreenState extends State<ModuleQuizDetailScreen> {
                           );
                         }
                       } else {
-                        PreferencesUtils preferencesUtils = PreferencesUtils();
-                        await preferencesUtils.init();
-                        //get current section
-                        int currentSection = preferencesUtils.getPreferencesInt(
-                                'current_section_course_${widget.courseId}') ??
-                            0;
-                        //increment the current section value
-                        preferencesUtils.savePreferencesInt(
-                          'current_section_course_${widget.courseId}',
-                          currentSection++,
-                        );
+                        saveSectionProgress();
                         if (context.mounted) {
                           showDialog(
                             context: context,

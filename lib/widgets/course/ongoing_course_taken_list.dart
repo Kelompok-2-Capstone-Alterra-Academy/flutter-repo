@@ -10,7 +10,6 @@ import 'package:staredu/widgets/course/filter_course_taken.dart';
 import 'package:staredu/widgets/loading/circular_progress.dart';
 import 'package:staredu/widgets/loading/opacity_progress.dart';
 
-import '../../utils/animation/fade_animation2.dart';
 import '../../utils/color/color.dart';
 
 class OnGoingCourseTakenListScreen extends StatefulWidget {
@@ -28,45 +27,65 @@ class OnGoingCourseTakenListScreen extends StatefulWidget {
 class _OnGoingCourseTakenListScreenState
     extends State<OnGoingCourseTakenListScreen> {
   //to get current section
-  Future<String> getCurrentSection(String courseId) async {
+  Future<int> getCurrentSection(String courseId) async {
     PreferencesUtils preferencesUtils = PreferencesUtils();
     await preferencesUtils.init();
 
-    String currentSection = preferencesUtils
-            .getPreferencesString('current_section_course_$courseId') ??
-        "";
+    String email = preferencesUtils.getPreferencesString("user_email") ?? "";
+
+    int currentSection = preferencesUtils
+            .getPreferencesInt('current_section_course_${courseId}_$email') ??
+        0;
     return currentSection;
   }
 
   //to get total section
-  Future<String> getSectionCount(String courseId) async {
+  Future<int> getSectionCount(String courseId) async {
     PreferencesUtils preferencesUtils = PreferencesUtils();
     await preferencesUtils.init();
 
-    String totalSection = preferencesUtils
-            .getPreferencesString('total_section_course_$courseId') ??
-        "";
+    String email = preferencesUtils.getPreferencesString("user_email") ?? "";
+
+    int? totalSection = preferencesUtils
+            .getPreferencesInt('total_section_course_${courseId}_$email') ??
+        0;
     return totalSection;
   }
 
   Future<double> getProgress(String courseId) async {
     PreferencesUtils preferencesUtils = PreferencesUtils();
     await preferencesUtils.init();
-    int currentSection = int.parse(preferencesUtils
-            .getPreferencesString('current_section_course_$courseId') ??
-        "0");
-    int totalSection = int.parse(preferencesUtils
-            .getPreferencesString('total_section_course_$courseId') ??
-        "0");
 
-    return currentSection / totalSection * 100;
+    String email = preferencesUtils.getPreferencesString("user_email") ?? "";
+
+    int? currentSection = preferencesUtils
+            .getPreferencesInt('current_section_course_${courseId}_$email') ??
+        0;
+    int? totalSection = preferencesUtils
+            .getPreferencesInt('total_section_course_${courseId}_$email') ??
+        0;
+
+    if (currentSection != 0 && totalSection != 0) {
+      return currentSection / totalSection * 100;
+    } else {
+      return 0;
+    }
   }
 
+  // reset section (for testing)
   // Future<void> removeSection(String courseId) async {
   //   PreferencesUtils preferencesUtils = PreferencesUtils();
   //   await preferencesUtils.init();
 
   //   preferencesUtils.removePreferences('total_section_course_$courseId');
+  //   preferencesUtils.removePreferences('current_section_course_$courseId');
+  // }
+
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   removeSection("45");
   // }
 
   @override
@@ -149,7 +168,7 @@ class _OnGoingCourseTakenListScreenState
                                           left: 10, right: 18),
                                       child: Image(
                                         image: AssetImage(
-                                            "assets/images/${onGoingCourse[index].thumbnail ?? "idea"}.png"),
+                                            "assets/images/thumbnail/${onGoingCourse[index].thumbnail ?? "idea"}.png"),
                                         height: 70,
                                       ),
                                     ),
@@ -176,34 +195,80 @@ class _OnGoingCourseTakenListScreenState
                                             fit: FlexFit.loose,
                                             child: Row(
                                               children: [
-                                                Text(
-                                                  "Section ",
-                                                  style: GoogleFonts.poppins(
-                                                    fontStyle: FontStyle.normal,
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 11,
-                                                  ),
-                                                ),
-                                                FutureBuilder(
-                                                  future: currentSection,
-                                                  builder: (context, snapshot) {
-                                                    return Text(
-                                                      snapshot.data ?? "",
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                        fontStyle:
-                                                            FontStyle.normal,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        fontSize: 11,
-                                                      ),
-                                                    );
-                                                  },
-                                                ),
                                                 FutureBuilder(
                                                   future: totalSection,
                                                   builder: (context, snapshot) {
-                                                    if (snapshot.data != null) {
+                                                    if (snapshot.data != 0) {
+                                                      return Text(
+                                                        "Section ",
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                          fontStyle:
+                                                              FontStyle.normal,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          fontSize: 11,
+                                                        ),
+                                                      );
+                                                    } else {
+                                                      return Text(
+                                                        "Kursus Baru !",
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                          fontStyle:
+                                                              FontStyle.normal,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          fontSize: 11,
+                                                          color: successColor,
+                                                        ),
+                                                      );
+                                                    }
+                                                  },
+                                                ),
+                                                FutureBuilder(
+                                                    future: totalSection,
+                                                    builder:
+                                                        (context, snapshot) {
+                                                      if (snapshot.data != 0) {
+                                                        return FutureBuilder(
+                                                          future:
+                                                              currentSection,
+                                                          builder: (context,
+                                                              snapshot) {
+                                                            if (snapshot.data !=
+                                                                null) {
+                                                              return Text(
+                                                                (snapshot.data ??
+                                                                        0)
+                                                                    .toString(),
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .poppins(
+                                                                  fontStyle:
+                                                                      FontStyle
+                                                                          .normal,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  fontSize: 11,
+                                                                ),
+                                                              );
+                                                            } else {
+                                                              return const SizedBox
+                                                                  .shrink();
+                                                            }
+                                                          },
+                                                        );
+                                                      } else {
+                                                        return const SizedBox
+                                                            .shrink();
+                                                      }
+                                                    }),
+                                                FutureBuilder(
+                                                  future: totalSection,
+                                                  builder: (context, snapshot) {
+                                                    if (snapshot.data != 0) {
                                                       return Text(
                                                         "/",
                                                         style:
@@ -224,17 +289,23 @@ class _OnGoingCourseTakenListScreenState
                                                 FutureBuilder(
                                                   future: totalSection,
                                                   builder: (context, snapshot) {
-                                                    return Text(
-                                                      snapshot.data ?? "",
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                        fontStyle:
-                                                            FontStyle.normal,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        fontSize: 11,
-                                                      ),
-                                                    );
+                                                    if (snapshot.data != 0) {
+                                                      return Text(
+                                                        (snapshot.data ?? 0)
+                                                            .toString(),
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                          fontStyle:
+                                                              FontStyle.normal,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          fontSize: 11,
+                                                        ),
+                                                      );
+                                                    } else {
+                                                      return const SizedBox
+                                                          .shrink();
+                                                    }
                                                   },
                                                 ),
                                               ],
@@ -285,6 +356,7 @@ class _OnGoingCourseTakenListScreenState
                                                   ),
                                                   Text(
                                                     (snapshot.data ?? 0)
+                                                        .toInt()
                                                         .toString(),
                                                     style: GoogleFonts.inter(
                                                       fontWeight:

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/preferences/preferences_utils.dart';
 import 'package:staredu/utils/state/my_state.dart';
+import 'package:staredu/views/screen/course/course_taken_list_screen.dart';
 import 'package:staredu/views/view_model/course/certificate_view_model.dart';
 import 'package:staredu/views/view_model/course/module_view_model.dart';
 import 'package:staredu/widgets/course/course_certificate.dart';
@@ -13,6 +14,7 @@ import 'package:staredu/widgets/module_course/module_button.dart';
 import 'package:staredu/widgets/module_course/module_card.dart';
 import 'package:staredu/widgets/module_course/module_section_card.dart';
 
+import '../../../../utils/animation/fade_animation2.dart';
 import '../../../../widgets/bottom_navigation_bar/bottom_navigation_bar.dart';
 
 class ModuleListScreen extends StatefulWidget with WidgetsBindingObserver {
@@ -45,11 +47,25 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
       await Provider.of<ModuleListViewModel>(context, listen: false)
           .getCourseModule(token, widget.courseId);
       if (context.mounted) {
-        String totalCourse =
-            context.read<ModuleListViewModel>().courseModule.length.toString();
-        preferencesUtils.savePreferencesString(
-          'total_section_course_${widget.courseId}',
-          totalCourse,
+        final totalSection =
+            context.read<ModuleListViewModel>().courseModule.length;
+        int totalModule = 0;
+        for (var m = 0; m < totalSection; m++) {
+          totalModule += context
+                  .read<ModuleListViewModel>()
+                  .courseModule[m]
+                  .module
+                  ?.length ??
+              0;
+        }
+
+        //get current user
+        String email =
+            preferencesUtils.getPreferencesString("user_email") ?? "";
+
+        preferencesUtils.savePreferencesInt(
+          'total_section_course_${widget.courseId}_$email',
+          totalModule,
         );
       }
     }
@@ -78,6 +94,15 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                 fontWeight: FontWeight.w600,
                 fontSize: 17,
               ),
+            ),
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    FadeAnimation2(page: const CourseTakenListScreen()),
+                    (route) => false);
+              },
             ),
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(kToolbarHeight),
@@ -224,33 +249,36 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                                         : false,
                                                 isMaterialAvailable:
                                                     moduleViewModel
-                                                                .courseModule[
-                                                                    firstIndex]
-                                                                .module![
-                                                                    secondIndex]
-                                                                .attachment!
-                                                                .type!
-                                                                .contains(
-                                                                    'document') &&
-                                                            moduleViewModel
-                                                                .courseModule[
-                                                                    firstIndex]
-                                                                .module![
-                                                                    secondIndex]
-                                                                .tasks!
-                                                                .isEmpty
+                                                            .courseModule[
+                                                                firstIndex]
+                                                            .module![
+                                                                secondIndex]
+                                                            .attachment!
+                                                            .type!
+                                                            .contains('ppt')
                                                         ? true
                                                         : false,
                                                 isAssignmentAvailable:
+                                                    // moduleViewModel
+                                                    //         .courseModule[
+                                                    //             firstIndex]
+                                                    //         .module![
+                                                    //             secondIndex]
+                                                    //         .tasks!
+                                                    //         .isEmpty
+                                                    //     ? false
+                                                    //     : true,
                                                     moduleViewModel
                                                             .courseModule[
                                                                 firstIndex]
                                                             .module![
                                                                 secondIndex]
-                                                            .tasks!
-                                                            .isEmpty
-                                                        ? false
-                                                        : true,
+                                                            .attachment!
+                                                            .type!
+                                                            .contains(
+                                                                'document')
+                                                        ? true
+                                                        : false,
                                                 dueDate:
                                                     DateTime.now().toString(),
                                                 isSectionFinished: false,
@@ -265,7 +293,8 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                                             firstIndex]
                                                         .module![secondIndex]
                                                         .attachment!
-                                                        .description,
+                                                        .description
+                                                        .toString(),
                                               );
                                             }
                                             return ModuleCard(
@@ -297,21 +326,12 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                                   : false,
                                               isMaterialAvailable:
                                                   moduleViewModel
-                                                              .courseModule[
-                                                                  firstIndex]
-                                                              .module![
-                                                                  secondIndex]
-                                                              .attachment!
-                                                              .type!
-                                                              .contains(
-                                                                  'document') &&
-                                                          moduleViewModel
-                                                              .courseModule[
-                                                                  firstIndex]
-                                                              .module![
-                                                                  secondIndex]
-                                                              .tasks!
-                                                              .isEmpty
+                                                          .courseModule[
+                                                              firstIndex]
+                                                          .module![secondIndex]
+                                                          .attachment!
+                                                          .type!
+                                                          .contains('ppt')
                                                       ? true
                                                       : false,
                                               isAssignmentAvailable:
@@ -319,10 +339,11 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                                           .courseModule[
                                                               firstIndex]
                                                           .module![secondIndex]
-                                                          .tasks!
-                                                          .isEmpty
-                                                      ? false
-                                                      : true,
+                                                          .attachment!
+                                                          .type!
+                                                          .contains('document')
+                                                      ? true
+                                                      : false,
                                               dueDate:
                                                   DateTime.now().toString(),
                                               isSectionFinished: false,
@@ -335,7 +356,8 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                                   .courseModule[firstIndex]
                                                   .module![secondIndex]
                                                   .attachment!
-                                                  .description,
+                                                  .description
+                                                  .toString(),
                                             );
                                           },
                                         ),
@@ -390,18 +412,11 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                                 ? true
                                                 : false,
                                             isMaterialAvailable: moduleViewModel
-                                                        .courseModule[
-                                                            firstIndex]
-                                                        .module![secondIndex]
-                                                        .attachment!
-                                                        .type!
-                                                        .contains('document') &&
-                                                    moduleViewModel
-                                                        .courseModule[
-                                                            firstIndex]
-                                                        .module![secondIndex]
-                                                        .tasks!
-                                                        .isEmpty
+                                                    .courseModule[firstIndex]
+                                                    .module![secondIndex]
+                                                    .attachment!
+                                                    .type!
+                                                    .contains('ppt')
                                                 ? true
                                                 : false,
                                             isAssignmentAvailable:
@@ -409,10 +424,11 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                                         .courseModule[
                                                             firstIndex]
                                                         .module![secondIndex]
-                                                        .tasks!
-                                                        .isEmpty
-                                                    ? false
-                                                    : true,
+                                                        .attachment!
+                                                        .type!
+                                                        .contains('document')
+                                                    ? true
+                                                    : false,
                                             dueDate: DateTime.now().toString(),
                                             isSectionFinished: false,
                                             linkModule: moduleViewModel
@@ -424,7 +440,8 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                                 .courseModule[firstIndex]
                                                 .module![secondIndex]
                                                 .attachment!
-                                                .description,
+                                                .description
+                                                .toString(),
                                           );
                                         },
                                       ),

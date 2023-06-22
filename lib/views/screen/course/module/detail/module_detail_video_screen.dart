@@ -58,9 +58,24 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
     );
   }
 
+  Future<void> saveSectionProgress() async {
+    PreferencesUtils preferencesUtils = PreferencesUtils();
+    await preferencesUtils.init();
+    //get current user
+    String email = preferencesUtils.getPreferencesString("user_email") ?? "";
+    //get current section
+    int currentSection = preferencesUtils.getPreferencesInt(
+            'current_section_course_${widget.courseId}_$email') ??
+        0;
+    //increment the current section value
+    await preferencesUtils.savePreferencesInt(
+      'current_section_course_${widget.courseId}_$email',
+      currentSection + 1,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    print(widget.courseName.toString());
     final double screenWidth = MediaQuery.of(context).size.width;
     final String linkVideo =
         YoutubePlayer.convertUrlToId(widget.linkModule.toString()).toString();
@@ -169,18 +184,7 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
                       ),
                       onPressed: () async {
                         if (widget.isLastIndex) {
-                          PreferencesUtils preferencesUtils =
-                              PreferencesUtils();
-                          await preferencesUtils.init();
-                          //get current section
-                          int currentSection = preferencesUtils.getPreferencesInt(
-                                  'current_section_course_${widget.courseId}') ??
-                              0;
-                          //increment the current section value
-                          preferencesUtils.savePreferencesInt(
-                            'current_section_course_${widget.courseId}',
-                            currentSection++,
-                          );
+                          await saveSectionProgress();
                           if (context.mounted) {
                             showDialog(
                               context: context,
@@ -190,18 +194,7 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
                             );
                           }
                         } else {
-                          PreferencesUtils preferencesUtils =
-                              PreferencesUtils();
-                          await preferencesUtils.init();
-                          //get current section
-                          int currentSection = preferencesUtils.getPreferencesInt(
-                                  'current_section_course_${widget.courseId}') ??
-                              0;
-                          //increment the current section value
-                          preferencesUtils.savePreferencesInt(
-                            'current_section_course_${widget.courseId}',
-                            currentSection++,
-                          );
+                          await saveSectionProgress();
                           if (context.mounted) {
                             Navigator.pushReplacement(
                               context,
