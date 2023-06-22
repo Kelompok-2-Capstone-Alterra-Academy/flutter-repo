@@ -41,6 +41,9 @@ class CourseAPI {
       for (var element in response.data['data']) {
         listCourse.add(SellCourseModel.fromJson(element));
       }
+      // for (var element in sellCoursesResponse) {
+      //   listCourse.add(SellCourseModel.fromJson(element));
+      // }
       return listCourse;
     } on DioError catch (_) {
       rethrow;
