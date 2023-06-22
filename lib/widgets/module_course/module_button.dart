@@ -12,12 +12,14 @@ import '../../utils/color/color.dart';
 class ModuleButton extends StatelessWidget {
   const ModuleButton({
     super.key,
+    required this.courseId,
     required this.courseName,
     required this.width,
     required this.text,
     required this.borderColor,
   });
 
+  final int courseId;
   final String courseName;
   final double width;
   final String text;
@@ -47,7 +49,10 @@ class ModuleButton extends StatelessWidget {
 
             if (text == "Quiz") {
               Navigator.of(context).push(FadeAnimation2(
-                  page: ModuleListQuizScreen(courseName: courseName)));
+                  page: ModuleListQuizScreen(
+                courseName: courseName,
+                courseId: courseId,
+              )));
             }
 
             if (text == "Tanya Mentor") {

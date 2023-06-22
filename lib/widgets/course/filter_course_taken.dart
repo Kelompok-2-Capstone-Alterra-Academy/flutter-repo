@@ -32,7 +32,7 @@ class _FilterCourseTakenState extends State<FilterCourseTaken> {
   Widget build(BuildContext context) {
     return TextButton(
       child: Text(
-        "Urutkan",
+        "Filter",
         style: GoogleFonts.poppins(
           fontStyle: FontStyle.normal,
           fontWeight: FontWeight.w400,
@@ -57,8 +57,18 @@ class _FilterCourseTakenState extends State<FilterCourseTaken> {
                 ),
                 child: Column(
                   children: [
+                    const SizedBox(
+                      width: 80,
+                      child: Divider(
+                        height: 8,
+                        thickness: 3,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 18,
+                    ),
                     Text(
-                      'Urutkan Berdasarkan',
+                      'Tampilkan Berdasarkan',
                       style: GoogleFonts.poppins(
                         fontStyle: FontStyle.normal,
                         fontSize: 14,
@@ -66,195 +76,7 @@ class _FilterCourseTakenState extends State<FilterCourseTaken> {
                       ),
                     ),
                     const SizedBox(
-                      height: 40,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          height: 40,
-                          width: MediaQuery.of(context).size.width * 0.41,
-                          decoration: BoxDecoration(
-                            color: toggleButton1
-                                ? lightBlueColor
-                                : Colors.transparent,
-                            border: Border.all(
-                                width: 1.5,
-                                color: toggleButton1
-                                    ? primaryColor
-                                    : searchBarTextColor),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(8),
-                            ),
-                          ),
-                          child: TextButton(
-                            onPressed: () {
-                              // if (toggleButton2 ||
-                              //     toggleButton3 ||
-                              //     toggleButton4 == true) {
-                              // } else {
-                              //   setState(() {
-                              //     if (toggleButton1 == false) {
-                              //       classFilter = "segera_selesai";
-                              //     } else {
-                              //       classFilter = "";
-                              //     }
-                              //     toggleButton1 = !toggleButton1;
-                              //   });
-                              // }
-                            },
-                            child: Text(
-                              "Segera Selesai",
-                              style: GoogleFonts.poppins(
-                                color: blackColor,
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          height: 40,
-                          width: MediaQuery.of(context).size.width * 0.41,
-                          decoration: BoxDecoration(
-                            color: toggleButton2
-                                ? lightBlueColor
-                                : Colors.transparent,
-                            border: Border.all(
-                                width: 1.5,
-                                color: toggleButton2
-                                    ? primaryColor
-                                    : searchBarTextColor),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(8),
-                            ),
-                          ),
-                          child: TextButton(
-                            onPressed: () {
-                              // if (toggleButton1 ||
-                              //     toggleButton3 ||
-                              //     toggleButton4 == true) {
-                              // } else {
-                              //   setState(() {
-                              //     if (toggleButton2 == false) {
-                              //       classFilter = "kursus_baru";
-                              //     } else {
-                              //       classFilter = "";
-                              //     }
-                              //     toggleButton2 = !toggleButton2;
-                              //   });
-                              // }
-                            },
-                            child: Text(
-                              "Kursus Baru",
-                              style: GoogleFonts.poppins(
-                                color: blackColor,
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          height: 40,
-                          width: MediaQuery.of(context).size.width * 0.41,
-                          decoration: BoxDecoration(
-                            color: toggleButton3
-                                ? lightBlueColor
-                                : Colors.transparent,
-                            border: Border.all(
-                                width: 1.5,
-                                color: toggleButton3
-                                    ? primaryColor
-                                    : searchBarTextColor),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(8),
-                            ),
-                          ),
-                          child: TextButton(
-                            onPressed: () {
-                              // if (toggleButton1 ||
-                              //     toggleButton2 ||
-                              //     toggleButton4 == true) {
-                              // } else {
-                              //   setState(() {
-                              //     if (toggleButton3 == false) {
-                              //       classFilter = "kelas_atas";
-                              //     } else {
-                              //       classFilter = "";
-                              //     }
-                              //     toggleButton3 = !toggleButton3;
-                              //   });
-                              // }
-                            },
-                            child: Text(
-                              "Kelas Bawah",
-                              style: GoogleFonts.poppins(
-                                color: blackColor,
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          height: 40,
-                          width: MediaQuery.of(context).size.width * 0.41,
-                          decoration: BoxDecoration(
-                            color: toggleButton4
-                                ? lightBlueColor
-                                : Colors.transparent,
-                            border: Border.all(
-                                width: 1.5,
-                                color: toggleButton4
-                                    ? primaryColor
-                                    : searchBarTextColor),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(8),
-                            ),
-                          ),
-                          child: TextButton(
-                            onPressed: () {
-                              // if (toggleButton1 ||
-                              //     toggleButton2 ||
-                              //     toggleButton3 == true) {
-                              // } else {
-                              //   setState(() {
-                              //     if (toggleButton4 == false) {
-                              //       classFilter = "kelas_bawah";
-                              //     } else {
-                              //       classFilter = "";
-                              //     }
-                              //     toggleButton4 = !toggleButton4;
-                              //   });
-                              // }
-                            },
-                            child: Text(
-                              "Kelas Atas",
-                              style: GoogleFonts.poppins(
-                                color: blackColor,
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 40,
+                      height: 32,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -284,7 +106,7 @@ class _FilterCourseTakenState extends State<FilterCourseTaken> {
                               } else {
                                 setState(() {
                                   if (toggle1 == false) {
-                                    majorFilter = "ipa";
+                                    majorFilter = "IPA";
                                   } else {
                                     majorFilter = "";
                                   }
@@ -328,7 +150,7 @@ class _FilterCourseTakenState extends State<FilterCourseTaken> {
                               } else {
                                 setState(() {
                                   if (toggle2 == false) {
-                                    majorFilter = "ips";
+                                    majorFilter = "IPS";
                                   } else {
                                     majorFilter = "";
                                   }
@@ -376,7 +198,7 @@ class _FilterCourseTakenState extends State<FilterCourseTaken> {
                               } else {
                                 setState(() {
                                   if (toggle3 == false) {
-                                    majorFilter = "multimedia";
+                                    majorFilter = "Multimedia";
                                   } else {
                                     majorFilter = "";
                                   }
@@ -427,7 +249,7 @@ class _FilterCourseTakenState extends State<FilterCourseTaken> {
                               } else {
                                 setState(() {
                                   if (toggle4 == false) {
-                                    majorFilter = "tkj";
+                                    majorFilter = "TKJ";
                                   } else {
                                     majorFilter = "";
                                   }
@@ -478,7 +300,7 @@ class _FilterCourseTakenState extends State<FilterCourseTaken> {
                               } else {
                                 setState(() {
                                   if (toggle5 == false) {
-                                    majorFilter = "rpl";
+                                    majorFilter = "RPL";
                                   } else {
                                     majorFilter = "";
                                   }
@@ -525,7 +347,7 @@ class _FilterCourseTakenState extends State<FilterCourseTaken> {
                               } else {
                                 setState(() {
                                   if (toggle6 == false) {
-                                    majorFilter = "umum";
+                                    majorFilter = "Umum";
                                   } else {
                                     majorFilter = "";
                                   }
@@ -556,21 +378,11 @@ class _FilterCourseTakenState extends State<FilterCourseTaken> {
                         ),
                       ),
                       onPressed: () {
-                        if (classFilter.isNotEmpty && majorFilter.isNotEmpty) {
-                          context.read<CourseTakenViewModel>().filterCourse(
-                              filterBy: 'both',
-                              classFilter: classFilter,
-                              majorFilter: majorFilter);
-                        }
-                        if (classFilter.isEmpty && majorFilter.isNotEmpty) {
+                        if (majorFilter.isNotEmpty) {
                           context.read<CourseTakenViewModel>().filterCourse(
                               filterBy: 'major', majorFilter: majorFilter);
                         }
-                        if (majorFilter.isEmpty && classFilter.isNotEmpty) {
-                          context.read<CourseTakenViewModel>().filterCourse(
-                              filterBy: 'class', classFilter: classFilter);
-                        }
-                        if (classFilter.isEmpty && majorFilter.isEmpty) {
+                        if (majorFilter.isEmpty) {
                           context
                               .read<CourseTakenViewModel>()
                               .resetFilterCourse();

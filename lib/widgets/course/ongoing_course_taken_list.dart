@@ -72,6 +72,26 @@ class _OnGoingCourseTakenListScreenState
     }
   }
 
+  Future<bool> checkIfLastModule(String courseId) async {
+    PreferencesUtils preferencesUtils = PreferencesUtils();
+    await preferencesUtils.init();
+
+    String email = preferencesUtils.getPreferencesString("user_email") ?? "";
+
+    int? currentSection = preferencesUtils
+            .getPreferencesInt('current_section_course_${courseId}_$email') ??
+        0;
+    int? totalSection = preferencesUtils
+            .getPreferencesInt('total_section_course_${courseId}_$email') ??
+        0;
+
+    if (totalSection - currentSection == 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   // reset section (for testing)
   // Future<void> removeSection(String courseId) async {
   //   PreferencesUtils preferencesUtils = PreferencesUtils();
@@ -124,19 +144,39 @@ class _OnGoingCourseTakenListScreenState
                               onGoingCourse[index].id.toString());
                           final currentProgress =
                               getProgress(onGoingCourse[index].id.toString());
+                          final isLastModule = checkIfLastModule(
+                              onGoingCourse[index].id.toString());
                           return InkWell(
                             onTap: () {
                               Navigator.of(context).push(
                                 PageRouteBuilder(
                                   pageBuilder: (context, animations,
-                                          secondaryAnimations) =>
-                                      ModuleListScreen(
-                                    courseName: onGoingCourse[index]
-                                        .courseName
-                                        .toString(),
-                                    courseId: (onGoingCourse[index].id),
-                                    courseFinished: false,
-                                  ),
+                                      secondaryAnimations) {
+                                    return FutureBuilder(
+                                      future: isLastModule,
+                                      builder: (context, snapshot) {
+                                        if (snapshot.data != null) {
+                                          return ModuleListScreen(
+                                            isLastModule: snapshot.data,
+                                            courseName: onGoingCourse[index]
+                                                .courseName
+                                                .toString(),
+                                            courseId: (onGoingCourse[index].id),
+                                            courseFinished: false,
+                                          );
+                                        } else {
+                                          return ModuleListScreen(
+                                            isLastModule: false,
+                                            courseName: onGoingCourse[index]
+                                                .courseName
+                                                .toString(),
+                                            courseId: (onGoingCourse[index].id),
+                                            courseFinished: false,
+                                          );
+                                        }
+                                      },
+                                    );
+                                  },
                                   transitionsBuilder: (context, animations,
                                       secondaryAnimations, childs) {
                                     final tween = Tween(begin: 0.0, end: 1.0);
