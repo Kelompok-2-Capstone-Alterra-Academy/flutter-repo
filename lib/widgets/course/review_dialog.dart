@@ -208,7 +208,6 @@ class _ReviewDialogState extends State<ReviewDialog> {
                           _notesController.text,
                         );
                         if (msg.contains('success')) {
-                          print(msg);
                           Navigator.pop(context);
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
