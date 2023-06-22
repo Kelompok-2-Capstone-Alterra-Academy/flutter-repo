@@ -74,6 +74,14 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
     );
   }
 
+  Future<void> updateModuleStatus() async {
+    PreferencesUtils preferencesUtils = PreferencesUtils();
+    await preferencesUtils.init();
+
+    await preferencesUtils.savePreferencesBool(
+        widget.moduleId.toString(), true);
+  }
+
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
@@ -185,6 +193,7 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
                       onPressed: () async {
                         if (widget.isLastIndex) {
                           await saveSectionProgress();
+                          await updateModuleStatus();
                           if (context.mounted) {
                             showDialog(
                               context: context,
@@ -195,6 +204,7 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
                           }
                         } else {
                           await saveSectionProgress();
+                          await updateModuleStatus();
                           if (context.mounted) {
                             Navigator.pushReplacement(
                               context,

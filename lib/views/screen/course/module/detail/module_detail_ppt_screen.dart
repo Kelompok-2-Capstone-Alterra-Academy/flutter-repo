@@ -58,6 +58,14 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
     );
   }
 
+  Future<void> updateModuleStatus() async {
+    PreferencesUtils preferencesUtils = PreferencesUtils();
+    await preferencesUtils.init();
+
+    await preferencesUtils.savePreferencesBool(
+        widget.moduleId.toString(), true);
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenOrientation = MediaQuery.of(context).orientation;
@@ -152,6 +160,7 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                                   onPressed: () async {
                                     if (widget.isLastIndex) {
                                       saveSectionProgress();
+                                      updateModuleStatus();
                                       if (context.mounted) {
                                         showDialog(
                                           context: context,
@@ -162,6 +171,7 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                                       }
                                     } else {
                                       saveSectionProgress();
+                                      updateModuleStatus();
                                       if (context.mounted) {
                                         Navigator.pushReplacement(
                                           context,
