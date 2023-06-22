@@ -242,6 +242,7 @@ class ModuleCard extends StatelessWidget {
                           page: ModulDetailPPTScreen(
                         isLastIndex: isLastIndex,
                         courseId: id,
+                        courseName: courseName,
                         pptDetailModel: PPTDetailModel(),
                       )));
                 },

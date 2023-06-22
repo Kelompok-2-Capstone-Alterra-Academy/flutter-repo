@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:staredu/models/new_module_list_model.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/preferences/preferences_utils.dart';
 import 'package:staredu/utils/state/my_state.dart';
+import 'package:staredu/views/screen/course/course_taken_list_screen.dart';
 import 'package:staredu/views/view_model/course/certificate_view_model.dart';
 import 'package:staredu/views/view_model/course/module_view_model.dart';
 import 'package:staredu/widgets/course/course_certificate.dart';
@@ -14,6 +14,7 @@ import 'package:staredu/widgets/module_course/module_button.dart';
 import 'package:staredu/widgets/module_course/module_card.dart';
 import 'package:staredu/widgets/module_course/module_section_card.dart';
 
+import '../../../../utils/animation/fade_animation2.dart';
 import '../../../../widgets/bottom_navigation_bar/bottom_navigation_bar.dart';
 
 class ModuleListScreen extends StatefulWidget with WidgetsBindingObserver {
@@ -93,6 +94,15 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                 fontWeight: FontWeight.w600,
                 fontSize: 17,
               ),
+            ),
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    FadeAnimation2(page: const CourseTakenListScreen()),
+                    (route) => false);
+              },
             ),
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(kToolbarHeight),
@@ -228,42 +238,47 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                                 numbering: secondIndex + 1,
                                                 isVideoAvailable:
                                                     moduleViewModel
-                                                                .courseModule[
-                                                                    firstIndex]
-                                                                .module![
-                                                                    secondIndex]
-                                                                .attachment!
-                                                                .type ==
-                                                            Type.VIDEO
-                                                        ? true
-                                                        : false,
-                                                isMaterialAvailable: moduleViewModel
-                                                                .courseModule[
-                                                                    firstIndex]
-                                                                .module![
-                                                                    secondIndex]
-                                                                .attachment!
-                                                                .type ==
-                                                            Type.DOCUMENT &&
-                                                        moduleViewModel
                                                             .courseModule[
                                                                 firstIndex]
                                                             .module![
                                                                 secondIndex]
-                                                            .tasks!
-                                                            .isEmpty
-                                                    ? true
-                                                    : false,
-                                                isAssignmentAvailable:
+                                                            .attachment!
+                                                            .type!
+                                                            .contains('video')
+                                                        ? true
+                                                        : false,
+                                                isMaterialAvailable:
                                                     moduleViewModel
                                                             .courseModule[
                                                                 firstIndex]
                                                             .module![
                                                                 secondIndex]
-                                                            .tasks!
-                                                            .isEmpty
-                                                        ? false
-                                                        : true,
+                                                            .attachment!
+                                                            .type!
+                                                            .contains('ppt')
+                                                        ? true
+                                                        : false,
+                                                isAssignmentAvailable:
+                                                    // moduleViewModel
+                                                    //         .courseModule[
+                                                    //             firstIndex]
+                                                    //         .module![
+                                                    //             secondIndex]
+                                                    //         .tasks!
+                                                    //         .isEmpty
+                                                    //     ? false
+                                                    //     : true,
+                                                    moduleViewModel
+                                                            .courseModule[
+                                                                firstIndex]
+                                                            .module![
+                                                                secondIndex]
+                                                            .attachment!
+                                                            .type!
+                                                            .contains(
+                                                                'document')
+                                                        ? true
+                                                        : false,
                                                 dueDate:
                                                     DateTime.now().toString(),
                                                 isSectionFinished: false,
@@ -302,39 +317,33 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                                   .toString(),
                                               numbering: secondIndex + 1,
                                               isVideoAvailable: moduleViewModel
+                                                      .courseModule[firstIndex]
+                                                      .module![secondIndex]
+                                                      .attachment!
+                                                      .type!
+                                                      .contains('video')
+                                                  ? true
+                                                  : false,
+                                              isMaterialAvailable:
+                                                  moduleViewModel
                                                           .courseModule[
                                                               firstIndex]
                                                           .module![secondIndex]
                                                           .attachment!
-                                                          .type ==
-                                                      Type.VIDEO
-                                                  ? true
-                                                  : false,
-                                              isMaterialAvailable: moduleViewModel
-                                                              .courseModule[
-                                                                  firstIndex]
-                                                              .module![
-                                                                  secondIndex]
-                                                              .attachment!
-                                                              .type ==
-                                                          Type.DOCUMENT &&
-                                                      moduleViewModel
-                                                          .courseModule[
-                                                              firstIndex]
-                                                          .module![secondIndex]
-                                                          .tasks!
-                                                          .isEmpty
-                                                  ? true
-                                                  : false,
+                                                          .type!
+                                                          .contains('ppt')
+                                                      ? true
+                                                      : false,
                                               isAssignmentAvailable:
                                                   moduleViewModel
                                                           .courseModule[
                                                               firstIndex]
                                                           .module![secondIndex]
-                                                          .tasks!
-                                                          .isEmpty
-                                                      ? false
-                                                      : true,
+                                                          .attachment!
+                                                          .type!
+                                                          .contains('document')
+                                                      ? true
+                                                      : false,
                                               dueDate:
                                                   DateTime.now().toString(),
                                               isSectionFinished: false,
@@ -395,28 +404,19 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                                 .toString(),
                                             numbering: secondIndex + 1,
                                             isVideoAvailable: moduleViewModel
-                                                        .courseModule[
-                                                            firstIndex]
-                                                        .module![secondIndex]
-                                                        .attachment!
-                                                        .type ==
-                                                    Type.VIDEO
+                                                    .courseModule[firstIndex]
+                                                    .module![secondIndex]
+                                                    .attachment!
+                                                    .type!
+                                                    .contains('video')
                                                 ? true
                                                 : false,
                                             isMaterialAvailable: moduleViewModel
-                                                            .courseModule[
-                                                                firstIndex]
-                                                            .module![
-                                                                secondIndex]
-                                                            .attachment!
-                                                            .type ==
-                                                        Type.DOCUMENT &&
-                                                    moduleViewModel
-                                                        .courseModule[
-                                                            firstIndex]
-                                                        .module![secondIndex]
-                                                        .tasks!
-                                                        .isEmpty
+                                                    .courseModule[firstIndex]
+                                                    .module![secondIndex]
+                                                    .attachment!
+                                                    .type!
+                                                    .contains('ppt')
                                                 ? true
                                                 : false,
                                             isAssignmentAvailable:
@@ -424,10 +424,11 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                                         .courseModule[
                                                             firstIndex]
                                                         .module![secondIndex]
-                                                        .tasks!
-                                                        .isEmpty
-                                                    ? false
-                                                    : true,
+                                                        .attachment!
+                                                        .type!
+                                                        .contains('document')
+                                                    ? true
+                                                    : false,
                                             dueDate: DateTime.now().toString(),
                                             isSectionFinished: false,
                                             linkModule: moduleViewModel

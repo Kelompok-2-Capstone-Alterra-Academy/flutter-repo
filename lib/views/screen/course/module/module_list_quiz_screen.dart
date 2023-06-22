@@ -92,11 +92,11 @@ class _ModuleListQuizScreenState extends State<ModuleListQuizScreen> {
                                 .courseModule[firstIndex].courseId
                                 .toString()),
                             isQuizAvailable: moduleViewModel
-                                        .courseQuiz[firstIndex]
-                                        .module![secondIndex]
-                                        .attachment!
-                                        .type ==
-                                    Type.QUIZ
+                                    .courseQuiz[firstIndex]
+                                    .module![secondIndex]
+                                    .attachment!
+                                    .type!
+                                    .contains('quiz')
                                 ? true
                                 : false,
                             title: moduleViewModel
