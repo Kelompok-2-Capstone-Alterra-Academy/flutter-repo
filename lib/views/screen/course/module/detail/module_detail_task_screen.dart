@@ -36,19 +36,15 @@ class ModuleDetailTask extends StatefulWidget {
 }
 
 class _ModuleDetailTaskState extends State<ModuleDetailTask> {
-  late String fileName;
   late Future<String> fileType;
   late Future<int> fileSize;
   bool isLoading = false;
-  // String widget.linkModule.toString() = 'https://web.wpi.edu/Images/CMS/Provost/landscape.pdf';
 
   @override
   void initState() {
     super.initState();
-    fileName = getFileNameFromUrl(widget.linkModule.toString());
-    //fileType = getFileType(widget.linkModule.toString());
-    //print(fileType);
     fileSize = getFileSize(widget.linkModule.toString());
+    print(widget.linkModule);
   }
 
   @override
@@ -141,8 +137,9 @@ class _ModuleDetailTaskState extends State<ModuleDetailTask> {
                             isLoading = !isLoading;
                           });
 
-                          await downloadFile(
-                              widget.linkModule.toString(), fileName);
+                          await downloadGoogleDocument(
+                              widget.linkModule.toString(),
+                              "Tugas ${widget.sectionName}");
 
                           if (context.mounted) {
                             setState(() {
@@ -221,7 +218,7 @@ class _ModuleDetailTaskState extends State<ModuleDetailTask> {
                                   ),
                                   Expanded(
                                     child: Text(
-                                      fileName,
+                                      "${widget.sectionName}.docx",
                                       style: GoogleFonts.poppins(
                                         fontStyle: FontStyle.normal,
                                         fontWeight: FontWeight.w500,
