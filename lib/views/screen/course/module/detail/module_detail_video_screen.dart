@@ -69,7 +69,7 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
         0;
     //increment the current section value
     await preferencesUtils.savePreferencesInt(
-      'current_section_course_${widget.courseId}',
+      'current_section_course_${widget.courseId}_$email',
       currentSection + 1,
     );
   }
