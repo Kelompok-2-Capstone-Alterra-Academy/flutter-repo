@@ -57,6 +57,10 @@ class _LoginScreenState extends State<LoginScreen> {
     preferencesUtils.savePreferencesBool('isLogin', true);
   }
 
+  saveEmail(String value) async {
+    preferencesUtils.savePreferencesString('user_email', _emailController.text);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -268,6 +272,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             _passwordController.text);
                                 if (message.contains('success')) {
                                   await saveToken(message);
+                                  await saveEmail(_emailController.text);
                                   // ignore: use_build_context_synchronously
                                   showModalBottomSheet(
                                       context: context,
