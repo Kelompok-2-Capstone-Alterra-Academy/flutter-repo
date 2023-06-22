@@ -166,18 +166,21 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   ModuleButton(
+                                    courseId: widget.courseId ?? 0,
                                     courseName: widget.courseName.toString(),
                                     width: screenWidth,
                                     text: "Live Session",
                                     borderColor: primaryColor,
                                   ),
                                   ModuleButton(
+                                    courseId: widget.courseId ?? 0,
                                     courseName: widget.courseName.toString(),
                                     width: screenWidth,
                                     text: "Quiz",
                                     borderColor: primaryColor,
                                   ),
                                   ModuleButton(
+                                    courseId: widget.courseId ?? 0,
                                     courseName: widget.courseName.toString(),
                                     width: screenWidth,
                                     text: "Tanya Mentor",

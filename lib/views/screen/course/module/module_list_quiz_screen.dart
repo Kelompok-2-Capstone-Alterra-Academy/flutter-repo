@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:staredu/models/new_module_list_model.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/constant/module_list.dart';
+import 'package:staredu/utils/preferences/preferences_utils.dart';
 import 'package:staredu/views/view_model/course/module_view_model.dart';
 import 'package:staredu/widgets/module_course/module_quiz_card.dart';
 
@@ -11,24 +12,45 @@ class ModuleListQuizScreen extends StatefulWidget {
   static const String routeName = "/modulelistquiz";
 
   final String? courseName;
-  const ModuleListQuizScreen({super.key, this.courseName});
+  final int courseId;
+  const ModuleListQuizScreen({
+    super.key,
+    this.courseName,
+    required this.courseId,
+  });
 
   @override
   State<ModuleListQuizScreen> createState() => _ModuleListQuizScreenState();
 }
 
 class _ModuleListQuizScreenState extends State<ModuleListQuizScreen> {
-  @override
-  void initState() {
-    super.initState();
+  Future<bool> checkIfLastModule(String courseId) async {
+    PreferencesUtils preferencesUtils = PreferencesUtils();
+    await preferencesUtils.init();
+
+    String email = preferencesUtils.getPreferencesString("user_email") ?? "";
+
+    int? currentSection = preferencesUtils
+            .getPreferencesInt('current_section_course_${courseId}_$email') ??
+        0;
+    int? totalSection = preferencesUtils
+            .getPreferencesInt('total_section_course_${courseId}_$email') ??
+        0;
+
+    if (totalSection - currentSection == 1) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final moduleViewModel =
         Provider.of<ModuleListViewModel>(context, listen: false);
-    // final List quizList = moduleViewModel.courseQuiz;
     final double screenWidth = MediaQuery.of(context).size.width;
+
+    final isLastModule = checkIfLastModule(widget.courseId.toString());
 
     return Scaffold(
       appBar: AppBar(
@@ -87,26 +109,32 @@ class _ModuleListQuizScreenState extends State<ModuleListQuizScreen> {
                         itemCount: moduleViewModel
                             .courseQuiz[firstIndex].module!.length,
                         itemBuilder: (context, secondIndex) {
-                          return ModuleQuizCard(
-                            id: int.parse(moduleViewModel
-                                .courseModule[firstIndex].courseId
-                                .toString()),
-                            isQuizAvailable: moduleViewModel
+                          FutureBuilder(
+                            future: isLastModule,
+                            builder: (context, snapshot) {
+                              return ModuleQuizCard(
+                                isLastModule: snapshot.data ?? false,
+                                id: int.parse(moduleViewModel
+                                    .courseModule[firstIndex].courseId
+                                    .toString()),
+                                isQuizAvailable: moduleViewModel
+                                        .courseQuiz[firstIndex]
+                                        .module![secondIndex]
+                                        .attachment!
+                                        .type!
+                                        .contains('quiz')
+                                    ? true
+                                    : false,
+                                title: moduleViewModel
+                                    .courseQuiz[firstIndex].sectionName,
+                                numbering: (secondIndex + 1).toString(),
+                                url: moduleViewModel
                                     .courseQuiz[firstIndex]
                                     .module![secondIndex]
                                     .attachment!
-                                    .type!
-                                    .contains('quiz')
-                                ? true
-                                : false,
-                            title: moduleViewModel
-                                .courseQuiz[firstIndex].sectionName,
-                            numbering: (secondIndex + 1).toString(),
-                            url: moduleViewModel
-                                .courseQuiz[firstIndex]
-                                .module![secondIndex]
-                                .attachment!
-                                .attachmentSource,
+                                    .attachmentSource,
+                              );
+                            },
                           );
                         },
                       );

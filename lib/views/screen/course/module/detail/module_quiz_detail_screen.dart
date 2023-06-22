@@ -137,7 +137,7 @@ class _ModuleQuizDetailScreenState extends State<ModuleQuizDetailScreen> {
                     ),
                     onPressed: () async {
                       if (widget.isLastIndex) {
-                        saveSectionProgress();
+                        await saveSectionProgress();
                         if (context.mounted) {
                           showDialog(
                             context: context,
@@ -147,7 +147,7 @@ class _ModuleQuizDetailScreenState extends State<ModuleQuizDetailScreen> {
                           );
                         }
                       } else {
-                        saveSectionProgress();
+                        await saveSectionProgress();
                         if (context.mounted) {
                           showDialog(
                             context: context,
