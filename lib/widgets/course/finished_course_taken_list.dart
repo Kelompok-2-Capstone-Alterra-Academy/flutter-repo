@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/utils/state/my_state.dart';
+import 'package:staredu/views/screen/course/module/module_list_screen.dart';
 import 'package:staredu/views/view_model/course/course_taken_view_model.dart';
 import 'package:staredu/widgets/course/filter_course_taken.dart';
 import 'package:staredu/widgets/loading/circular_progress.dart';
@@ -53,130 +54,155 @@ class _FinishedCourseTakenListScreenState
                         shrinkWrap: true,
                         itemCount: finishedCourse.length,
                         itemBuilder: (context, index) {
-                          return Card(
-                            elevation: 2,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              padding: const EdgeInsets.only(
-                                left: 8,
-                                top: 8,
-                                right: 16,
-                                bottom: 9,
+                          return InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                PageRouteBuilder(
+                                  pageBuilder: (context, animations,
+                                          secondaryAnimations) =>
+                                      ModuleListScreen(
+                                    courseName: finishedCourse[index]
+                                        .courseName
+                                        .toString(),
+                                    courseId: (finishedCourse[index].id),
+                                    courseFinished: true,
+                                  ),
+                                  transitionsBuilder: (context, animations,
+                                      secondaryAnimations, childs) {
+                                    final tween = Tween(begin: 0.0, end: 1.0);
+                                    return FadeTransition(
+                                      opacity: animations.drive(tween),
+                                      child: childs,
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                            child: Card(
+                              elevation: 2,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
                               ),
-                              height: 88,
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 10, right: 18),
-                                    child: Image(
-                                      image: AssetImage(
-                                          "assets/images/thumbnail/${finishedCourse[index].thumbnail ?? "idea"}.png"),
-                                      height: 70,
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                padding: const EdgeInsets.only(
+                                  left: 8,
+                                  top: 8,
+                                  right: 16,
+                                  bottom: 9,
+                                ),
+                                height: 88,
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10, right: 18),
+                                      child: Image(
+                                        image: AssetImage(
+                                            "assets/images/thumbnail/${finishedCourse[index].thumbnail ?? "idea"}.png"),
+                                        height: 70,
+                                      ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          finishedCourse[index].courseName ??
-                                              "Course Name",
-                                          style: GoogleFonts.poppins(
-                                            fontStyle: FontStyle.normal,
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 13,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 8,
-                                        ),
-                                        Expanded(
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                "Nilai : ",
-                                                style: GoogleFonts.poppins(
-                                                  fontStyle: FontStyle.normal,
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 11,
-                                                ),
-                                              ),
-                                              Text(
-                                                finishedCourse[index]
-                                                        .scores
-                                                        ?.toString() ??
-                                                    "A",
-                                                style: GoogleFonts.poppins(
-                                                  fontStyle: FontStyle.normal,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 15,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 4,
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(16),
-                                            color: const Color(0xffE1EFE1),
-                                          ),
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 28, vertical: 4),
-                                          child: Text(
-                                            "Mendapat Sertifikat",
-                                            style: GoogleFonts.poppins(
-                                              fontStyle: FontStyle.normal,
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 9,
-                                              color: certificateStatusColor,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 60,
-                                    height: 60,
-                                    child: CircleProgressBar(
-                                      foregroundColor: primaryColor,
-                                      backgroundColor: searchBarColor,
-                                      // value: finishedCourse[index].progress!,
-                                      value: 100,
-                                      child: Container(
-                                        margin: const EdgeInsets.all(4),
-                                        decoration: BoxDecoration(
-                                          color: progressBarBackgroundColor,
-                                          borderRadius:
-                                              BorderRadius.circular(150),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            // "${finishedCourse[index].progress.toString()}%",
-                                            "100%",
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            finishedCourse[index].courseName ??
+                                                "Course Name",
                                             style: GoogleFonts.poppins(
                                               fontStyle: FontStyle.normal,
                                               fontWeight: FontWeight.w600,
-                                              fontSize: 11,
-                                              color: whiteColor,
+                                              fontSize: 13,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 8,
+                                          ),
+                                          Expanded(
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  "Nilai : ",
+                                                  style: GoogleFonts.poppins(
+                                                    fontStyle: FontStyle.normal,
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 11,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  finishedCourse[index]
+                                                          .scores
+                                                          ?.toString() ??
+                                                      "A",
+                                                  style: GoogleFonts.poppins(
+                                                    fontStyle: FontStyle.normal,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 15,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 4,
+                                          ),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(16),
+                                              color: const Color(0xffE1EFE1),
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 28, vertical: 4),
+                                            child: Text(
+                                              "Mendapat Sertifikat",
+                                              style: GoogleFonts.poppins(
+                                                fontStyle: FontStyle.normal,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 9,
+                                                color: certificateStatusColor,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 60,
+                                      height: 60,
+                                      child: CircleProgressBar(
+                                        foregroundColor: primaryColor,
+                                        backgroundColor: searchBarColor,
+                                        // value: finishedCourse[index].progress!,
+                                        value: 100,
+                                        child: Container(
+                                          margin: const EdgeInsets.all(4),
+                                          decoration: BoxDecoration(
+                                            color: progressBarBackgroundColor,
+                                            borderRadius:
+                                                BorderRadius.circular(150),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              // "${finishedCourse[index].progress.toString()}%",
+                                              "100%",
+                                              style: GoogleFonts.poppins(
+                                                fontStyle: FontStyle.normal,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 11,
+                                                color: whiteColor,
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           );

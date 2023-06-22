@@ -169,12 +169,12 @@ class _HistoryTransactionScreenState extends State<HistoryTransactionScreen> {
                                           child: Image.asset(
                                             value
                                                     .historyCourses[index]
-                                                    .transactionDetails![index]
+                                                    .transactionDetails![0]
                                                     .course!
                                                     .thumbnail!
                                                     .isEmpty
                                                 ? 'assets/images/thumbnail/apple.png'
-                                                : "assets/images/thumbnail/${value.historyCourses[index].transactionDetails![index].course!.thumbnail}.png",
+                                                : "assets/images/thumbnail/${value.historyCourses[index].transactionDetails![0].course!.thumbnail}.png",
                                             fit: BoxFit.contain,
                                           ),
                                         ),
@@ -186,7 +186,7 @@ class _HistoryTransactionScreenState extends State<HistoryTransactionScreen> {
                                             Text(
                                               value
                                                   .historyCourses[index]
-                                                  .transactionDetails![index]
+                                                  .transactionDetails![0]
                                                   .course!
                                                   .courseName!,
                                               style: GoogleFonts.poppins(

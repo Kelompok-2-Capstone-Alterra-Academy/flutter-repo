@@ -20,18 +20,21 @@ class ModuleVideoScreen extends StatefulWidget {
   final String? linkModule;
   final String? description;
   final bool isLastIndex;
+  final int? moduleId;
+  final bool? isFinished;
 
-  const ModuleVideoScreen({
-    super.key,
-    this.courseId,
-    this.sectionId,
-    this.courseName,
-    this.sectionName,
-    this.moduleName,
-    this.linkModule,
-    this.description,
-    required this.isLastIndex,
-  });
+  const ModuleVideoScreen(
+      {super.key,
+      this.courseId,
+      this.sectionId,
+      this.courseName,
+      this.sectionName,
+      this.moduleName,
+      this.linkModule,
+      this.description,
+      required this.isLastIndex,
+      this.moduleId,
+      this.isFinished});
 
   @override
   State<ModuleVideoScreen> createState() => _ModuleVideoScreenState();
@@ -74,11 +77,19 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
     );
   }
 
+  Future<void> updateModuleStatus() async {
+    PreferencesUtils preferencesUtils = PreferencesUtils();
+    String email = preferencesUtils.getPreferencesString("user_email") ?? "";
+
+    await preferencesUtils.init();
+
+    await preferencesUtils.savePreferencesBool(
+        "${widget.moduleId.toString()}_$email", true);
+  }
+
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-    final String linkVideo =
-        YoutubePlayer.convertUrlToId(widget.linkModule.toString()).toString();
     return Consumer<ModuleListViewModel>(
       builder: (context, value, _) {
         return Scaffold(
@@ -114,9 +125,6 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
                       handleColor: Colors.red,
                       bufferedColor: Colors.redAccent,
                     ),
-                    onReady: () {
-                      _videoController.load(linkVideo);
-                    },
                     topActions: <Widget>[
                       const SizedBox(width: 8.0),
                       Expanded(
@@ -174,48 +182,71 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
                   Container(
                     width: MediaQuery.of(context).size.width / 2.3,
                     margin: const EdgeInsets.only(bottom: 16),
-                    child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: whiteColor,
-                        backgroundColor: primaryColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      onPressed: () async {
-                        if (widget.isLastIndex) {
-                          await saveSectionProgress();
-                          if (context.mounted) {
-                            showDialog(
-                              context: context,
-                              builder: (context) => ReviewDialog(
-                                courseId: widget.courseId!,
+                    child: widget.isFinished!
+                        ? OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: searchBarTextColor,
+                              backgroundColor: searchBarColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
                               ),
-                            );
-                          }
-                        } else {
-                          await saveSectionProgress();
-                          if (context.mounted) {
-                            Navigator.pushReplacement(
-                              context,
-                              FadeAnimation(
-                                page: ModuleListScreen(
-                                    courseId: widget.courseId,
-                                    courseName: widget.courseName),
+                            ),
+                            onPressed: null,
+                            child: Text(
+                              "Selesai",
+                              style: GoogleFonts.poppins(
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 13,
                               ),
-                            );
-                          }
-                        }
-                      },
-                      child: Text(
-                        "Selesai",
-                        style: GoogleFonts.poppins(
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 13,
-                        ),
-                      ),
-                    ),
+                            ),
+                          )
+                        : OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: whiteColor,
+                              backgroundColor: primaryColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            onPressed: () async {
+                              if (widget.isLastIndex) {
+                                await saveSectionProgress();
+                                await updateModuleStatus();
+                                if (context.mounted) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => ReviewDialog(
+                                      courseId: widget.courseId!,
+                                    ),
+                                  );
+                                }
+                              } else {
+                                await saveSectionProgress();
+                                await updateModuleStatus();
+                                if (context.mounted) {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    FadeAnimation(
+                                      page: ModuleListScreen(
+                                        courseId: widget.courseId,
+                                        courseName: widget.courseName,
+                                        courseFinished: false,
+                                      ),
+                                    ),
+                                  );
+                                }
+                              }
+                            },
+                            child: Text(
+                              "Selesai",
+                              style: GoogleFonts.poppins(
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ),
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width / 2.3,
