@@ -23,8 +23,10 @@ class ModuleListScreen extends StatefulWidget with WidgetsBindingObserver {
 
   final String? courseName;
   final int? courseId;
+  final bool? courseFinished;
 
-  const ModuleListScreen({super.key, this.courseName, this.courseId});
+  const ModuleListScreen(
+      {super.key, this.courseName, this.courseId, this.courseFinished});
 
   @override
   State<ModuleListScreen> createState() => _ModuleListScreenState();
@@ -233,208 +235,200 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                                         .length -
                                                     1) {
                                               return FutureBuilder(
-                                                  future: getModuleStatus(
-                                                      moduleViewModel
+                                                future: getModuleStatus(
+                                                    moduleViewModel
+                                                        .courseModule[
+                                                            firstIndex]
+                                                        .module![secondIndex]
+                                                        .id!
+                                                        .toInt()),
+                                                builder: (context, snapshot) {
+                                                  if (snapshot.hasData) {
+                                                    var status = snapshot.data;
+                                                    return ModuleCard(
+                                                      isLastIndex: true,
+                                                      id: widget.courseId,
+                                                      sectionId: moduleViewModel
+                                                          .courseModule[
+                                                              firstIndex]
+                                                          .module![secondIndex]
+                                                          .sectionId,
+                                                      sectionName:
+                                                          moduleViewModel
+                                                              .courseModule[
+                                                                  firstIndex]
+                                                              .sectionName,
+                                                      courseName: widget
+                                                          .courseName
+                                                          .toString(),
+                                                      moduleName:
+                                                          moduleViewModel
+                                                              .courseModule[
+                                                                  firstIndex]
+                                                              .module![
+                                                                  secondIndex]
+                                                              .attachment!
+                                                              .attachmentName
+                                                              .toString(),
+                                                      numbering:
+                                                          secondIndex + 1,
+                                                      isVideoAvailable:
+                                                          moduleViewModel
+                                                                  .courseModule[
+                                                                      firstIndex]
+                                                                  .module![
+                                                                      secondIndex]
+                                                                  .attachment!
+                                                                  .type!
+                                                                  .contains(
+                                                                      'video')
+                                                              ? true
+                                                              : false,
+                                                      isMaterialAvailable:
+                                                          moduleViewModel
+                                                                  .courseModule[
+                                                                      firstIndex]
+                                                                  .module![
+                                                                      secondIndex]
+                                                                  .attachment!
+                                                                  .type!
+                                                                  .contains(
+                                                                      'ppt')
+                                                              ? true
+                                                              : false,
+                                                      isAssignmentAvailable:
+                                                          moduleViewModel
+                                                                  .courseModule[
+                                                                      firstIndex]
+                                                                  .module![
+                                                                      secondIndex]
+                                                                  .attachment!
+                                                                  .type!
+                                                                  .contains(
+                                                                      'document')
+                                                              ? true
+                                                              : false,
+                                                      dueDate: DateTime.now()
+                                                          .toString(),
+                                                      isSectionFinished: status,
+                                                      linkModule:
+                                                          moduleViewModel
+                                                              .courseModule[
+                                                                  firstIndex]
+                                                              .module![
+                                                                  secondIndex]
+                                                              .attachment!
+                                                              .attachmentSource,
+                                                      moduleDescription:
+                                                          moduleViewModel
+                                                              .courseModule[
+                                                                  firstIndex]
+                                                              .module![
+                                                                  secondIndex]
+                                                              .attachment!
+                                                              .description
+                                                              .toString(),
+                                                      moduleId: moduleViewModel
                                                           .courseModule[
                                                               firstIndex]
                                                           .module![secondIndex]
                                                           .id!
-                                                          .toInt()),
-                                                  builder: (context, snapshot) {
-                                                    if (snapshot.hasData) {
-                                                      var status =
-                                                          snapshot.data;
-                                                      return ModuleCard(
-                                                        isLastIndex: true,
-                                                        id: widget.courseId,
-                                                        sectionId:
-                                                            moduleViewModel
-                                                                .courseModule[
-                                                                    firstIndex]
-                                                                .module![
-                                                                    secondIndex]
-                                                                .sectionId,
-                                                        sectionName:
-                                                            moduleViewModel
-                                                                .courseModule[
-                                                                    firstIndex]
-                                                                .sectionName,
-                                                        courseName: widget
-                                                            .courseName
-                                                            .toString(),
-                                                        moduleName:
-                                                            moduleViewModel
-                                                                .courseModule[
-                                                                    firstIndex]
-                                                                .module![
-                                                                    secondIndex]
-                                                                .attachment!
-                                                                .attachmentName
-                                                                .toString(),
-                                                        numbering:
-                                                            secondIndex + 1,
-                                                        isVideoAvailable: moduleViewModel
-                                                                .courseModule[
-                                                                    firstIndex]
-                                                                .module![
-                                                                    secondIndex]
-                                                                .attachment!
-                                                                .type!
-                                                                .contains(
-                                                                    'video')
-                                                            ? true
-                                                            : false,
-                                                        isMaterialAvailable:
-                                                            moduleViewModel
-                                                                    .courseModule[
-                                                                        firstIndex]
-                                                                    .module![
-                                                                        secondIndex]
-                                                                    .attachment!
-                                                                    .type!
-                                                                    .contains(
-                                                                        'ppt')
-                                                                ? true
-                                                                : false,
-                                                        isAssignmentAvailable:
-                                                            moduleViewModel
-                                                                    .courseModule[
-                                                                        firstIndex]
-                                                                    .module![
-                                                                        secondIndex]
-                                                                    .attachment!
-                                                                    .type!
-                                                                    .contains(
-                                                                        'document')
-                                                                ? true
-                                                                : false,
-                                                        dueDate: DateTime.now()
-                                                            .toString(),
-                                                        isSectionFinished:
-                                                            status,
-                                                        linkModule:
-                                                            moduleViewModel
-                                                                .courseModule[
-                                                                    firstIndex]
-                                                                .module![
-                                                                    secondIndex]
-                                                                .attachment!
-                                                                .attachmentSource,
-                                                        moduleDescription:
-                                                            moduleViewModel
-                                                                .courseModule[
-                                                                    firstIndex]
-                                                                .module![
-                                                                    secondIndex]
-                                                                .attachment!
-                                                                .description
-                                                                .toString(),
-                                                        moduleId:
-                                                            moduleViewModel
-                                                                .courseModule[
-                                                                    firstIndex]
-                                                                .module![
-                                                                    secondIndex]
-                                                                .id!
-                                                                .toInt(),
-                                                      );
-                                                    } else {
-                                                      return ModuleCard(
-                                                        isLastIndex: true,
-                                                        id: widget.courseId,
-                                                        sectionId:
-                                                            moduleViewModel
-                                                                .courseModule[
-                                                                    firstIndex]
-                                                                .module![
-                                                                    secondIndex]
-                                                                .sectionId,
-                                                        sectionName:
-                                                            moduleViewModel
-                                                                .courseModule[
-                                                                    firstIndex]
-                                                                .sectionName,
-                                                        courseName: widget
-                                                            .courseName
-                                                            .toString(),
-                                                        moduleName:
-                                                            moduleViewModel
-                                                                .courseModule[
-                                                                    firstIndex]
-                                                                .module![
-                                                                    secondIndex]
-                                                                .attachment!
-                                                                .attachmentName
-                                                                .toString(),
-                                                        numbering:
-                                                            secondIndex + 1,
-                                                        isVideoAvailable: moduleViewModel
-                                                                .courseModule[
-                                                                    firstIndex]
-                                                                .module![
-                                                                    secondIndex]
-                                                                .attachment!
-                                                                .type!
-                                                                .contains(
-                                                                    'video')
-                                                            ? true
-                                                            : false,
-                                                        isMaterialAvailable:
-                                                            moduleViewModel
-                                                                    .courseModule[
-                                                                        firstIndex]
-                                                                    .module![
-                                                                        secondIndex]
-                                                                    .attachment!
-                                                                    .type!
-                                                                    .contains(
-                                                                        'ppt')
-                                                                ? true
-                                                                : false,
-                                                        isAssignmentAvailable:
-                                                            moduleViewModel
-                                                                    .courseModule[
-                                                                        firstIndex]
-                                                                    .module![
-                                                                        secondIndex]
-                                                                    .attachment!
-                                                                    .type!
-                                                                    .contains(
-                                                                        'document')
-                                                                ? true
-                                                                : false,
-                                                        dueDate: DateTime.now()
-                                                            .toString(),
-                                                        isSectionFinished:
-                                                            false,
-                                                        linkModule:
-                                                            moduleViewModel
-                                                                .courseModule[
-                                                                    firstIndex]
-                                                                .module![
-                                                                    secondIndex]
-                                                                .attachment!
-                                                                .attachmentSource,
-                                                        moduleDescription:
-                                                            moduleViewModel
-                                                                .courseModule[
-                                                                    firstIndex]
-                                                                .module![
-                                                                    secondIndex]
-                                                                .attachment!
-                                                                .description
-                                                                .toString(),
-                                                        moduleId:
-                                                            moduleViewModel
-                                                                .courseModule[
-                                                                    firstIndex]
-                                                                .module![
-                                                                    secondIndex]
-                                                                .id!
-                                                                .toInt(),
-                                                      );
-                                                    }
-                                                  });
+                                                          .toInt(),
+                                                    );
+                                                  } else {
+                                                    return ModuleCard(
+                                                      isLastIndex: true,
+                                                      id: widget.courseId,
+                                                      sectionId: moduleViewModel
+                                                          .courseModule[
+                                                              firstIndex]
+                                                          .module![secondIndex]
+                                                          .sectionId,
+                                                      sectionName:
+                                                          moduleViewModel
+                                                              .courseModule[
+                                                                  firstIndex]
+                                                              .sectionName,
+                                                      courseName: widget
+                                                          .courseName
+                                                          .toString(),
+                                                      moduleName:
+                                                          moduleViewModel
+                                                              .courseModule[
+                                                                  firstIndex]
+                                                              .module![
+                                                                  secondIndex]
+                                                              .attachment!
+                                                              .attachmentName
+                                                              .toString(),
+                                                      numbering:
+                                                          secondIndex + 1,
+                                                      isVideoAvailable:
+                                                          moduleViewModel
+                                                                  .courseModule[
+                                                                      firstIndex]
+                                                                  .module![
+                                                                      secondIndex]
+                                                                  .attachment!
+                                                                  .type!
+                                                                  .contains(
+                                                                      'video')
+                                                              ? true
+                                                              : false,
+                                                      isMaterialAvailable:
+                                                          moduleViewModel
+                                                                  .courseModule[
+                                                                      firstIndex]
+                                                                  .module![
+                                                                      secondIndex]
+                                                                  .attachment!
+                                                                  .type!
+                                                                  .contains(
+                                                                      'ppt')
+                                                              ? true
+                                                              : false,
+                                                      isAssignmentAvailable:
+                                                          moduleViewModel
+                                                                  .courseModule[
+                                                                      firstIndex]
+                                                                  .module![
+                                                                      secondIndex]
+                                                                  .attachment!
+                                                                  .type!
+                                                                  .contains(
+                                                                      'document')
+                                                              ? true
+                                                              : false,
+                                                      dueDate: DateTime.now()
+                                                          .toString(),
+                                                      isSectionFinished: false,
+                                                      linkModule:
+                                                          moduleViewModel
+                                                              .courseModule[
+                                                                  firstIndex]
+                                                              .module![
+                                                                  secondIndex]
+                                                              .attachment!
+                                                              .attachmentSource,
+                                                      moduleDescription:
+                                                          moduleViewModel
+                                                              .courseModule[
+                                                                  firstIndex]
+                                                              .module![
+                                                                  secondIndex]
+                                                              .attachment!
+                                                              .description
+                                                              .toString(),
+                                                      moduleId: moduleViewModel
+                                                          .courseModule[
+                                                              firstIndex]
+                                                          .module![secondIndex]
+                                                          .id!
+                                                          .toInt(),
+                                                    );
+                                                  }
+                                                },
+                                              );
                                             }
                                             return FutureBuilder(
                                                 future: getModuleStatus(
@@ -864,19 +858,23 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                       )
                     ],
                   ),
-                  Consumer<CertificateViewModel>(
-                    builder: (context, value, child) {
-                      return ListView.builder(
-                        itemCount: 1,
-                        itemBuilder: (context, index) {
-                          return CourseCertificate(
-                            pdfLink: certificateViewModel
-                                .moduleCertificate[index].link,
-                          );
-                        },
-                      );
-                    },
-                  ),
+                  widget.courseFinished!
+                      ? Consumer<CertificateViewModel>(
+                          builder: (context, value, child) {
+                            return ListView.builder(
+                              itemCount: 1,
+                              itemBuilder: (context, index) {
+                                return CourseCertificate(
+                                  pdfLink: certificateViewModel
+                                      .moduleCertificate[index].link,
+                                );
+                              },
+                            );
+                          },
+                        )
+                      : const Center(
+                          child: Text("Kursus Belum Selesai !"),
+                        ),
                 ],
               );
             },

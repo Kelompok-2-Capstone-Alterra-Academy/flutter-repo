@@ -135,6 +135,7 @@ class _OnGoingCourseTakenListScreenState
                                         .courseName
                                         .toString(),
                                     courseId: (onGoingCourse[index].id),
+                                    courseFinished: false,
                                   ),
                                   transitionsBuilder: (context, animations,
                                       secondaryAnimations, childs) {

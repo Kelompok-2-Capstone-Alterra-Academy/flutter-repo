@@ -68,6 +68,7 @@ class ModuleCard extends StatelessWidget {
                           linkModule: linkModule,
                           description: moduleDescription,
                           moduleId: moduleId,
+                          isFinished: isSectionFinished,
                         ),
                       ));
                     },
@@ -243,8 +244,11 @@ class ModuleCard extends StatelessWidget {
                       context,
                       FadeAnimation2(
                           page: ModulDetailPPTScreen(
+                        courseId: id,
+                        courseName: courseName,
                         isLastIndex: isLastIndex,
                         moduleId: moduleId,
+                        isFinished: isSectionFinished,
                         pptDetailModel: PPTDetailModel(url: linkModule),
                       )));
                 },
@@ -412,6 +416,7 @@ class ModuleCard extends StatelessWidget {
                       linkModule: linkModule,
                       description: moduleDescription,
                       moduleId: moduleId,
+                      isFinished: isSectionFinished,
                     ),
                   ));
                 },

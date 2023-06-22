@@ -13,12 +13,14 @@ class ModuleQuizDetailScreen extends StatefulWidget {
   final bool isLastIndex;
   final int courseId;
   final int moduleId;
+  final bool? isFinished;
   const ModuleQuizDetailScreen({
     super.key,
     required this.quizDetail,
     required this.isLastIndex,
     required this.courseId,
     required this.moduleId,
+    this.isFinished,
   });
 
   @override
@@ -139,47 +141,66 @@ class _ModuleQuizDetailScreenState extends State<ModuleQuizDetailScreen> {
                     left: 16,
                     right: 16,
                   ),
-                  child: OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: whiteColor,
-                      backgroundColor: primaryColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    onPressed: () async {
-                      if (widget.isLastIndex) {
-                        saveSectionProgress();
-                        updateModuleStatus();
-                        if (context.mounted) {
-                          showDialog(
-                            context: context,
-                            builder: (context) => ReviewDialog(
-                              courseId: widget.courseId,
+                  child: widget.isFinished!
+                      ? OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: whiteColor,
+                            backgroundColor: primaryColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
                             ),
-                          );
-                        }
-                      } else {
-                        saveSectionProgress();
-                        updateModuleStatus();
-                        if (context.mounted) {
-                          showDialog(
-                            context: context,
-                            builder: (context) =>
-                                const ModuleQuizDetailDoneDialog(),
-                          );
-                        }
-                      }
-                    },
-                    child: Text(
-                      "Selesai",
-                      style: GoogleFonts.poppins(
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 13,
-                      ),
-                    ),
-                  ),
+                          ),
+                          onPressed: null,
+                          child: Text(
+                            "Sudah Selesai",
+                            style: GoogleFonts.poppins(
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 13,
+                            ),
+                          ),
+                        )
+                      : OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: whiteColor,
+                            backgroundColor: primaryColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          onPressed: () async {
+                            if (widget.isLastIndex) {
+                              saveSectionProgress();
+                              updateModuleStatus();
+                              if (context.mounted) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => ReviewDialog(
+                                    courseId: widget.courseId,
+                                  ),
+                                );
+                              }
+                            } else {
+                              saveSectionProgress();
+                              updateModuleStatus();
+                              if (context.mounted) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) =>
+                                      const ModuleQuizDetailDoneDialog(),
+                                );
+                              }
+                            }
+                          },
+                          child: Text(
+                            "Selesai",
+                            style: GoogleFonts.poppins(
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 13,
+                            ),
+                          ),
+                        ),
                 ),
               ],
             ),

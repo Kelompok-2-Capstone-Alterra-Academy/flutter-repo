@@ -20,6 +20,7 @@ class ModuleDetailTask extends StatefulWidget {
   final String? description;
   final bool isLastIndex;
   final int? moduleId;
+  final bool? isFinished;
 
   const ModuleDetailTask({
     super.key,
@@ -31,6 +32,7 @@ class ModuleDetailTask extends StatefulWidget {
     this.description,
     required this.isLastIndex,
     this.moduleId,
+    this.isFinished,
   });
 
   @override
@@ -286,45 +288,75 @@ class _ModuleDetailTaskState extends State<ModuleDetailTask> {
                         ),
                       ),
                       const Spacer(),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                          shape: MaterialStatePropertyAll(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),
-                        ),
-                        onPressed: () {
-                          if (widget.isLastIndex) {
-                            Navigator.of(context).push(SlideAnimation3(
-                                page: ModuleSendTaskScreen(
-                              courseId: widget.courseId!,
-                              isLastIndex: widget.isLastIndex,
-                              moduleId: widget.moduleId!,
-                            )));
-                          } else {
-                            Navigator.of(context).push(SlideAnimation3(
-                                page: ModuleSendTaskScreen(
-                              isLastIndex: false,
-                              courseId: widget.courseId!,
-                              moduleId: widget.moduleId!,
-                            )));
-                          }
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Center(
-                            child: Text(
-                              'Kumpulkan Tugas',
-                              style: GoogleFonts.poppins(
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 14,
+                      widget.isFinished!
+                          ? ElevatedButton(
+                              style: ButtonStyle(
+                                foregroundColor: const MaterialStatePropertyAll(
+                                    searchBarTextColor),
+                                backgroundColor: const MaterialStatePropertyAll(
+                                    searchBarColor),
+                                shape: MaterialStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
+                              ),
+                              onPressed: null,
+                              child: Padding(
+                                padding: const EdgeInsets.all(12),
+                                child: Center(
+                                  child: Text(
+                                    'Kumpulkan Tugas',
+                                    style: GoogleFonts.poppins(
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          : ElevatedButton(
+                              style: ButtonStyle(
+                                shape: MaterialStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
+                              ),
+                              onPressed: () {
+                                if (widget.isLastIndex) {
+                                  Navigator.of(context).push(SlideAnimation3(
+                                      page: ModuleSendTaskScreen(
+                                    courseId: widget.courseId!,
+                                    isLastIndex: widget.isLastIndex,
+                                    moduleId: widget.moduleId!,
+                                    isFinished: widget.isFinished,
+                                  )));
+                                } else {
+                                  Navigator.of(context).push(SlideAnimation3(
+                                      page: ModuleSendTaskScreen(
+                                    isLastIndex: false,
+                                    courseId: widget.courseId!,
+                                    moduleId: widget.moduleId!,
+                                    isFinished: widget.isFinished,
+                                  )));
+                                }
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(12),
+                                child: Center(
+                                  child: Text(
+                                    'Kumpulkan Tugas',
+                                    style: GoogleFonts.poppins(
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      ),
                     ],
                   );
                 },
