@@ -35,13 +35,15 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
   Future<void> saveSectionProgress() async {
     PreferencesUtils preferencesUtils = PreferencesUtils();
     await preferencesUtils.init();
+    //get current user
+    String email = preferencesUtils.getPreferencesString("user_email") ?? "";
     //get current section
-    int currentSection = preferencesUtils
-            .getPreferencesInt('current_section_course_${widget.courseId}') ??
+    int currentSection = preferencesUtils.getPreferencesInt(
+            'current_section_course_${widget.courseId}_$email') ??
         0;
     //increment the current section value
     await preferencesUtils.savePreferencesInt(
-      'current_section_course_${widget.courseId}',
+      'current_section_course_${widget.courseId}_$email',
       currentSection + 1,
     );
   }

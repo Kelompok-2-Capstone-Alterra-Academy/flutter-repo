@@ -60,8 +60,12 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
               0;
         }
 
+        //get current user
+        String email =
+            preferencesUtils.getPreferencesString("user_email") ?? "";
+
         preferencesUtils.savePreferencesInt(
-          'total_section_course_${widget.courseId}',
+          'total_section_course_${widget.courseId}_$email',
           totalModule,
         );
       }

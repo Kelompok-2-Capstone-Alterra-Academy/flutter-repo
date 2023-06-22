@@ -10,7 +10,6 @@ import 'package:staredu/widgets/course/filter_course_taken.dart';
 import 'package:staredu/widgets/loading/circular_progress.dart';
 import 'package:staredu/widgets/loading/opacity_progress.dart';
 
-import '../../utils/animation/fade_animation2.dart';
 import '../../utils/color/color.dart';
 
 class OnGoingCourseTakenListScreen extends StatefulWidget {
@@ -32,8 +31,10 @@ class _OnGoingCourseTakenListScreenState
     PreferencesUtils preferencesUtils = PreferencesUtils();
     await preferencesUtils.init();
 
+    String email = preferencesUtils.getPreferencesString("user_email") ?? "";
+
     int currentSection = preferencesUtils
-            .getPreferencesInt('current_section_course_$courseId') ??
+            .getPreferencesInt('current_section_course_${courseId}_$email') ??
         0;
     return currentSection;
   }
@@ -43,9 +44,11 @@ class _OnGoingCourseTakenListScreenState
     PreferencesUtils preferencesUtils = PreferencesUtils();
     await preferencesUtils.init();
 
-    int? totalSection =
-        preferencesUtils.getPreferencesInt('total_section_course_$courseId') ??
-            0;
+    String email = preferencesUtils.getPreferencesString("user_email") ?? "";
+
+    int? totalSection = preferencesUtils
+            .getPreferencesInt('total_section_course_${courseId}_$email') ??
+        0;
     return totalSection;
   }
 
@@ -53,12 +56,14 @@ class _OnGoingCourseTakenListScreenState
     PreferencesUtils preferencesUtils = PreferencesUtils();
     await preferencesUtils.init();
 
+    String email = preferencesUtils.getPreferencesString("user_email") ?? "";
+
     int? currentSection = preferencesUtils
-            .getPreferencesInt('current_section_course_$courseId') ??
+            .getPreferencesInt('current_section_course_${courseId}_$email') ??
         0;
-    int? totalSection =
-        preferencesUtils.getPreferencesInt('total_section_course_$courseId') ??
-            0;
+    int? totalSection = preferencesUtils
+            .getPreferencesInt('total_section_course_${courseId}_$email') ??
+        0;
 
     if (currentSection != 0 && totalSection != 0) {
       return currentSection / totalSection * 100;
