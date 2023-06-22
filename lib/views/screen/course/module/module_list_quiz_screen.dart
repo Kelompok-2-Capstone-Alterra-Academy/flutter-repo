@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:staredu/models/new_module_list_model.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/constant/module_list.dart';
 import 'package:staredu/views/view_model/course/module_view_model.dart';
@@ -101,6 +102,11 @@ class _ModuleListQuizScreenState extends State<ModuleListQuizScreen> {
                             title: moduleViewModel
                                 .courseQuiz[firstIndex].sectionName,
                             numbering: (secondIndex + 1).toString(),
+                            url: moduleViewModel
+                                .courseQuiz[firstIndex]
+                                .module![secondIndex]
+                                .attachment!
+                                .attachmentSource,
                           );
                         },
                       );

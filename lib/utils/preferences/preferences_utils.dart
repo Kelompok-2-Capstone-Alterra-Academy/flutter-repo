@@ -24,6 +24,14 @@ class PreferencesUtils {
     return prefs.getBool(key);
   }
 
+  Future<void> savePreferencesInt(String key, int value) async {
+    prefs.setInt(key, value);
+  }
+
+  int? getPreferencesInt(String key) {
+    return prefs.getInt(key);
+  }
+
   Future<void> removePreferences(String key) async {
     await prefs.remove(key);
   }

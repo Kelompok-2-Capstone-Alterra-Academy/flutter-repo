@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:staredu/utils/preferences/preferences_utils.dart';
 import 'package:staredu/utils/state/my_state.dart';
 import 'package:staredu/views/screen/course/module/module_list_screen.dart';
 import 'package:staredu/views/view_model/course/course_taken_view_model.dart';
@@ -9,7 +10,6 @@ import 'package:staredu/widgets/course/filter_course_taken.dart';
 import 'package:staredu/widgets/loading/circular_progress.dart';
 import 'package:staredu/widgets/loading/opacity_progress.dart';
 
-import '../../utils/animation/fade_animation2.dart';
 import '../../utils/color/color.dart';
 
 class OnGoingCourseTakenListScreen extends StatefulWidget {
@@ -26,9 +26,72 @@ class OnGoingCourseTakenListScreen extends StatefulWidget {
 
 class _OnGoingCourseTakenListScreenState
     extends State<OnGoingCourseTakenListScreen> {
+  //to get current section
+  Future<int> getCurrentSection(String courseId) async {
+    PreferencesUtils preferencesUtils = PreferencesUtils();
+    await preferencesUtils.init();
+
+    String email = preferencesUtils.getPreferencesString("user_email") ?? "";
+
+    int currentSection = preferencesUtils
+            .getPreferencesInt('current_section_course_${courseId}_$email') ??
+        0;
+    return currentSection;
+  }
+
+  //to get total section
+  Future<int> getSectionCount(String courseId) async {
+    PreferencesUtils preferencesUtils = PreferencesUtils();
+    await preferencesUtils.init();
+
+    String email = preferencesUtils.getPreferencesString("user_email") ?? "";
+
+    int? totalSection = preferencesUtils
+            .getPreferencesInt('total_section_course_${courseId}_$email') ??
+        0;
+    return totalSection;
+  }
+
+  Future<double> getProgress(String courseId) async {
+    PreferencesUtils preferencesUtils = PreferencesUtils();
+    await preferencesUtils.init();
+
+    String email = preferencesUtils.getPreferencesString("user_email") ?? "";
+
+    int? currentSection = preferencesUtils
+            .getPreferencesInt('current_section_course_${courseId}_$email') ??
+        0;
+    int? totalSection = preferencesUtils
+            .getPreferencesInt('total_section_course_${courseId}_$email') ??
+        0;
+
+    if (currentSection != 0 && totalSection != 0) {
+      return currentSection / totalSection * 100;
+    } else {
+      return 0;
+    }
+  }
+
+  // reset section (for testing)
+  // Future<void> removeSection(String courseId) async {
+  //   PreferencesUtils preferencesUtils = PreferencesUtils();
+  //   await preferencesUtils.init();
+
+  //   preferencesUtils.removePreferences('total_section_course_$courseId');
+  //   preferencesUtils.removePreferences('current_section_course_$courseId');
+  // }
+
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   removeSection("45");
+  // }
+
   @override
   Widget build(BuildContext context) {
     final onGoingCourse = widget.viewModel.inProgressCourseTaken;
+
     return Stack(
       children: [
         SingleChildScrollView(
@@ -55,6 +118,12 @@ class _OnGoingCourseTakenListScreenState
                         shrinkWrap: true,
                         itemCount: onGoingCourse.length,
                         itemBuilder: (context, index) {
+                          final currentSection = getCurrentSection(
+                              onGoingCourse[index].id.toString());
+                          final totalSection = getSectionCount(
+                              onGoingCourse[index].id.toString());
+                          final currentProgress =
+                              getProgress(onGoingCourse[index].id.toString());
                           return InkWell(
                             onTap: () {
                               Navigator.of(context).push(
@@ -99,7 +168,7 @@ class _OnGoingCourseTakenListScreenState
                                           left: 10, right: 18),
                                       child: Image(
                                         image: AssetImage(
-                                            "assets/images/${onGoingCourse[index].thumbnail ?? "idea"}.png"),
+                                            "assets/images/thumbnail/${onGoingCourse[index].thumbnail ?? "idea"}.png"),
                                         height: 70,
                                       ),
                                     ),
@@ -126,37 +195,118 @@ class _OnGoingCourseTakenListScreenState
                                             fit: FlexFit.loose,
                                             child: Row(
                                               children: [
-                                                Text(
-                                                  "Section ",
-                                                  style: GoogleFonts.poppins(
-                                                    fontStyle: FontStyle.normal,
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 11,
-                                                  ),
+                                                FutureBuilder(
+                                                  future: totalSection,
+                                                  builder: (context, snapshot) {
+                                                    if (snapshot.data != 0) {
+                                                      return Text(
+                                                        "Section ",
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                          fontStyle:
+                                                              FontStyle.normal,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          fontSize: 11,
+                                                        ),
+                                                      );
+                                                    } else {
+                                                      return Text(
+                                                        "Kursus Baru !",
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                          fontStyle:
+                                                              FontStyle.normal,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          fontSize: 11,
+                                                          color: successColor,
+                                                        ),
+                                                      );
+                                                    }
+                                                  },
                                                 ),
-                                                Text(
-                                                  "9",
-                                                  style: GoogleFonts.poppins(
-                                                    fontStyle: FontStyle.normal,
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 11,
-                                                  ),
+                                                FutureBuilder(
+                                                    future: totalSection,
+                                                    builder:
+                                                        (context, snapshot) {
+                                                      if (snapshot.data != 0) {
+                                                        return FutureBuilder(
+                                                          future:
+                                                              currentSection,
+                                                          builder: (context,
+                                                              snapshot) {
+                                                            if (snapshot.data !=
+                                                                null) {
+                                                              return Text(
+                                                                (snapshot.data ??
+                                                                        0)
+                                                                    .toString(),
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .poppins(
+                                                                  fontStyle:
+                                                                      FontStyle
+                                                                          .normal,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  fontSize: 11,
+                                                                ),
+                                                              );
+                                                            } else {
+                                                              return const SizedBox
+                                                                  .shrink();
+                                                            }
+                                                          },
+                                                        );
+                                                      } else {
+                                                        return const SizedBox
+                                                            .shrink();
+                                                      }
+                                                    }),
+                                                FutureBuilder(
+                                                  future: totalSection,
+                                                  builder: (context, snapshot) {
+                                                    if (snapshot.data != 0) {
+                                                      return Text(
+                                                        "/",
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                          fontStyle:
+                                                              FontStyle.normal,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          fontSize: 10,
+                                                        ),
+                                                      );
+                                                    } else {
+                                                      return const SizedBox
+                                                          .shrink();
+                                                    }
+                                                  },
                                                 ),
-                                                Text(
-                                                  "/",
-                                                  style: GoogleFonts.poppins(
-                                                    fontStyle: FontStyle.normal,
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 10,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  "11",
-                                                  style: GoogleFonts.poppins(
-                                                    fontStyle: FontStyle.normal,
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 11,
-                                                  ),
+                                                FutureBuilder(
+                                                  future: totalSection,
+                                                  builder: (context, snapshot) {
+                                                    if (snapshot.data != 0) {
+                                                      return Text(
+                                                        (snapshot.data ?? 0)
+                                                            .toString(),
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                          fontStyle:
+                                                              FontStyle.normal,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          fontSize: 11,
+                                                        ),
+                                                      );
+                                                    } else {
+                                                      return const SizedBox
+                                                          .shrink();
+                                                    }
+                                                  },
                                                 ),
                                               ],
                                             ),
@@ -164,54 +314,67 @@ class _OnGoingCourseTakenListScreenState
                                           const SizedBox(
                                             height: 4,
                                           ),
-                                          Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Flexible(
-                                                fit: FlexFit.loose,
-                                                child: FAProgressBar(
-                                                  animatedDuration:
-                                                      const Duration(
-                                                    milliseconds: 600,
+                                          FutureBuilder(
+                                            future: currentProgress,
+                                            builder: (context, snapshot) {
+                                              return Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Flexible(
+                                                    fit: FlexFit.loose,
+                                                    child: FAProgressBar(
+                                                      animatedDuration:
+                                                          const Duration(
+                                                        milliseconds: 600,
+                                                      ),
+                                                      progressGradient:
+                                                          const LinearGradient(
+                                                        begin:
+                                                            Alignment.topCenter,
+                                                        end: Alignment
+                                                            .bottomCenter,
+                                                        colors: [
+                                                          primaryColor,
+                                                          secondaryColor,
+                                                        ],
+                                                      ),
+                                                      backgroundColor:
+                                                          progressBarBackgroundColor,
+                                                      size: 10,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              100),
+                                                      currentValue:
+                                                          snapshot.data ?? 0,
+                                                      maxValue: 100,
+                                                      direction:
+                                                          Axis.horizontal,
+                                                    ),
                                                   ),
-                                                  progressGradient:
-                                                      const LinearGradient(
-                                                    begin: Alignment.topCenter,
-                                                    end: Alignment.bottomCenter,
-                                                    colors: [
-                                                      primaryColor,
-                                                      secondaryColor,
-                                                    ],
+                                                  const SizedBox(
+                                                    width: 8,
                                                   ),
-                                                  backgroundColor:
-                                                      progressBarBackgroundColor,
-                                                  size: 10,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          100),
-                                                  currentValue: 0,
-                                                  maxValue: 100,
-                                                  direction: Axis.horizontal,
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                width: 8,
-                                              ),
-                                              Text(
-                                                0.toString(),
-                                                style: GoogleFonts.inter(
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 11,
-                                                ),
-                                              ),
-                                              Text(
-                                                " %",
-                                                style: GoogleFonts.inter(
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 11,
-                                                ),
-                                              ),
-                                            ],
+                                                  Text(
+                                                    (snapshot.data ?? 0)
+                                                        .toInt()
+                                                        .toString(),
+                                                    style: GoogleFonts.inter(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 11,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    " %",
+                                                    style: GoogleFonts.inter(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 11,
+                                                    ),
+                                                  ),
+                                                ],
+                                              );
+                                            },
                                           ),
                                           const SizedBox(
                                             height: 5,
