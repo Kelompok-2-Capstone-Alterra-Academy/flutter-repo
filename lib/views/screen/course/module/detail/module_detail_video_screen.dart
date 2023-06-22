@@ -76,10 +76,12 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
 
   Future<void> updateModuleStatus() async {
     PreferencesUtils preferencesUtils = PreferencesUtils();
+    String email = preferencesUtils.getPreferencesString("user_email") ?? "";
+
     await preferencesUtils.init();
 
     await preferencesUtils.savePreferencesBool(
-        widget.moduleId.toString(), true);
+        "${widget.moduleId.toString()}_$email", true);
   }
 
   @override

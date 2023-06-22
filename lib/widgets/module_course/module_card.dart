@@ -244,7 +244,8 @@ class ModuleCard extends StatelessWidget {
                       FadeAnimation2(
                           page: ModulDetailPPTScreen(
                         isLastIndex: isLastIndex,
-                        pptDetailModel: PPTDetailModel(),
+                        moduleId: moduleId,
+                        pptDetailModel: PPTDetailModel(url: linkModule),
                       )));
                 },
                 child: Card(

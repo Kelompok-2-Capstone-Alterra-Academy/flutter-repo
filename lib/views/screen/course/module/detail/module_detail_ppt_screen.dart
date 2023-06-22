@@ -60,10 +60,12 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
 
   Future<void> updateModuleStatus() async {
     PreferencesUtils preferencesUtils = PreferencesUtils();
+    String email = preferencesUtils.getPreferencesString("user_email") ?? "";
+
     await preferencesUtils.init();
 
     await preferencesUtils.savePreferencesBool(
-        widget.moduleId.toString(), true);
+        "${widget.moduleId.toString()}_$email", true);
   }
 
   @override
@@ -159,8 +161,8 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                                   ),
                                   onPressed: () async {
                                     if (widget.isLastIndex) {
-                                      saveSectionProgress();
-                                      updateModuleStatus();
+                                      await saveSectionProgress();
+                                      await updateModuleStatus();
                                       if (context.mounted) {
                                         showDialog(
                                           context: context,
@@ -170,8 +172,8 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                                         );
                                       }
                                     } else {
-                                      saveSectionProgress();
-                                      updateModuleStatus();
+                                      await saveSectionProgress();
+                                      await updateModuleStatus();
                                       if (context.mounted) {
                                         Navigator.pushReplacement(
                                           context,
@@ -292,7 +294,8 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                                 ),
                                 onPressed: () async {
                                   if (widget.isLastIndex) {
-                                    saveSectionProgress();
+                                    await saveSectionProgress();
+                                    await updateModuleStatus();
                                     if (context.mounted) {
                                       showDialog(
                                         context: context,
@@ -302,7 +305,8 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                                       );
                                     }
                                   } else {
-                                    saveSectionProgress();
+                                    await saveSectionProgress();
+                                    await updateModuleStatus();
                                     if (context.mounted) {
                                       Navigator.pushReplacement(
                                         context,

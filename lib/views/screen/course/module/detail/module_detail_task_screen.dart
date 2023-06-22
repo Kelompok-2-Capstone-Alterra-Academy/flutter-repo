@@ -112,20 +112,6 @@ class _ModuleDetailTaskState extends State<ModuleDetailTask> {
                           fontSize: 11,
                         ),
                       ),
-                      // ListView.builder(
-                      //   shrinkWrap: true,
-                      //   itemCount: sectionTask.isEmpty ? 0 : 1,
-                      //   itemBuilder: (context, index) {
-                      //     return Text(
-                      //       widget.description.toString(),
-                      //       style: GoogleFonts.poppins(
-                      //         fontStyle: FontStyle.normal,
-                      //         fontWeight: FontWeight.w400,
-                      //         fontSize: 11,
-                      //       ),
-                      //     );
-                      //   },
-                      // ),
                       Text(
                         "Kerjakan Tugas Matematika Dasar pada dokumen dibawah ini. Jawaban di tulis tangan kemudian diFoto/discan dan kemudian diupload dalam bentuk pdf Nama file (no induk_nama_jenis latihan)",
                         style: GoogleFonts.poppins(
@@ -314,12 +300,14 @@ class _ModuleDetailTaskState extends State<ModuleDetailTask> {
                                 page: ModuleSendTaskScreen(
                               courseId: widget.courseId!,
                               isLastIndex: widget.isLastIndex,
+                              moduleId: widget.moduleId!,
                             )));
                           } else {
                             Navigator.of(context).push(SlideAnimation3(
                                 page: ModuleSendTaskScreen(
                               isLastIndex: false,
                               courseId: widget.courseId!,
+                              moduleId: widget.moduleId!,
                             )));
                           }
                         },

@@ -55,6 +55,16 @@ class _ModuleQuizDetailScreenState extends State<ModuleQuizDetailScreen> {
     );
   }
 
+  Future<void> updateModuleStatus() async {
+    PreferencesUtils preferencesUtils = PreferencesUtils();
+    String email = preferencesUtils.getPreferencesString("user_email") ?? "";
+
+    await preferencesUtils.init();
+
+    await preferencesUtils.savePreferencesBool(
+        "${widget.moduleId.toString()}_$email", true);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -138,6 +148,7 @@ class _ModuleQuizDetailScreenState extends State<ModuleQuizDetailScreen> {
                     onPressed: () async {
                       if (widget.isLastIndex) {
                         saveSectionProgress();
+                        updateModuleStatus();
                         if (context.mounted) {
                           showDialog(
                             context: context,
@@ -148,6 +159,7 @@ class _ModuleQuizDetailScreenState extends State<ModuleQuizDetailScreen> {
                         }
                       } else {
                         saveSectionProgress();
+                        updateModuleStatus();
                         if (context.mounted) {
                           showDialog(
                             context: context,

@@ -17,10 +17,12 @@ class ModuleSendTaskScreen extends StatefulWidget {
   static const String routeName = "/sendtask";
   final bool isLastIndex;
   final int courseId;
+  final int moduleId;
   const ModuleSendTaskScreen({
     super.key,
     required this.isLastIndex,
     required this.courseId,
+    required this.moduleId,
   });
 
   @override
@@ -42,6 +44,16 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
       'current_section_course_${widget.courseId}',
       currentSection + 1,
     );
+  }
+
+  Future<void> updateModuleStatus() async {
+    PreferencesUtils preferencesUtils = PreferencesUtils();
+    String email = preferencesUtils.getPreferencesString("user_email") ?? "";
+
+    await preferencesUtils.init();
+
+    await preferencesUtils.savePreferencesBool(
+        "${widget.moduleId.toString()}_$email", true);
   }
 
   @override
@@ -280,7 +292,8 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
                             );
                             if (msg.contains('success')) {
                               if (widget.isLastIndex) {
-                                saveSectionProgress();
+                                await saveSectionProgress();
+                                await updateModuleStatus();
                                 if (context.mounted) {
                                   showDialog(
                                     context: context,
@@ -290,7 +303,8 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
                                   );
                                 }
                               } else {
-                                saveSectionProgress();
+                                await saveSectionProgress();
+                                await updateModuleStatus();
                                 showDialog(
                                   context: context,
                                   builder: (context) =>
