@@ -307,7 +307,7 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
                                           listen: false)
                                       .sendTask(
                                     token: token,
-                                    moduleId: "3",
+                                    moduleId: widget.moduleId.toString(),
                                     filePath: Provider.of<TaskViewModel>(
                                             context,
                                             listen: false)

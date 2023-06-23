@@ -39,9 +39,11 @@ class TaskViewModel with ChangeNotifier {
         filePath: filePath,
         notes: notes,
       );
+      print(response);
       setState(MyState.success);
       return 'success';
     } catch (e) {
+      print(e);
       setState(MyState.failed);
       return e.toString();
     }

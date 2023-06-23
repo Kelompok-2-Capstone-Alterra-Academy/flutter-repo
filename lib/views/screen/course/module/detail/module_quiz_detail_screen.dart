@@ -46,6 +46,7 @@ class _ModuleQuizDetailScreenState extends State<ModuleQuizDetailScreen> {
               'https://docs.google.com/forms/d/e/1FAIpQLSdzKOirkmbwCFED1bTIfY2mJqu6UfGdA4y9CI-3kud-UUBRsg/viewform?usp=sf_link',
         ),
       );
+    print(widget.isLastIndex);
   }
 
   Future<void> saveSectionProgress() async {
