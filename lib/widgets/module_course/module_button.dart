@@ -17,6 +17,7 @@ class ModuleButton extends StatelessWidget {
     required this.width,
     required this.text,
     required this.borderColor,
+    required this.courseStatus,
   });
 
   final int courseId;
@@ -24,6 +25,7 @@ class ModuleButton extends StatelessWidget {
   final double width;
   final String text;
   final Color borderColor;
+  final bool courseStatus;
 
   @override
   Widget build(BuildContext context) {
