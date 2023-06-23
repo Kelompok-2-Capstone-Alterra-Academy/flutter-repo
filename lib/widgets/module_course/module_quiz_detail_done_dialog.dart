@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:staredu/utils/animation/fade_animation2.dart';
 import 'package:staredu/utils/color/color.dart';
+import 'package:staredu/views/screen/course/module/module_list_quiz_screen.dart';
 
 class ModuleQuizDetailDoneDialog extends StatelessWidget {
-  const ModuleQuizDetailDoneDialog({super.key});
+  final String? courseName;
+  final int? courseId;
+  const ModuleQuizDetailDoneDialog({super.key, this.courseName, this.courseId});
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +87,11 @@ class ModuleQuizDetailDoneDialog extends StatelessWidget {
                 ),
                 onPressed: () {
                   Navigator.pop(context);
-                  Navigator.pop(context);
+                  Navigator.of(context).pushReplacement(FadeAnimation2(
+                      page: ModuleListQuizScreen(
+                    courseName: courseName,
+                    courseId: courseId!,
+                  )));
                 },
                 child: Text(
                   "Quiz Selanjutnya",

@@ -36,22 +36,22 @@ class _SplashWelcomeScreenState extends State<SplashWelcomeScreen> {
     PreferencesUtils preferencesUtils = PreferencesUtils();
     await preferencesUtils.init();
     Future.delayed(const Duration(seconds: 5), () {
-      setState(() {
-        isLogin = preferencesUtils.getPreferencesBool('isLogin');
-      });
-      if (isLogin == null) {
-        Navigator.pushAndRemoveUntil(
-          context,
-          FadeAnimation(page: const LoginScreen()),
-          (Route<dynamic> route) => false,
-        );
-      } else {
-        Navigator.pushAndRemoveUntil(
-          context,
-          SlideAnimation(page: const HomeScreen()),
-          (Route<dynamic> route) => false,
-        );
-      }
+      // setState(() {
+      //   isLogin = preferencesUtils.getPreferencesBool('isLogin');
+      // });
+      // if (isLogin == null) {
+      //   Navigator.pushAndRemoveUntil(
+      //     context,
+      //     FadeAnimation(page: const LoginScreen()),
+      //     (Route<dynamic> route) => false,
+      //   );
+      // } else {
+      Navigator.pushAndRemoveUntil(
+        context,
+        SlideAnimation(page: const HomeScreen()),
+        (Route<dynamic> route) => false,
+      );
+      // }
     });
   }
 }

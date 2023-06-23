@@ -17,10 +17,14 @@ class ModuleSendTaskScreen extends StatefulWidget {
   static const String routeName = "/sendtask";
   final bool isLastIndex;
   final int courseId;
+  final int moduleId;
+  final bool? isFinished;
   const ModuleSendTaskScreen({
     super.key,
     required this.isLastIndex,
     required this.courseId,
+    required this.moduleId,
+    this.isFinished,
   });
 
   @override
@@ -44,6 +48,16 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
       'current_section_course_${widget.courseId}_$email',
       currentSection + 1,
     );
+  }
+
+  Future<void> updateModuleStatus() async {
+    PreferencesUtils preferencesUtils = PreferencesUtils();
+    String email = preferencesUtils.getPreferencesString("user_email") ?? "";
+
+    await preferencesUtils.init();
+
+    await preferencesUtils.savePreferencesBool(
+        "${widget.moduleId.toString()}_$email", true);
   }
 
   @override
@@ -252,70 +266,92 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
                       SizedBox(
                         width: constraints.maxWidth,
                         height: 40,
-                        child: OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                            foregroundColor: whiteColor,
-                            backgroundColor: primaryColor,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          onPressed: () async {
-                            PreferencesUtils preferencesUtils =
-                                PreferencesUtils();
-                            await preferencesUtils.init();
-
-                            String token = preferencesUtils
-                                    .getPreferencesString('token') ??
-                                "";
-
-                            String msg = await Provider.of<TaskViewModel>(
-                                    context,
-                                    listen: false)
-                                .sendTask(
-                              token: token,
-                              moduleId: "3",
-                              filePath: Provider.of<TaskViewModel>(context,
-                                      listen: false)
-                                  .filePath,
-                              notes: _notesController.text,
-                            );
-                            if (msg.contains('success')) {
-                              if (widget.isLastIndex) {
-                                saveSectionProgress();
-                                if (context.mounted) {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) => ReviewDialog(
-                                      courseId: widget.courseId,
-                                    ),
-                                  );
-                                }
-                              } else {
-                                saveSectionProgress();
-                                showDialog(
-                                  context: context,
-                                  builder: (context) =>
-                                      const ModuleSendTaskDoneDialog(),
-                                );
-                              }
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(msg),
+                        child: widget.isFinished!
+                            ? OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  foregroundColor: searchBarTextColor,
+                                  backgroundColor: searchBarColor,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
                                 ),
-                              );
-                            }
-                          },
-                          child: Text(
-                            "Submit",
-                            style: GoogleFonts.poppins(
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 13,
-                            ),
-                          ),
-                        ),
+                                onPressed: null,
+                                child: Text(
+                                  "Selesai",
+                                  style: GoogleFonts.poppins(
+                                    fontStyle: FontStyle.normal,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              )
+                            : OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  foregroundColor: whiteColor,
+                                  backgroundColor: primaryColor,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                                onPressed: () async {
+                                  PreferencesUtils preferencesUtils =
+                                      PreferencesUtils();
+                                  await preferencesUtils.init();
+
+                                  String token = preferencesUtils
+                                          .getPreferencesString('token') ??
+                                      "";
+
+                                  String msg = await Provider.of<TaskViewModel>(
+                                          context,
+                                          listen: false)
+                                      .sendTask(
+                                    token: token,
+                                    moduleId: "3",
+                                    filePath: Provider.of<TaskViewModel>(
+                                            context,
+                                            listen: false)
+                                        .filePath,
+                                    notes: _notesController.text,
+                                  );
+                                  if (msg.contains('success')) {
+                                    if (widget.isLastIndex) {
+                                      await saveSectionProgress();
+                                      await updateModuleStatus();
+                                      if (context.mounted) {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) => ReviewDialog(
+                                            courseId: widget.courseId,
+                                          ),
+                                        );
+                                      }
+                                    } else {
+                                      await saveSectionProgress();
+                                      await updateModuleStatus();
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) =>
+                                            const ModuleSendTaskDoneDialog(),
+                                      );
+                                    }
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(msg),
+                                      ),
+                                    );
+                                  }
+                                },
+                                child: Text(
+                                  "Submit",
+                                  style: GoogleFonts.poppins(
+                                    fontStyle: FontStyle.normal,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ),
                       ),
                     ],
                   ),

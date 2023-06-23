@@ -38,16 +38,16 @@ class User {
 
   Map<String, dynamic> toJson() {
     return {
-      'ID': id!,
-      'name': name!,
-      'email': email!,
-      'dob': dob!,
-      'city': city!,
-      'phone_number': phoneNumber!,
-      'major': major!,
-      'school_name': schoolName!,
-      'class': classes!,
-      'gender': gender!,
+      'ID': id,
+      'name': name,
+      'email': email,
+      'dob': dob,
+      'city': city,
+      'phone_number': phoneNumber,
+      'major': major,
+      'school_name': schoolName,
+      'class': classes,
+      'gender': gender,
     };
   }
 }
