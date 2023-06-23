@@ -46,8 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return null;
   }
 
-  savePassword(String email, String password) async {
-    preferencesUtils.savePreferencesString('email', email);
+  savePassword(String password) async {
     preferencesUtils.savePreferencesString('password', password);
   }
 
@@ -58,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   saveEmail(String value) async {
-    preferencesUtils.savePreferencesString('user_email', _emailController.text);
+    preferencesUtils.savePreferencesString('email', _emailController.text);
   }
 
   @override
@@ -321,7 +320,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                                     textColor: whiteColor,
                                                     press: () async {
                                                       await savePassword(
-                                                          _emailController.text,
                                                           _passwordController
                                                               .text);
                                                       // ignore: use_build_context_synchronously
