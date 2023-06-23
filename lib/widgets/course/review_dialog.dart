@@ -195,9 +195,7 @@ class _ReviewDialogState extends State<ReviewDialog> {
                                 "";
 
                         //send rating
-                        Provider.of<CourseTakenViewModel>(context,
-                                listen: false)
-                            .clearRating();
+
                         String msg = await Provider.of<CourseTakenViewModel>(
                                 context,
                                 listen: false)
@@ -207,18 +205,32 @@ class _ReviewDialogState extends State<ReviewDialog> {
                           context.read<CourseTakenViewModel>().rating.toInt(),
                           _notesController.text,
                         );
+
+                        Provider.of<CourseTakenViewModel>(context,
+                                listen: false)
+                            .clearRating();
                         if (msg.contains('success')) {
                           Navigator.pop(context);
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text("Ulasanmu sudah kami rekam"),
+                            SnackBar(
+                              behavior: SnackBarBehavior.floating,
+                              content: Text(
+                                "Ulasanmu sudah kami rekam",
+                                style: GoogleFonts.poppins(
+                                  fontStyle: FontStyle.normal,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 11,
+                                ),
+                              ),
+                              backgroundColor: successColor,
                             ),
                           );
+
                           Navigator.of(context).pushReplacement(
                             PageRouteBuilder(
-                              pageBuilder: (context, animations,
-                                      secondaryAnimations) =>
-                                  const ModuleListScreen(courseFinished: true),
+                              pageBuilder:
+                                  (context, animations, secondaryAnimations) =>
+                                      const CourseTakenListScreen(),
                               transitionsBuilder: (context, animations,
                                   secondaryAnimations, childs) {
                                 final tween = Tween(begin: 0.0, end: 1.0);
@@ -230,10 +242,17 @@ class _ReviewDialogState extends State<ReviewDialog> {
                             ),
                           );
                         } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text("Gagal mengirim ulasan."),
+                          SnackBar(
+                            behavior: SnackBarBehavior.floating,
+                            content: Text(
+                              "Gagal mengirim ulasan",
+                              style: GoogleFonts.poppins(
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 11,
+                              ),
                             ),
+                            backgroundColor: redWarningColor,
                           );
                         }
                       },

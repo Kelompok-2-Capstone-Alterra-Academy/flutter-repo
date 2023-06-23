@@ -130,8 +130,7 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Text(
-                            widget.pptDetailModel.lesson ??
-                                "Matematika Dasar - Fungsi Trigonometri",
+                            "${widget.courseName} - ${widget.pptDetailModel.section}",
                             style: GoogleFonts.poppins(
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w600,
@@ -143,8 +142,7 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16, vertical: 8),
                           child: Text(
-                            widget.pptDetailModel.lessonDescription ??
-                                "Mengenal Fungsi Trigonometri",
+                            widget.pptDetailModel.lesson ?? "Lorem Ipsum",
                             style: GoogleFonts.poppins(
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w400,
@@ -293,11 +291,11 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                                   horizontal: 16,
                                 ),
                                 child: Text(
-                                  "Matematika Dasar - Fungsi Trigonometri",
+                                  "${widget.courseName} - ${widget.pptDetailModel.section}",
                                   style: GoogleFonts.poppins(
                                     fontStyle: FontStyle.normal,
                                     fontWeight: FontWeight.w600,
-                                    fontSize: 13,
+                                    fontSize: 14,
                                   ),
                                 ),
                               ),
@@ -307,11 +305,11 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                                   horizontal: 16,
                                 ),
                                 child: Text(
-                                  "Mengenal Fungsi Trigonometri",
+                                  widget.pptDetailModel.lesson ?? "Lorem Ipsum",
                                   style: GoogleFonts.poppins(
                                     fontStyle: FontStyle.normal,
                                     fontWeight: FontWeight.w400,
-                                    fontSize: 11,
+                                    fontSize: 12,
                                   ),
                                 ),
                               ),
