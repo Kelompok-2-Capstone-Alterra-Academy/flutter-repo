@@ -300,8 +300,11 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                                                   'document')
                                                           ? true
                                                           : false,
-                                                  dueDate:
-                                                      DateTime.now().toString(),
+                                                  dueDate: moduleViewModel
+                                                      .courseModule[firstIndex]
+                                                      .module![secondIndex]
+                                                      .tasks![0]
+                                                      .dueDate,
                                                   isSectionFinished:
                                                       snapshot.data ?? false,
                                                   linkModule: moduleViewModel

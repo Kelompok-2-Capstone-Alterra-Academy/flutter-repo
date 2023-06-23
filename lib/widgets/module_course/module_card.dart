@@ -249,7 +249,11 @@ class ModuleCard extends StatelessWidget {
                         isLastIndex: isLastModule,
                         moduleId: moduleId,
                         isFinished: isSectionFinished,
-                        pptDetailModel: PPTDetailModel(url: linkModule),
+                        pptDetailModel: PPTDetailModel(
+                          section: sectionName,
+                          lesson: moduleDescription,
+                          url: linkModule,
+                        ),
                       )));
                 },
                 child: Card(
@@ -414,6 +418,7 @@ class ModuleCard extends StatelessWidget {
                       courseName: courseName,
                       sectionName: sectionName,
                       linkModule: linkModule,
+                      dueDate: dueDate,
                       description: moduleDescription,
                       moduleId: moduleId,
                       isFinished: isSectionFinished,

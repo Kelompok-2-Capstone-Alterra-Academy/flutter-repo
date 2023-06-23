@@ -3,6 +3,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/preferences/preferences_utils.dart';
@@ -19,12 +20,21 @@ class ModuleSendTaskScreen extends StatefulWidget {
   final int courseId;
   final int moduleId;
   final bool? isFinished;
+  final String? courseName;
+  final String? sectionName;
+  final String? description;
+  final String? dueDate;
+
   const ModuleSendTaskScreen({
     super.key,
     required this.isLastIndex,
     required this.courseId,
     required this.moduleId,
     this.isFinished,
+    this.courseName,
+    this.sectionName,
+    this.description,
+    this.dueDate,
   });
 
   @override
@@ -60,6 +70,14 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
         "${widget.moduleId.toString()}_$email", true);
   }
 
+  String formatDate(String date) {
+    DateTime dateTime = DateTime.parse(date);
+    DateFormat dateFormat = DateFormat('dd MMMM yyyy');
+    String formattedDate = dateFormat.format(dateTime);
+
+    return formattedDate;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,7 +87,7 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
         foregroundColor: blackColor,
         elevation: 0,
         title: Text(
-          "Latihan 1 - Trigonometri",
+          "Latihan - ${widget.sectionName}",
           style: GoogleFonts.poppins(
             fontStyle: FontStyle.normal,
             fontWeight: FontWeight.w600,
@@ -96,7 +114,7 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
                         height: 24,
                       ),
                       Text(
-                        "Matematika Dasar",
+                        widget.courseName.toString(),
                         style: GoogleFonts.poppins(
                           fontStyle: FontStyle.normal,
                           fontWeight: FontWeight.w600,
@@ -107,7 +125,7 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
                         height: 8,
                       ),
                       Text(
-                        "Kerjakan Tugas Matematika Dasar pada dokumen dibawah ini. Jawaban di tulis tangan kemudian diFoto/discan dan kemudian diupload dalam bentuk pdf Nama file (no induk_nama_jenis latihan)",
+                        widget.description.toString(),
                         style: GoogleFonts.poppins(
                           fontStyle: FontStyle.normal,
                           fontWeight: FontWeight.w400,
@@ -129,7 +147,7 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
                         height: 4,
                       ),
                       Text(
-                        "Tanggal : 13 April 2023 - 20 April 2023",
+                        "Tanggal : ${formatDate(widget.dueDate ?? DateTime.now().toString())}",
                         style: GoogleFonts.poppins(
                           fontStyle: FontStyle.normal,
                           fontWeight: FontWeight.w400,
@@ -137,7 +155,7 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
                         ),
                       ),
                       Text(
-                        "Type : Soal Essay",
+                        "Tipe : Soal Essay",
                         style: GoogleFonts.poppins(
                           fontStyle: FontStyle.normal,
                           fontWeight: FontWeight.w400,
