@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:staredu/views/view_model/sell_course/sell_course_view_model.dart';
 import '../../../utils/animation/fade_animation2.dart';
 import '../../../utils/color/color.dart';
 import '../../../utils/preferences/preferences_utils.dart';
@@ -38,7 +38,6 @@ class _HistoryTransactionScreenState extends State<HistoryTransactionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: AppBar(
           backgroundColor: whiteColor,
@@ -143,7 +142,16 @@ class _HistoryTransactionScreenState extends State<HistoryTransactionScreen> {
                           return Column(
                             children: [
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    FadeAnimation2(
+                                      page: NoteTransactionScreen(
+                                        model: value.historyCourses[index],
+                                      ),
+                                    ),
+                                  );
+                                },
                                 child: Card(
                                   elevation: 2,
                                   shape: const RoundedRectangleBorder(
@@ -167,15 +175,16 @@ class _HistoryTransactionScreenState extends State<HistoryTransactionScreen> {
                                           height: 80,
                                           width: 80,
                                           child: Image.asset(
-                                            value
-                                                    .historyCourses[index]
-                                                    .transactionDetails![index]
-                                                    .course!
-                                                    .thumbnail!
-                                                    .isEmpty
-                                                ? 'assets/images/thumbnail/apple.png'
-                                                : "assets/images/thumbnail/${value.historyCourses[index].transactionDetails![index].course!.thumbnail}.png",
-                                            fit: BoxFit.contain,
+                                            'assets/images/thumbnail/apple.jpg',
+                                            // value
+                                            //         .historyCourses[index].data!
+                                            //         .transactionDetails![0]
+                                            //         .course!
+                                            //         .thumbnail!
+                                            //         .isEmpty
+                                            //     ? 'assets/images/thumbnail/apple.png'
+                                            //     : "assets/images/thumbnail/${value.historyCourses[index].transactionDetails![0].course!.thumbnail}.png",
+                                            // fit: BoxFit.contain,
                                           ),
                                         ),
                                         const SizedBox(width: 31),
@@ -184,11 +193,10 @@ class _HistoryTransactionScreenState extends State<HistoryTransactionScreen> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              value
-                                                  .historyCourses[index]
-                                                  .transactionDetails![index]
-                                                  .course!
-                                                  .courseName!,
+                                              '',
+                                              // value
+                                              //     .historyCourses[index].data!.transaction![index].,
+
                                               style: GoogleFonts.poppins(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w600,
@@ -196,16 +204,20 @@ class _HistoryTransactionScreenState extends State<HistoryTransactionScreen> {
                                             ),
                                             const SizedBox(height: 3),
                                             Text(
-                                              value.historyCourses[index]
-                                                  .createdAt!,
+                                              DateFormat('dd MMMM yyyy').format(
+                                                  DateTime.parse(value
+                                                      .historyCourses[0]
+                                                      .data!
+                                                      .transaction![0]
+                                                      .createdAt!)),
                                               style: GoogleFonts.poppins(
                                                 fontSize: 11,
                                                 fontWeight: FontWeight.normal,
                                               ),
                                             ),
                                             Text(
-                                              value.historyCourses[index]
-                                                  .status!,
+                                              value.historyCourses[index].data!
+                                                  .transaction![index].status!,
                                               style: GoogleFonts.poppins(
                                                 fontSize: 11,
                                                 fontWeight: FontWeight.normal,
