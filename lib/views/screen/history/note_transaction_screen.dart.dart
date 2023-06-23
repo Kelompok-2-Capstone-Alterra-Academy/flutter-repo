@@ -75,7 +75,7 @@ class _NoteTransactionScreenState extends State<NoteTransactionScreen> {
                     height: 120,
                   ),
                   Text(
-                    widget.model!.data!.transaction![0].invoiceNumber!,
+                    widget.model!.invoiceNumber!,
                     style: GoogleFonts.poppins(
                         color: blackColor,
                         fontSize: 16,
@@ -195,9 +195,8 @@ class _NoteTransactionScreenState extends State<NoteTransactionScreen> {
                               ),
                               Expanded(
                                 child: Text(
-                                  '',
-                                  // widget.model!.transactionDetails![0].course!
-                                  //     .courseName!,
+                                  widget.model!.transactionDetails![0].course!
+                                      .courseName!,
                                   style: GoogleFonts.poppins(
                                     color: blackColor,
                                     fontSize: 11,
@@ -223,8 +222,7 @@ class _NoteTransactionScreenState extends State<NoteTransactionScreen> {
                               ),
                               Expanded(
                                 child: Text(
-                                  "",
-                                  // 'SMA/SMK KelaS ${widget.model!.transactionDetails![0].course!.courseClass!.className!} ',
+                                  'SMA/SMK Kelas ${widget.model!.transactionDetails![0].course!.courseClass!.className!} ',
                                   style: GoogleFonts.poppins(
                                     color: blackColor,
                                     fontSize: 11,
@@ -343,7 +341,7 @@ class _NoteTransactionScreenState extends State<NoteTransactionScreen> {
                               ),
                               Expanded(
                                 child: Text(
-                                  user?.city ?? '',
+                                  'Indonesia',
                                   style: GoogleFonts.poppins(
                                     color: blackColor,
                                     fontSize: 11,
@@ -387,12 +385,8 @@ class _NoteTransactionScreenState extends State<NoteTransactionScreen> {
                                           locale: 'id_ID',
                                           symbol: 'Rp',
                                           decimalDigits: 0)
-                                      .format(widget
-                                          .model!
-                                          .data!
-                                          .transaction![0]
-                                          .transactionDetails![0]
-                                          .price!),
+                                      .format(widget.model!
+                                          .transactionDetails![0].price!),
                                   style: GoogleFonts.poppins(
                                     color: blackColor,
                                     fontSize: 11,
@@ -403,33 +397,33 @@ class _NoteTransactionScreenState extends State<NoteTransactionScreen> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 20),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  'Metode Pembayaran',
-                                  style: GoogleFonts.poppins(
-                                    color: blackColor,
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  'Transfer Bank',
-                                  // value.historyCourses[index].pembayaran!,
-                                  style: GoogleFonts.poppins(
-                                    color: blackColor,
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                  textAlign: TextAlign.right,
-                                ),
-                              ),
-                            ],
-                          ),
+                          // const SizedBox(height: 20),
+                          // Row(
+                          //   children: [
+                          //     Expanded(
+                          //       child: Text(
+                          //         'Metode Pembayaran',
+                          //         style: GoogleFonts.poppins(
+                          //           color: blackColor,
+                          //           fontSize: 11,
+                          //           fontWeight: FontWeight.w500,
+                          //         ),
+                          //       ),
+                          //     ),
+                          //     Expanded(
+                          //       child: Text(
+                          //         'Transfer Bank',
+                          //         // value.historyCourses[index].pembayaran!,
+                          //         style: GoogleFonts.poppins(
+                          //           color: blackColor,
+                          //           fontSize: 11,
+                          //           fontWeight: FontWeight.w700,
+                          //         ),
+                          //         textAlign: TextAlign.right,
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
                           const SizedBox(height: 20),
                           Row(
                             children: [
@@ -446,8 +440,8 @@ class _NoteTransactionScreenState extends State<NoteTransactionScreen> {
                               Expanded(
                                 child: Text(
                                   DateFormat('dd MMMM yyyy').format(
-                                      DateTime.parse(value.historyCourses[0]
-                                          .data!.transaction![0].createdAt!)),
+                                      DateTime.parse(
+                                          value.historyCourses[0].createdAt!)),
                                   style: GoogleFonts.poppins(
                                     color: blackColor,
                                     fontSize: 11,
@@ -473,8 +467,8 @@ class _NoteTransactionScreenState extends State<NoteTransactionScreen> {
                               ),
                               Expanded(
                                 child: Text(
-                                  widget.model!.data!.transaction![0]
-                                      .transactionDetails![0].transactionId!
+                                  widget.model!.transactionDetails![0]
+                                      .transactionId!
                                       .toString(),
                                   style: GoogleFonts.poppins(
                                     color: blackColor,
@@ -501,7 +495,7 @@ class _NoteTransactionScreenState extends State<NoteTransactionScreen> {
                               ),
                               Expanded(
                                 child: Text(
-                                  widget.model!.data!.transaction![0].status!,
+                                  widget.model!.status!,
                                   style: GoogleFonts.poppins(
                                     color: blackColor,
                                     fontSize: 11,
