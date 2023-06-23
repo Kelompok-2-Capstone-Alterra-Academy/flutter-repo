@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/models/ppt_model.dart';
 import 'package:staredu/utils/animation/fade_animation.dart';
+import 'package:staredu/utils/animation/fade_animation2.dart';
 import 'package:staredu/utils/preferences/preferences_utils.dart';
 import 'package:staredu/views/screen/course/module/module_list_screen.dart';
+import 'package:staredu/views/screen/mentor/chat_mentor_screen.dart';
 import 'package:staredu/widgets/course/review_dialog.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -128,8 +130,7 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Text(
-                            widget.pptDetailModel.lesson ??
-                                "Matematika Dasar - Fungsi Trigonometri",
+                            "${widget.courseName} - ${widget.pptDetailModel.section}",
                             style: GoogleFonts.poppins(
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w600,
@@ -141,8 +142,7 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16, vertical: 8),
                           child: Text(
-                            widget.pptDetailModel.lessonDescription ??
-                                "Mengenal Fungsi Trigonometri",
+                            widget.pptDetailModel.lesson ?? "Lorem Ipsum",
                             style: GoogleFonts.poppins(
                               fontStyle: FontStyle.normal,
                               fontWeight: FontWeight.w400,
@@ -284,11 +284,11 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                                   horizontal: 16,
                                 ),
                                 child: Text(
-                                  "Matematika Dasar - Fungsi Trigonometri",
+                                  "${widget.courseName} - ${widget.pptDetailModel.section}",
                                   style: GoogleFonts.poppins(
                                     fontStyle: FontStyle.normal,
                                     fontWeight: FontWeight.w600,
-                                    fontSize: 13,
+                                    fontSize: 14,
                                   ),
                                 ),
                               ),
@@ -298,11 +298,11 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                                   horizontal: 16,
                                 ),
                                 child: Text(
-                                  "Mengenal Fungsi Trigonometri",
+                                  widget.pptDetailModel.lesson ?? "Lorem Ipsum",
                                   style: GoogleFonts.poppins(
                                     fontStyle: FontStyle.normal,
                                     fontWeight: FontWeight.w400,
-                                    fontSize: 11,
+                                    fontSize: 12,
                                   ),
                                 ),
                               ),
@@ -398,7 +398,14 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      FadeAnimation2(
+                                        page: const ChatMentorScreen(),
+                                      ),
+                                      (route) => false);
+                                },
                                 child: Text(
                                   "Tanya Mentor",
                                   style: GoogleFonts.poppins(
