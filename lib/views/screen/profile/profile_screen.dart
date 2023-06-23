@@ -8,6 +8,7 @@ import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/preferences/preferences_utils.dart';
 import 'package:staredu/views/screen/auth/login/login_screen.dart';
 import 'package:staredu/views/screen/edit_profile/edit_profile_screen.dart';
+import 'package:staredu/views/screen/home/home_screen.dart';
 import 'package:staredu/views/screen/profile/profile_view_model.dart';
 import 'package:staredu/widgets/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'package:staredu/widgets/profile/section_profile.dart';
@@ -198,11 +199,12 @@ class _ProfileState extends State<Profile> {
                         ),
                         onPressed: () async {
                           await preferencesUtils.removePreferences('token');
-                          await preferencesUtils.removePreferences('isLogin');
+                          await preferencesUtils.savePreferencesBool(
+                              'isLogin', false);
                           // ignore: use_build_context_synchronously
                           Navigator.pushAndRemoveUntil(
                               context,
-                              FadeAnimation(page: const LoginScreen()),
+                              FadeAnimation(page: const HomeScreen()),
                               (route) => false);
                         },
                         child: Text("Keluar",
