@@ -93,19 +93,28 @@ class _OnGoingCourseTakenListScreenState
   }
 
   // reset section (for testing)
-  // Future<void> removeSection(String courseId) async {
+  // Future<void> removeSection(String courseId, String moduleId) async {
   //   PreferencesUtils preferencesUtils = PreferencesUtils();
   //   await preferencesUtils.init();
 
-  //   preferencesUtils.removePreferences('total_section_course_$courseId');
-  //   preferencesUtils.removePreferences('current_section_course_$courseId');
+  //   String email = preferencesUtils.getPreferencesString("user_email") ?? "";
+
+  //   preferencesUtils.savePreferencesInt(
+  //       'total_section_course_${courseId}_$email', 12);
+  //   // preferencesUtils
+  //   //     .removePreferences('total_section_course_${courseId}_$email');
+  //   // preferencesUtils
+  //   //     .removePreferences('current_section_course_${courseId}_$email');
+  //   preferencesUtils.savePreferencesInt(
+  //       'current_section_course_${courseId}_$email', 11);
+  //   preferencesUtils.removePreferences('${moduleId.toString()}_$email');
   // }
 
   // @override
   // void initState() {
   //   // TODO: implement initState
   //   super.initState();
-  //   removeSection("45");
+  //   removeSection("63", "408");
   // }
 
   @override

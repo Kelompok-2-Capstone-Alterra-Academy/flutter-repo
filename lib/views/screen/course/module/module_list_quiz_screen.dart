@@ -130,7 +130,7 @@ class _ModuleListQuizScreenState extends State<ModuleListQuizScreen> {
                         itemBuilder: (context, secondIndex) {
                           return FutureBuilder(
                             future: isLastModule,
-                            builder: (context, snapshot) {
+                            builder: (context, snapshotLastModule) {
                               var sectionFinished = getModuleStatus(
                                   moduleViewModel.courseModule[firstIndex]
                                       .module![secondIndex].id!
@@ -139,7 +139,8 @@ class _ModuleListQuizScreenState extends State<ModuleListQuizScreen> {
                                 future: sectionFinished,
                                 builder: (context, snapshot) {
                                   return ModuleQuizCard(
-                                    isLastModule: snapshot.data ?? false,
+                                    isLastModule:
+                                        snapshotLastModule.data ?? false,
                                     id: int.parse(moduleViewModel
                                         .courseModule[firstIndex].courseId
                                         .toString()),
