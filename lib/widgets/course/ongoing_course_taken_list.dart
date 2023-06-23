@@ -106,7 +106,7 @@ class _OnGoingCourseTakenListScreenState
   //   // preferencesUtils
   //   //     .removePreferences('current_section_course_${courseId}_$email');
   //   preferencesUtils.savePreferencesInt(
-  //       'current_section_course_${courseId}_$email', 11);
+  //       'current_section_course_${courseId}_$email', 10);
   //   preferencesUtils.removePreferences('${moduleId.toString()}_$email');
   // }
 
@@ -114,7 +114,7 @@ class _OnGoingCourseTakenListScreenState
   // void initState() {
   //   // TODO: implement initState
   //   super.initState();
-  //   removeSection("63", "408");
+  //   removeSection("63", "374");
   // }
 
   @override
