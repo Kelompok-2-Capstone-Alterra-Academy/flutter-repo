@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/views/screen/sell_course/course_payment_screen.dart';
+import 'package:staredu/views/view_model/course/course_taken_view_model.dart';
+import '../../../models/course_taken_model.dart';
 import '../../../models/sell_course_model.dart';
 import '../../../models/service/wishlist_manager.dart';
+import '../../../utils/animation/slide_animation3.dart';
+import '../../../utils/preferences/preferences_utils.dart';
 import '../../../widgets/sell_course/detail_keuntungan.dart';
 import '../../../widgets/sell_course/primary_button.dart';
 
@@ -38,6 +43,7 @@ class SellCourseDetailScreen extends StatefulWidget {
 }
 
 class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
+  late PreferencesUtils preferencesUtils;
   bool isWishlistSelected = false;
   WishlistManager wishlistManager = WishlistManager();
 
@@ -53,6 +59,18 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
   void initState() {
     super.initState();
     checkWishlistStatus();
+    init();
+  }
+
+  void init() async {
+    preferencesUtils = PreferencesUtils();
+    await preferencesUtils.init();
+    String? token = preferencesUtils.getPreferencesString('token');
+
+    if (context.mounted) {
+      Provider.of<CourseTakenViewModel>(context, listen: false)
+          .getCourseTaken(token ?? '');
+    }
   }
 
   void toggleWishlistStatus() async {
@@ -60,15 +78,16 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
       await wishlistManager.removeWishlistItem(widget.id);
     } else {
       await wishlistManager.addWishlistItem(
-          widget.id,
-          widget.thumbnail,
-          widget.price,
-          widget.rating,
-          widget.student,
-          widget.courseName,
-          widget.grade,
-          widget.description,
-          widget.liveSession);
+        widget.id,
+        widget.thumbnail,
+        widget.price,
+        widget.rating,
+        widget.student,
+        widget.courseName,
+        widget.grade,
+        widget.liveSession,
+        widget.description,
+      );
     }
 
     setState(() {
@@ -271,16 +290,75 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
                 text: "Rangkuman materi",
               ),
               const SizedBox(height: 40),
-              PrimaryButton(
-                screenWidth: screenWidth,
-                title: "Ambil Kursus",
-                page: CoursePaymentScreen(
-                  courseId: widget.id,
-                  title: widget.courseName,
-                  price: widget.price,
-                  liveSession: widget.liveSession,
-                ),
-              ),
+              Consumer<CourseTakenViewModel>(builder: (context, value, child) {
+                List<InProgress> courseTaken = value.inProgressCourseTaken;
+                return Container(
+                  height: 42,
+                  width: screenWidth,
+                  decoration: const BoxDecoration(
+                    color: primaryColor,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(8),
+                    ),
+                  ),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () {
+                        if (courseTaken.isEmpty) {
+                          Navigator.push(
+                              context,
+                              SlideAnimation3(
+                                page: CoursePaymentScreen(
+                                  courseId: widget.id,
+                                  title: widget.courseName,
+                                  price: widget.price,
+                                  liveSession: widget.liveSession,
+                                ),
+                              ));
+                        } else {
+                          for (var element in courseTaken) {
+                            if (element.id != widget.id) {
+                              Navigator.push(
+                                  context,
+                                  SlideAnimation3(
+                                    page: CoursePaymentScreen(
+                                      courseId: widget.id,
+                                      title: widget.courseName,
+                                      price: widget.price,
+                                      liveSession: widget.liveSession,
+                                    ),
+                                  ));
+                            } else {}
+                          }
+                        }
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10, right: 12),
+                        child: Center(
+                          child: Text(
+                            "Ambil Kursus",
+                            style: GoogleFonts.poppins(
+                                color: whiteColor,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }),
+              // PrimaryButton(
+              //   screenWidth: screenWidth,
+              //   title: "Ambil Kursus",
+              //   page: CoursePaymentScreen(
+              //     courseId: widget.id,
+              //     title: widget.courseName,
+              //     price: widget.price,
+              //     liveSession: widget.liveSession,
+              //   ),
+              // ),
             ],
           ),
         ),

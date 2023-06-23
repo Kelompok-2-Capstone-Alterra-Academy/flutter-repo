@@ -36,6 +36,17 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       return 'Kata Sandi harus mengandung 1 huruf kecil';
     } else if (!value.contains(RegExp(r'^(?=.*?[0-9])'))) {
       return 'Kata Sandi harus mengandung 1 angka';
+    } else if (!value.contains(RegExp(r'^(?=.*?[!@#\$&*~])'))) {
+      return 'Kata Sandi harus mengandung 1 karakter spesial';
+    }
+    return null;
+  }
+
+  String? validateConfirmPassword(String value) {
+    if (value != _passwordController.text) {
+      return 'Kata Sandi Dan Konfirmasi Kata Sandi Tidak Sama';
+    } else if (value.isEmpty) {
+      return 'Konfirmasi Kata Sandi tidak boleh kosong';
     }
     return null;
   }
@@ -162,7 +173,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           TextFormField(
                             obscureText: _obscureTextConfirmPass,
                             controller: _confirmPasswordController,
-                            validator: (value) => validatePassword(value!),
+                            validator: (value) =>
+                                validateConfirmPassword(value!),
                             maxLength: 20,
                             autocorrect: false,
                             textInputAction: TextInputAction.next,
