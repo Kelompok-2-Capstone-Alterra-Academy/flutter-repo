@@ -17,7 +17,7 @@ class ProfileViewModel extends ChangeNotifier {
       String? id = decodedToken!['id'].toString();
       res = await ProfileAPI.getUserDetail(id, token);
       if (res == null) {
-        setState(MyState.failed); 
+        setState(MyState.failed);
         return null;
       }
       response = User.fromJson(res['data']);
