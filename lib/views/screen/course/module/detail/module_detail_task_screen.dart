@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:staredu/utils/http/http_utils.dart';
 import 'package:staredu/views/screen/course/module/module_send_task_screen.dart';
 import 'package:staredu/views/view_model/course/module_view_model.dart';
-import 'package:staredu/widgets/course/review_dialog.dart';
+import 'package:staredu/views/view_model/course/task_view_model.dart';
 
 import '../../../../../utils/animation/slide_animation3.dart';
 import '../../../../../utils/color/color.dart';
@@ -48,7 +48,6 @@ class _ModuleDetailTaskState extends State<ModuleDetailTask> {
   void initState() {
     super.initState();
     fileSize = getFileSize(widget.linkModule.toString());
-    print(widget.linkModule);
   }
 
   @override
@@ -62,7 +61,7 @@ class _ModuleDetailTaskState extends State<ModuleDetailTask> {
         foregroundColor: blackColor,
         elevation: 0,
         title: Text(
-          "Latihan ${widget.sectionId.toString()} - ${widget.sectionName}",
+          "Latihan - ${widget.sectionName}",
           style: GoogleFonts.poppins(
             fontStyle: FontStyle.normal,
             fontWeight: FontWeight.w600,
@@ -123,18 +122,16 @@ class _ModuleDetailTaskState extends State<ModuleDetailTask> {
                       ),
                       InkWell(
                         onTap: () async {
-                          setState(() {
-                            isLoading = !isLoading;
-                          });
+                          Provider.of<TaskViewModel>(context, listen: false)
+                              .setDownloadingStatus(true);
 
                           await downloadGoogleDocument(
                               widget.linkModule.toString(),
                               "Tugas ${widget.sectionName}");
 
                           if (context.mounted) {
-                            setState(() {
-                              isLoading = !isLoading;
-                            });
+                            Provider.of<TaskViewModel>(context, listen: false)
+                                .setDownloadingStatus(false);
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
@@ -182,16 +179,22 @@ class _ModuleDetailTaskState extends State<ModuleDetailTask> {
                               const SizedBox(
                                 height: 8,
                               ),
-                              isLoading
-                                  ? const LinearProgressIndicator(
+                              Consumer<TaskViewModel>(
+                                builder: (context, value, child) {
+                                  if (value.isDownloading) {
+                                    return const LinearProgressIndicator(
                                       minHeight: 3,
                                       color: primaryColor,
-                                    )
-                                  : const Divider(
+                                    );
+                                  } else {
+                                    return const Divider(
                                       color: searchBarTextColor,
                                       height: 3,
                                       thickness: 2,
-                                    ),
+                                    );
+                                  }
+                                },
+                              ),
                               const SizedBox(
                                 height: 8,
                               ),
