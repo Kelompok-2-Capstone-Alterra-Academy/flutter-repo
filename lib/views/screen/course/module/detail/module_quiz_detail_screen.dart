@@ -1,12 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:staredu/models/quiz_model.dart';
+import 'package:staredu/utils/animation/fade_animation2.dart';
 import 'package:staredu/utils/color/color.dart';
+import 'package:staredu/utils/preferences/preferences_utils.dart';
+import 'package:staredu/views/screen/course/course_taken_list_screen.dart';
+import 'package:staredu/views/screen/course/module/module_list_quiz_screen.dart';
+import 'package:staredu/widgets/course/review_dialog.dart';
 import 'package:staredu/widgets/module_course/module_quiz_detail_done_dialog.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class ModuleQuizDetailScreen extends StatefulWidget {
   static const String routeName = "/quizdetail";
-  const ModuleQuizDetailScreen({super.key});
+  final QuizDetailModel quizDetail;
+  final bool isLastIndex;
+  final int courseId;
+  final int moduleId;
+  final bool? isFinished;
+  final String? courseName;
+  const ModuleQuizDetailScreen({
+    super.key,
+    required this.quizDetail,
+    required this.isLastIndex,
+    required this.courseId,
+    required this.moduleId,
+    this.isFinished,
+    this.courseName,
+  });
 
   @override
   State<ModuleQuizDetailScreen> createState() => _ModuleQuizDetailScreenState();
@@ -22,8 +42,36 @@ class _ModuleQuizDetailScreenState extends State<ModuleQuizDetailScreen> {
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..loadRequest(
         Uri.parse(
-            'https://docs.google.com/forms/d/e/1FAIpQLSdzKOirkmbwCFED1bTIfY2mJqu6UfGdA4y9CI-3kud-UUBRsg/viewform?usp=sf_link'),
+          widget.quizDetail.url ??
+              'https://docs.google.com/forms/d/e/1FAIpQLSdzKOirkmbwCFED1bTIfY2mJqu6UfGdA4y9CI-3kud-UUBRsg/viewform?usp=sf_link',
+        ),
       );
+  }
+
+  Future<void> saveSectionProgress() async {
+    PreferencesUtils preferencesUtils = PreferencesUtils();
+    await preferencesUtils.init();
+    //get current user
+    String email = preferencesUtils.getPreferencesString("user_email") ?? "";
+    //get current section
+    int currentSection = preferencesUtils.getPreferencesInt(
+            'current_section_course_${widget.courseId}_$email') ??
+        0;
+    //increment the current section value
+    await preferencesUtils.savePreferencesInt(
+      'current_section_course_${widget.courseId}_$email',
+      currentSection + 1,
+    );
+  }
+
+  Future<void> updateModuleStatus() async {
+    PreferencesUtils preferencesUtils = PreferencesUtils();
+    String email = preferencesUtils.getPreferencesString("user_email") ?? "";
+
+    await preferencesUtils.init();
+
+    await preferencesUtils.savePreferencesBool(
+        "${widget.moduleId.toString()}_$email", true);
   }
 
   @override
@@ -35,12 +83,25 @@ class _ModuleQuizDetailScreenState extends State<ModuleQuizDetailScreen> {
         foregroundColor: blackColor,
         elevation: 0,
         title: Text(
-          "Quiz Section 1",
+          widget.quizDetail.section ?? "Quiz Section 1",
           style: GoogleFonts.poppins(
             fontStyle: FontStyle.normal,
             fontWeight: FontWeight.w600,
             fontSize: 17,
           ),
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushAndRemoveUntil(
+                context,
+                FadeAnimation2(
+                    page: ModuleListQuizScreen(
+                  courseId: widget.courseId,
+                  courseName: widget.courseName,
+                )),
+                (route) => false);
+          },
         ),
       ),
       body: LayoutBuilder(
@@ -58,7 +119,8 @@ class _ModuleQuizDetailScreenState extends State<ModuleQuizDetailScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Text(
-                    "Matematika Dasar - Fungsi Trigonometri",
+                    widget.quizDetail.lesson ??
+                        "Matematika Dasar - Fungsi Trigonometri",
                     style: GoogleFonts.poppins(
                       fontStyle: FontStyle.normal,
                       fontWeight: FontWeight.w600,
@@ -97,30 +159,68 @@ class _ModuleQuizDetailScreenState extends State<ModuleQuizDetailScreen> {
                     left: 16,
                     right: 16,
                   ),
-                  child: OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: whiteColor,
-                      backgroundColor: primaryColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) =>
-                            const ModuleQuizDetailDoneDialog(),
-                      );
-                    },
-                    child: Text(
-                      "Selesai",
-                      style: GoogleFonts.poppins(
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 13,
-                      ),
-                    ),
-                  ),
+                  child: widget.isFinished!
+                      ? OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: searchBarTextColor,
+                            backgroundColor: searchBarColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          onPressed: null,
+                          child: Text(
+                            "Sudah Selesai",
+                            style: GoogleFonts.poppins(
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 13,
+                            ),
+                          ),
+                        )
+                      : OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: whiteColor,
+                            backgroundColor: primaryColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          onPressed: () async {
+                            if (widget.isLastIndex) {
+                              await saveSectionProgress();
+                              await updateModuleStatus();
+                              if (context.mounted) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => ReviewDialog(
+                                    courseId: widget.courseId,
+                                  ),
+                                );
+                              }
+                            } else {
+                              await saveSectionProgress();
+                              await updateModuleStatus();
+                              if (context.mounted) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) =>
+                                      ModuleQuizDetailDoneDialog(
+                                          courseId: widget.courseId,
+                                          courseName: widget.courseName),
+                                );
+                              }
+                            }
+                          },
+                          child: Text(
+                            "Selesai",
+                            style: GoogleFonts.poppins(
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 13,
+                            ),
+                          ),
+                        ),
                 ),
               ],
             ),

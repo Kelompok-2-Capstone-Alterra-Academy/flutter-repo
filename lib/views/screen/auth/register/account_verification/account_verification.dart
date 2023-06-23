@@ -169,6 +169,7 @@ class _AccountVerificationState extends State<AccountVerification> {
                             SizedBox(
                               width: 60,
                               child: TextFormField(
+                                textAlign: TextAlign.center,
                                 maxLength: 1,
                                 focusNode: _otpFocus1,
                                 onChanged: (value) {
@@ -203,6 +204,7 @@ class _AccountVerificationState extends State<AccountVerification> {
                             SizedBox(
                               width: 60,
                               child: TextFormField(
+                                textAlign: TextAlign.center,
                                 maxLength: 1,
                                 focusNode: _otpFocus2,
                                 onChanged: (value) {
@@ -237,6 +239,7 @@ class _AccountVerificationState extends State<AccountVerification> {
                             SizedBox(
                               width: 60,
                               child: TextFormField(
+                                textAlign: TextAlign.center,
                                 maxLength: 1,
                                 focusNode: _otpFocus3,
                                 onChanged: (value) {
@@ -271,6 +274,7 @@ class _AccountVerificationState extends State<AccountVerification> {
                             SizedBox(
                               width: 60,
                               child: TextFormField(
+                                textAlign: TextAlign.center,
                                 controller: _otpController4,
                                 maxLength: 1,
                                 focusNode: _otpFocus4,
@@ -407,7 +411,7 @@ class _AccountVerificationState extends State<AccountVerification> {
                               _otpController4.clear();
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(
-                                content: Text(message),
+                                content: Text("Wrong or $message"),
                               ));
                             }
                           }

@@ -89,6 +89,8 @@ flutter:
     - assets/images/bottom_splash.jpg
     - assets/images/login_logo.jpg
     - assets/images/calculator.jpg
+    - assets/images/apple.jpg
+    - assets/images/apple.png
     - assets/images/camera.jpg
     - assets/images/idea.jpg
     - assets/images/notebook.jpg

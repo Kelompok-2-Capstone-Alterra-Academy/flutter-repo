@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
+import 'package:staredu/models/course_taken_model.dart';
 import 'package:staredu/models/type_course.dart';
 import 'package:dio/dio.dart';
 import 'package:staredu/models/sell_course_model.dart';
@@ -48,6 +52,9 @@ class CourseAPI {
       for (var element in response.data['data']) {
         listCourse.add(SellCourseModel.fromJson(element));
       }
+      // for (var element in sellCoursesResponse) {
+      //   listCourse.add(SellCourseModel.fromJson(element));
+      // }
       return listCourse;
     } on DioError catch (_) {
       rethrow;
@@ -123,6 +130,70 @@ class CourseAPI {
         headers: {'Authorization': 'Bearer $token'},
       ),
     );
+    return response
+        .then((value) => value.data)
+        .catchError((e) => handleErrorApi(e));
+  }
+
+  Future<dynamic> getCourseTaken(String token) async {
+    final Dio dio = Dio();
+
+    dio.options.headers['Authorization'] = 'Bearer $token';
+
+    final response = dio.get("$BASE_URL_API/students/courses/status");
+
+    return response
+        .then((value) => value.data)
+        .catchError((e) => handleErrorApi(e));
+  }
+
+  Future<dynamic> sendTask({
+    required token,
+    required String moduleId,
+    required String filePath,
+    String? notes,
+  }) async {
+    final Dio dio = Dio();
+
+    dio.options.headers['Authorization'] = 'Bearer $token';
+
+    FormData formData = FormData();
+
+    formData.files.add(MapEntry(
+      'submission_source',
+      await MultipartFile.fromFile(filePath),
+    ));
+
+    formData.fields.add(
+      MapEntry('module_id', moduleId),
+    );
+
+    formData.fields.add(
+      MapEntry('notes', notes ?? ""),
+    );
+
+    final response = dio.post(
+      "$BASE_URL_API/students/courses/submission",
+      data: formData,
+    );
+
+    return response
+        .then((value) => value.data)
+        .catchError((e) => handleErrorApi(e));
+  }
+
+  Future<dynamic> sendReview(
+      String token, int courseId, int rating, String notes) {
+    final Dio dio = Dio();
+
+    dio.options.headers['Authorization'] = 'Bearer $token';
+
+    final response = dio.post("$BASE_URL_API/students/rate-course", data: {
+      'course_id': courseId,
+      'rating': rating,
+      'comment': notes,
+    });
+
     return response
         .then((value) => value.data)
         .catchError((e) => handleErrorApi(e));

@@ -155,9 +155,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                                       student:
                                           wishlistItems[index].numStudents!,
                                       price: wishlistItems[index].price!,
-                                      grade: wishlistItems[index]
-                                          .sellCourseModelClass!
-                                          .className!,
+                                      grade: wishlistItems[index].status!,
                                       liveSession:
                                           wishlistItems[index].liveSessionWeek!,
                                       description:

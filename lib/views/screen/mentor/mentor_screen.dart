@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:staredu/views/view_model/mentor/mentor_view_model.dart';
 
 import '../../../utils/color/color.dart';
+import '../../../utils/preferences/preferences_utils.dart';
 import '../../../utils/state/my_state.dart';
 
 class MentorScreen extends StatefulWidget {
@@ -15,17 +16,22 @@ class MentorScreen extends StatefulWidget {
 }
 
 class _MentorScreenState extends State<MentorScreen> {
+  late PreferencesUtils preferencesUtils;
+
   @override
   void initState() {
-    Future.delayed(
-      Duration.zero,
-      () {
-        final provider = Provider.of<MentorViewModel>(context, listen: false);
-
-        provider.getAllMentor();
-      },
-    );
     super.initState();
+    init();
+  }
+
+  void init() async {
+    preferencesUtils = PreferencesUtils();
+    await preferencesUtils.init();
+    String? token = preferencesUtils.getPreferencesString('token');
+
+    if (context.mounted) {
+      Provider.of<MentorViewModel>(context, listen: false).getAllMentor(token!);
+    }
   }
 
   @override
@@ -97,7 +103,11 @@ class _MentorScreenState extends State<MentorScreen> {
                       height: 60,
                       decoration: const BoxDecoration(shape: BoxShape.circle),
                       child: Image.asset(
-                        value.mentorList[index].pic!,
+                        value.mentorList[index].profile!.contains('noimage') ||
+                                value.mentorList[index].profile!.length > 20 ||
+                                value.mentorList[index].profile!.isEmpty
+                            ? "assets/images/mentor_pic.png"
+                            : "assets/images/${value.mentorList[index].profile!}",
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -116,7 +126,7 @@ class _MentorScreenState extends State<MentorScreen> {
                           borderRadius: BorderRadius.all(Radius.circular(8))),
                       child: Center(
                           child: Text(
-                        value.mentorList[index].subject!,
+                        value.mentorList[index].mentorModelClass!,
                         style: GoogleFonts.poppins(
                             fontSize: 11, fontWeight: FontWeight.w600),
                       )),

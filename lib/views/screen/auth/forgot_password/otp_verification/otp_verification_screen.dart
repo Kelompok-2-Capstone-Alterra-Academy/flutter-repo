@@ -126,6 +126,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                               SizedBox(
                                 width: 60,
                                 child: TextFormField(
+                                  textAlign: TextAlign.center,
                                   maxLength: 1,
                                   focusNode: _otpFocus1,
                                   onChanged: (value) {
@@ -160,6 +161,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                               SizedBox(
                                 width: 60,
                                 child: TextFormField(
+                                  textAlign: TextAlign.center,
                                   maxLength: 1,
                                   focusNode: _otpFocus2,
                                   onChanged: (value) {
@@ -194,6 +196,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                               SizedBox(
                                 width: 60,
                                 child: TextFormField(
+                                  textAlign: TextAlign.center,
                                   maxLength: 1,
                                   focusNode: _otpFocus3,
                                   onChanged: (value) {
@@ -228,6 +231,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                               SizedBox(
                                 width: 60,
                                 child: TextFormField(
+                                  textAlign: TextAlign.center,
                                   maxLength: 1,
                                   focusNode: _otpFocus4,
                                   onChanged: (value) {

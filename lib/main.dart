@@ -46,11 +46,15 @@ import 'package:staredu/views/screen/news/news_screen.dart';
 import 'package:staredu/views/screen/splash_welcome/splash_welcome_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/views/screen/wishlist/wishlist_screen.dart';
+import 'package:staredu/views/view_model/course/certificate_view_model.dart';
+import 'package:staredu/views/view_model/course/course_taken_view_model.dart';
+import 'package:staredu/views/view_model/course/module_view_model.dart';
 import 'package:staredu/views/view_model/mentor/mentor_view_model.dart';
 import 'package:staredu/views/view_model/sell_course/claimed_voucher_view_model.dart';
 import 'package:staredu/views/view_model/sell_course/course_payment_view_model.dart';
 import 'package:staredu/views/view_model/sell_course/sell_course_view_model.dart';
 import 'package:staredu/views/view_model/sell_course/voucher_view_model.dart';
+import 'package:staredu/views/view_model/course/task_view_model.dart';
 import 'package:staredu/widgets/bottom_navigation_bar/bottom_navigation_bar_view_model.dart';
 
 class PostHttpOverrides extends HttpOverrides {
@@ -73,18 +77,21 @@ void main() {
       ChangeNotifierProvider(create: (_) => RegisterViewModel()),
       ChangeNotifierProvider(create: (_) => LoginViewModel()),
       ChangeNotifierProvider(create: (_) => ForgotPasswordViewModel()),
+      ChangeNotifierProvider(create: (_) => CourseTakenViewModel()),
+      ChangeNotifierProvider(create: (_) => ModuleListViewModel()),
+      ChangeNotifierProvider(create: (_) => CertificateViewModel()),
       ChangeNotifierProvider(create: (_) => ProfileViewModel()),
       ChangeNotifierProvider(create: (_) => EditProfileViewModel()),
       ChangeNotifierProvider(create: (_) => MentorViewModel()),
       ChangeNotifierProvider(create: (_) => SellCourseViewModel()),
       ChangeNotifierProvider(create: (_) => VoucherViewModel()),
       ChangeNotifierProvider(create: (_) => CoursePaymentViewModel()),
+      ChangeNotifierProvider(create: (_) => TaskViewModel()),
       ChangeNotifierProvider(create: (_) => ScheduleViewModel()),
       ChangeNotifierProvider(create: (_) => NewsViewModel()),
       ChangeNotifierProvider(create: (_) => PostFeedViewModel()),
       ChangeNotifierProvider(create: (_) => ClaimedVoucherViewModel()),
       ChangeNotifierProvider(create: (_) => HistoryTransactionViewModel()),
-
     ],
     child: const StarEdu(),
   ));
@@ -115,11 +122,11 @@ class StarEdu extends StatelessWidget {
         ModuleListScreen.routeName: (context) => const ModuleListScreen(),
         AskMentorScreen.routeName: (context) => const AskMentorScreen(),
         LiveSessionScreen.routeName: (context) => const LiveSessionScreen(),
-        ModuleListQuizScreen.routeName: (context) =>
-            const ModuleListQuizScreen(),
-        ModuleVideoScreen.routeName: (context) => const ModuleVideoScreen(),
-        ModulDetailPPTScreen.routeName: (context) =>
-            const ModulDetailPPTScreen(),
+        // ModuleListQuizScreen.routeName: (context) =>
+        //     const ModuleListQuizScreen(),
+        // ModuleVideoScreen.routeName: (context) => const ModuleVideoScreen(),
+        // ModulDetailPPTScreen.routeName: (context) =>
+        //     const ModulDetailPPTScreen(),
         ForgotPasswordScreen.routeName: (context) =>
             const ForgotPasswordScreen(),
         OtpVerificationScreen.routeName: (context) =>
@@ -130,10 +137,10 @@ class StarEdu extends StatelessWidget {
         Profile.routeName: (context) => const Profile(),
         EditProfile.routeName: (context) => const EditProfile(),
         NotificationScreen.routeName: (context) => const NotificationScreen(),
-        ModuleQuizDetailScreen.routeName: (context) =>
-            const ModuleQuizDetailScreen(),
-        ModuleSendTaskScreen.routeName: (context) =>
-            const ModuleSendTaskScreen(),
+        // ModuleQuizDetailScreen.routeName: (context) =>
+        //     const ModuleQuizDetailScreen(),
+        // ModuleSendTaskScreen.routeName: (context) =>
+        // const ModuleSendTaskScreen(),
         NewsScreen.routeName: (context) => const NewsScreen(),
         SellCourseScreen.routeName: (context) => const SellCourseScreen(),
         CourseVoucherScreen.routeName: (context) => const CourseVoucherScreen(),
@@ -141,7 +148,7 @@ class StarEdu extends StatelessWidget {
         ChatMentorScreen.routeName: (context) => const ChatMentorScreen(),
         SearchChatScreen.routeName: (context) => const SearchChatScreen(),
         TaskListScreen.routeName: (context) => const TaskListScreen(),
-        ModuleDetailTask.routeName: (context) => const ModuleDetailTask(),
+        // ModuleDetailTask.routeName: (context) => const ModuleDetailTask(),
         WishlistScreen.routeName: (context) => const WishlistScreen(),
         HistoryTransactionScreen.routeName: (context) =>
             const HistoryTransactionScreen(),
