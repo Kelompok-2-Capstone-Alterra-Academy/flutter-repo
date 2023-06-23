@@ -20,11 +20,12 @@ class ProfileAPI {
 
   static Future<dynamic> updateUserDetail(
       User? user, String? token, int? id) async {
-    final response = Dio().put('$BASE_URL_API/students/users/$id',
+    final response = Dio().put('$BASE_URL_API/students/user/profile/$id',
         options: Options(headers: {
           'Authorization': 'Bearer $token',
         }),
         data: user?.toJson());
+
     return response
         .then((value) => value.data)
         .catchError((e) => handleErrorApi(e));
