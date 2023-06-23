@@ -7,7 +7,9 @@ import 'package:staredu/views/screen/course/module/module_list_quiz_screen.dart'
 class ModuleQuizDetailDoneDialog extends StatelessWidget {
   final String? courseName;
   final int? courseId;
-  const ModuleQuizDetailDoneDialog({super.key, this.courseName, this.courseId});
+  final bool? courseStatus;
+  const ModuleQuizDetailDoneDialog(
+      {super.key, this.courseName, this.courseId, this.courseStatus});
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +93,7 @@ class ModuleQuizDetailDoneDialog extends StatelessWidget {
                       page: ModuleListQuizScreen(
                     courseName: courseName,
                     courseId: courseId!,
+                    courseStatus: courseStatus,
                   )));
                 },
                 child: Text(
