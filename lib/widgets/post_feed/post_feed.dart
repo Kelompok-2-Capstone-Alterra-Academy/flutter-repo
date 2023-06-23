@@ -90,7 +90,7 @@ class PostFeed extends StatelessWidget {
                     onPressed: () {},
                   ),
                   Text(
-                    postFeed.like ?? '',
+                    postFeed.like.toString(),
                     style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w400,
                       fontSize: 11,

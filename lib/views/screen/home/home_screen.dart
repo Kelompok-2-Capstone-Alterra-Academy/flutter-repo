@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -66,7 +68,14 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+
+    Provider.of<HomeViewModel>(context, listen: false).getAllTypeCourse();
+    Provider.of<HomeViewModel>(context, listen: false).getAllMentor();
+    Provider.of<HomeViewModel>(context, listen: false).getPostFeed();
+    Provider.of<HomeViewModel>(context, listen: false).getAllNews();
+
     init();
+
   }
 
   @override
@@ -376,7 +385,23 @@ class _HomeScreenState extends State<HomeScreen> {
                             left: 'Seputar Pendidikan di Indonesia',
                             right: 'Lihat Semua',
                             page: NewsScreen()),
-                        News(screenWidth: MediaQuery.of(context).size.width),
+                        Consumer<HomeViewModel>(
+                          builder: (context, value, child) {
+                            if (value.news.isNotEmpty) {
+                              final newsItem =
+                                  value.news[0]; // Ambil item berita pertama
+                              return News(
+                                screenWidth: MediaQuery.of(context).size.width,
+                                link: newsItem.link,
+                                shortDescription: newsItem.content,
+                                tittle: newsItem.title,
+                              );
+                            } else {
+                              return Container(); // Tampilkan widget kosong jika tidak ada berita
+                            }
+                          },
+                        ),
+
                         const SizedBox(height: 20),
                         const RowText(
                             left: 'Yuk, sharing sama pengguna lain',
