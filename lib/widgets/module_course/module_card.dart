@@ -27,6 +27,7 @@ class ModuleCard extends StatelessWidget {
     this.linkModule,
     this.moduleDescription,
     required this.isLastModule,
+    this.moduleId,
   });
 
   final int? id;
@@ -43,6 +44,7 @@ class ModuleCard extends StatelessWidget {
   final String? linkModule;
   final String? moduleDescription;
   final bool isLastModule;
+  final int? moduleId;
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +67,8 @@ class ModuleCard extends StatelessWidget {
                           sectionName: sectionName,
                           linkModule: linkModule,
                           description: moduleDescription,
+                          moduleId: moduleId,
+                          isFinished: isSectionFinished,
                         ),
                       ));
                     },
@@ -240,10 +244,12 @@ class ModuleCard extends StatelessWidget {
                       context,
                       FadeAnimation2(
                           page: ModulDetailPPTScreen(
-                        isLastIndex: isLastModule,
                         courseId: id,
                         courseName: courseName,
-                        pptDetailModel: PPTDetailModel(),
+                        isLastIndex: isLastModule,
+                        moduleId: moduleId,
+                        isFinished: isSectionFinished,
+                        pptDetailModel: PPTDetailModel(url: linkModule),
                       )));
                 },
                 child: Card(
@@ -409,6 +415,8 @@ class ModuleCard extends StatelessWidget {
                       sectionName: sectionName,
                       linkModule: linkModule,
                       description: moduleDescription,
+                      moduleId: moduleId,
+                      isFinished: isSectionFinished,
                     ),
                   ));
                 },

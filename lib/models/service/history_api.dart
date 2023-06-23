@@ -18,7 +18,7 @@ class HistoryAPI {
           headers: {'Authorization': 'Bearer $token'},
         ),
       );
-      for (var element in response.data['data']) {
+      for (var element in response.data['data']["transaction"]) {
         listHistory.add(CourseHistoryModel.fromJson(element));
       }
       return listHistory;

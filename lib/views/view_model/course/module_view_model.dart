@@ -37,6 +37,9 @@ class ModuleListViewModel with ChangeNotifier {
           if (j.attachment!.type!.contains('quiz')) {
             tempCourseQuiz.add(i);
           }
+          // else {
+          //   tempCourseModule.add(i);
+          // }
         }
       }
 

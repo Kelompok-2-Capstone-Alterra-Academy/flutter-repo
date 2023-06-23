@@ -1,17 +1,17 @@
 class Mentor {
   int id;
   String name;
-  String image;
+  String profile;
 
-  Mentor({required this.id, required this.name, required this.image});
+  Mentor({required this.id, required this.name, required this.profile});
 
   factory Mentor.fromJson(Map<String, dynamic> json) {
-    return Mentor(id: json['id'], name: json['name'], image: json['image']);
+    return Mentor(id: json['ID'], name: json['name'], profile: json['profile']);
   }
 
   Map<String, dynamic> toJson() => {
-        'id': id,
+        'ID': id,
         'name': name,
-        'image': image,
+        'image': profile,
       };
 }

@@ -162,6 +162,7 @@ class _OnGoingCourseTakenListScreenState
                                                 .courseName
                                                 .toString(),
                                             courseId: (onGoingCourse[index].id),
+                                            courseFinished: false,
                                           );
                                         } else {
                                           return ModuleListScreen(
@@ -170,6 +171,7 @@ class _OnGoingCourseTakenListScreenState
                                                 .courseName
                                                 .toString(),
                                             courseId: (onGoingCourse[index].id),
+                                            courseFinished: false,
                                           );
                                         }
                                       },

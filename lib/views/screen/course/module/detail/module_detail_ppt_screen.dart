@@ -15,12 +15,16 @@ class ModulDetailPPTScreen extends StatefulWidget {
   final int? courseId;
   final String? courseName;
   final bool isLastIndex;
+  final int? moduleId;
+  final bool? isFinished;
   const ModulDetailPPTScreen({
     super.key,
     required this.pptDetailModel,
     this.courseId,
     this.courseName,
     required this.isLastIndex,
+    this.moduleId,
+    this.isFinished,
   });
 
   @override
@@ -33,12 +37,17 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
   @override
   void initState() {
     super.initState();
+    String? pptLink = widget.pptDetailModel.url?.replaceFirst(
+        RegExp(r'/edit#slide=id.[^/]+$'),
+        '/embed?frameborder&amp;usp=embed_googleplus');
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..enableZoom(true)
       ..loadRequest(
-        Uri.parse(widget.pptDetailModel.url ??
-            'https://docs.google.com/presentation/d/17LfZZORMeVzL3B-kFybmeK0pHyX4q61OPOpX-x3EHNo/embed?frameborder&amp;usp=embed_googleplus'),
+        Uri.parse(
+          pptLink ??
+              'https://docs.google.com/presentation/d/17LfZZORMeVzL3B-kFybmeK0pHyX4q61OPOpX-x3EHNo/embed?frameborder&amp;usp=embed_googleplus%27)',
+        ),
       );
   }
 
@@ -57,6 +66,16 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
       'current_section_course_${widget.courseId}_$email',
       currentSection + 1,
     );
+  }
+
+  Future<void> updateModuleStatus() async {
+    PreferencesUtils preferencesUtils = PreferencesUtils();
+    String email = preferencesUtils.getPreferencesString("user_email") ?? "";
+
+    await preferencesUtils.init();
+
+    await preferencesUtils.savePreferencesBool(
+        "${widget.moduleId.toString()}_$email", true);
   }
 
   @override
@@ -142,49 +161,75 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                               Container(
                                 margin: const EdgeInsets.only(bottom: 16),
                                 width: MediaQuery.of(context).size.width / 2.3,
-                                child: OutlinedButton(
-                                  style: OutlinedButton.styleFrom(
-                                    foregroundColor: whiteColor,
-                                    backgroundColor: primaryColor,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                  onPressed: () async {
-                                    if (widget.isLastIndex) {
-                                      saveSectionProgress();
-                                      if (context.mounted) {
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) => ReviewDialog(
-                                            courseId: widget.courseId!,
+                                child: widget.isFinished!
+                                    ? OutlinedButton(
+                                        style: OutlinedButton.styleFrom(
+                                          foregroundColor: whiteColor,
+                                          backgroundColor: primaryColor,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
                                           ),
-                                        );
-                                      }
-                                    } else {
-                                      saveSectionProgress();
-                                      if (context.mounted) {
-                                        Navigator.pushReplacement(
-                                          context,
-                                          FadeAnimation(
-                                            page: ModuleListScreen(
-                                              courseId: widget.courseId,
-                                              courseName: widget.courseName,
-                                            ),
+                                        ),
+                                        onPressed: null,
+                                        child: Text(
+                                          "Sudah Selesai",
+                                          style: GoogleFonts.poppins(
+                                            fontStyle: FontStyle.normal,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 13,
                                           ),
-                                        );
-                                      }
-                                    }
-                                  },
-                                  child: Text(
-                                    "Selesai",
-                                    style: GoogleFonts.poppins(
-                                      fontStyle: FontStyle.normal,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 13,
-                                    ),
-                                  ),
-                                ),
+                                        ),
+                                      )
+                                    : OutlinedButton(
+                                        style: OutlinedButton.styleFrom(
+                                          foregroundColor: whiteColor,
+                                          backgroundColor: primaryColor,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                        ),
+                                        onPressed: () async {
+                                          if (widget.isLastIndex) {
+                                            await saveSectionProgress();
+                                            await updateModuleStatus();
+                                            if (context.mounted) {
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    ReviewDialog(
+                                                  courseId: widget.courseId!,
+                                                ),
+                                              );
+                                            }
+                                          } else {
+                                            await saveSectionProgress();
+                                            await updateModuleStatus();
+                                            if (context.mounted) {
+                                              Navigator.pushReplacement(
+                                                context,
+                                                FadeAnimation(
+                                                  page: ModuleListScreen(
+                                                    courseId: widget.courseId,
+                                                    courseName:
+                                                        widget.courseName,
+                                                    courseFinished: false,
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                          }
+                                        },
+                                        child: Text(
+                                          "Selesai",
+                                          style: GoogleFonts.poppins(
+                                            fontStyle: FontStyle.normal,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 13,
+                                          ),
+                                        ),
+                                      ),
                               ),
                               Container(
                                 margin: const EdgeInsets.only(bottom: 16),
@@ -273,49 +318,74 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                             Container(
                               margin: const EdgeInsets.only(bottom: 16),
                               width: MediaQuery.of(context).size.width / 2.3,
-                              child: OutlinedButton(
-                                style: OutlinedButton.styleFrom(
-                                  foregroundColor: whiteColor,
-                                  backgroundColor: primaryColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                                onPressed: () async {
-                                  if (widget.isLastIndex) {
-                                    saveSectionProgress();
-                                    if (context.mounted) {
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) => ReviewDialog(
-                                          courseId: widget.courseId!,
+                              child: widget.isFinished!
+                                  ? OutlinedButton(
+                                      style: OutlinedButton.styleFrom(
+                                        foregroundColor: searchBarTextColor,
+                                        backgroundColor: searchBarColor,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                         ),
-                                      );
-                                    }
-                                  } else {
-                                    saveSectionProgress();
-                                    if (context.mounted) {
-                                      Navigator.pushReplacement(
-                                        context,
-                                        FadeAnimation(
-                                          page: ModuleListScreen(
-                                            courseId: widget.courseId,
-                                            courseName: widget.courseName,
-                                          ),
+                                      ),
+                                      onPressed: null,
+                                      child: Text(
+                                        "Selesai",
+                                        style: GoogleFonts.poppins(
+                                          fontStyle: FontStyle.normal,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 13,
                                         ),
-                                      );
-                                    }
-                                  }
-                                },
-                                child: Text(
-                                  "Selesai",
-                                  style: GoogleFonts.poppins(
-                                    fontStyle: FontStyle.normal,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 13,
-                                  ),
-                                ),
-                              ),
+                                      ),
+                                    )
+                                  : OutlinedButton(
+                                      style: OutlinedButton.styleFrom(
+                                        foregroundColor: whiteColor,
+                                        backgroundColor: primaryColor,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                      ),
+                                      onPressed: () async {
+                                        if (widget.isLastIndex) {
+                                          await saveSectionProgress();
+                                          await updateModuleStatus();
+                                          if (context.mounted) {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) =>
+                                                  ReviewDialog(
+                                                courseId: widget.courseId!,
+                                              ),
+                                            );
+                                          }
+                                        } else {
+                                          await saveSectionProgress();
+                                          await updateModuleStatus();
+                                          if (context.mounted) {
+                                            Navigator.pushReplacement(
+                                              context,
+                                              FadeAnimation(
+                                                page: ModuleListScreen(
+                                                  courseId: widget.courseId,
+                                                  courseName: widget.courseName,
+                                                  courseFinished: false,
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                        }
+                                      },
+                                      child: Text(
+                                        "Selesai",
+                                        style: GoogleFonts.poppins(
+                                          fontStyle: FontStyle.normal,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 13,
+                                        ),
+                                      ),
+                                    ),
                             ),
                             Container(
                               margin: const EdgeInsets.only(bottom: 16),

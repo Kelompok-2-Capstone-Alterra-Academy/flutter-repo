@@ -19,6 +19,8 @@ class ModuleDetailTask extends StatefulWidget {
   final String? linkModule;
   final String? description;
   final bool isLastIndex;
+  final int? moduleId;
+  final bool? isFinished;
 
   const ModuleDetailTask({
     super.key,
@@ -29,6 +31,8 @@ class ModuleDetailTask extends StatefulWidget {
     this.linkModule,
     this.description,
     required this.isLastIndex,
+    this.moduleId,
+    this.isFinished,
   });
 
   @override
@@ -106,20 +110,6 @@ class _ModuleDetailTaskState extends State<ModuleDetailTask> {
                           fontSize: 11,
                         ),
                       ),
-                      // ListView.builder(
-                      //   shrinkWrap: true,
-                      //   itemCount: sectionTask.isEmpty ? 0 : 1,
-                      //   itemBuilder: (context, index) {
-                      //     return Text(
-                      //       widget.description.toString(),
-                      //       style: GoogleFonts.poppins(
-                      //         fontStyle: FontStyle.normal,
-                      //         fontWeight: FontWeight.w400,
-                      //         fontSize: 11,
-                      //       ),
-                      //     );
-                      //   },
-                      // ),
                       Text(
                         "Kerjakan Tugas Matematika Dasar pada dokumen dibawah ini. Jawaban di tulis tangan kemudian diFoto/discan dan kemudian diupload dalam bentuk pdf Nama file (no induk_nama_jenis latihan)",
                         style: GoogleFonts.poppins(
@@ -295,43 +285,75 @@ class _ModuleDetailTaskState extends State<ModuleDetailTask> {
                         ),
                       ),
                       const Spacer(),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                          shape: MaterialStatePropertyAll(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),
-                        ),
-                        onPressed: () {
-                          if (widget.isLastIndex) {
-                            Navigator.of(context).push(SlideAnimation3(
-                                page: ModuleSendTaskScreen(
-                              courseId: widget.courseId!,
-                              isLastIndex: widget.isLastIndex,
-                            )));
-                          } else {
-                            Navigator.of(context).push(SlideAnimation3(
-                                page: ModuleSendTaskScreen(
-                              isLastIndex: false,
-                              courseId: widget.courseId!,
-                            )));
-                          }
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Center(
-                            child: Text(
-                              'Kumpulkan Tugas',
-                              style: GoogleFonts.poppins(
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 14,
+                      widget.isFinished!
+                          ? ElevatedButton(
+                              style: ButtonStyle(
+                                foregroundColor: const MaterialStatePropertyAll(
+                                    searchBarTextColor),
+                                backgroundColor: const MaterialStatePropertyAll(
+                                    searchBarColor),
+                                shape: MaterialStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
+                              ),
+                              onPressed: null,
+                              child: Padding(
+                                padding: const EdgeInsets.all(12),
+                                child: Center(
+                                  child: Text(
+                                    'Kumpulkan Tugas',
+                                    style: GoogleFonts.poppins(
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          : ElevatedButton(
+                              style: ButtonStyle(
+                                shape: MaterialStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
+                              ),
+                              onPressed: () {
+                                if (widget.isLastIndex) {
+                                  Navigator.of(context).push(SlideAnimation3(
+                                      page: ModuleSendTaskScreen(
+                                    courseId: widget.courseId!,
+                                    isLastIndex: widget.isLastIndex,
+                                    moduleId: widget.moduleId!,
+                                    isFinished: widget.isFinished,
+                                  )));
+                                } else {
+                                  Navigator.of(context).push(SlideAnimation3(
+                                      page: ModuleSendTaskScreen(
+                                    isLastIndex: false,
+                                    courseId: widget.courseId!,
+                                    moduleId: widget.moduleId!,
+                                    isFinished: widget.isFinished,
+                                  )));
+                                }
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(12),
+                                child: Center(
+                                  child: Text(
+                                    'Kumpulkan Tugas',
+                                    style: GoogleFonts.poppins(
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      ),
                     ],
                   );
                 },

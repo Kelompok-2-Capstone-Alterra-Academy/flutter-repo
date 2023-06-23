@@ -216,9 +216,9 @@ class _ReviewDialogState extends State<ReviewDialog> {
                           );
                           Navigator.of(context).pushReplacement(
                             PageRouteBuilder(
-                              pageBuilder:
-                                  (context, animations, secondaryAnimations) =>
-                                      const ModuleListScreen(),
+                              pageBuilder: (context, animations,
+                                      secondaryAnimations) =>
+                                  const ModuleListScreen(courseFinished: true),
                               transitionsBuilder: (context, animations,
                                   secondaryAnimations, childs) {
                                 final tween = Tween(begin: 0.0, end: 1.0);
