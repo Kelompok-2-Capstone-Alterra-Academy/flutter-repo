@@ -14,8 +14,18 @@ import '../../utils/color/color.dart';
 
 class CourseCertificate extends StatefulWidget {
   final String? pdfLink;
+  final String? courseScore;
+  final String? courseTaskAmount;
+  final String? courseVideoAmount;
+  final String? courseMaterialAmount;
 
-  const CourseCertificate({super.key, this.pdfLink});
+  const CourseCertificate(
+      {super.key,
+      this.pdfLink,
+      this.courseScore,
+      this.courseTaskAmount,
+      this.courseVideoAmount,
+      this.courseMaterialAmount});
 
   @override
   State<CourseCertificate> createState() => _CourseCertificateState();
@@ -144,7 +154,7 @@ class _CourseCertificateState extends State<CourseCertificate> {
                                                             width: 30,
                                                           ),
                                                           Text(
-                                                            "9 Video Pembelajaran",
+                                                            "${widget.courseVideoAmount ?? 0} Video Pembelajaran",
                                                             style: GoogleFonts
                                                                 .poppins(
                                                               color: blackColor,
@@ -195,7 +205,7 @@ class _CourseCertificateState extends State<CourseCertificate> {
                                                             width: 25.5,
                                                           ),
                                                           Text(
-                                                            "6 Slide Pembelajaran",
+                                                            "${widget.courseMaterialAmount ?? 0} Slide Pembelajaran",
                                                             style: GoogleFonts
                                                                 .poppins(
                                                               color: blackColor,
@@ -244,7 +254,7 @@ class _CourseCertificateState extends State<CourseCertificate> {
                                                             width: 27,
                                                           ),
                                                           Text(
-                                                            "5 Tugas Selesai",
+                                                            "${widget.courseTaskAmount ?? 0} Tugas Selesai",
                                                             style: GoogleFonts
                                                                 .poppins(
                                                               color: blackColor,
@@ -284,7 +294,7 @@ class _CourseCertificateState extends State<CourseCertificate> {
                                                 ),
                                               ),
                                               Text(
-                                                '90',
+                                                '${widget.courseScore ?? 0}',
                                                 style: GoogleFonts.poppins(
                                                   color: blackColor,
                                                   fontStyle: FontStyle.normal,

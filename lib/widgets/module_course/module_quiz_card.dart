@@ -16,6 +16,7 @@ class ModuleQuizCard extends StatelessWidget {
     this.moduleId,
     this.sectionFinished,
     this.courseName,
+    this.courseStatus,
   });
 
   final int? id;
@@ -27,6 +28,7 @@ class ModuleQuizCard extends StatelessWidget {
   final int? moduleId;
   final bool? sectionFinished;
   final String? courseName;
+  final bool? courseStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +51,7 @@ class ModuleQuizCard extends StatelessWidget {
                           moduleId: moduleId!,
                           isFinished: sectionFinished,
                           courseName: courseName,
+                          courseStatus: courseStatus,
                         ),
                         transitionsBuilder:
                             (context, animations, secondaryAnimations, childs) {
@@ -72,6 +75,7 @@ class ModuleQuizCard extends StatelessWidget {
                           moduleId: moduleId!,
                           isFinished: sectionFinished,
                           courseName: courseName,
+                          courseStatus: courseStatus,
                         ),
                         transitionsBuilder:
                             (context, animations, secondaryAnimations, childs) {
