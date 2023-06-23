@@ -54,7 +54,7 @@ class ButtonText extends StatelessWidget {
                 },
               ),
             ),
-            onPressed: () {},
+            onPressed: press,
             child: Text(text,
                 style: GoogleFonts.poppins(
                     fontSize: 10,

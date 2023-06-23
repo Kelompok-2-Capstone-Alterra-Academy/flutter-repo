@@ -15,10 +15,12 @@ class HomeViewModel extends ChangeNotifier {
   List<TypeCourse> _typeCourse = [];
   List<Mentor> _mentor = [];
   List<PostFeedModel> _postFeeds = [];
+  int _selectedIndex = 1;
 
   List<TypeCourse> get typeCourse => _typeCourse;
   List<Mentor> get mentor => _mentor;
   List<PostFeedModel> get postFeeds => _postFeeds;
+  int get selectedIndex => _selectedIndex;
 
   void getAllTypeCourse(String? token) async {
     // try {
@@ -80,6 +82,11 @@ class HomeViewModel extends ChangeNotifier {
 
   void getPostFeed() async {
     _postFeeds = await PostFeedAPI.getPostFeed();
+    notifyListeners();
+  }
+
+  void onItemSelected(int id) {
+    _selectedIndex = id;
     notifyListeners();
   }
 }

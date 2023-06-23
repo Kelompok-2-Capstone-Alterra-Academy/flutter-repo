@@ -9,6 +9,7 @@ class User {
   String? schoolName;
   String? classes;
   String? gender;
+  String? profile;
 
   User(
       {this.id,
@@ -20,7 +21,8 @@ class User {
       this.major,
       this.schoolName,
       this.classes,
-      this.gender});
+      this.gender,
+      this.profile});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -33,7 +35,8 @@ class User {
         major: json['major'],
         schoolName: json['school_name'],
         classes: json['class'],
-        gender: json['gender']);
+        gender: json['gender'],
+        profile: json['profile']);
   }
 
   Map<String, dynamic> toJson() {
@@ -48,6 +51,7 @@ class User {
       'school_name': schoolName,
       'class': classes,
       'gender': gender,
+      'profile': profile
     };
   }
 }
