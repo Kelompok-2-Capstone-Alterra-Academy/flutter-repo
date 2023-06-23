@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/utils/animation/fade_animation.dart';
+import 'package:staredu/utils/animation/fade_animation2.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/preferences/preferences_utils.dart';
 import 'package:staredu/views/screen/course/module/module_list_screen.dart';
+import 'package:staredu/views/screen/mentor/chat_mentor_screen.dart';
 import 'package:staredu/views/view_model/course/module_view_model.dart';
 import 'package:staredu/widgets/course/review_dialog.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -225,8 +227,7 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
                                 await saveSectionProgress();
                                 await updateModuleStatus();
                                 if (context.mounted) {
-                                  Navigator.pushReplacement(
-                                    context,
+                                  Navigator.of(context).pushReplacement(
                                     FadeAnimation(
                                       page: ModuleListScreen(
                                         courseId: widget.courseId,
@@ -259,7 +260,14 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            FadeAnimation2(
+                              page: const ChatMentorScreen(),
+                            ),
+                            (route) => false);
+                      },
                       child: Text(
                         "Tanya Mentor",
                         style: GoogleFonts.poppins(

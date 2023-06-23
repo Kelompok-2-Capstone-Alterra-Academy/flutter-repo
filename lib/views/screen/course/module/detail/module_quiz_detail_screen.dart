@@ -5,6 +5,7 @@ import 'package:staredu/utils/animation/fade_animation2.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/preferences/preferences_utils.dart';
 import 'package:staredu/views/screen/course/course_taken_list_screen.dart';
+import 'package:staredu/views/screen/course/module/finished_module_list_quiz_screen.dart';
 import 'package:staredu/views/screen/course/module/module_list_quiz_screen.dart';
 import 'package:staredu/widgets/course/review_dialog.dart';
 import 'package:staredu/widgets/module_course/module_quiz_detail_done_dialog.dart';
@@ -18,6 +19,7 @@ class ModuleQuizDetailScreen extends StatefulWidget {
   final int moduleId;
   final bool? isFinished;
   final String? courseName;
+  final bool? courseStatus;
   const ModuleQuizDetailScreen({
     super.key,
     required this.quizDetail,
@@ -26,6 +28,7 @@ class ModuleQuizDetailScreen extends StatefulWidget {
     required this.moduleId,
     this.isFinished,
     this.courseName,
+    this.courseStatus,
   });
 
   @override
@@ -93,14 +96,24 @@ class _ModuleQuizDetailScreenState extends State<ModuleQuizDetailScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pushAndRemoveUntil(
-                context,
+            if (widget.courseStatus != true) {
+              Navigator.of(context).pushReplacement(
                 FadeAnimation2(
                     page: ModuleListQuizScreen(
                   courseId: widget.courseId,
                   courseName: widget.courseName,
                 )),
-                (route) => false);
+              );
+            } else {
+              Navigator.of(context).pushReplacement(
+                FadeAnimation2(
+                    page: FinishedModuleListQuizScreen(
+                  courseId: widget.courseId,
+                  courseName: widget.courseName,
+                  courseStatus: widget.courseStatus,
+                )),
+              );
+            }
           },
         ),
       ),
@@ -207,7 +220,8 @@ class _ModuleQuizDetailScreenState extends State<ModuleQuizDetailScreen> {
                                   builder: (context) =>
                                       ModuleQuizDetailDoneDialog(
                                           courseId: widget.courseId,
-                                          courseName: widget.courseName),
+                                          courseName: widget.courseName,
+                                          courseStatus: widget.courseStatus),
                                 );
                               }
                             }

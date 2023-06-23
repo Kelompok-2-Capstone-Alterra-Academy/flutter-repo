@@ -12,7 +12,15 @@ class TaskViewModel with ChangeNotifier {
   MyState _state = MyState.initial;
   MyState get state => _state;
 
+  bool _isDownloading = false;
+  bool get isDownloading => _isDownloading;
+
   final CourseAPI courseApi = CourseAPI();
+
+  void setDownloadingStatus(bool status) {
+    _isDownloading = status;
+    notifyListeners();
+  }
 
   void setState(MyState state) {
     _state = state;
@@ -39,9 +47,11 @@ class TaskViewModel with ChangeNotifier {
         filePath: filePath,
         notes: notes,
       );
+      print(response);
       setState(MyState.success);
       return 'success';
     } catch (e) {
+      print(e);
       setState(MyState.failed);
       return e.toString();
     }

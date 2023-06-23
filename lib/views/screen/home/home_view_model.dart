@@ -11,7 +11,6 @@ import '../../../models/news.dart';
 
 import 'package:staredu/utils/state/my_state.dart';
 
-
 class HomeViewModel extends ChangeNotifier {
   Mentor? response;
   MyState _stateMentor = MyState.initial;
@@ -21,11 +20,13 @@ class HomeViewModel extends ChangeNotifier {
   List<Mentor> _mentor = [];
   List<PostFeedModel> _postFeeds = [];
   List<News> _news = [];
+  int _selectedIndex = 1;
 
   List<TypeCourse> get typeCourse => _typeCourse;
   List<Mentor> get mentor => _mentor;
   List<PostFeedModel> get postFeeds => _postFeeds;
   List<News> get news => _news;
+  int get selectedIndex => _selectedIndex;
 
   void getAllTypeCourse(String? token) async {
     // try {
@@ -92,6 +93,11 @@ class HomeViewModel extends ChangeNotifier {
 
   void getAllNews() async {
     _news = await NewsAPI.getNews();
+    notifyListeners();
+  }
+
+  void onItemSelected(int id) {
+    _selectedIndex = id;
     notifyListeners();
   }
 }

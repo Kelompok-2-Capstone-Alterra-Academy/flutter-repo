@@ -27,7 +27,7 @@ class SellCourseViewModel extends ChangeNotifier {
       notifyListeners();
 
       _courseForSale = await courseAPI.getCourseForSale(token);
-      _findCourse = _courseForSale;
+      _findCourse = [..._courseForSale];
 
       myState = MyState.success;
       notifyListeners();
@@ -63,7 +63,7 @@ class SellCourseViewModel extends ChangeNotifier {
   void filterCourse(
       {String? filterBy, String? majorFilter, String? classFilter}) {
     //save current list to temporary so dont need to re-request to api
-    _tempfindCourse = List.from(_findCourse);
+    _tempfindCourse = List.from(_courseForSale);
 
     //clear current list
     _findCourse.clear();
