@@ -1,3 +1,4 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +11,7 @@ import '../../../utils/preferences/preferences_utils.dart';
 import '../../../utils/state/my_state.dart';
 import '../../../widgets/sell_course/filter_button.dart';
 import '../../../widgets/sell_course/promo_button.dart';
+import '../../view_model/course/course_taken_view_model.dart';
 
 class SellCourseScreen extends StatefulWidget {
   static const String routeName = "/sell_course";
@@ -151,27 +153,81 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
                                     Radius.circular(8),
                                   ),
                                   onTap: () {
-                                    Navigator.of(context).push(FadeAnimation2(
-                                        page: SellCourseDetailScreen(
-                                      id: value.findCourse[index].id!,
-                                      thumbnail:
-                                          value.findCourse[index].thumbnail!,
-                                      courseName:
-                                          value.findCourse[index].courseName!,
-                                      rating: value.findCourse[index].scores!,
-                                      student:
-                                          value.findCourse[index].numStudents!,
-                                      price:
-                                          value.findCourse[index].price!.isEmpty
+                                    if (context
+                                        .read<CourseTakenViewModel>()
+                                        .inProgressCourseTaken
+                                        .isEmpty) {
+                                      Navigator.of(context).push(FadeAnimation2(
+                                          page: SellCourseDetailScreen(
+                                        id: value.findCourse[index].id!,
+                                        thumbnail:
+                                            value.findCourse[index].thumbnail!,
+                                        courseName:
+                                            value.findCourse[index].courseName!,
+                                        rating: value.findCourse[index].scores!,
+                                        student: value
+                                            .findCourse[index].numStudents!,
+                                        price: value.findCourse[index].price!
+                                                .isEmpty
+                                            ? "700000"
+                                            : value.findCourse[index].price!,
+                                        grade: value.findCourse[index]
+                                            .sellCourseModelClass!.className!,
+                                        liveSession: value
+                                            .findCourse[index].liveSessionWeek!,
+                                        description: value
+                                            .findCourse[index].description!,
+                                      )));
+                                      print('Masih Kosong');
+                                    } else {
+                                      for (var element in context
+                                          .read<CourseTakenViewModel>()
+                                          .inProgressCourseTaken) {
+                                        if (element.id ==
+                                            value.findCourse[index].id) {
+                                          value.findCourse[index].isBuy = true;
+                                          print(value.findCourse[index].isBuy);
+                                        }
+                                      }
+                                      if (value.findCourse[index].isBuy ==
+                                              false ||
+                                          value.findCourse[index].isBuy ==
+                                              null) {
+                                        Navigator.of(context)
+                                            .push(FadeAnimation2(
+                                                page: SellCourseDetailScreen(
+                                          id: value.findCourse[index].id!,
+                                          thumbnail: value
+                                              .findCourse[index].thumbnail!,
+                                          courseName: value
+                                              .findCourse[index].courseName!,
+                                          rating:
+                                              value.findCourse[index].scores!,
+                                          student: value
+                                              .findCourse[index].numStudents!,
+                                          price: value.findCourse[index].price!
+                                                  .isEmpty
                                               ? "700000"
                                               : value.findCourse[index].price!,
-                                      grade: value.findCourse[index]
-                                          .sellCourseModelClass!.className!,
-                                      liveSession: value
-                                          .findCourse[index].liveSessionWeek!,
-                                      description:
-                                          value.findCourse[index].description!,
-                                    )));
+                                          grade: value.findCourse[index]
+                                              .sellCourseModelClass!.className!,
+                                          liveSession: value.findCourse[index]
+                                              .liveSessionWeek!,
+                                          description: value
+                                              .findCourse[index].description!,
+                                        )));
+                                        print('Masih Kosong');
+                                      } else {
+                                        AnimatedSnackBar.material(
+                                                'Kamu Sudah Membeli Course Ini',
+                                                type: AnimatedSnackBarType.info,
+                                                snackBarStrategy:
+                                                    RemoveSnackBarStrategy())
+                                            .show(context);
+                                        print('udah Ada');
+                                        print(value.findCourse[index].isBuy);
+                                      }
+                                    }
                                   },
                                   child: Card(
                                     elevation: 2,

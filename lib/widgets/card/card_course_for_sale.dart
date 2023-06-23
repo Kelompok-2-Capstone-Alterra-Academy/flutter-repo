@@ -71,7 +71,7 @@ class CardCourseForSale extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: Container(
-                height: 110,
+                height: 115,
                 width: MediaQuery.of(context).size.width * 0.75,
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(
@@ -91,18 +91,16 @@ class CardCourseForSale extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
-                          width: 140,
-                          child: Text(
-                            courseName,
-                            style: GoogleFonts.poppins(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600,
-                            ),
+                        Text(
+                          courseName,
+                          style: GoogleFonts.poppins(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                         const SizedBox(height: 3),
                         Text(
+                          // price,
                           fo.symbolOnLeft,
                           style: GoogleFonts.poppins(
                             fontSize: 11,

@@ -1,3 +1,4 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -59,18 +60,6 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
   void initState() {
     super.initState();
     checkWishlistStatus();
-    init();
-  }
-
-  void init() async {
-    preferencesUtils = PreferencesUtils();
-    await preferencesUtils.init();
-    String? token = preferencesUtils.getPreferencesString('token');
-
-    if (context.mounted) {
-      Provider.of<CourseTakenViewModel>(context, listen: false)
-          .getCourseTaken(token ?? '');
-    }
   }
 
   void toggleWishlistStatus() async {
@@ -290,75 +279,76 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
                 text: "Rangkuman materi",
               ),
               const SizedBox(height: 40),
-              Consumer<CourseTakenViewModel>(builder: (context, value, child) {
-                List<InProgress> courseTaken = value.inProgressCourseTaken;
-                return Container(
-                  height: 42,
-                  width: screenWidth,
-                  decoration: const BoxDecoration(
-                    color: primaryColor,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(8),
-                    ),
+              Container(
+                height: 42,
+                width: screenWidth,
+                decoration: const BoxDecoration(
+                  color: primaryColor,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(8),
                   ),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap: () {
-                        if (courseTaken.isEmpty) {
-                          Navigator.push(
-                              context,
-                              SlideAnimation3(
-                                page: CoursePaymentScreen(
-                                  courseId: widget.id,
-                                  title: widget.courseName,
-                                  price: widget.price,
-                                  liveSession: widget.liveSession,
-                                ),
-                              ));
-                        } else {
-                          for (var element in courseTaken) {
-                            if (element.id != widget.id) {
-                              Navigator.push(
-                                  context,
-                                  SlideAnimation3(
-                                    page: CoursePaymentScreen(
-                                      courseId: widget.id,
-                                      title: widget.courseName,
-                                      price: widget.price,
-                                      liveSession: widget.liveSession,
-                                    ),
-                                  ));
-                            } else {}
+                ),
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: () {
+                      if (context
+                          .read<CourseTakenViewModel>()
+                          .inProgressCourseTaken
+                          .isEmpty) {
+                        Navigator.push(
+                            context,
+                            SlideAnimation3(
+                              page: CoursePaymentScreen(
+                                courseId: widget.id,
+                                title: widget.courseName,
+                                price: widget.price,
+                                liveSession: widget.liveSession,
+                              ),
+                            ));
+                        print("Kosong");
+                      } else {
+                        for (var element in context
+                            .read<CourseTakenViewModel>()
+                            .inProgressCourseTaken) {
+                          if (element.id == widget.id) {
+                            AnimatedSnackBar.material(
+                                    'Kamu Sudah Membeli Course Ini',
+                                    type: AnimatedSnackBarType.info,
+                                    snackBarStrategy: RemoveSnackBarStrategy())
+                                .show(context);
+                            print("udah beli woi");
+                          } else {
+                            Navigator.push(
+                                context,
+                                SlideAnimation3(
+                                  page: CoursePaymentScreen(
+                                    courseId: widget.id,
+                                    title: widget.courseName,
+                                    price: widget.price,
+                                    liveSession: widget.liveSession,
+                                  ),
+                                ));
+                            print("gaada id");
                           }
                         }
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10, right: 12),
-                        child: Center(
-                          child: Text(
-                            "Ambil Kursus",
-                            style: GoogleFonts.poppins(
-                                color: whiteColor,
-                                fontSize: 13,
-                                fontWeight: FontWeight.w600),
-                          ),
+                      }
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 12),
+                      child: Center(
+                        child: Text(
+                          "Ambil Kursus",
+                          style: GoogleFonts.poppins(
+                              color: whiteColor,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600),
                         ),
                       ),
                     ),
                   ),
-                );
-              }),
-              // PrimaryButton(
-              //   screenWidth: screenWidth,
-              //   title: "Ambil Kursus",
-              //   page: CoursePaymentScreen(
-              //     courseId: widget.id,
-              //     title: widget.courseName,
-              //     price: widget.price,
-              //     liveSession: widget.liveSession,
-              //   ),
-              // ),
+                ),
+              ),
             ],
           ),
         ),
