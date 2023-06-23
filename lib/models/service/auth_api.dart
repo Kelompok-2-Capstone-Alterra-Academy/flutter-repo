@@ -31,9 +31,9 @@ class AuthAPI {
         'otp': otp,
       },
     );
-    return response.then((value) {
-      return value.data;
-    }).catchError((e) => handleErrorApi(e));
+    return response
+        .then((value) => value.data)
+        .catchError((e) => handleErrorApi(e));
   }
 
   static Future<dynamic> login(String email, String password) async {

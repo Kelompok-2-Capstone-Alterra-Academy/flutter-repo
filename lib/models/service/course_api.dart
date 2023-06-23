@@ -8,14 +8,25 @@ import 'package:staredu/models/sell_course_model.dart';
 import 'package:staredu/models/voucher_model.dart';
 import 'package:staredu/utils/constant/claimed_voucher_list.dart';
 import 'package:staredu/utils/constant/sell_course_list.dart';
-
 import '../../utils/constant/constant.dart';
 import '../../utils/constant/helper.dart';
 
 class CourseAPI {
   Dio dio = Dio();
 
-  static Future<List<TypeCourse>> getTypeCourse() async {
+  static Future<List<TypeCourse>> getTypeCourse(String? token) async {
+    // final response = Dio().get(
+    //   '$BASE_URL_API/students/mentors',
+    //   options: Options(
+    //     headers: {
+    //       'Authorization': 'Bearer $token',
+    //     },
+    //   ),
+    // );
+    // return response
+    //     .then((value) => value.data)
+    //     .catchError((e) => handleErrorApi(e));
+
     // TODO change data to data from API
     final List<TypeCourse> data = [
       TypeCourse(id: 1, name: 'Matematika'),

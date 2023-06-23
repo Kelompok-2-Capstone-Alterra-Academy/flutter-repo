@@ -175,16 +175,16 @@ class _HistoryTransactionScreenState extends State<HistoryTransactionScreen> {
                                           height: 80,
                                           width: 80,
                                           child: Image.asset(
-                                            'assets/images/thumbnail/apple.jpg',
-                                            // value
-                                            //         .historyCourses[index].data!
-                                            //         .transactionDetails![0]
-                                            //         .course!
-                                            //         .thumbnail!
-                                            //         .isEmpty
-                                            //     ? 'assets/images/thumbnail/apple.png'
-                                            //     : "assets/images/thumbnail/${value.historyCourses[index].transactionDetails![0].course!.thumbnail}.png",
-                                            // fit: BoxFit.contain,
+                                            value
+                                                    .historyCourses[index]
+                                                    .transactionDetails![0]
+                                                    .course!
+                                                    .thumbnail!
+                                                    .isEmpty
+                                                ? 'assets/images/thumbnail/apple.png'
+                                                : "assets/images/thumbnail/${value.historyCourses[index].transactionDetails![0].course!.thumbnail}.png",
+                                            fit: BoxFit.contain,
+
                                           ),
                                         ),
                                         const SizedBox(width: 31),
@@ -193,9 +193,12 @@ class _HistoryTransactionScreenState extends State<HistoryTransactionScreen> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              '',
-                                              // value
-                                              //     .historyCourses[index].data!.transaction![index].,
+
+                                              value
+                                                  .historyCourses[index]
+                                                  .transactionDetails![0]
+                                                  .course!
+                                                  .courseName!,
 
                                               style: GoogleFonts.poppins(
                                                 fontSize: 16,
