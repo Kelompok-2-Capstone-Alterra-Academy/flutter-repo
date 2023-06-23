@@ -18,6 +18,7 @@ class ModuleDetailTask extends StatefulWidget {
   final String? sectionName;
   final String? linkModule;
   final String? description;
+  final String? dueDate;
   final bool isLastIndex;
   final int? moduleId;
   final bool? isFinished;
@@ -30,6 +31,7 @@ class ModuleDetailTask extends StatefulWidget {
     this.sectionName,
     this.linkModule,
     this.description,
+    this.dueDate,
     required this.isLastIndex,
     this.moduleId,
     this.isFinished,
@@ -103,14 +105,6 @@ class _ModuleDetailTaskState extends State<ModuleDetailTask> {
                       ),
                       Text(
                         widget.description.toString(),
-                        style: GoogleFonts.poppins(
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 11,
-                        ),
-                      ),
-                      Text(
-                        "Kerjakan Tugas Matematika Dasar pada dokumen dibawah ini. Jawaban di tulis tangan kemudian diFoto/discan dan kemudian diupload dalam bentuk pdf Nama file (no induk_nama_jenis latihan)",
                         style: GoogleFonts.poppins(
                           fontStyle: FontStyle.normal,
                           fontWeight: FontWeight.w400,
@@ -327,21 +321,35 @@ class _ModuleDetailTaskState extends State<ModuleDetailTask> {
                               ),
                               onPressed: () {
                                 if (widget.isLastIndex) {
-                                  Navigator.of(context).push(SlideAnimation3(
+                                  Navigator.of(context).push(
+                                    SlideAnimation3(
                                       page: ModuleSendTaskScreen(
-                                    courseId: widget.courseId!,
-                                    isLastIndex: widget.isLastIndex,
-                                    moduleId: widget.moduleId!,
-                                    isFinished: widget.isFinished,
-                                  )));
+                                        courseId: widget.courseId!,
+                                        isLastIndex: widget.isLastIndex,
+                                        moduleId: widget.moduleId!,
+                                        isFinished: widget.isFinished,
+                                        courseName: widget.courseName,
+                                        sectionName: widget.sectionName,
+                                        description: widget.description,
+                                        dueDate: widget.dueDate,
+                                      ),
+                                    ),
+                                  );
                                 } else {
-                                  Navigator.of(context).push(SlideAnimation3(
+                                  Navigator.of(context).push(
+                                    SlideAnimation3(
                                       page: ModuleSendTaskScreen(
-                                    isLastIndex: false,
-                                    courseId: widget.courseId!,
-                                    moduleId: widget.moduleId!,
-                                    isFinished: widget.isFinished,
-                                  )));
+                                        isLastIndex: false,
+                                        courseId: widget.courseId!,
+                                        moduleId: widget.moduleId!,
+                                        isFinished: widget.isFinished,
+                                        courseName: widget.courseName,
+                                        sectionName: widget.sectionName,
+                                        description: widget.description,
+                                        dueDate: widget.dueDate,
+                                      ),
+                                    ),
+                                  );
                                 }
                               },
                               child: Padding(

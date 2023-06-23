@@ -2,7 +2,6 @@ class PPTDetailModel {
   int? id;
   String? section;
   String? lesson;
-  String? lessonDescription;
   String? url;
 
   PPTDetailModel({
