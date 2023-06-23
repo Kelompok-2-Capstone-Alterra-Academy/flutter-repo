@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/animation/fade_animation2.dart';
 import 'package:staredu/utils/color/color.dart';
+import 'package:staredu/views/screen/course/course_taken_list_screen.dart';
 import 'package:staredu/views/screen/course/module/module_list_quiz_screen.dart';
 
 class ModuleQuizDetailDoneDialog extends StatelessWidget {
@@ -122,7 +123,10 @@ class ModuleQuizDetailDoneDialog extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(
+                      FadeAnimation2(page: const CourseTakenListScreen()));
+                },
                 child: Text(
                   "Kembali ke Kursus",
                   style: GoogleFonts.poppins(

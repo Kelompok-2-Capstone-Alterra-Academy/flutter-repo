@@ -134,6 +134,7 @@ class _ModuleDetailTaskState extends State<ModuleDetailTask> {
                                 .setDownloadingStatus(false);
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
+                                behavior: SnackBarBehavior.floating,
                                 content: Text(
                                   "Berhasil mengunduh tugas !",
                                   style: GoogleFonts.poppins(
