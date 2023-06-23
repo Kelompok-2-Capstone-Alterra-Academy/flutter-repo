@@ -198,7 +198,6 @@ class _ProfileState extends State<Profile> {
                           ),
                         ),
                         onPressed: () async {
-                          await preferencesUtils.removePreferences('token');
                           await preferencesUtils.savePreferencesBool(
                               'isLogin', false);
                           // ignore: use_build_context_synchronously

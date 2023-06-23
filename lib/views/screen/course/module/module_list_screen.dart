@@ -428,7 +428,7 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                       )
                     ],
                   ),
-                  widget.courseFinished!
+                  widget.courseFinished != null
                       ? Consumer<CertificateViewModel>(
                           builder: (context, value, child) {
                             return ListView.builder(

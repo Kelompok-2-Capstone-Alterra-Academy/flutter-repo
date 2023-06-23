@@ -56,10 +56,18 @@ class _CardCourseTakenState extends State<CardCourseTaken> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 10, right: 18),
-                child: Image(
-                  image: AssetImage(widget.img),
-                  height: 70,
-                ),
+                child: widget.img.isEmpty ||
+                        widget.img == 'noimage.png' ||
+                        !widget.img.contains('http')
+                    ? Image(
+                        image: AssetImage(
+                            'assets/images/thumbnail/${widget.img}.png'),
+                        fit: BoxFit.cover,
+                      )
+                    : Image(
+                        image: NetworkImage(widget.img),
+                        fit: BoxFit.cover,
+                      ),
               ),
               Flexible(
                 fit: FlexFit.loose,
