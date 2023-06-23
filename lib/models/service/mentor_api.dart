@@ -10,9 +10,7 @@ import '../../utils/constant/constant.dart';
 class MentorAPI {
   final Dio dio = Dio();
 
-
   Future<List<MentorModel>> getMentor(String? token) async {
-
     try {
       List<MentorModel> listMentor = [];
       final response = await dio.get(

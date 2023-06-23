@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:staredu/views/view_model/sell_course/sell_course_view_model.dart';
 import '../../../utils/animation/fade_animation2.dart';
 import '../../../utils/color/color.dart';
 import '../../../utils/preferences/preferences_utils.dart';
@@ -38,7 +38,6 @@ class _HistoryTransactionScreenState extends State<HistoryTransactionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: AppBar(
           backgroundColor: whiteColor,
@@ -143,7 +142,16 @@ class _HistoryTransactionScreenState extends State<HistoryTransactionScreen> {
                           return Column(
                             children: [
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    FadeAnimation2(
+                                      page: NoteTransactionScreen(
+                                        model: value.historyCourses[index],
+                                      ),
+                                    ),
+                                  );
+                                },
                                 child: Card(
                                   elevation: 2,
                                   shape: const RoundedRectangleBorder(
@@ -196,8 +204,10 @@ class _HistoryTransactionScreenState extends State<HistoryTransactionScreen> {
                                             ),
                                             const SizedBox(height: 3),
                                             Text(
-                                              value.historyCourses[index]
-                                                  .createdAt!,
+                                              DateFormat('dd MMMM yyyy').format(
+                                                  DateTime.parse(value
+                                                      .historyCourses[index]
+                                                      .createdAt!)),
                                               style: GoogleFonts.poppins(
                                                 fontSize: 11,
                                                 fontWeight: FontWeight.normal,
