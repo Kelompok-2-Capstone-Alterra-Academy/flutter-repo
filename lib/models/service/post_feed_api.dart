@@ -12,7 +12,7 @@ class PostFeedAPI {
         time: '20 April 2023, 12:37',
         comment:
             'Lorem ipsum dolor sit amet consectetur. Et risus interdum nulla egestas rhoncus. Eu eget euismod sem ullamcorper eget sed.',
-        like: '15',
+        like: 15,
         reply: '3',
       ),
       PostFeedModel(
@@ -20,7 +20,7 @@ class PostFeedAPI {
         time: '20 April 2023, 12:37',
         comment:
             'Lorem ipsum dolor sit amet consectetur. Et risus interdum nulla egestas rhoncus. Eu eget euismod sem ullamcorper eget sed.',
-        like: '15',
+        like: 15,
         reply: '3',
       ),
     ];
