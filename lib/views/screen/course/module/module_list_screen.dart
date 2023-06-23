@@ -189,6 +189,7 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                     width: screenWidth,
                                     text: "Live Session",
                                     borderColor: primaryColor,
+                                    courseStatus: widget.courseFinished!,
                                   ),
                                   ModuleButton(
                                     courseId: widget.courseId ?? 0,
@@ -196,6 +197,7 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                     width: screenWidth,
                                     text: "Quiz",
                                     borderColor: primaryColor,
+                                    courseStatus: widget.courseFinished!,
                                   ),
                                   ModuleButton(
                                     courseId: widget.courseId ?? 0,
@@ -203,6 +205,7 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                     width: screenWidth,
                                     text: "Tanya Mentor",
                                     borderColor: primaryColor,
+                                    courseStatus: widget.courseFinished!,
                                   ),
                                 ],
                               ),
@@ -244,6 +247,18 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                             builder: (context, snapshot) {
                                               if (widget.isLastModule ??
                                                   false) {
+                                                String due = "2020-12-12";
+                                                if (moduleViewModel
+                                                    .courseModule[firstIndex]
+                                                    .module![secondIndex]
+                                                    .tasks!
+                                                    .isNotEmpty) {
+                                                  due = moduleViewModel
+                                                      .courseModule[firstIndex]
+                                                      .module![secondIndex]
+                                                      .tasks![0]
+                                                      .dueDate!;
+                                                }
                                                 return ModuleCard(
                                                   isLastModule: true,
                                                   id: widget.courseId,
@@ -297,11 +312,7 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                                                   'document')
                                                           ? true
                                                           : false,
-                                                  dueDate: moduleViewModel
-                                                      .courseModule[firstIndex]
-                                                      .module![secondIndex]
-                                                      .tasks![0]
-                                                      .dueDate,
+                                                  dueDate: due,
                                                   isSectionFinished:
                                                       snapshot.data ?? false,
                                                   linkModule: moduleViewModel
@@ -323,6 +334,18 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                                       .id,
                                                 );
                                               } else {
+                                                String due = "2020-12-12";
+                                                if (moduleViewModel
+                                                    .courseModule[firstIndex]
+                                                    .module![secondIndex]
+                                                    .tasks!
+                                                    .isNotEmpty) {
+                                                  due = moduleViewModel
+                                                      .courseModule[firstIndex]
+                                                      .module![secondIndex]
+                                                      .tasks![0]
+                                                      .dueDate!;
+                                                }
                                                 return ModuleCard(
                                                   isLastModule: false,
                                                   id: widget.courseId,
@@ -376,8 +399,7 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                                                   'document')
                                                           ? true
                                                           : false,
-                                                  dueDate:
-                                                      DateTime.now().toString(),
+                                                  dueDate: due,
                                                   isSectionFinished:
                                                       snapshot.data ?? false,
                                                   linkModule: moduleViewModel
@@ -431,7 +453,7 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                       )
                     ],
                   ),
-                  widget.courseFinished!
+                  widget.courseFinished != null
                       ? Consumer<CertificateViewModel>(
                           builder: (context, value, child) {
                             return ListView.builder(
