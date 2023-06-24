@@ -190,7 +190,9 @@ class _SearchChatScreenState extends State<SearchChatScreen> {
           }),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBarComponent(),
+      bottomNavigationBar: BottomNavigationBarComponent(
+        indexDefined: 2,
+      ),
     );
   }
 }

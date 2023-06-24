@@ -24,19 +24,19 @@ class CardLiveSession extends StatelessWidget {
         Navigator.push(
           context,
           FadeAnimation2(
-            page: DetailScheduleScreen(index: index),
+            page: DetailScheduleScreen(
+              index: index,
+            ),
           ),
         );
       },
       child: Container(
-        // Styling Container
         margin: const EdgeInsets.only(bottom: 10.0),
         decoration: BoxDecoration(
           color: primaryColor,
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: ListTile(
-          // Judul ListTile
           title: Text(
             schedule.date,
             style: GoogleFonts.poppins(
@@ -44,7 +44,6 @@ class CardLiveSession extends StatelessWidget {
               fontSize: 12,
             ),
           ),
-          // Subjudul ListTile
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -58,9 +57,7 @@ class CardLiveSession extends StatelessWidget {
               ),
             ],
           ),
-          // Widget trailing ListTile
           trailing: Container(
-            // Styling container trailing
             padding: const EdgeInsets.symmetric(
               horizontal: 20.0,
               vertical: 6,
@@ -82,5 +79,69 @@ class CardLiveSession extends StatelessWidget {
         ),
       ),
     );
+
+    // return GestureDetector(
+    //   onTap: () {
+    //     Navigator.push(
+    //       context,
+    //       FadeAnimation2(
+    //         page: DetailScheduleScreen(index: index),
+    //       ),
+    //     );
+    //   },
+    //   child: Container(
+    //     // Styling Container
+    //     margin: const EdgeInsets.only(bottom: 10.0),
+    //     decoration: BoxDecoration(
+    //       color: primaryColor,
+    //       borderRadius: BorderRadius.circular(8.0),
+    //     ),
+    //     child: ListTile(
+    //       // Judul ListTile
+    //       title: Text(
+    //         schedule.date,
+    //         style: GoogleFonts.poppins(
+    //           color: Colors.white,
+    //           fontSize: 12,
+    //         ),
+    //       ),
+    //       // Subjudul ListTile
+    //       subtitle: Column(
+    //         crossAxisAlignment: CrossAxisAlignment.start,
+    //         children: [
+    //           Text(
+    //             schedule.course,
+    //             style: GoogleFonts.poppins(
+    //               color: Colors.white,
+    //               fontWeight: FontWeight.bold,
+    //               fontSize: 15,
+    //             ),
+    //           ),
+    //         ],
+    //       ),
+    //       // Widget trailing ListTile
+    //       trailing: Container(
+    //         // Styling container trailing
+    //         padding: const EdgeInsets.symmetric(
+    //           horizontal: 20.0,
+    //           vertical: 6,
+    //         ),
+    //         decoration: BoxDecoration(
+    //           color: schedule.status == 'Sudah Ikut'
+    //               ? Colors.green
+    //               : Colors.orange,
+    //           borderRadius: BorderRadius.circular(12.0),
+    //         ),
+    //         child: Text(
+    //           schedule.status,
+    //           style: GoogleFonts.poppins(
+    //             color: Colors.white,
+    //             fontSize: 12,
+    //           ),
+    //         ),
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 }

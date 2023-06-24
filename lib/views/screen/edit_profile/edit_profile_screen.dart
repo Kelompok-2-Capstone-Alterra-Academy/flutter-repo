@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -428,19 +429,18 @@ class _EditProfileState extends State<EditProfile> {
                                   (route) => false);
                             } else {
                               // ignore: use_build_context_synchronously
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Gagal mengubah data'),
-                                ),
-                              );
+                              AnimatedSnackBar.material('Gagal Mengubah Data',
+                                      type: AnimatedSnackBarType.error,
+                                      snackBarStrategy:
+                                          RemoveSnackBarStrategy())
+                                  .show(context);
                             }
                           } else {
                             // ignore: use_build_context_synchronously
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Gagal mengubah data'),
-                              ),
-                            );
+                            AnimatedSnackBar.material('Gagal mengubah Data',
+                                    type: AnimatedSnackBarType.error,
+                                    snackBarStrategy: RemoveSnackBarStrategy())
+                                .show(context);
                           }
                         },
                         child: Text("Simpan Perubahan",

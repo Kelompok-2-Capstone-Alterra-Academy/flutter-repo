@@ -239,7 +239,7 @@ class _NoteTransactionScreenState extends State<NoteTransactionScreen> {
                   ),
                   const SizedBox(height: 20),
                   Container(
-                    height: 160,
+                    height: 180,
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(12)),
                       color: searchBarColor,
@@ -440,8 +440,7 @@ class _NoteTransactionScreenState extends State<NoteTransactionScreen> {
                               Expanded(
                                 child: Text(
                                   DateFormat('dd MMMM yyyy').format(
-                                      DateTime.parse(
-                                          value.historyCourses[0].createdAt!)),
+                                      DateTime.parse(widget.model!.createdAt!)),
                                   style: GoogleFonts.poppins(
                                     color: blackColor,
                                     fontSize: 11,
@@ -510,6 +509,7 @@ class _NoteTransactionScreenState extends State<NoteTransactionScreen> {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 20),
                 ],
               ),
             );

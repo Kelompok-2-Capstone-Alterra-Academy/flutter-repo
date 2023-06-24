@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:money_formatter/money_formatter.dart';
 import '../../utils/animation/fade_animation2.dart';
 import '../../utils/color/color.dart';
 import '../../views/screen/sell_course/sell_course_detail_screen.dart';
@@ -30,6 +31,18 @@ class CardCourseForSale extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MoneyFormatter fmf = MoneyFormatter(
+      amount: double.parse(price),
+      settings: MoneyFormatterSettings(
+        symbol: 'Rp',
+        thousandSeparator: '.',
+        decimalSeparator: ',',
+        symbolAndNumberSeparator: '. ',
+        fractionDigits: 0,
+      ),
+    );
+
+    MoneyFormatterOutput fo = fmf.output;
     return Column(
       children: [
         InkWell(
@@ -56,9 +69,9 @@ class CardCourseForSale extends StatelessWidget {
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(8))),
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+              padding: const EdgeInsets.symmetric(vertical: 8),
               child: Container(
-                height: 100,
+                height: 115,
                 width: MediaQuery.of(context).size.width * 0.75,
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(
@@ -74,7 +87,7 @@ class CardCourseForSale extends StatelessWidget {
                         fit: BoxFit.contain,
                       ),
                     ),
-                    const SizedBox(width: 31),
+                    const SizedBox(width: 10),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -87,7 +100,8 @@ class CardCourseForSale extends StatelessWidget {
                         ),
                         const SizedBox(height: 3),
                         Text(
-                          price,
+                          // price,
+                          fo.symbolOnLeft,
                           style: GoogleFonts.poppins(
                             fontSize: 11,
                             fontWeight: FontWeight.w600,
@@ -95,7 +109,7 @@ class CardCourseForSale extends StatelessWidget {
                         ),
                         const SizedBox(height: 3),
                         Text(
-                          className,
+                          "Kelas $className",
                           style: GoogleFonts.poppins(
                               fontSize: 11,
                               fontWeight: FontWeight.w600,

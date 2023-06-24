@@ -207,7 +207,7 @@ class _FilterCourseTakenState extends State<FilterCourseTaken> {
                               }
                             },
                             child: Text(
-                              "Multi Media",
+                              "Multimedia",
                               style: GoogleFonts.poppins(
                                 color: blackColor,
                                 fontStyle: FontStyle.normal,

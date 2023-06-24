@@ -1,5 +1,7 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:money_formatter/money_formatter.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/views/screen/sell_course/course_voucher_screen.dart';
 import 'package:staredu/views/screen/sell_course/sell_course_detail_screen.dart';
@@ -10,6 +12,7 @@ import '../../../utils/preferences/preferences_utils.dart';
 import '../../../utils/state/my_state.dart';
 import '../../../widgets/sell_course/filter_button.dart';
 import '../../../widgets/sell_course/promo_button.dart';
+import '../../view_model/course/course_taken_view_model.dart';
 
 class SellCourseScreen extends StatefulWidget {
   static const String routeName = "/sell_course";
@@ -144,6 +147,19 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
                           physics: const BouncingScrollPhysics(),
                           itemCount: value.findCourse.length,
                           itemBuilder: (context, index) {
+                            MoneyFormatter fmf = MoneyFormatter(
+                              amount:
+                                  double.parse(value.findCourse[index].price!),
+                              settings: MoneyFormatterSettings(
+                                symbol: 'Rp',
+                                thousandSeparator: '.',
+                                decimalSeparator: ',',
+                                symbolAndNumberSeparator: '. ',
+                                fractionDigits: 0,
+                              ),
+                            );
+
+                            MoneyFormatterOutput fo = fmf.output;
                             return Column(
                               children: [
                                 InkWell(
@@ -151,27 +167,88 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
                                     Radius.circular(8),
                                   ),
                                   onTap: () {
-                                    Navigator.of(context).push(FadeAnimation2(
-                                        page: SellCourseDetailScreen(
-                                      id: value.findCourse[index].id!,
-                                      thumbnail:
-                                          value.findCourse[index].thumbnail!,
-                                      courseName:
-                                          value.findCourse[index].courseName!,
-                                      rating: value.findCourse[index].scores!,
-                                      student:
-                                          value.findCourse[index].numStudents!,
-                                      price:
-                                          value.findCourse[index].price!.isEmpty
+                                    if (context
+                                            .read<CourseTakenViewModel>()
+                                            .inProgressCourseTaken
+                                            .isEmpty ||
+                                        context
+                                            .read<CourseTakenViewModel>()
+                                            .completedCourseTaken
+                                            .isEmpty) {
+                                      Navigator.of(context).push(FadeAnimation2(
+                                          page: SellCourseDetailScreen(
+                                        id: value.findCourse[index].id!,
+                                        thumbnail:
+                                            value.findCourse[index].thumbnail!,
+                                        courseName:
+                                            value.findCourse[index].courseName!,
+                                        rating: value.findCourse[index].scores!,
+                                        student: value
+                                            .findCourse[index].numStudents!,
+                                        price: value.findCourse[index].price!
+                                                .isEmpty
+                                            ? "700000"
+                                            : value.findCourse[index].price!,
+                                        grade: value.findCourse[index]
+                                            .sellCourseModelClass!.className!,
+                                        liveSession: value
+                                            .findCourse[index].liveSessionWeek!,
+                                        description: value
+                                            .findCourse[index].description!,
+                                      )));
+                                    } else {
+                                      for (var element in context
+                                          .read<CourseTakenViewModel>()
+                                          .inProgressCourseTaken) {
+                                        if (element.id ==
+                                            value.findCourse[index].id) {
+                                          value.findCourse[index].isBuy = true;
+                                        }
+                                      }
+                                      for (var element in context
+                                          .read<CourseTakenViewModel>()
+                                          .completedCourseTaken) {
+                                        if (element.id ==
+                                            value.findCourse[index].id) {
+                                          value.findCourse[index].isBuy = true;
+                                        }
+                                      }
+                                      if (value.findCourse[index].isBuy ==
+                                              false ||
+                                          value.findCourse[index].isBuy ==
+                                              null) {
+                                        Navigator.of(context)
+                                            .push(FadeAnimation2(
+                                                page: SellCourseDetailScreen(
+                                          id: value.findCourse[index].id!,
+                                          thumbnail: value
+                                              .findCourse[index].thumbnail!,
+                                          courseName: value
+                                              .findCourse[index].courseName!,
+                                          rating:
+                                              value.findCourse[index].scores!,
+                                          student: value
+                                              .findCourse[index].numStudents!,
+                                          price: value.findCourse[index].price!
+                                                  .isEmpty
                                               ? "700000"
                                               : value.findCourse[index].price!,
-                                      grade: value.findCourse[index]
-                                          .sellCourseModelClass!.className!,
-                                      liveSession: value
-                                          .findCourse[index].liveSessionWeek!,
-                                      description:
-                                          value.findCourse[index].description!,
-                                    )));
+                                          grade: value.findCourse[index]
+                                              .sellCourseModelClass!.className!,
+                                          liveSession: value.findCourse[index]
+                                              .liveSessionWeek!,
+                                          description: value
+                                              .findCourse[index].description!,
+                                        )));
+                                      } else {
+                                        AnimatedSnackBar.material(
+                                                'Kamu Sudah Membeli Course Ini',
+                                                type: AnimatedSnackBarType.info,
+                                                snackBarStrategy:
+                                                    RemoveSnackBarStrategy())
+                                            .show(context);
+                                      }
+                                    }
                                   },
                                   child: Card(
                                     elevation: 2,
@@ -218,8 +295,8 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
                                                 Text(
                                                   value.findCourse[index].price!
                                                           .isEmpty
-                                                      ? "Rp. " "700000"
-                                                      : "Rp. ${value.findCourse[index].price!}",
+                                                      ? "Rp. " "700.000"
+                                                      : fo.symbolOnLeft,
                                                   style: GoogleFonts.poppins(
                                                     fontSize: 11,
                                                     fontWeight: FontWeight.w600,
