@@ -2,8 +2,8 @@ class User {
   int? id;
   String? name;
   String? email;
-  String? dob;
-  String? city;
+  String? date_of_birth;
+  String? hometown;
   String? phoneNumber;
   String? major;
   String? schoolName;
@@ -15,8 +15,8 @@ class User {
       {this.id,
       this.name,
       this.email,
-      this.dob,
-      this.city,
+      this.date_of_birth,
+      this.hometown,
       this.phoneNumber,
       this.major,
       this.schoolName,
@@ -29,8 +29,8 @@ class User {
         id: json['ID'],
         name: json['name'],
         email: json['email'],
-        dob: json['dob'],
-        city: json['city'],
+        date_of_birth: json['date_of_birth'],
+        hometown: json['hometown'],
         phoneNumber: json['phone_number'],
         major: json['major'],
         schoolName: json['school_name'],
@@ -44,8 +44,8 @@ class User {
       'ID': id,
       'name': name,
       'email': email,
-      'dob': dob,
-      'city': city,
+      'date_of_birth': date_of_birth,
+      'hometown': hometown,
       'phone_number': phoneNumber,
       'major': major,
       'school_name': schoolName,
