@@ -96,13 +96,23 @@ class _ChatMentorScreenState extends State<ChatMentorScreen> {
             return ListView.builder(
               itemCount: value.mentorList.length,
               itemBuilder: (context, index) => ListTile(
-                leading: Image.asset(
-                  value.mentorList[index].profile!.contains('noimage') ||
-                          value.mentorList[index].profile!.length > 20 ||
-                          value.mentorList[index].profile!.isEmpty
-                      ? "assets/images/mentor_pic.png"
-                      : "assets/images/${value.mentorList[index].profile!}",
-                ),
+                leading: value.mentorList[index].profile!.isEmpty ||
+                        value.mentorList[index].profile!.contains('noimage') ||
+                        value.mentorList[index].profile!.contains('base64')
+                    ? SizedBox(
+                        width: 55,
+                        child: Image.asset(
+                          'assets/images/default_mentor.jpg',
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : SizedBox(
+                        width: 55,
+                        child: Image.network(
+                          value.mentorList[index].profile!,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                 title: Text(
                   value.mentorList[index].name!,
                   style: GoogleFonts.poppins(
@@ -152,6 +162,8 @@ class _ChatMentorScreenState extends State<ChatMentorScreen> {
             );
           }
         }),
-        bottomNavigationBar: BottomNavigationBarComponent());
+        bottomNavigationBar: BottomNavigationBarComponent(
+          indexDefined: 2,
+        ));
   }
 }

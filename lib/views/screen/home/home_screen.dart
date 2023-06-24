@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -9,7 +11,9 @@ import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/constant/list_post_feed.dart';
 import 'package:staredu/utils/preferences/preferences_utils.dart';
 import 'package:staredu/views/screen/auth/login/login_screen.dart';
+import 'package:staredu/views/screen/course/course_taken_list_screen.dart';
 import 'package:staredu/views/screen/home/home_view_model.dart';
+import 'package:staredu/views/screen/live_session/schedule_course_screen.dart';
 import 'package:staredu/views/screen/live_session/schedule_view_model.dart';
 import 'package:staredu/views/screen/mentor/mentor_screen.dart';
 import 'package:staredu/views/screen/news/news_screen.dart';
@@ -34,6 +38,7 @@ import 'package:staredu/widgets/row/row_text.dart';
 
 import '../../../utils/animation/fade_animation2.dart';
 import '../../../utils/animation/slide_animation2.dart';
+import '../../../widgets/row/row_text2.dart';
 import '../profile/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -81,6 +86,8 @@ class _HomeScreenState extends State<HomeScreen> {
     // ignore: use_build_context_synchronously
     Provider.of<ProfileViewModel>(context, listen: false)
         .getUserDetail(email, token ?? '');
+    // ignore: use_build_context_synchronously
+    Provider.of<HomeViewModel>(context, listen: false).getAllNews();
   }
 
   @override
@@ -313,7 +320,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             fit: BoxFit.cover,
                           ),
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 5),
 
                         isLogin != null && isLogin == true
                             ? Consumer<CourseTakenViewModel>(
@@ -325,10 +332,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ? Container()
                                     : Column(
                                         children: [
-                                          const RowText(
+                                          const RowText2(
                                               left: 'Course yang diikuti',
                                               right: 'Lihat Semua',
-                                              page: SellCourseScreen()),
+                                              page: CourseTakenListScreen()),
                                           CardCourseTaken(
                                               id: courseTaken[0].id ?? 0,
                                               title:
@@ -342,34 +349,39 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   '',
                                               totalSection: '20',
                                               progress: 50),
-                                          const SizedBox(height: 20),
+                                          const SizedBox(height: 5),
                                         ],
                                       );
                               })
                             : Container(),
                         isLogin != null && isLogin == true
-                            ? Consumer<ScheduleViewModel>(
+                            ? Consumer<CourseTakenViewModel>(
                                 builder: (context, value, child) {
-                                List<ScheduleCourseModel> scheduleList = value
-                                    .filteredList
-                                    .where((element) =>
-                                        element.status == 'Belum Ikut')
-                                    .toList();
-                                return scheduleList.isEmpty ||
-                                        scheduleList.length == 0
-                                    ? Container()
-                                    : Column(
-                                        children: [
-                                          const RowText(
-                                              left: 'Presensi',
-                                              right: 'Lihat Semua',
-                                              page: SellCourseScreen()),
-                                          CardLiveSession(
-                                              schedule: scheduleList[0],
-                                              index: 1),
-                                          const SizedBox(height: 20),
-                                        ],
-                                      );
+                                List<InProgress> courseTaken =
+                                    value.inProgressCourseTaken;
+                                return Consumer<ScheduleViewModel>(
+                                    builder: (context, value, child) {
+                                  List<ScheduleCourseModel> scheduleList = value
+                                      .filteredList
+                                      .where((element) =>
+                                          element.status == 'Belum Ikut')
+                                      .toList();
+                                  return courseTaken.isEmpty ||
+                                          courseTaken.length == 0
+                                      ? Container()
+                                      : Column(
+                                          children: [
+                                            const RowText(
+                                                left: 'Presensi',
+                                                right: 'Lihat Semua',
+                                                page: ScheduleCourseScreen()),
+                                            CardLiveSession(
+                                                schedule: scheduleList[0],
+                                                index: 1),
+                                            const SizedBox(height: 5),
+                                          ],
+                                        );
+                                });
                               })
                             : Container(),
                         isLogin != null && isLogin == true
@@ -396,7 +408,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   courseTaken[0].courseName ??
                                                       '',
                                               isAssignmentAvailable: true),
-                                          const SizedBox(height: 20),
+                                          const SizedBox(height: 2),
                                         ],
                                       );
                               })
@@ -405,7 +417,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             left: 'Course Populer',
                             right: 'Lihat Semua',
                             page: SellCourseScreen()),
-                        const SizedBox(height: 10),
                         Consumer<SellCourseViewModel>(
                             builder: (context, valueSell, child) {
                           return Column(
@@ -462,7 +473,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   );
                                 },
                               ),
-                              const SizedBox(height: 10),
+                              const SizedBox(height: 5),
                               valueSell.findCourse.isEmpty
                                   ? const Text('Tidak ada Course')
                                   : SizedBox(
@@ -473,12 +484,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           );
                         }),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 5),
                         const RowText(
                             left: 'Mentor Terbaik Kami',
                             right: 'Lihat Semua',
                             page: MentorScreen()),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 5),
                         Consumer<HomeViewModel>(
                           builder: (context, value, child) {
                             return value.mentor.isEmpty
@@ -503,7 +514,23 @@ class _HomeScreenState extends State<HomeScreen> {
                             left: 'Seputar Pendidikan di Indonesia',
                             right: 'Lihat Semua',
                             page: NewsScreen()),
-                        News(screenWidth: MediaQuery.of(context).size.width),
+                        Consumer<HomeViewModel>(
+                          builder: (context, value, child) {
+                            if (value.news.isNotEmpty) {
+                              final newsItem =
+                                  value.news[0]; // Ambil item berita pertama
+                              return News(
+                                screenWidth: MediaQuery.of(context).size.width,
+                                link: newsItem.link,
+                                shortDescription: newsItem.content,
+                                tittle: newsItem.title,
+                              );
+                            } else {
+                              return Container(); // Tampilkan widget kosong jika tidak ada berita
+                            }
+                          },
+                        ),
+
                         const SizedBox(height: 20),
                         const RowText(
                             left: 'Yuk, sharing sama pengguna lain',

@@ -7,17 +7,15 @@ import '../../../utils/state/my_state.dart';
 class NewsViewModel extends ChangeNotifier {
   List<NewsModel> _newsList = [];
   List<NewsModel> get newsList => _newsList;
-
   final NewsAPI newsAPI = NewsAPI();
-
   MyState myState = MyState.initial;
 
-  Future getAllNews() async {
+  Future<void> getAllNews(String? token) async {
     try {
       myState = MyState.loading;
       notifyListeners();
 
-      _newsList = await newsAPI.getAllNews();
+      _newsList = await newsAPI.getAllNews(token);
 
       myState = MyState.success;
       notifyListeners();

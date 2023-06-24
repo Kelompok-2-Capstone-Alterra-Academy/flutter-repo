@@ -1,3 +1,4 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -490,20 +491,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                             arguments: _emailController.text));
                                   } else {
                                     // ignore: use_build_context_synchronously
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
-                                      content: Text(
-                                          "Email Sudah Terdaftar / $message"),
-                                    ));
+                                    AnimatedSnackBar.material(
+                                            'Email Sudah Terdaftar / $message',
+                                            type: AnimatedSnackBarType.error,
+                                            snackBarStrategy:
+                                                RemoveSnackBarStrategy())
+                                        .show(context);
                                   }
                                 } else {
                                   // ignore: use_build_context_synchronously
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(const SnackBar(
-                                    duration: Duration(seconds: 1),
-                                    content: Text(
-                                        'Pastikan Semua Data Terisi Dengan Benar!'),
-                                  ));
+                                  AnimatedSnackBar.material(
+                                          'Pastikan Semua Data Terisi Dengan Benar',
+                                          type: AnimatedSnackBarType.info,
+                                          snackBarStrategy:
+                                              RemoveSnackBarStrategy())
+                                      .show(context);
                                 }
                               },
                               child: Text("Lanjut",

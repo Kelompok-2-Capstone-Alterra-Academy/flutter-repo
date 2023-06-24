@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/views/screen/live_session/schedule_web_view.dart';
-import '../../../utils/constant/news_list.dart';
 import '../../../views/screen/live_session/schedule_view_model.dart';
 
 class DetailScheduleScreen extends StatefulWidget {
@@ -17,12 +16,15 @@ class DetailScheduleScreen extends StatefulWidget {
 }
 
 class _DetailScheduleScreenState extends State<DetailScheduleScreen> {
+  bool isAttended = false;
+
   @override
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
       final provider = Provider.of<ScheduleViewModel>(context, listen: false);
       provider.getAllSchedule();
+      isAttended = provider.scheduleList[widget.index].status == 'Sudah Ikut';
     });
   }
 
@@ -99,15 +101,18 @@ class _DetailScheduleScreenState extends State<DetailScheduleScreen> {
                 const SizedBox(height: 30),
                 Center(
                   child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ScheduleWebView(
-                              url: value.scheduleList[widget.index].url),
-                        ),
-                      );
-                    },
+                    onPressed: isAttended
+                        ? null
+                        : () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ScheduleWebView(
+                                  url: value.scheduleList[widget.index].url,
+                                ),
+                              ),
+                            );
+                          },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
@@ -116,6 +121,7 @@ class _DetailScheduleScreenState extends State<DetailScheduleScreen> {
                         vertical: 12.0,
                         horizontal: 130,
                       ),
+                      backgroundColor: isAttended ? searchBarColor : null,
                     ),
                     child: Text(
                       'Join Meeting',

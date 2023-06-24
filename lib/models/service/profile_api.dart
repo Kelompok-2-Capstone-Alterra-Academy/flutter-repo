@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:staredu/models/user_model.dart';
 import 'package:staredu/utils/constant/constant.dart';
@@ -25,6 +27,22 @@ class ProfileAPI {
           'Authorization': 'Bearer $token',
         }),
         data: user?.toJson());
+
+    return response
+        .then((value) => value.data)
+        .catchError((e) => handleErrorApi(e));
+  }
+
+  static Future<dynamic> uploadImage(
+      File? imageFile, String? token, int? id) async {
+    var formData = FormData.fromMap({
+      'profile': await MultipartFile.fromFile(imageFile!.path),
+    });
+    final response = Dio().put('$BASE_URL_API/students/user/profile/$id',
+        options: Options(headers: {
+          'Authorization': 'Bearer $token',
+        }),
+        data: formData);
 
     return response
         .then((value) => value.data)

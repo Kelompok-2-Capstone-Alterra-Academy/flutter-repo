@@ -1,3 +1,4 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -126,20 +127,11 @@ class _ModuleDetailTaskState extends State<ModuleDetailTask> {
                           if (context.mounted) {
                             Provider.of<TaskViewModel>(context, listen: false)
                                 .setDownloadingStatus(false);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                behavior: SnackBarBehavior.floating,
-                                content: Text(
-                                  "Berhasil mengunduh tugas !",
-                                  style: GoogleFonts.poppins(
-                                    fontStyle: FontStyle.normal,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 11,
-                                  ),
-                                ),
-                                backgroundColor: successColor,
-                              ),
-                            );
+                            AnimatedSnackBar.material(
+                                    'Berhasil mengunduh Tugas',
+                                    type: AnimatedSnackBarType.success,
+                                    snackBarStrategy: RemoveSnackBarStrategy())
+                                .show(context);
                           }
                         },
                         child: Container(

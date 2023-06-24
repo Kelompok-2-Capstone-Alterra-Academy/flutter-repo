@@ -1,5 +1,7 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:money_formatter/money_formatter.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/utils/animation/slide_animation2.dart';
 import 'package:staredu/views/screen/sell_course/claimed_voucher_screen.dart';
@@ -55,11 +57,16 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
       context.read<CoursePaymentViewModel>().hargaAwal =
           double.parse(widget.price) + 500;
 
-      if (context.read<CoursePaymentViewModel>().promoUsed == true) {
-      } else {
-        context.read<CoursePaymentViewModel>().totalBayar =
-            context.read<CoursePaymentViewModel>().hargaAwal;
-      }
+      context.read<CoursePaymentViewModel>().totalBayar =
+          context.read<CoursePaymentViewModel>().hargaAwal;
+
+      context.read<CoursePaymentViewModel>().promoUsed = false;
+
+      // if () {
+      // } else {
+      //   context.read<CoursePaymentViewModel>().totalBayar =
+      //       context.read<CoursePaymentViewModel>().hargaAwal;
+      // }
     }
   }
 
@@ -69,6 +76,19 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
 
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+
+    MoneyFormatter fmf = MoneyFormatter(
+      amount: double.parse(widget.price),
+      settings: MoneyFormatterSettings(
+        symbol: 'Rp',
+        thousandSeparator: '.',
+        decimalSeparator: ',',
+        symbolAndNumberSeparator: '. ',
+        fractionDigits: 0,
+      ),
+    );
+
+    MoneyFormatterOutput fo = fmf.output;
 
     return Scaffold(
       appBar: AppBar(
@@ -197,7 +217,7 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                       DetailKursus(
                         icon: Icons.payments_outlined,
                         title: "Harga",
-                        subtitle: widget.price,
+                        subtitle: fo.symbolOnLeft,
                       ),
                       const SizedBox(height: 15),
                       const DetailKursus(
@@ -273,9 +293,10 @@ class _CoursePaymentScreenState extends State<CoursePaymentScreen> {
                           );
                         } else {
                           if (context.mounted) {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text(message),
-                            ));
+                            AnimatedSnackBar.material(message,
+                                    type: AnimatedSnackBarType.error,
+                                    snackBarStrategy: RemoveSnackBarStrategy())
+                                .show(context);
                           }
                         }
 

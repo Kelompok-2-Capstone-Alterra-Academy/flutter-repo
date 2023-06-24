@@ -22,6 +22,7 @@ class SellCourseModel {
   String? liveSessionWeek;
   int? numStudents;
   double? scores;
+  bool? isBuy = false;
 
   SellCourseModel({
     this.id,
@@ -43,6 +44,7 @@ class SellCourseModel {
     this.liveSessionWeek,
     this.numStudents,
     this.scores,
+    this.isBuy,
   });
 
   factory SellCourseModel.fromRawJson(String str) =>

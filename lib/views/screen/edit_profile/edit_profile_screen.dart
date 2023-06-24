@@ -1,6 +1,8 @@
+import 'dart:io';
+
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/models/user_model.dart';
@@ -23,6 +25,7 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   late PreferencesUtils preferencesUtils;
+  var pickedFile;
   String? token;
 
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
@@ -40,6 +43,28 @@ class _EditProfileState extends State<EditProfile> {
   void initState() {
     super.initState();
     init();
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    phoneController.dispose();
+    addressController.dispose();
+    dateController.dispose();
+    genderController.dispose();
+    schoolNameController.dispose();
+    majorController.dispose();
+    gradeController.dispose();
+    super.dispose();
+  }
+
+  void _pickImageAndUpload() async {
+    final picker = ImagePicker();
+    final tempPickedFile = await picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      pickedFile = tempPickedFile;
+    });
   }
 
   void init() async {
@@ -130,15 +155,26 @@ class _EditProfileState extends State<EditProfile> {
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              width: 90,
-                              height: 90,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                image: const DecorationImage(
-                                  image: AssetImage(
-                                      'assets/images/default_mentor.jpg'),
-                                  fit: BoxFit.cover,
+                            InkWell(
+                              onTap: () => _pickImageAndUpload(),
+                              child: Container(
+                                width: 90,
+                                height: 90,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  image: user.profile == '' ||
+                                          user.profile == 'noimage.png' ||
+                                          !user.profile!.contains('http')
+                                      ? const DecorationImage(
+                                          image: AssetImage(
+                                              'assets/images/default_mentor.jpg'),
+                                          fit: BoxFit.cover,
+                                        )
+                                      : DecorationImage(
+                                          image:
+                                              NetworkImage(user.profile ?? ''),
+                                          fit: BoxFit.cover,
+                                        ),
                                 ),
                               ),
                             ),
@@ -193,11 +229,9 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                     const SizedBox(height: 10),
                     TextFormField(
-                      controller: dateController..text = user.dob ?? '',
-                      validator: (value) => validateDate(value!),
+                      controller: dateController
+                        ..text = user.date_of_birth ?? '',
                       keyboardType: TextInputType.datetime,
-                      autocorrect: false,
-                      textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                         suffixIcon: IconButton(
                           onPressed: () {},
@@ -214,7 +248,7 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                     const SizedBox(height: 10),
                     TextFormField(
-                      controller: addressController..text = user.city ?? '',
+                      controller: addressController..text = user.hometown!,
                       validator: (value) => validateAddress(value!),
                       keyboardType: TextInputType.text,
                       autocorrect: false,
@@ -355,10 +389,10 @@ class _EditProfileState extends State<EditProfile> {
                               'name': nameController.text == ''
                                   ? null
                                   : nameController.text,
-                              'dob': dateController.text == ''
+                              'date_of_birth': dateController.text == ''
                                   ? null
                                   : dateController.text,
-                              'city': addressController.text == ''
+                              'hometown': addressController.text == ''
                                   ? null
                                   : addressController.text,
                               'phone_number': phoneController.text == ''
@@ -381,6 +415,12 @@ class _EditProfileState extends State<EditProfile> {
                                 await Provider.of<EditProfileViewModel>(context,
                                         listen: false)
                                     .updateUserDetail(newUser, token, user.id!);
+                            if (pickedFile != null) {
+                              File imageFile = File(pickedFile.path);
+                              await Provider.of<EditProfileViewModel>(context,
+                                      listen: false)
+                                  .updateImage(imageFile, token, user.id!);
+                            }
                             if (updateUser != null) {
                               // ignore: use_build_context_synchronously
                               Navigator.pushAndRemoveUntil(
@@ -389,19 +429,18 @@ class _EditProfileState extends State<EditProfile> {
                                   (route) => false);
                             } else {
                               // ignore: use_build_context_synchronously
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Gagal mengubah data'),
-                                ),
-                              );
+                              AnimatedSnackBar.material('Gagal Mengubah Data',
+                                      type: AnimatedSnackBarType.error,
+                                      snackBarStrategy:
+                                          RemoveSnackBarStrategy())
+                                  .show(context);
                             }
                           } else {
                             // ignore: use_build_context_synchronously
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Gagal mengubah data'),
-                              ),
-                            );
+                            AnimatedSnackBar.material('Gagal mengubah Data',
+                                    type: AnimatedSnackBarType.error,
+                                    snackBarStrategy: RemoveSnackBarStrategy())
+                                .show(context);
                           }
                         },
                         child: Text("Simpan Perubahan",

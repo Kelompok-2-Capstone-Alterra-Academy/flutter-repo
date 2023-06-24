@@ -247,6 +247,18 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                             builder: (context, snapshot) {
                                               if (widget.isLastModule ??
                                                   false) {
+                                                String due = "2020-12-12";
+                                                if (moduleViewModel
+                                                    .courseModule[firstIndex]
+                                                    .module![secondIndex]
+                                                    .tasks!
+                                                    .isNotEmpty) {
+                                                  due = moduleViewModel
+                                                      .courseModule[firstIndex]
+                                                      .module![secondIndex]
+                                                      .tasks![0]
+                                                      .dueDate!;
+                                                }
                                                 return ModuleCard(
                                                   isLastModule: true,
                                                   id: widget.courseId,
@@ -300,11 +312,7 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                                                   'document')
                                                           ? true
                                                           : false,
-                                                  dueDate: moduleViewModel
-                                                      .courseModule[firstIndex]
-                                                      .module![secondIndex]
-                                                      .tasks![0]
-                                                      .dueDate,
+                                                  dueDate: due,
                                                   isSectionFinished:
                                                       snapshot.data ?? false,
                                                   linkModule: moduleViewModel
@@ -326,6 +334,18 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                                       .id,
                                                 );
                                               } else {
+                                                String due = "2020-12-12";
+                                                if (moduleViewModel
+                                                    .courseModule[firstIndex]
+                                                    .module![secondIndex]
+                                                    .tasks!
+                                                    .isNotEmpty) {
+                                                  due = moduleViewModel
+                                                      .courseModule[firstIndex]
+                                                      .module![secondIndex]
+                                                      .tasks![0]
+                                                      .dueDate!;
+                                                }
                                                 return ModuleCard(
                                                   isLastModule: false,
                                                   id: widget.courseId,
@@ -379,8 +399,7 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                                                                   'document')
                                                           ? true
                                                           : false,
-                                                  dueDate:
-                                                      DateTime.now().toString(),
+                                                  dueDate: due,
                                                   isSectionFinished:
                                                       snapshot.data ?? false,
                                                   linkModule: moduleViewModel
@@ -455,7 +474,9 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
               );
             },
           ),
-          bottomNavigationBar: BottomNavigationBarComponent()),
+          bottomNavigationBar: BottomNavigationBarComponent(
+            indexDefined: 1,
+          )),
     );
   }
 }

@@ -6,7 +6,9 @@ import 'package:staredu/utils/animation/slide_animation3.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/views/screen/post_feed/post_detail_screen.dart';
 import 'package:staredu/views/screen/post_feed/post_feed_view_model.dart';
+import '../../../models/user_model.dart';
 import '../../../utils/constant/list_post_feed.dart';
+import '../../../utils/preferences/preferences_utils.dart';
 import 'create_post_feed_screen.dart';
 
 class PostFeedScreen extends StatefulWidget {
@@ -19,17 +21,28 @@ class PostFeedScreen extends StatefulWidget {
 
 class _PostFeedScreenState extends State<PostFeedScreen> {
   List<PostFeedModel> postFeedScreenList = postFeedsList;
+  User? user;
+  String? email;
+  late PreferencesUtils preferencesUtils;
+
   @override
   void initState() {
+    super.initState();
+    preferencesUtils = PreferencesUtils();
+    preferencesUtils.init();
+    setState(() {
+      email = preferencesUtils.getPreferencesString('email');
+    });
+    String? token = preferencesUtils.getPreferencesString('token');
     Future.delayed(
       Duration.zero,
       () {
         final provider = Provider.of<PostFeedViewModel>(context, listen: false);
 
+        provider.getUserDetail(email, token);
         provider.getAllPostFeed();
       },
     );
-    super.initState();
   }
 
   @override
@@ -50,6 +63,7 @@ class _PostFeedScreenState extends State<PostFeedScreen> {
         ),
       ),
       body: Consumer<PostFeedViewModel>(builder: (context, value, _) {
+        user = value.response;
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
@@ -72,8 +86,10 @@ class _PostFeedScreenState extends State<PostFeedScreen> {
                         Navigator.push(
                           context,
                           SlideAnimation3(
-                              page: CreatePostScreen(
-                                  onPostSubmitted: _handlePostSubmitted)),
+                            page: CreatePostScreen(
+                              onPostSubmitted: _handlePostSubmitted,
+                            ),
+                          ),
                         );
                       },
                       child: Container(
@@ -106,6 +122,7 @@ class _PostFeedScreenState extends State<PostFeedScreen> {
                 child: ListView.builder(
                   itemCount: postFeedScreenList.length,
                   itemBuilder: (context, index) {
+                    final postFeed = postFeedScreenList[index];
                     return GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -141,7 +158,7 @@ class _PostFeedScreenState extends State<PostFeedScreen> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        postFeedScreenList[index].name!,
+                                        postFeed.name!,
                                         style: GoogleFonts.poppins(
                                           fontWeight: FontWeight.w600,
                                           fontSize: 12,
@@ -149,7 +166,7 @@ class _PostFeedScreenState extends State<PostFeedScreen> {
                                       ),
                                       const SizedBox(height: 4),
                                       Text(
-                                        postFeedScreenList[index].time!,
+                                        postFeed.time!,
                                         style: GoogleFonts.poppins(
                                           fontWeight: FontWeight.w400,
                                           fontSize: 10,
@@ -161,7 +178,7 @@ class _PostFeedScreenState extends State<PostFeedScreen> {
                               ),
                               const SizedBox(height: 8),
                               Text(
-                                postFeedScreenList[index].comment!,
+                                postFeed.comment!,
                                 style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w400,
                                   fontSize: 14,
@@ -171,14 +188,20 @@ class _PostFeedScreenState extends State<PostFeedScreen> {
                               Row(
                                 children: [
                                   IconButton(
-                                    icon: const Icon(
+                                    icon: Icon(
                                       Icons.thumb_up,
-                                      color: Colors.blue,
+                                      color: postFeed.isLiked
+                                          ? Colors.blue
+                                          : Colors.grey,
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      value.toggleLikeStatus(index);
+                                    },
                                   ),
                                   Text(
-                                    postFeedScreenList[index].like!,
+                                    (postFeed.like! +
+                                            (postFeed.isLiked ? 1 : 0))
+                                        .toString(),
                                     style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w400,
                                       fontSize: 11,
@@ -190,7 +213,7 @@ class _PostFeedScreenState extends State<PostFeedScreen> {
                                     onPressed: () {},
                                   ),
                                   Text(
-                                    postFeedScreenList[index].reply!,
+                                    postFeed.reply!,
                                     style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w400,
                                       fontSize: 11,
@@ -215,11 +238,12 @@ class _PostFeedScreenState extends State<PostFeedScreen> {
 
   void _handlePostSubmitted(String postContent) {
     PostFeedModel newPost = PostFeedModel(
-      name: "Aldi Musidik",
+      name: user?.name ?? '',
       time: '20 Juni 2023, 12:37',
       comment: postContent,
-      like: "0",
+      like: 0,
       reply: "0",
+      isLiked: false,
     );
 
     postFeedScreenList.insert(0, newPost);

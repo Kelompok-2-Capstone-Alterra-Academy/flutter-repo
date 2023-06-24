@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -339,19 +340,13 @@ class _CourseCertificateState extends State<CourseCertificate> {
                                               .toString();
                                       await certificateViewModel.downloadFile();
                                       if (context.mounted) {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          SnackBar(
-                                            content: const Center(
-                                              child: Text(
-                                                  "Sertifikat Berhasil di Download"),
-                                            ),
-                                            duration:
-                                                const Duration(seconds: 1),
-                                            backgroundColor:
-                                                blackColor.withOpacity(0.5),
-                                          ),
-                                        );
+                                        AnimatedSnackBar.material(
+                                                'Berhasil Mengunduh Sertifikat',
+                                                type: AnimatedSnackBarType
+                                                    .success,
+                                                snackBarStrategy:
+                                                    RemoveSnackBarStrategy())
+                                            .show(context);
                                       }
                                     },
                                     child: Center(
