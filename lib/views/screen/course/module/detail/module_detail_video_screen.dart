@@ -228,7 +228,7 @@ class _ModuleVideoScreenState extends State<ModuleVideoScreen> {
                                 await updateModuleStatus();
                                 if (context.mounted) {
                                   Navigator.pop(context);
-                                  Navigator.of(context).push(
+                                  Navigator.of(context).pushReplacement(
                                     FadeAnimation(
                                       page: ModuleListScreen(
                                         courseId: widget.courseId,

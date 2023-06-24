@@ -208,7 +208,8 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                                             await updateModuleStatus();
                                             if (context.mounted) {
                                               Navigator.pop(context);
-                                              Navigator.of(context).push(
+                                              Navigator.of(context)
+                                                  .pushReplacement(
                                                 FadeAnimation(
                                                   page: ModuleListScreen(
                                                     courseId: widget.courseId,
@@ -372,7 +373,8 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                                           await updateModuleStatus();
                                           if (context.mounted) {
                                             Navigator.pop(context);
-                                            Navigator.of(context).push(
+                                            Navigator.of(context)
+                                                .pushReplacement(
                                               FadeAnimation(
                                                 page: ModuleListScreen(
                                                   courseId: widget.courseId,
