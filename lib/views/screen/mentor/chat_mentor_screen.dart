@@ -99,19 +99,20 @@ class _ChatMentorScreenState extends State<ChatMentorScreen> {
                 leading: value.mentorList[index].profile!.isEmpty ||
                         value.mentorList[index].profile!.contains('noimage') ||
                         value.mentorList[index].profile!.contains('base64')
-                    ? Image.asset(
-                        'assets/images/default_mentor.jpg',
+                    ? SizedBox(
+                        width: 55,
+                        child: Image.asset(
+                          'assets/images/default_mentor.jpg',
+                          fit: BoxFit.cover,
+                        ),
                       )
-                    : Image.network(
-                        value.mentorList[index].profile!,
+                    : SizedBox(
+                        width: 55,
+                        child: Image.network(
+                          value.mentorList[index].profile!,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                // Image.asset(
-                //   value.mentorList[index].profile!.contains('noimage') ||
-                //           value.mentorList[index].profile!.length > 20 ||
-                //           value.mentorList[index].profile!.isEmpty
-                //       ? "assets/images/mentor_pic.png"
-                //       : "assets/images/${value.mentorList[index].profile!}",
-                // ),
                 title: Text(
                   value.mentorList[index].name!,
                   style: GoogleFonts.poppins(
