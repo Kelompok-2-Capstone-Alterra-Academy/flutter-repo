@@ -207,6 +207,7 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                                             await saveSectionProgress();
                                             await updateModuleStatus();
                                             if (context.mounted) {
+                                              Navigator.pop(context);
                                               Navigator.of(context)
                                                   .pushReplacement(
                                                 FadeAnimation(
@@ -371,6 +372,7 @@ class _ModulDetailPPTScreenState extends State<ModulDetailPPTScreen> {
                                           await saveSectionProgress();
                                           await updateModuleStatus();
                                           if (context.mounted) {
+                                            Navigator.pop(context);
                                             Navigator.of(context)
                                                 .pushReplacement(
                                               FadeAnimation(
