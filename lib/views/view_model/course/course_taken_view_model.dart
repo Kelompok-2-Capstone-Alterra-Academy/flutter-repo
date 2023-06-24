@@ -43,18 +43,10 @@ class CourseTakenViewModel with ChangeNotifier {
 
   void filterCourse(
       {String? filterBy, String? majorFilter, String? classFilter}) {
-    //save current list to temporary so dont need to re-request to api
-
     if (_tempInProgressCourseTaken.isEmpty) {
       _tempInProgressCourseTaken = List.from(_inProgressCourseTaken);
       _tempCompletedCourseTaken = List.from(_completedCourseTaken);
     }
-
-    List<InProgress> _tempInProgressList = [];
-    List<InProgress> _tempCompletedList = [];
-
-    _tempInProgressList = List.from(_tempInProgressCourseTaken);
-    _tempCompletedList = List.from(_tempCompletedCourseTaken);
 
     //clear current list
     _inProgressCourseTaken.clear();
@@ -75,14 +67,18 @@ class CourseTakenViewModel with ChangeNotifier {
   }
 
   void resetFilterCourse() {
-    //clear current list
-    _inProgressCourseTaken.clear();
-    _completedCourseTaken.clear();
+    if (_tempInProgressCourseTaken.isEmpty) {
+      //do nothing
+    } else {
+      //clear current list
+      _inProgressCourseTaken.clear();
+      _completedCourseTaken.clear();
 
-    //set the data from saved data before
-    _inProgressCourseTaken = List.from(_tempInProgressCourseTaken);
-    _completedCourseTaken = List.from(_tempCompletedCourseTaken);
-    notifyListeners();
+      //set the data from saved data before
+      _inProgressCourseTaken = List.from(_tempInProgressCourseTaken);
+      _completedCourseTaken = List.from(_tempCompletedCourseTaken);
+      notifyListeners();
+    }
   }
 
   Future getCourseTaken(String token) async {

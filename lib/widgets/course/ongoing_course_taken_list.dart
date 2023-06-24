@@ -249,113 +249,90 @@ class _OnGoingCourseTakenListScreenState
                                                   future: totalSection,
                                                   builder: (context, snapshot) {
                                                     if (snapshot.data != 0) {
-                                                      return Text(
-                                                        "Section ",
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                          fontStyle:
-                                                              FontStyle.normal,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          fontSize: 11,
-                                                        ),
-                                                      );
-                                                    } else {
-                                                      return Text(
-                                                        "Kursus Baru !",
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                          fontStyle:
-                                                              FontStyle.normal,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          fontSize: 11,
-                                                          color: successColor,
+                                                      return Flexible(
+                                                        fit: FlexFit.loose,
+                                                        child: Row(
+                                                          children: [
+                                                            Text(
+                                                              "Section ",
+                                                              style: GoogleFonts
+                                                                  .poppins(
+                                                                fontStyle:
+                                                                    FontStyle
+                                                                        .normal,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                fontSize: 11,
+                                                              ),
+                                                            ),
+                                                            FutureBuilder(
+                                                              future:
+                                                                  currentSection,
+                                                              builder: (context,
+                                                                  currSection) {
+                                                                return Text(
+                                                                  currSection
+                                                                      .data
+                                                                      .toString(),
+                                                                  style: GoogleFonts
+                                                                      .poppins(
+                                                                    fontStyle:
+                                                                        FontStyle
+                                                                            .normal,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400,
+                                                                    fontSize:
+                                                                        11,
+                                                                  ),
+                                                                );
+                                                              },
+                                                            ),
+                                                            Text(
+                                                              "/",
+                                                              style: GoogleFonts
+                                                                  .poppins(
+                                                                fontStyle:
+                                                                    FontStyle
+                                                                        .normal,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                fontSize: 10,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              snapshot.data
+                                                                      ?.toString() ??
+                                                                  "0",
+                                                              style: GoogleFonts
+                                                                  .poppins(
+                                                                fontStyle:
+                                                                    FontStyle
+                                                                        .normal,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                fontSize: 11,
+                                                              ),
+                                                            ),
+                                                          ],
                                                         ),
                                                       );
                                                     }
-                                                  },
-                                                ),
-                                                FutureBuilder(
-                                                    future: totalSection,
-                                                    builder:
-                                                        (context, snapshot) {
-                                                      if (snapshot.data != 0) {
-                                                        return FutureBuilder(
-                                                          future:
-                                                              currentSection,
-                                                          builder: (context,
-                                                              snapshot) {
-                                                            if (snapshot.data !=
-                                                                null) {
-                                                              return Text(
-                                                                (snapshot.data ??
-                                                                        0)
-                                                                    .toString(),
-                                                                style:
-                                                                    GoogleFonts
-                                                                        .poppins(
-                                                                  fontStyle:
-                                                                      FontStyle
-                                                                          .normal,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  fontSize: 11,
-                                                                ),
-                                                              );
-                                                            } else {
-                                                              return const SizedBox
-                                                                  .shrink();
-                                                            }
-                                                          },
-                                                        );
-                                                      } else {
-                                                        return const SizedBox
-                                                            .shrink();
-                                                      }
-                                                    }),
-                                                FutureBuilder(
-                                                  future: totalSection,
-                                                  builder: (context, snapshot) {
-                                                    if (snapshot.data != 0) {
-                                                      return Text(
-                                                        "/",
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                          fontStyle:
-                                                              FontStyle.normal,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          fontSize: 10,
-                                                        ),
-                                                      );
-                                                    } else {
-                                                      return const SizedBox
-                                                          .shrink();
-                                                    }
-                                                  },
-                                                ),
-                                                FutureBuilder(
-                                                  future: totalSection,
-                                                  builder: (context, snapshot) {
-                                                    if (snapshot.data != 0) {
-                                                      return Text(
-                                                        (snapshot.data ?? 0)
-                                                            .toString(),
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                          fontStyle:
-                                                              FontStyle.normal,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          fontSize: 11,
-                                                        ),
-                                                      );
-                                                    } else {
-                                                      return const SizedBox
-                                                          .shrink();
-                                                    }
+                                                    return Text(
+                                                      "Kursus Baru !",
+                                                      style:
+                                                          GoogleFonts.poppins(
+                                                        fontStyle:
+                                                            FontStyle.normal,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        fontSize: 11,
+                                                        color: successColor,
+                                                      ),
+                                                    );
                                                   },
                                                 ),
                                               ],
