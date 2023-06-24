@@ -97,11 +97,15 @@ class SellCourseViewModel extends ChangeNotifier {
   }
 
   void resetFilterCourse() {
-    //clear current list
-    _findCourse.clear();
+    if (_tempfindCourse.isEmpty) {
+      //do nothing
+    } else {
+      //clear current list
+      _findCourse.clear();
 
-    //set the data from saved data before
-    _findCourse = _tempfindCourse;
-    notifyListeners();
+      //set the data from saved data before
+      _findCourse = _tempfindCourse;
+      notifyListeners();
+    }
   }
 }
