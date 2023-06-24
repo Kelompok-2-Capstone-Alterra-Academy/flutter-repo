@@ -225,7 +225,6 @@ class _ReviewDialogState extends State<ReviewDialog> {
                               backgroundColor: successColor,
                             ),
                           );
-
                           Navigator.of(context).pushReplacement(
                             PageRouteBuilder(
                               pageBuilder:

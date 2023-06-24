@@ -97,7 +97,8 @@ class _ModuleQuizDetailScreenState extends State<ModuleQuizDetailScreen> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             if (widget.courseStatus != true) {
-              Navigator.of(context).pushReplacement(
+              Navigator.pop(context);
+              Navigator.of(context).push(
                 FadeAnimation2(
                     page: ModuleListQuizScreen(
                   courseId: widget.courseId,
@@ -105,7 +106,8 @@ class _ModuleQuizDetailScreenState extends State<ModuleQuizDetailScreen> {
                 )),
               );
             } else {
-              Navigator.of(context).pushReplacement(
+              Navigator.pop(context);
+              Navigator.of(context).push(
                 FadeAnimation2(
                     page: FinishedModuleListQuizScreen(
                   courseId: widget.courseId,

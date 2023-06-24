@@ -90,7 +90,7 @@ class ModuleQuizDetailDoneDialog extends StatelessWidget {
                 ),
                 onPressed: () {
                   Navigator.pop(context);
-                  Navigator.of(context).pushReplacement(FadeAnimation2(
+                  Navigator.of(context).push(FadeAnimation2(
                       page: ModuleListQuizScreen(
                     courseName: courseName,
                     courseId: courseId!,
