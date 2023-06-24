@@ -48,6 +48,7 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
   late PreferencesUtils preferencesUtils;
   bool isWishlistSelected = false;
   WishlistManager wishlistManager = WishlistManager();
+  bool? isLogin = false;
 
   Future<void> checkWishlistStatus() async {
     List wishlist = await wishlistManager.getWishlist();
@@ -57,9 +58,18 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
     });
   }
 
+  void init() async {
+    preferencesUtils = PreferencesUtils();
+    await preferencesUtils.init();
+    setState(() {
+      isLogin = preferencesUtils.getPreferencesBool('isLogin');
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    init();
     checkWishlistStatus();
   }
 
@@ -95,6 +105,8 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
+
+    bool isBuy = false;
 
     MoneyFormatter fmf = MoneyFormatter(
       amount: double.parse(widget.price),
@@ -306,16 +318,66 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          SlideAnimation3(
-                            page: CoursePaymentScreen(
-                              courseId: widget.id,
-                              title: widget.courseName,
-                              price: widget.price,
-                              liveSession: widget.liveSession,
-                            ),
-                          ));
+                      if (isLogin == null || isLogin == true) {
+                        if (context
+                                .read<CourseTakenViewModel>()
+                                .inProgressCourseTaken
+                                .isEmpty ||
+                            context
+                                .read<CourseTakenViewModel>()
+                                .completedCourseTaken
+                                .isEmpty) {
+                          Navigator.push(
+                              context,
+                              SlideAnimation3(
+                                page: CoursePaymentScreen(
+                                  courseId: widget.id,
+                                  title: widget.courseName,
+                                  price: widget.price,
+                                  liveSession: widget.liveSession,
+                                ),
+                              ));
+                        } else {
+                          for (var element in context
+                              .read<CourseTakenViewModel>()
+                              .inProgressCourseTaken) {
+                            if (element.id == widget.id) {
+                              isBuy = true;
+                            }
+                          }
+                          for (var element in context
+                              .read<CourseTakenViewModel>()
+                              .completedCourseTaken) {
+                            if (element.id == widget.id) {
+                              isBuy = true;
+                            }
+                          }
+                          if (isBuy == false) {
+                            Navigator.push(
+                                context,
+                                SlideAnimation3(
+                                  page: CoursePaymentScreen(
+                                    courseId: widget.id,
+                                    title: widget.courseName,
+                                    price: widget.price,
+                                    liveSession: widget.liveSession,
+                                  ),
+                                ));
+                          } else {
+                            AnimatedSnackBar.material(
+                                    'Kamu Sudah Membeli Course Ini',
+                                    type: AnimatedSnackBarType.info,
+                                    snackBarStrategy: RemoveSnackBarStrategy())
+                                .show(context);
+                          }
+                        }
+                      } else {
+                        AnimatedSnackBar.material(
+                                'Silahkan Login Terlebih Dahulu',
+                                type: AnimatedSnackBarType.info,
+                                snackBarStrategy: RemoveSnackBarStrategy())
+                            .show(context);
+                      }
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(left: 10, right: 12),

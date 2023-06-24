@@ -78,6 +78,7 @@ class _CardCourseTakenState extends State<CardCourseTaken> {
       onTap: () {
         Navigator.of(context).push(FadeAnimation2(
           page: ModuleListScreen(
+            courseId: widget.id,
             courseName: widget.title.toString(),
             courseFinished: false,
           ),
