@@ -337,18 +337,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                               right: 'Lihat Semua',
                                               page: CourseTakenListScreen()),
                                           CardCourseTaken(
-                                              id: courseTaken[0].id ?? 0,
-                                              title:
-                                                  courseTaken[0].courseName ??
-                                                      '',
-                                              img: courseTaken[0].thumbnail ??
-                                                  '',
-                                              currentSection: courseTaken[0]
-                                                      .inProgressClass!
-                                                      .className ??
-                                                  '',
-                                              totalSection: '20',
-                                              progress: 50),
+                                            id: courseTaken[
+                                                        courseTaken.length - 1]
+                                                    .id ??
+                                                0,
+                                            title: courseTaken[
+                                                        courseTaken.length - 1]
+                                                    .courseName ??
+                                                '',
+                                            img: courseTaken[
+                                                        courseTaken.length - 1]
+                                                    .thumbnail ??
+                                                '',
+                                          ),
                                           const SizedBox(height: 5),
                                         ],
                                       );
