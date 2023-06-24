@@ -57,48 +57,6 @@ class _HistoryTransactionScreenState extends State<HistoryTransactionScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: 42,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                        color: searchBarColor,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Icons.search_rounded,
-                              color: searchBarTextColor,
-                            ),
-                            const SizedBox(width: 12),
-                            Text(
-                              "Mau belajar apa hari ini? Cari di sini",
-                              style: GoogleFonts.poppins(
-                                color: searchBarTextColor,
-                                fontSize: 11,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  const Icon(
-                    Icons.filter_list,
-                    color: searchBarTextColor,
-                  ),
-                ],
-              ),
               Expanded(
                 child: Consumer<HistoryTransactionViewModel>(
                   builder: (context, value, _) {
@@ -147,7 +105,8 @@ class _HistoryTransactionScreenState extends State<HistoryTransactionScreen> {
                                     context,
                                     FadeAnimation2(
                                       page: NoteTransactionScreen(
-                                        model: value.historyCourses[index],
+                                        model: value.historyCourses.reversed
+                                            .toList()[index],
                                       ),
                                     ),
                                   );
@@ -175,14 +134,14 @@ class _HistoryTransactionScreenState extends State<HistoryTransactionScreen> {
                                           height: 80,
                                           width: 80,
                                           child: Image.asset(
-                                            value
-                                                    .historyCourses[index]
+                                            value.historyCourses.reversed
+                                                    .toList()[index]
                                                     .transactionDetails![0]
                                                     .course!
                                                     .thumbnail!
                                                     .isEmpty
                                                 ? 'assets/images/thumbnail/apple.png'
-                                                : "assets/images/thumbnail/${value.historyCourses[index].transactionDetails![0].course!.thumbnail}.png",
+                                                : "assets/images/thumbnail/${value.historyCourses.reversed.toList()[index].transactionDetails![0].course!.thumbnail}.png",
                                             fit: BoxFit.contain,
                                           ),
                                         ),
@@ -192,8 +151,8 @@ class _HistoryTransactionScreenState extends State<HistoryTransactionScreen> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              value
-                                                  .historyCourses[index]
+                                              value.historyCourses.reversed
+                                                  .toList()[index]
                                                   .transactionDetails![0]
                                                   .course!
                                                   .courseName!,
@@ -206,7 +165,8 @@ class _HistoryTransactionScreenState extends State<HistoryTransactionScreen> {
                                             Text(
                                               DateFormat('dd MMMM yyyy').format(
                                                   DateTime.parse(value
-                                                      .historyCourses[index]
+                                                      .historyCourses.reversed
+                                                      .toList()[index]
                                                       .createdAt!)),
                                               style: GoogleFonts.poppins(
                                                 fontSize: 11,
@@ -214,7 +174,8 @@ class _HistoryTransactionScreenState extends State<HistoryTransactionScreen> {
                                               ),
                                             ),
                                             Text(
-                                              value.historyCourses[index]
+                                              value.historyCourses.reversed
+                                                  .toList()[index]
                                                   .status!,
                                               style: GoogleFonts.poppins(
                                                 fontSize: 11,
@@ -269,6 +230,8 @@ class _HistoryTransactionScreenState extends State<HistoryTransactionScreen> {
             ],
           ),
         ),
-        bottomNavigationBar: BottomNavigationBarComponent());
+        bottomNavigationBar: BottomNavigationBarComponent(
+          indexDefined: 3,
+        ));
   }
 }

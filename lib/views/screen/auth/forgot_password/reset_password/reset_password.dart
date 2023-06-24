@@ -1,3 +1,4 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -349,10 +350,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                     });
                               } else {
                                 // ignore: use_build_context_synchronously
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                  content: Text(message),
-                                ));
+                                AnimatedSnackBar.material(message,
+                                        type: AnimatedSnackBarType.error,
+                                        snackBarStrategy:
+                                            RemoveSnackBarStrategy())
+                                    .show(context);
                               }
                             }
                           },

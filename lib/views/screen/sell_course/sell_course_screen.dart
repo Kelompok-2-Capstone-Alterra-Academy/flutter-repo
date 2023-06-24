@@ -1,6 +1,7 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:money_formatter/money_formatter.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/views/screen/sell_course/course_voucher_screen.dart';
 import 'package:staredu/views/screen/sell_course/sell_course_detail_screen.dart';
@@ -146,6 +147,19 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
                           physics: const BouncingScrollPhysics(),
                           itemCount: value.findCourse.length,
                           itemBuilder: (context, index) {
+                            MoneyFormatter fmf = MoneyFormatter(
+                              amount:
+                                  double.parse(value.findCourse[index].price!),
+                              settings: MoneyFormatterSettings(
+                                symbol: 'Rp',
+                                thousandSeparator: '.',
+                                decimalSeparator: ',',
+                                symbolAndNumberSeparator: '. ',
+                                fractionDigits: 0,
+                              ),
+                            );
+
+                            MoneyFormatterOutput fo = fmf.output;
                             return Column(
                               children: [
                                 InkWell(
@@ -154,9 +168,13 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
                                   ),
                                   onTap: () {
                                     if (context
-                                        .read<CourseTakenViewModel>()
-                                        .inProgressCourseTaken
-                                        .isEmpty) {
+                                            .read<CourseTakenViewModel>()
+                                            .inProgressCourseTaken
+                                            .isEmpty ||
+                                        context
+                                            .read<CourseTakenViewModel>()
+                                            .completedCourseTaken
+                                            .isEmpty) {
                                       Navigator.of(context).push(FadeAnimation2(
                                           page: SellCourseDetailScreen(
                                         id: value.findCourse[index].id!,
@@ -178,7 +196,6 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
                                         description: value
                                             .findCourse[index].description!,
                                       )));
-                                      print('Masih Kosong');
                                     } else {
                                       for (var element in context
                                           .read<CourseTakenViewModel>()
@@ -186,7 +203,14 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
                                         if (element.id ==
                                             value.findCourse[index].id) {
                                           value.findCourse[index].isBuy = true;
-                                          print(value.findCourse[index].isBuy);
+                                        }
+                                      }
+                                      for (var element in context
+                                          .read<CourseTakenViewModel>()
+                                          .completedCourseTaken) {
+                                        if (element.id ==
+                                            value.findCourse[index].id) {
+                                          value.findCourse[index].isBuy = true;
                                         }
                                       }
                                       if (value.findCourse[index].isBuy ==
@@ -216,7 +240,6 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
                                           description: value
                                               .findCourse[index].description!,
                                         )));
-                                        print('Masih Kosong');
                                       } else {
                                         AnimatedSnackBar.material(
                                                 'Kamu Sudah Membeli Course Ini',
@@ -224,8 +247,6 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
                                                 snackBarStrategy:
                                                     RemoveSnackBarStrategy())
                                             .show(context);
-                                        print('udah Ada');
-                                        print(value.findCourse[index].isBuy);
                                       }
                                     }
                                   },
@@ -274,8 +295,8 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
                                                 Text(
                                                   value.findCourse[index].price!
                                                           .isEmpty
-                                                      ? "Rp. " "700000"
-                                                      : "Rp. ${value.findCourse[index].price!}",
+                                                      ? "Rp. " "700.000"
+                                                      : fo.symbolOnLeft,
                                                   style: GoogleFonts.poppins(
                                                     fontSize: 11,
                                                     fontWeight: FontWeight.w600,

@@ -1,3 +1,4 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:staredu/models/mentor_model.dart';
@@ -57,11 +58,10 @@ class MentorViewModel extends ChangeNotifier {
       await launchUrl(whatsappAndroid);
     } else {
       // ignore: use_build_context_synchronously
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("WhatsApp is not installed on the device"),
-        ),
-      );
+      AnimatedSnackBar.material('Aplikasi Whatsapp Tidak Terdeteksi',
+              type: AnimatedSnackBarType.error,
+              snackBarStrategy: RemoveSnackBarStrategy())
+          .show(context);
     }
   }
 }

@@ -1,6 +1,7 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:money_formatter/money_formatter.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/views/screen/sell_course/course_payment_screen.dart';
@@ -94,6 +95,19 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
+
+    MoneyFormatter fmf = MoneyFormatter(
+      amount: double.parse(widget.price),
+      settings: MoneyFormatterSettings(
+        symbol: 'Rp',
+        thousandSeparator: '.',
+        decimalSeparator: ',',
+        symbolAndNumberSeparator: '. ',
+        fractionDigits: 0,
+      ),
+    );
+
+    MoneyFormatterOutput fo = fmf.output;
 
     return Scaffold(
       appBar: AppBar(
@@ -226,7 +240,7 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
               ),
               const SizedBox(height: 10),
               Text(
-                "Rp. ${widget.price}",
+                fo.symbolOnLeft,
                 style: GoogleFonts.poppins(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
@@ -292,47 +306,16 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: () {
-                      if (context
-                          .read<CourseTakenViewModel>()
-                          .inProgressCourseTaken
-                          .isEmpty) {
-                        Navigator.push(
-                            context,
-                            SlideAnimation3(
-                              page: CoursePaymentScreen(
-                                courseId: widget.id,
-                                title: widget.courseName,
-                                price: widget.price,
-                                liveSession: widget.liveSession,
-                              ),
-                            ));
-                        print("Kosong");
-                      } else {
-                        for (var element in context
-                            .read<CourseTakenViewModel>()
-                            .inProgressCourseTaken) {
-                          if (element.id == widget.id) {
-                            AnimatedSnackBar.material(
-                                    'Kamu Sudah Membeli Course Ini',
-                                    type: AnimatedSnackBarType.info,
-                                    snackBarStrategy: RemoveSnackBarStrategy())
-                                .show(context);
-                            print("udah beli woi");
-                          } else {
-                            Navigator.push(
-                                context,
-                                SlideAnimation3(
-                                  page: CoursePaymentScreen(
-                                    courseId: widget.id,
-                                    title: widget.courseName,
-                                    price: widget.price,
-                                    liveSession: widget.liveSession,
-                                  ),
-                                ));
-                            print("gaada id");
-                          }
-                        }
-                      }
+                      Navigator.push(
+                          context,
+                          SlideAnimation3(
+                            page: CoursePaymentScreen(
+                              courseId: widget.id,
+                              title: widget.courseName,
+                              price: widget.price,
+                              liveSession: widget.liveSession,
+                            ),
+                          ));
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(left: 10, right: 12),

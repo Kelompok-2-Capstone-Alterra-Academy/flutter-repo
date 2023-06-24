@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -211,20 +212,10 @@ class _ReviewDialogState extends State<ReviewDialog> {
                             .clearRating();
                         if (msg.contains('success')) {
                           Navigator.pop(context);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              behavior: SnackBarBehavior.floating,
-                              content: Text(
-                                "Ulasanmu sudah kami rekam",
-                                style: GoogleFonts.poppins(
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 11,
-                                ),
-                              ),
-                              backgroundColor: successColor,
-                            ),
-                          );
+                          AnimatedSnackBar.material('Ulasanmu Sudah Terekam',
+                                  type: AnimatedSnackBarType.success,
+                                  snackBarStrategy: RemoveSnackBarStrategy())
+                              .show(context);
 
                           Navigator.of(context).pushReplacement(
                             PageRouteBuilder(
@@ -242,18 +233,10 @@ class _ReviewDialogState extends State<ReviewDialog> {
                             ),
                           );
                         } else {
-                          SnackBar(
-                            behavior: SnackBarBehavior.floating,
-                            content: Text(
-                              "Gagal mengirim ulasan",
-                              style: GoogleFonts.poppins(
-                                fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 11,
-                              ),
-                            ),
-                            backgroundColor: redWarningColor,
-                          );
+                          AnimatedSnackBar.material('Gagal Mengirim Ulasan',
+                                  type: AnimatedSnackBarType.error,
+                                  snackBarStrategy: RemoveSnackBarStrategy())
+                              .show(context);
                         }
                       },
                       child: Text(

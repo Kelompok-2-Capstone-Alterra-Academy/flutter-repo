@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -206,11 +207,12 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
                                     path: result.files.single.path!,
                                   );
                                 } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text("Gagal mengupload file !"),
-                                    ),
-                                  );
+                                  AnimatedSnackBar.material(
+                                          'Gagal Mengupload File',
+                                          type: AnimatedSnackBarType.error,
+                                          snackBarStrategy:
+                                              RemoveSnackBarStrategy())
+                                      .show(context);
                                 }
                               },
                               child: Text(
@@ -354,11 +356,11 @@ class _ModuleSendTaskScreenState extends State<ModuleSendTaskScreen> {
                                       );
                                     }
                                   } else {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(msg),
-                                      ),
-                                    );
+                                    AnimatedSnackBar.material(msg,
+                                            type: AnimatedSnackBarType.error,
+                                            snackBarStrategy:
+                                                RemoveSnackBarStrategy())
+                                        .show(context);
                                   }
                                 },
                                 child: Text(
