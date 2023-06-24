@@ -29,11 +29,11 @@ class CourseAPI {
 
     // TODO change data to data from API
     final List<TypeCourse> data = [
-      TypeCourse(id: 1, name: 'IPA'),
-      TypeCourse(id: 2, name: 'IPS'),
+      TypeCourse(id: 1, name: 'RPL'),
+      TypeCourse(id: 2, name: 'TKJ'),
       TypeCourse(id: 3, name: 'Multimedia'),
-      TypeCourse(id: 4, name: 'TKJ'),
-      TypeCourse(id: 5, name: 'RPL'),
+      TypeCourse(id: 4, name: 'IPA'),
+      TypeCourse(id: 5, name: 'IPS'),
       TypeCourse(id: 6, name: 'Umum'),
     ];
     return data;

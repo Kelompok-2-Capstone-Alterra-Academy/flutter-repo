@@ -167,88 +167,110 @@ class _SellCourseScreenState extends State<SellCourseScreen> {
                                     Radius.circular(8),
                                   ),
                                   onTap: () {
-                                    if (context
-                                            .read<CourseTakenViewModel>()
-                                            .inProgressCourseTaken
-                                            .isEmpty ||
-                                        context
-                                            .read<CourseTakenViewModel>()
-                                            .completedCourseTaken
-                                            .isEmpty) {
-                                      Navigator.of(context).push(FadeAnimation2(
-                                          page: SellCourseDetailScreen(
-                                        id: value.findCourse[index].id!,
-                                        thumbnail:
-                                            value.findCourse[index].thumbnail!,
-                                        courseName:
-                                            value.findCourse[index].courseName!,
-                                        rating: value.findCourse[index].scores!,
-                                        student: value
-                                            .findCourse[index].numStudents!,
-                                        price: value.findCourse[index].price!
-                                                .isEmpty
-                                            ? "700000"
-                                            : value.findCourse[index].price!,
-                                        grade: value.findCourse[index]
-                                            .sellCourseModelClass!.className!,
-                                        liveSession: value
-                                            .findCourse[index].liveSessionWeek!,
-                                        description: value
-                                            .findCourse[index].description!,
-                                      )));
-                                    } else {
-                                      for (var element in context
-                                          .read<CourseTakenViewModel>()
-                                          .inProgressCourseTaken) {
-                                        if (element.id ==
-                                            value.findCourse[index].id) {
-                                          value.findCourse[index].isBuy = true;
-                                        }
-                                      }
-                                      for (var element in context
-                                          .read<CourseTakenViewModel>()
-                                          .completedCourseTaken) {
-                                        if (element.id ==
-                                            value.findCourse[index].id) {
-                                          value.findCourse[index].isBuy = true;
-                                        }
-                                      }
-                                      if (value.findCourse[index].isBuy ==
-                                              false ||
-                                          value.findCourse[index].isBuy ==
-                                              null) {
-                                        Navigator.of(context)
-                                            .push(FadeAnimation2(
-                                                page: SellCourseDetailScreen(
-                                          id: value.findCourse[index].id!,
-                                          thumbnail: value
-                                              .findCourse[index].thumbnail!,
-                                          courseName: value
-                                              .findCourse[index].courseName!,
-                                          rating:
-                                              value.findCourse[index].scores!,
-                                          student: value
-                                              .findCourse[index].numStudents!,
-                                          price: value.findCourse[index].price!
-                                                  .isEmpty
+                                    Navigator.of(context).push(FadeAnimation2(
+                                        page: SellCourseDetailScreen(
+                                      id: value.findCourse[index].id!,
+                                      thumbnail:
+                                          value.findCourse[index].thumbnail!,
+                                      courseName:
+                                          value.findCourse[index].courseName!,
+                                      rating: value.findCourse[index].scores!,
+                                      student:
+                                          value.findCourse[index].numStudents!,
+                                      price:
+                                          value.findCourse[index].price!.isEmpty
                                               ? "700000"
                                               : value.findCourse[index].price!,
-                                          grade: value.findCourse[index]
-                                              .sellCourseModelClass!.className!,
-                                          liveSession: value.findCourse[index]
-                                              .liveSessionWeek!,
-                                          description: value
-                                              .findCourse[index].description!,
-                                        )));
-                                      } else {
-                                        AnimatedSnackBar.material(
-                                                'Kamu Sudah Membeli Course Ini',
-                                                type: AnimatedSnackBarType.info,
-                                                snackBarStrategy:
-                                                    RemoveSnackBarStrategy())
-                                            .show(context);
-                                      }
-                                    }
+                                      grade: value.findCourse[index]
+                                          .sellCourseModelClass!.className!,
+                                      liveSession: value
+                                          .findCourse[index].liveSessionWeek!,
+                                      description:
+                                          value.findCourse[index].description!,
+                                    )));
+
+                                    // if (context
+                                    //         .read<CourseTakenViewModel>()
+                                    //         .inProgressCourseTaken
+                                    //         .isEmpty ||
+                                    //     context
+                                    //         .read<CourseTakenViewModel>()
+                                    //         .completedCourseTaken
+                                    //         .isEmpty) {
+                                    //   Navigator.of(context).push(FadeAnimation2(
+                                    //       page: SellCourseDetailScreen(
+                                    //     id: value.findCourse[index].id!,
+                                    //     thumbnail:
+                                    //         value.findCourse[index].thumbnail!,
+                                    //     courseName:
+                                    //         value.findCourse[index].courseName!,
+                                    //     rating: value.findCourse[index].scores!,
+                                    //     student: value
+                                    //         .findCourse[index].numStudents!,
+                                    //     price: value.findCourse[index].price!
+                                    //             .isEmpty
+                                    //         ? "700000"
+                                    //         : value.findCourse[index].price!,
+                                    //     grade: value.findCourse[index]
+                                    //         .sellCourseModelClass!.className!,
+                                    //     liveSession: value
+                                    //         .findCourse[index].liveSessionWeek!,
+                                    //     description: value
+                                    //         .findCourse[index].description!,
+                                    //   )));
+                                    // } else {
+                                    //   for (var element in context
+                                    //       .read<CourseTakenViewModel>()
+                                    //       .inProgressCourseTaken) {
+                                    //     if (element.id ==
+                                    //         value.findCourse[index].id) {
+                                    //       value.findCourse[index].isBuy = true;
+                                    //     }
+                                    //   }
+                                    //   for (var element in context
+                                    //       .read<CourseTakenViewModel>()
+                                    //       .completedCourseTaken) {
+                                    //     if (element.id ==
+                                    //         value.findCourse[index].id) {
+                                    //       value.findCourse[index].isBuy = true;
+                                    //     }
+                                    //   }
+                                    //   if (value.findCourse[index].isBuy ==
+                                    //           false ||
+                                    //       value.findCourse[index].isBuy ==
+                                    //           null) {
+                                    //     Navigator.of(context)
+                                    //         .push(FadeAnimation2(
+                                    //             page: SellCourseDetailScreen(
+                                    //       id: value.findCourse[index].id!,
+                                    //       thumbnail: value
+                                    //           .findCourse[index].thumbnail!,
+                                    //       courseName: value
+                                    //           .findCourse[index].courseName!,
+                                    //       rating:
+                                    //           value.findCourse[index].scores!,
+                                    //       student: value
+                                    //           .findCourse[index].numStudents!,
+                                    //       price: value.findCourse[index].price!
+                                    //               .isEmpty
+                                    //           ? "700000"
+                                    //           : value.findCourse[index].price!,
+                                    //       grade: value.findCourse[index]
+                                    //           .sellCourseModelClass!.className!,
+                                    //       liveSession: value.findCourse[index]
+                                    //           .liveSessionWeek!,
+                                    //       description: value
+                                    //           .findCourse[index].description!,
+                                    //     )));
+                                    //   } else {
+                                    //     AnimatedSnackBar.material(
+                                    //             'Kamu Sudah Membeli Course Ini',
+                                    //             type: AnimatedSnackBarType.info,
+                                    //             snackBarStrategy:
+                                    //                 RemoveSnackBarStrategy())
+                                    //         .show(context);
+                                    //   }
+                                    // }
                                   },
                                   child: Card(
                                     elevation: 2,

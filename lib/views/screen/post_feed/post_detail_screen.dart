@@ -142,10 +142,13 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                               : Colors.grey,
                         ),
                         onPressed: () {
-                          setState(() {
-                            postFeedScreenList[widget.index].isLiked =
-                                !postFeedScreenList[widget.index].isLiked;
-                          });
+                          context
+                              .read<PostFeedViewModel>()
+                              .toggleLikeStatus(widget.index);
+                          // setState(() {
+                          //   postFeedScreenList[widget.index].isLiked =
+                          //       !postFeedScreenList[widget.index].isLiked;
+                          // });
                         },
                       ),
                     ),

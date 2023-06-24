@@ -12,6 +12,7 @@ import 'package:staredu/utils/constant/list_post_feed.dart';
 import 'package:staredu/utils/preferences/preferences_utils.dart';
 import 'package:staredu/views/screen/auth/login/login_screen.dart';
 import 'package:staredu/views/screen/course/course_taken_list_screen.dart';
+import 'package:staredu/views/screen/course/module/module_task_list_screen.dart';
 import 'package:staredu/views/screen/home/home_view_model.dart';
 import 'package:staredu/views/screen/live_session/schedule_course_screen.dart';
 import 'package:staredu/views/screen/live_session/schedule_view_model.dart';
@@ -398,7 +399,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           const RowText(
                                               left: 'Tugas Terkini',
                                               right: 'Lihat Semua',
-                                              page: SellCourseScreen()),
+                                              page: TaskListScreen()),
                                           CardTaskList(
                                               sectionNumbering: 1,
                                               sectionName: courseTaken[0]
