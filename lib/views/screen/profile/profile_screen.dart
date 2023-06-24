@@ -85,18 +85,30 @@ class _ProfileState extends State<Profile> {
                   child: Center(
                     child: Column(
                       children: [
-                        Container(
-                          width: 90,
-                          height: 90,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            image: const DecorationImage(
-                              image: AssetImage(
-                                  'assets/images/default_mentor.jpg'),
-                              fit: BoxFit.cover,
+                        Consumer<ProfileViewModel>(
+                            builder: (context, value, child) {
+                          return Container(
+                            width: 90,
+                            height: 90,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                              image: value.response!.profile == '' ||
+                                      value.response!.profile ==
+                                          'noimage.png' ||
+                                      !value.response!.profile!.contains('http')
+                                  ? const DecorationImage(
+                                      image: AssetImage(
+                                          'assets/images/default_mentor.jpg'),
+                                      fit: BoxFit.cover,
+                                    )
+                                  : DecorationImage(
+                                      image: NetworkImage(
+                                          value.response!.profile ?? ''),
+                                      fit: BoxFit.cover,
+                                    ),
                             ),
-                          ),
-                        ),
+                          );
+                        }),
                         const SizedBox(
                           height: 15,
                         ),
