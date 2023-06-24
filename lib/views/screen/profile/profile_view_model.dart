@@ -1,8 +1,10 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:staredu/models/service/profile_api.dart';
 import 'package:staredu/models/user_model.dart';
 import 'package:staredu/utils/state/my_state.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfileViewModel extends ChangeNotifier {
   dynamic res;
@@ -32,5 +34,19 @@ class ProfileViewModel extends ChangeNotifier {
   void setState(MyState state) {
     _state = state;
     notifyListeners();
+  }
+
+  launchWhatsapp(BuildContext context, String whatsapp) async {
+    var whatsappAndroid =
+        Uri.parse("whatsapp://send?phone=$whatsapp&text=hello");
+    if (await canLaunchUrl(whatsappAndroid)) {
+      await launchUrl(whatsappAndroid);
+    } else {
+      // ignore: use_build_context_synchronously
+      AnimatedSnackBar.material('Aplikasi Whatsapp Tidak Terdeteksi',
+              type: AnimatedSnackBarType.error,
+              snackBarStrategy: RemoveSnackBarStrategy())
+          .show(context);
+    }
   }
 }

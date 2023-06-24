@@ -89,6 +89,9 @@ class SellCourseViewModel extends ChangeNotifier {
           _findCourse.add(i);
         }
       }
+      if (filterBy == "" || filterBy!.isEmpty) {
+        // print('by none');
+      }
     }
     notifyListeners();
   }

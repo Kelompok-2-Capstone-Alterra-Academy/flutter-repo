@@ -474,7 +474,9 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
               );
             },
           ),
-          bottomNavigationBar: BottomNavigationBarComponent()),
+          bottomNavigationBar: BottomNavigationBarComponent(
+            indexDefined: 1,
+          )),
     );
   }
 }

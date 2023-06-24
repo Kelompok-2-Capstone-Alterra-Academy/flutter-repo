@@ -266,7 +266,7 @@ class _FilterButtonState extends State<FilterButton> {
                                     } else {
                                       setState(() {
                                         if (toggleButton4 == false) {
-                                          classFilter = "10 smk";
+                                          classFilter = "10 SMK";
                                         } else {
                                           classFilter = "";
                                         }
@@ -312,7 +312,7 @@ class _FilterButtonState extends State<FilterButton> {
                                     } else {
                                       setState(() {
                                         if (toggleButton5 == false) {
-                                          classFilter = "11 smk";
+                                          classFilter = "11 SMK";
                                         } else {
                                           classFilter = "";
                                         }
@@ -358,7 +358,7 @@ class _FilterButtonState extends State<FilterButton> {
                                     } else {
                                       setState(() {
                                         if (toggleButton6 == false) {
-                                          classFilter = "12 smk";
+                                          classFilter = "12 SMK";
                                         } else {
                                           classFilter = "";
                                         }
@@ -418,7 +418,7 @@ class _FilterButtonState extends State<FilterButton> {
                                     } else {
                                       setState(() {
                                         if (toggle1 == false) {
-                                          majorFilter = "ipa";
+                                          majorFilter = "IPA";
                                         } else {
                                           majorFilter = "";
                                         }
@@ -463,7 +463,7 @@ class _FilterButtonState extends State<FilterButton> {
                                     } else {
                                       setState(() {
                                         if (toggle2 == false) {
-                                          majorFilter = "ips";
+                                          majorFilter = "IPS";
                                         } else {
                                           majorFilter = "";
                                         }
@@ -508,7 +508,7 @@ class _FilterButtonState extends State<FilterButton> {
                                     } else {
                                       setState(() {
                                         if (toggle3 == false) {
-                                          majorFilter = "multimedia";
+                                          majorFilter = "Multimedia";
                                         } else {
                                           majorFilter = "";
                                         }
@@ -558,7 +558,7 @@ class _FilterButtonState extends State<FilterButton> {
                                     } else {
                                       setState(() {
                                         if (toggle4 == false) {
-                                          majorFilter = "tkj";
+                                          majorFilter = "TKJ";
                                         } else {
                                           majorFilter = "";
                                         }
@@ -604,7 +604,7 @@ class _FilterButtonState extends State<FilterButton> {
                                     } else {
                                       setState(() {
                                         if (toggle5 == false) {
-                                          majorFilter = "rpl";
+                                          majorFilter = "RPL";
                                         } else {
                                           majorFilter = "";
                                         }
@@ -649,7 +649,7 @@ class _FilterButtonState extends State<FilterButton> {
                                     } else {
                                       setState(() {
                                         if (toggle6 == false) {
-                                          majorFilter = "umum";
+                                          majorFilter = "Umum";
                                         } else {
                                           majorFilter = "";
                                         }
@@ -720,6 +720,7 @@ class _FilterButtonState extends State<FilterButton> {
                                         .read<SellCourseViewModel>()
                                         .resetFilterCourse();
                                   }
+
                                   Navigator.pop(context);
                                 },
                                 child: Padding(

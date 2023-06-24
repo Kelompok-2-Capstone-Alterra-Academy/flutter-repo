@@ -90,8 +90,10 @@ class _NewsScreenState extends State<NewsScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          WebViewScreen(url: value.newsList[index].link!),
+                      builder: (context) => WebViewScreen(
+                          url: value.newsList[index].link!.contains("http")
+                              ? value.newsList[index].link!
+                              : "https://${value.newsList[index].link!}"),
                     ),
                   );
                 },

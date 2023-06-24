@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -409,10 +410,12 @@ class _AccountVerificationState extends State<AccountVerification> {
                               _otpController2.clear();
                               _otpController3.clear();
                               _otpController4.clear();
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content: Text("Wrong or $message"),
-                              ));
+                              // ignore: use_build_context_synchronously
+                              AnimatedSnackBar.material('Salah Atau $message',
+                                      type: AnimatedSnackBarType.error,
+                                      snackBarStrategy:
+                                          RemoveSnackBarStrategy())
+                                  .show(context);
                             }
                           }
                         },

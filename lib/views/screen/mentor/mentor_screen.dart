@@ -99,18 +99,40 @@ class _MentorScreenState extends State<MentorScreen> {
                   children: [
                     const SizedBox(height: 19),
                     Container(
-                      width: 60,
-                      height: 60,
-                      decoration: const BoxDecoration(shape: BoxShape.circle),
-                      child: Image.asset(
-                        value.mentorList[index].profile!.contains('noimage') ||
-                                value.mentorList[index].profile!.length > 20 ||
-                                value.mentorList[index].profile!.isEmpty
-                            ? "assets/images/mentor_pic.png"
-                            : "assets/images/${value.mentorList[index].profile!}",
-                        fit: BoxFit.cover,
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: value.mentorList[index].profile!.isEmpty ||
+                                value.mentorList[index].profile!
+                                    .contains('noimage') ||
+                                value.mentorList[index].profile!
+                                    .contains('base64')
+                            ? const DecorationImage(
+                                image: AssetImage(
+                                    'assets/images/default_mentor.jpg'),
+                                fit: BoxFit.cover,
+                              )
+                            : DecorationImage(
+                                image: NetworkImage(
+                                    value.mentorList[index].profile!),
+                                fit: BoxFit.cover,
+                              ),
                       ),
                     ),
+                    // Container(
+                    //   width: 60,
+                    //   height: 60,
+                    //   decoration: const BoxDecoration(shape: BoxShape.circle),
+                    //   child: Image.asset(
+                    //     value.mentorList[index].profile!.contains('noimage') ||
+                    //             value.mentorList[index].profile!.length > 20 ||
+                    //             value.mentorList[index].profile!.isEmpty
+                    //         ? "assets/images/mentor_pic.png"
+                    //         : "assets/images/${value.mentorList[index].profile!}",
+                    //     fit: BoxFit.cover,
+                    //   ),
+                    // ),
                     const SizedBox(height: 9),
                     Text(
                       value.mentorList[index].name!,

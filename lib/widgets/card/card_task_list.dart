@@ -55,7 +55,7 @@ class CardTaskList extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Deadline XX - XX - XXXX",
+                                    "Deadline 21-July-2023",
                                     style: GoogleFonts.poppins(
                                       fontStyle: FontStyle.normal,
                                       fontWeight: FontWeight.w400,

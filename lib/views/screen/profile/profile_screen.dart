@@ -3,11 +3,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/models/user_model.dart';
 import 'package:staredu/utils/animation/fade_animation.dart';
+import 'package:staredu/utils/animation/fade_animation2.dart';
 import 'package:staredu/utils/animation/slide_animation.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/preferences/preferences_utils.dart';
 import 'package:staredu/views/screen/auth/login/login_screen.dart';
+import 'package:staredu/views/screen/course/course_taken_list_screen.dart';
 import 'package:staredu/views/screen/edit_profile/edit_profile_screen.dart';
+import 'package:staredu/views/screen/history/history_transaction_screen.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
 import 'package:staredu/views/screen/profile/profile_view_model.dart';
 import 'package:staredu/widgets/bottom_navigation_bar/bottom_navigation_bar.dart';
@@ -112,15 +115,19 @@ class _ProfileState extends State<Profile> {
                         const SizedBox(
                           height: 10,
                         ),
-                        Text(
-                          email ?? '',
-                          style: GoogleFonts.poppins(
-                            color: whiteColor,
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14,
-                          ),
-                        ),
+                        Consumer<ProfileViewModel>(
+                            builder: (context, value, child) {
+                          user = value.response;
+                          return Text(
+                            user?.email ?? '',
+                            style: GoogleFonts.poppins(
+                              color: whiteColor,
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14,
+                            ),
+                          );
+                        }),
                       ],
                     ),
                   ),
@@ -154,23 +161,44 @@ class _ProfileState extends State<Profile> {
                     SectionProfile(
                         title: 'Transaksi Saya',
                         icon: Icons.payment_outlined,
-                        press: () {}),
+                        press: () {
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            FadeAnimation2(
+                                page: const HistoryTransactionScreen(),
+                                arguments: user),
+                            (route) => false,
+                          );
+                        }),
                     const SizedBox(
                       height: 20,
                     ),
                     SectionProfile(
                         title: 'Kursus Saya',
                         icon: Icons.school_outlined,
-                        press: () {}),
+                        press: () {
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            FadeAnimation2(
+                                page: const CourseTakenListScreen(),
+                                arguments: user),
+                            (route) => false,
+                          );
+                        }),
                     const SizedBox(
                       height: 20,
                     ),
-                    SectionProfile(
-                      title: 'Kontak CS',
-                      icon: Icons.phone,
-                      press: () {},
-                      iconRight: Icons.call,
-                    ),
+                    Consumer<ProfileViewModel>(
+                        builder: (context, value, child) {
+                      return SectionProfile(
+                        title: 'Kontak CS',
+                        icon: Icons.phone,
+                        press: () {
+                          value.launchWhatsapp(context, "0895394857389");
+                        },
+                        iconRight: Icons.call,
+                      );
+                    }),
                     const SizedBox(
                       height: 30,
                     ),

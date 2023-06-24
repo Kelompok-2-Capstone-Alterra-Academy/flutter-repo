@@ -102,7 +102,9 @@ class _CourseTakenListScreenState extends State<CourseTakenListScreen> {
               );
             },
           ),
-          bottomNavigationBar: BottomNavigationBarComponent() ),
+          bottomNavigationBar: BottomNavigationBarComponent(
+            indexDefined: 1,
+          )),
     );
   }
 }
