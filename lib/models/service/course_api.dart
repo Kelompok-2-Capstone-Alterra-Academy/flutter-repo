@@ -1,13 +1,8 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
-import 'package:staredu/models/course_taken_model.dart';
 import 'package:staredu/models/type_course.dart';
-import 'package:dio/dio.dart';
 import 'package:staredu/models/sell_course_model.dart';
 import 'package:staredu/models/voucher_model.dart';
 import 'package:staredu/utils/constant/claimed_voucher_list.dart';
-import 'package:staredu/utils/constant/sell_course_list.dart';
 import '../../utils/constant/constant.dart';
 import '../../utils/constant/helper.dart';
 
@@ -27,7 +22,6 @@ class CourseAPI {
     //     .then((value) => value.data)
     //     .catchError((e) => handleErrorApi(e));
 
-    // TODO change data to data from API
     final List<TypeCourse> data = [
       TypeCourse(id: 1, name: 'RPL'),
       TypeCourse(id: 2, name: 'TKJ'),

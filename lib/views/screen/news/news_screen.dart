@@ -28,6 +28,7 @@ class _NewsScreenState extends State<NewsScreen> {
     preferencesUtils = PreferencesUtils();
     await preferencesUtils.init();
     String? token = preferencesUtils.getPreferencesString('token');
+    // ignore: use_build_context_synchronously
     Provider.of<NewsViewModel>(context, listen: false).getAllNews(token!);
   }
 

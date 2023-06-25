@@ -1,6 +1,6 @@
+// ignore_for_file: must_be_immutable, use_key_in_widget_constructors, unnecessary_this
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/color/color.dart';
 

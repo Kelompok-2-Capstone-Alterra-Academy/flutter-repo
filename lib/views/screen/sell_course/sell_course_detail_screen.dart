@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,13 +8,11 @@ import 'package:provider/provider.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/views/screen/sell_course/course_payment_screen.dart';
 import 'package:staredu/views/view_model/course/course_taken_view_model.dart';
-import '../../../models/course_taken_model.dart';
-import '../../../models/sell_course_model.dart';
+
 import '../../../models/service/wishlist_manager.dart';
 import '../../../utils/animation/slide_animation3.dart';
 import '../../../utils/preferences/preferences_utils.dart';
 import '../../../widgets/sell_course/detail_keuntungan.dart';
-import '../../../widgets/sell_course/primary_button.dart';
 
 class SellCourseDetailScreen extends StatefulWidget {
   static const String routeName = "/sell_course_detail";

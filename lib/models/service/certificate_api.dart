@@ -1,5 +1,4 @@
 import 'package:staredu/models/certificate_model.dart';
-import 'package:staredu/widgets/course/course_certificate.dart';
 
 class CertificateApi {
   Future<List<CourseCertificateModel>> getCertificate() async {

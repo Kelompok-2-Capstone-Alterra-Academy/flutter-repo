@@ -1,4 +1,4 @@
-import 'dart:io';
+// ignore_for_file: prefer_is_empty
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -115,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ? [
                   Padding(
                     padding: const EdgeInsets.all(10),
-                    child: Container(
+                    child: SizedBox(
                       width: 80,
                       child: ButtonFull(
                           title: 'Masuk',

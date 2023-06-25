@@ -1,8 +1,4 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/color/color.dart';
 
@@ -30,7 +26,7 @@ class NotificationSection extends StatelessWidget {
       // border on bottom
       decoration: BoxDecoration(
         color: id % 2 != 0 ? whiteColor : greyColor,
-        border: Border(
+        border: const Border(
           bottom: BorderSide(width: 0.5),
         ),
       ),

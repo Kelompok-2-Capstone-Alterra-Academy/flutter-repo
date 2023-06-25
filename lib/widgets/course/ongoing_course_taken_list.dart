@@ -112,7 +112,7 @@ class _OnGoingCourseTakenListScreenState
 
   // @override
   // void initState() {
-  //   // TODO: implement initState
+  //   // implement initState
   //   super.initState();
   //   removeSection("63", "374");
   // }

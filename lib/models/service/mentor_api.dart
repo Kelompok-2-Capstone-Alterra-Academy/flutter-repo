@@ -1,11 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:staredu/models/mentor.dart';
 import 'package:staredu/models/mentor_model.dart';
-import 'package:staredu/utils/constant/mentor_list.dart';
 import 'package:staredu/utils/constant/constant.dart';
 import 'package:staredu/utils/constant/helper.dart';
-
-import '../../utils/constant/constant.dart';
 
 class MentorAPI {
   final Dio dio = Dio();

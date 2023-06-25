@@ -4,10 +4,8 @@ import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf_thumbnail/pdf_thumbnail.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/views/view_model/course/certificate_view_model.dart';
 
@@ -35,7 +33,7 @@ class CourseCertificate extends StatefulWidget {
 class _CourseCertificateState extends State<CourseCertificate> {
   late Future<File> pdfFile;
 
-// TODO : Menampilkan File PDF Certificate Sesuai dengan coursenya, menunggu API yang sudah jadi
+// Menampilkan File PDF Certificate Sesuai dengan coursenya, menunggu API yang sudah jadi
   @override
   void initState() {
     pdfFile =

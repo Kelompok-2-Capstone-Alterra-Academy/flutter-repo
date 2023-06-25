@@ -42,6 +42,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
       email = preferencesUtils.getPreferencesString('email');
     });
     String? token = preferencesUtils.getPreferencesString('token');
+    // ignore: use_build_context_synchronously
     final provider = Provider.of<PostFeedViewModel>(context, listen: false);
     provider.getUserDetail(email, token);
     provider.getAllPostFeed();

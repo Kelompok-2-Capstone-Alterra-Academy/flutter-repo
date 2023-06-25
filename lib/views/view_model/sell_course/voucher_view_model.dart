@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:staredu/models/voucher_model.dart';
 import 'package:staredu/utils/constant/claimed_voucher_list.dart';

@@ -4,7 +4,6 @@ import 'package:staredu/models/quiz_model.dart';
 import 'package:staredu/utils/animation/fade_animation2.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/preferences/preferences_utils.dart';
-import 'package:staredu/views/screen/course/course_taken_list_screen.dart';
 import 'package:staredu/views/screen/course/module/finished_module_list_quiz_screen.dart';
 import 'package:staredu/views/screen/course/module/module_list_quiz_screen.dart';
 import 'package:staredu/widgets/course/review_dialog.dart';
