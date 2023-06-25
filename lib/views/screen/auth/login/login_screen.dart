@@ -145,7 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 fillColor: whiteColor,
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide(width: 1)),
+                                    borderSide: const BorderSide(width: 1)),
                               ),
                             ),
                           ],
@@ -277,7 +277,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   showModalBottomSheet(
                                       context: context,
                                       builder: (context) {
-                                        return Container(
+                                        return SizedBox(
                                           height: MediaQuery.of(context)
                                                   .size
                                                   .height *

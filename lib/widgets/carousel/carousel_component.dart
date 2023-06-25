@@ -1,4 +1,4 @@
-import 'package:carousel_slider/carousel_controller.dart';
+// ignore_for_file: must_be_immutable
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:staredu/models/sell_course_model.dart';
@@ -63,7 +63,8 @@ class _CarouselComponentState extends State<CarouselComponent> {
                 child: Container(
                   width: 12.0,
                   height: 12.0,
-                  margin: EdgeInsets.symmetric(vertical: 1.0, horizontal: 4.0),
+                  margin: const EdgeInsets.symmetric(
+                      vertical: 1.0, horizontal: 4.0),
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: (Theme.of(context).brightness == Brightness.dark

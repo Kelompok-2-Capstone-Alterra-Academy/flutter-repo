@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:staredu/models/post_feed_model.dart';
 import 'package:staredu/views/screen/auth/forgot_password/forgot_password_view_model.dart';
 import 'package:staredu/views/screen/auth/forgot_password/main/forgot_password_screen.dart';
 import 'package:staredu/views/screen/auth/forgot_password/otp_verification/otp_verification_screen.dart';
@@ -9,12 +8,9 @@ import 'package:staredu/views/screen/auth/login/login_screen.dart';
 import 'package:staredu/views/screen/auth/login/login_view_model.dart';
 import 'package:staredu/views/screen/auth/register/register_screen_view_model.dart';
 import 'package:staredu/views/screen/course/course_taken_list_screen.dart';
-import 'package:staredu/views/screen/course/module/detail/module_detail_video_screen.dart';
 import 'package:staredu/views/screen/course/module/module_ask_mentor_screen.dart';
-import 'package:staredu/views/screen/course/module/detail/module_detail_task_screen.dart';
 import 'package:staredu/views/screen/course/module/module_list_screen.dart';
 import 'package:staredu/views/screen/course/module/module_live_session_screen.dart';
-import 'package:staredu/views/screen/course/module/module_list_quiz_screen.dart';
 import 'package:staredu/views/screen/auth/register/account_verification/account_verification.dart';
 import 'package:staredu/views/screen/auth/register/main/register_screen.dart';
 import 'package:staredu/views/screen/edit_profile/edit_profile_screen.dart';
@@ -29,19 +25,15 @@ import 'package:staredu/views/screen/notification/notification_screen.dart';
 import 'package:staredu/views/screen/notification/notification_view_model.dart';
 import 'package:staredu/views/screen/post_feed/post_feed_view_model.dart';
 import 'package:staredu/views/screen/profile/profile_screen.dart';
-import 'package:staredu/views/screen/course/module/detail/module_quiz_detail_screen.dart';
-import 'package:staredu/views/screen/course/module/module_send_task_screen.dart';
 import 'package:staredu/views/screen/course/module/module_task_list_screen.dart';
 import 'package:staredu/views/screen/mentor/chat_mentor_screen.dart';
 import 'package:staredu/views/screen/mentor/mentor_screen.dart';
 import 'package:staredu/views/screen/mentor/search_chat_screen.dart';
 import 'package:staredu/views/screen/profile/profile_view_model.dart';
-import 'package:staredu/views/screen/sell_course/course_payment_screen.dart';
 import 'package:staredu/views/screen/sell_course/course_voucher_screen.dart';
 import 'package:staredu/views/screen/sell_course/sell_course_screen.dart';
 import 'package:staredu/views/screen/post_feed/post_feed_screen.dart';
 import 'package:staredu/views/screen/live_session/schedule_course_screen.dart';
-import 'package:staredu/views/screen/course/module/detail/module_detail_ppt_screen.dart';
 import 'package:staredu/views/screen/news/news_screen.dart';
 import 'package:staredu/views/screen/splash_welcome/splash_welcome_screen.dart';
 import 'package:provider/provider.dart';
@@ -122,11 +114,6 @@ class StarEdu extends StatelessWidget {
         ModuleListScreen.routeName: (context) => const ModuleListScreen(),
         AskMentorScreen.routeName: (context) => const AskMentorScreen(),
         LiveSessionScreen.routeName: (context) => const LiveSessionScreen(),
-        // ModuleListQuizScreen.routeName: (context) =>
-        //     const ModuleListQuizScreen(),
-        // ModuleVideoScreen.routeName: (context) => const ModuleVideoScreen(),
-        // ModulDetailPPTScreen.routeName: (context) =>
-        //     const ModulDetailPPTScreen(),
         ForgotPasswordScreen.routeName: (context) =>
             const ForgotPasswordScreen(),
         OtpVerificationScreen.routeName: (context) =>
@@ -137,10 +124,6 @@ class StarEdu extends StatelessWidget {
         Profile.routeName: (context) => const Profile(),
         EditProfile.routeName: (context) => const EditProfile(),
         NotificationScreen.routeName: (context) => const NotificationScreen(),
-        // ModuleQuizDetailScreen.routeName: (context) =>
-        //     const ModuleQuizDetailScreen(),
-        // ModuleSendTaskScreen.routeName: (context) =>
-        // const ModuleSendTaskScreen(),
         NewsScreen.routeName: (context) => const NewsScreen(),
         SellCourseScreen.routeName: (context) => const SellCourseScreen(),
         CourseVoucherScreen.routeName: (context) => const CourseVoucherScreen(),
@@ -148,7 +131,6 @@ class StarEdu extends StatelessWidget {
         ChatMentorScreen.routeName: (context) => const ChatMentorScreen(),
         SearchChatScreen.routeName: (context) => const SearchChatScreen(),
         TaskListScreen.routeName: (context) => const TaskListScreen(),
-        // ModuleDetailTask.routeName: (context) => const ModuleDetailTask(),
         WishlistScreen.routeName: (context) => const WishlistScreen(),
         HistoryTransactionScreen.routeName: (context) =>
             const HistoryTransactionScreen(),

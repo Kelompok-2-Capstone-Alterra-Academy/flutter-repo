@@ -16,7 +16,7 @@ class ProfileViewModel extends ChangeNotifier {
   Future<User?> getUserDetail(String? email, String? token) async {
     try {
       Map<String, dynamic>? decodedToken = JwtDecoder.decode(token!);
-      String? id = decodedToken!['id'].toString();
+      String? id = decodedToken['id'].toString();
       res = await ProfileAPI.getUserDetail(id, token);
       if (res == null) {
         setState(MyState.failed);

@@ -128,7 +128,7 @@ class ModuleQuizCard extends StatelessWidget {
                                     ),
                                   ),
                                   sectionFinished!
-                                      ? Icon(Icons.check_circle_outlined)
+                                      ? const Icon(Icons.check_circle_outlined)
                                       : Text(
                                           "100 Point",
                                           textAlign: TextAlign.right,

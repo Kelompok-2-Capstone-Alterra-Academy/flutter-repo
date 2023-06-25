@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/utils/state/my_state.dart';
 import 'package:staredu/views/screen/course/module/finished_module_list_screen.dart';
-import 'package:staredu/views/screen/course/module/module_list_screen.dart';
 import 'package:staredu/views/view_model/course/course_taken_view_model.dart';
 import 'package:staredu/widgets/course/filter_course_taken.dart';
 import 'package:staredu/widgets/loading/circular_progress.dart';

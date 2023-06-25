@@ -1,4 +1,3 @@
-import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:money_formatter/money_formatter.dart';
@@ -12,7 +11,6 @@ import '../../../utils/preferences/preferences_utils.dart';
 import '../../../utils/state/my_state.dart';
 import '../../../widgets/sell_course/filter_button.dart';
 import '../../../widgets/sell_course/promo_button.dart';
-import '../../view_model/course/course_taken_view_model.dart';
 
 class SellCourseScreen extends StatefulWidget {
   static const String routeName = "/sell_course";

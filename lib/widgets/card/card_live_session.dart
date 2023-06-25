@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../models/schedule_model.dart';
 import '../../utils/animation/fade_animation2.dart';
 import '../../utils/color/color.dart';
-import '../../utils/constant/list_schedule_course.dart';
 import '../../views/screen/live_session/detail_schadule_screen.dart';
 
 class CardLiveSession extends StatelessWidget {

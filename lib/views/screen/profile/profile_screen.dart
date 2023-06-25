@@ -7,7 +7,6 @@ import 'package:staredu/utils/animation/fade_animation2.dart';
 import 'package:staredu/utils/animation/slide_animation.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/preferences/preferences_utils.dart';
-import 'package:staredu/views/screen/auth/login/login_screen.dart';
 import 'package:staredu/views/screen/course/course_taken_list_screen.dart';
 import 'package:staredu/views/screen/edit_profile/edit_profile_screen.dart';
 import 'package:staredu/views/screen/history/history_transaction_screen.dart';

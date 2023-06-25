@@ -1,6 +1,7 @@
+// ignore_for_file: prefer_final_fields
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:staredu/models/module_details_model.dart';
 import 'package:staredu/models/module_list_model.dart';
 import 'package:staredu/models/new_module_list_model.dart';
 import 'package:staredu/models/service/module_api.dart';

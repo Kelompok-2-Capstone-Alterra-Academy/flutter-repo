@@ -6,7 +6,6 @@ import 'package:staredu/views/screen/post_feed/post_feed_view_model.dart';
 
 import '../../models/post_feed_model.dart';
 import '../../utils/color/color.dart';
-import '../../utils/preferences/preferences_utils.dart';
 import '../../views/screen/post_feed/post_detail_screen.dart';
 
 class PostFeed extends StatefulWidget {

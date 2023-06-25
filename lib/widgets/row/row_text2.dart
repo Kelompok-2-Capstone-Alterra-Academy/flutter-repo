@@ -3,8 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/animation/fade_animation2.dart';
 import 'package:staredu/utils/color/color.dart';
 
-import '../../utils/animation/slide_animation2.dart';
-
 class RowText2 extends StatelessWidget {
   final String left;
   final String right;

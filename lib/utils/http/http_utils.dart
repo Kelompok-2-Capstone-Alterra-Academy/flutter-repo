@@ -17,7 +17,7 @@ Future<String> getFileType(String url) async {
       return contentType.split('/').last;
     }
   } catch (e) {
-    print('Error checking file type: $e');
+    // print('Error checking file type: $e');
   }
 
   return '';
@@ -76,6 +76,6 @@ String getDocumentId(String documentUrl) {
   int startIndex = documentUrl.indexOf(startTag) + startTag.length;
   int endIndex = documentUrl.indexOf(endTag);
   String documentId = documentUrl.substring(startIndex, endIndex);
-  print(documentId);
+  // print(documentId);
   return documentId;
 }

@@ -5,8 +5,7 @@ import 'package:http/http.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:staredu/models/certificate_model.dart';
 import 'package:staredu/models/service/certificate_api.dart';
-import 'package:staredu/models/service/module_api.dart';
-import 'package:staredu/utils/color/color.dart';
+
 import 'package:staredu/utils/state/my_state.dart';
 
 class CertificateViewModel with ChangeNotifier {

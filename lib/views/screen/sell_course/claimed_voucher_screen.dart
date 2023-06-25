@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/utils/formater/date_format.dart';
 import 'package:staredu/views/view_model/sell_course/claimed_voucher_view_model.dart';
-import 'package:staredu/views/view_model/sell_course/course_payment_view_model.dart';
 import '../../../utils/color/color.dart';
 
 class ClaimedVoucherScreen extends StatefulWidget {

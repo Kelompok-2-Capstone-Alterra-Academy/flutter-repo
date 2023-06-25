@@ -4,10 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:staredu/models/new_module_list_model.dart';
 import 'package:staredu/utils/animation/fade_animation2.dart';
 import 'package:staredu/utils/color/color.dart';
-import 'package:staredu/utils/constant/list_course_taken.dart';
 import 'package:staredu/utils/preferences/preferences_utils.dart';
 import 'package:staredu/utils/state/my_state.dart';
-import 'package:staredu/views/screen/course/course_taken_list_screen.dart';
 import 'package:staredu/views/screen/course/course_taken_list_screen.dart';
 import 'package:staredu/views/view_model/course/certificate_view_model.dart';
 import 'package:staredu/views/view_model/course/module_view_model.dart';
@@ -18,7 +16,6 @@ import 'package:staredu/widgets/module_course/module_button.dart';
 import 'package:staredu/widgets/module_course/module_card.dart';
 import 'package:staredu/widgets/module_course/module_section_card.dart';
 
-import '../../../../utils/animation/fade_animation2.dart';
 import '../../../../widgets/bottom_navigation_bar/bottom_navigation_bar.dart';
 
 class FinishedModuleListScreen extends StatefulWidget

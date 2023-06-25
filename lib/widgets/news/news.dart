@@ -27,7 +27,7 @@ class News extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => WebViewScreen(url: link!),
+            builder: (context) => WebViewScreen(url: link),
           ),
         );
       },
@@ -56,7 +56,7 @@ class News extends StatelessWidget {
                       // ),
                       const SizedBox(height: 8),
                       Text(
-                        tittle!,
+                        tittle,
                         style: GoogleFonts.poppins(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
@@ -64,7 +64,7 @@ class News extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        shortDescription!,
+                        shortDescription,
                         style: GoogleFonts.poppins(
                           fontSize: 10,
                           fontWeight: FontWeight.w400,
