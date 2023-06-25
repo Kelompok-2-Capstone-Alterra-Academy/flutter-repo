@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +25,10 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   final TextEditingController _otpController2 = TextEditingController();
   final TextEditingController _otpController3 = TextEditingController();
   final TextEditingController _otpController4 = TextEditingController();
+  final FocusNode _otpFocus1 = FocusNode();
+  final FocusNode _otpFocus2 = FocusNode();
+  final FocusNode _otpFocus3 = FocusNode();
+  final FocusNode _otpFocus4 = FocusNode();
 
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   int _start = 30;
@@ -41,6 +46,10 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     _otpController2.dispose();
     _otpController3.dispose();
     _otpController4.dispose();
+    _otpFocus1.dispose();
+    _otpFocus2.dispose();
+    _otpFocus3.dispose();
+    _otpFocus4.dispose();
     _timer.cancel();
     super.dispose();
   }
@@ -118,6 +127,20 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                               SizedBox(
                                 width: 60,
                                 child: TextFormField(
+                                  textAlign: TextAlign.center,
+                                  maxLength: 1,
+                                  focusNode: _otpFocus1,
+                                  onChanged: (value) {
+                                    if (value.length == 1) {
+                                      FocusScope.of(context)
+                                          .requestFocus(_otpFocus2);
+                                    }
+                                  },
+                                  buildCounter: (BuildContext context,
+                                          {int? currentLength,
+                                          int? maxLength,
+                                          bool? isFocused}) =>
+                                      null,
                                   controller: _otpController1,
                                   validator: (value) => validateOtp(value),
                                   keyboardType: TextInputType.number,
@@ -139,6 +162,20 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                               SizedBox(
                                 width: 60,
                                 child: TextFormField(
+                                  textAlign: TextAlign.center,
+                                  maxLength: 1,
+                                  focusNode: _otpFocus2,
+                                  onChanged: (value) {
+                                    if (value.length == 1) {
+                                      FocusScope.of(context)
+                                          .requestFocus(_otpFocus3);
+                                    }
+                                  },
+                                  buildCounter: (BuildContext context,
+                                          {int? currentLength,
+                                          int? maxLength,
+                                          bool? isFocused}) =>
+                                      null,
                                   controller: _otpController2,
                                   validator: (value) => validateOtp(value),
                                   keyboardType: TextInputType.number,
@@ -160,6 +197,20 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                               SizedBox(
                                 width: 60,
                                 child: TextFormField(
+                                  textAlign: TextAlign.center,
+                                  maxLength: 1,
+                                  focusNode: _otpFocus3,
+                                  onChanged: (value) {
+                                    if (value.length == 1) {
+                                      FocusScope.of(context)
+                                          .requestFocus(_otpFocus4);
+                                    }
+                                  },
+                                  buildCounter: (BuildContext context,
+                                          {int? currentLength,
+                                          int? maxLength,
+                                          bool? isFocused}) =>
+                                      null,
                                   controller: _otpController3,
                                   validator: (value) => validateOtp(value),
                                   keyboardType: TextInputType.number,
@@ -181,6 +232,19 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                               SizedBox(
                                 width: 60,
                                 child: TextFormField(
+                                  textAlign: TextAlign.center,
+                                  maxLength: 1,
+                                  focusNode: _otpFocus4,
+                                  onChanged: (value) {
+                                    if (value.length == 1) {
+                                      _otpFocus4.unfocus();
+                                    }
+                                  },
+                                  buildCounter: (BuildContext context,
+                                          {int? currentLength,
+                                          int? maxLength,
+                                          bool? isFocused}) =>
+                                      null,
                                   controller: _otpController4,
                                   validator: (value) => validateOtp(value),
                                   keyboardType: TextInputType.number,
@@ -255,17 +319,31 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                                               _otpController4.text);
                               if (message.contains('success')) {
                                 // ignore: use_build_context_synchronously
+                                dynamic args = {
+                                  'token': message.split(' ')[1],
+                                  'otp': _otpController1.text +
+                                      _otpController2.text +
+                                      _otpController3.text +
+                                      _otpController4.text
+                                };
+                                // ignore: use_build_context_synchronously
                                 Navigator.push(
                                     context,
                                     FadeAnimation(
                                         page: const ResetPasswordScreen(),
-                                        arguments: message.split(' ')[1]));
+                                        arguments: args));
                               } else {
+                                _otpController1.clear();
+                                _otpController2.clear();
+                                _otpController3.clear();
+                                _otpController4.clear();
                                 // ignore: use_build_context_synchronously
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                  content: Text(message),
-                                ));
+                                AnimatedSnackBar.material(
+                                        'OTP Tidak Sesuai / $message',
+                                        type: AnimatedSnackBarType.error,
+                                        snackBarStrategy:
+                                            RemoveSnackBarStrategy())
+                                    .show(context);
                               }
                             }
                           },

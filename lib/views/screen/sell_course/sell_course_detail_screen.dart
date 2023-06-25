@@ -1,31 +1,43 @@
+// ignore_for_file: unused_local_variable
+
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:money_formatter/money_formatter.dart';
+import 'package:provider/provider.dart';
 import 'package:staredu/utils/color/color.dart';
-import 'package:staredu/utils/constant/sell_course_list.dart';
 import 'package:staredu/views/screen/sell_course/course_payment_screen.dart';
-import '../../../models/sell_course_model.dart';
+import 'package:staredu/views/view_model/course/course_taken_view_model.dart';
+
 import '../../../models/service/wishlist_manager.dart';
+import '../../../utils/animation/slide_animation3.dart';
+import '../../../utils/preferences/preferences_utils.dart';
 import '../../../widgets/sell_course/detail_keuntungan.dart';
-import '../../../widgets/sell_course/primary_button.dart';
 
 class SellCourseDetailScreen extends StatefulWidget {
   static const String routeName = "/sell_course_detail";
 
   final int id;
-  final String img;
-  final String title;
+  final String thumbnail;
+  final String courseName;
   final String price;
-  final String rating;
-  final String student;
+  final double rating;
+  final int student;
+  final String grade;
+  final String liveSession;
+  final String description;
 
   const SellCourseDetailScreen({
     super.key,
-    required this.title,
+    required this.courseName,
     required this.price,
     required this.rating,
     required this.student,
     required this.id,
-    required this.img,
+    required this.thumbnail,
+    required this.grade,
+    required this.liveSession,
+    required this.description,
   });
 
   @override
@@ -33,20 +45,31 @@ class SellCourseDetailScreen extends StatefulWidget {
 }
 
 class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
+  late PreferencesUtils preferencesUtils;
   bool isWishlistSelected = false;
   WishlistManager wishlistManager = WishlistManager();
+  bool? isLogin = false;
 
   Future<void> checkWishlistStatus() async {
-    List<SellCourseModel> wishlist = await wishlistManager.getWishlist();
+    List wishlist = await wishlistManager.getWishlist();
 
     setState(() {
       isWishlistSelected = wishlist.any((item) => item.id == widget.id);
     });
   }
 
+  void init() async {
+    preferencesUtils = PreferencesUtils();
+    await preferencesUtils.init();
+    setState(() {
+      isLogin = preferencesUtils.getPreferencesBool('isLogin');
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    init();
     checkWishlistStatus();
   }
 
@@ -54,8 +77,17 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
     if (isWishlistSelected) {
       await wishlistManager.removeWishlistItem(widget.id);
     } else {
-      await wishlistManager.addWishlistItem(widget.id, widget.img, widget.price,
-          widget.rating, widget.student, widget.title);
+      await wishlistManager.addWishlistItem(
+        widget.id,
+        widget.thumbnail,
+        widget.price,
+        widget.rating,
+        widget.student,
+        widget.courseName,
+        widget.grade,
+        widget.liveSession,
+        widget.description,
+      );
     }
 
     setState(() {
@@ -72,6 +104,22 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+
+    bool isBuy = false;
+
+    MoneyFormatter fmf = MoneyFormatter(
+      amount: double.parse(widget.price),
+      settings: MoneyFormatterSettings(
+        symbol: 'Rp',
+        thousandSeparator: '.',
+        decimalSeparator: ',',
+        symbolAndNumberSeparator: '. ',
+        fractionDigits: 0,
+      ),
+    );
+
+    MoneyFormatterOutput fo = fmf.output;
 
     return Scaffold(
       appBar: AppBar(
@@ -93,19 +141,66 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
-              SizedBox(
-                width: screenWidth,
-                child: Image.asset(
-                  "assets/images/banner_course.png",
-                  fit: BoxFit.contain,
-                ),
+              Stack(
+                children: [
+                  SizedBox(
+                    width: screenWidth,
+                    child: Image.asset(
+                      "assets/images/banner_course2.png",
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(width: screenWidth * 0.38),
+                      SizedBox(
+                        height: 182,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 170,
+                              child: Text(
+                                widget.courseName,
+                                style: const TextStyle(
+                                  fontFamily: 'GlikerSemiBold',
+                                  color: whiteColor,
+                                  fontSize: 22,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 7),
+                            Container(
+                              width: 170,
+                              height: 22,
+                              decoration: const BoxDecoration(
+                                  color: yellowColor,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8))),
+                              child: Center(
+                                child: Text(
+                                  " Kelas ${widget.grade}",
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
               const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    widget.title,
+                    widget.courseName,
                     style: GoogleFonts.poppins(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
@@ -131,7 +226,7 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
                   ),
                   const SizedBox(width: 7),
                   Text(
-                    widget.rating,
+                    widget.rating.toString(),
                     style: GoogleFonts.poppins(
                         fontSize: 11,
                         fontWeight: FontWeight.w600,
@@ -147,7 +242,7 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
                   ),
                   const SizedBox(width: 7),
                   Text(
-                    widget.student,
+                    "${widget.student.toString()} Siswa",
                     style: GoogleFonts.poppins(
                         fontSize: 11,
                         fontWeight: FontWeight.w600,
@@ -157,7 +252,7 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
               ),
               const SizedBox(height: 10),
               Text(
-                widget.price,
+                fo.symbolOnLeft,
                 style: GoogleFonts.poppins(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
@@ -173,7 +268,9 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
               ),
               const SizedBox(height: 10),
               Text(
-                "Dengan mengambil kursus ini dapat membuat kamu lebih memahami materi pelajaran dengan adanya video yang menarik, rangkuman pelajaran dan sesi tanya jawab dengan mentor",
+                widget.description.isEmpty || widget.description.length < 15
+                    ? "Dengan mengambil kursus ini dapat membuat kamu lebih memahami materi pelajaran dengan adanya video yang menarik, rangkuman pelajaran dan sesi tanya jawab dengan mentor"
+                    : widget.description,
                 style: GoogleFonts.poppins(
                     fontSize: 11,
                     fontWeight: FontWeight.w400,
@@ -188,9 +285,9 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
                 ),
               ),
               const SizedBox(height: 12),
-              const DetailKeuntungan(
+              DetailKeuntungan(
                 iconImg: "assets/images/live_session_icon.png",
-                text: "Live session 3x seminggu",
+                text: "Live session ${widget.liveSession}",
               ),
               const SizedBox(height: 15),
               const DetailKeuntungan(
@@ -208,12 +305,93 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
                 text: "Rangkuman materi",
               ),
               const SizedBox(height: 40),
-              PrimaryButton(
-                screenWidth: screenWidth,
-                title: "Ambil Kursus",
-                page: CoursePaymentScreen(
-                  title: widget.title,
-                  price: widget.price,
+              Container(
+                height: 42,
+                width: screenWidth,
+                decoration: const BoxDecoration(
+                  color: primaryColor,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(8),
+                  ),
+                ),
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: () {
+                      if (isLogin == null || isLogin == true) {
+                        if (context
+                                .read<CourseTakenViewModel>()
+                                .inProgressCourseTaken
+                                .isEmpty &&
+                            context
+                                .read<CourseTakenViewModel>()
+                                .completedCourseTaken
+                                .isEmpty) {
+                          Navigator.push(
+                              context,
+                              SlideAnimation3(
+                                page: CoursePaymentScreen(
+                                  courseId: widget.id,
+                                  title: widget.courseName,
+                                  price: widget.price,
+                                  liveSession: widget.liveSession,
+                                ),
+                              ));
+                        } else {
+                          for (var element in context
+                              .read<CourseTakenViewModel>()
+                              .inProgressCourseTaken) {
+                            if (element.id == widget.id) {
+                              isBuy = true;
+                            }
+                          }
+                          for (var element in context
+                              .read<CourseTakenViewModel>()
+                              .completedCourseTaken) {
+                            if (element.id == widget.id) {
+                              isBuy = true;
+                            }
+                          }
+                          if (isBuy == false) {
+                            Navigator.push(
+                                context,
+                                SlideAnimation3(
+                                  page: CoursePaymentScreen(
+                                    courseId: widget.id,
+                                    title: widget.courseName,
+                                    price: widget.price,
+                                    liveSession: widget.liveSession,
+                                  ),
+                                ));
+                          } else {
+                            AnimatedSnackBar.material(
+                                    'Kamu Sudah Membeli Course Ini',
+                                    type: AnimatedSnackBarType.info,
+                                    snackBarStrategy: RemoveSnackBarStrategy())
+                                .show(context);
+                          }
+                        }
+                      } else {
+                        AnimatedSnackBar.material(
+                                'Silahkan Login Terlebih Dahulu',
+                                type: AnimatedSnackBarType.info,
+                                snackBarStrategy: RemoveSnackBarStrategy())
+                            .show(context);
+                      }
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 12),
+                      child: Center(
+                        child: Text(
+                          "Ambil Kursus",
+                          style: GoogleFonts.poppins(
+                              color: whiteColor,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ],

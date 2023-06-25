@@ -1,49 +1,59 @@
+// ignore_for_file: non_constant_identifier_names
+
 class User {
-  String name;
-  String email;
-  String password;
-  String role;
-  String phoneNumber;
-  String status;
-  String schoolName;
-  String classes;
-  String gender;
+  int? id;
+  String? name;
+  String? email;
+  String? date_of_birth;
+  String? hometown;
+  String? phoneNumber;
+  String? major;
+  String? schoolName;
+  String? classes;
+  String? gender;
+  String? profile;
 
   User(
-      {required this.name,
-      required this.email,
-      required this.password,
-      required this.role,
-      required this.phoneNumber,
-      required this.status,
-      required this.schoolName,
-      required this.classes,
-      required this.gender});
+      {this.id,
+      this.name,
+      this.email,
+      this.date_of_birth,
+      this.hometown,
+      this.phoneNumber,
+      this.major,
+      this.schoolName,
+      this.classes,
+      this.gender,
+      this.profile});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
+        id: json['ID'],
         name: json['name'],
         email: json['email'],
-        password: json['password'],
-        role: json['role'],
+        date_of_birth: json['date_of_birth'],
+        hometown: json['hometown'],
         phoneNumber: json['phone_number'],
-        status: json['status'],
+        major: json['major'],
         schoolName: json['school_name'],
         classes: json['class'],
-        gender: json['gender']);
+        gender: json['gender'],
+        profile: json['profile']);
   }
 
-  Map<String, String> toJson() {
+  Map<String, dynamic> toJson() {
     return {
+      'ID': id,
       'name': name,
       'email': email,
-      'password': password,
-      'role': role,
+      'date_of_birth': date_of_birth,
+      'hometown': hometown,
       'phone_number': phoneNumber,
-      'status': status,
+      'major': major,
       'school_name': schoolName,
       'class': classes,
       'gender': gender,
+      'profile': profile
     };
   }
 }

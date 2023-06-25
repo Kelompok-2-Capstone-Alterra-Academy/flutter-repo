@@ -1,3 +1,4 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -46,12 +47,18 @@ class _LoginScreenState extends State<LoginScreen> {
     return null;
   }
 
-  savePassword(String value) async {
-    preferencesUtils.savePreferencesString('password', value);
+  savePassword(String password) async {
+    preferencesUtils.savePreferencesString('password', password);
   }
 
   saveToken(String value) async {
-    preferencesUtils.savePreferencesString('token', value);
+    String token = value.split(' ')[1];
+    preferencesUtils.savePreferencesString('token', token);
+    preferencesUtils.savePreferencesBool('isLogin', true);
+  }
+
+  saveEmail(String value) async {
+    preferencesUtils.savePreferencesString('email', _emailController.text);
   }
 
   @override
@@ -138,7 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 fillColor: whiteColor,
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide(width: 1)),
+                                    borderSide: const BorderSide(width: 1)),
                               ),
                             ),
                           ],
@@ -265,10 +272,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                             _passwordController.text);
                                 if (message.contains('success')) {
                                   await saveToken(message);
+                                  await saveEmail(_emailController.text);
+                                  // ignore: use_build_context_synchronously
                                   showModalBottomSheet(
                                       context: context,
                                       builder: (context) {
-                                        return Container(
+                                        return SizedBox(
                                           height: MediaQuery.of(context)
                                                   .size
                                                   .height *
@@ -277,13 +286,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                             padding: const EdgeInsets.all(20.0),
                                             child: Column(
                                               children: [
-                                                Icon(
-                                                  Icons.looks_sharp,
+                                                const Icon(
+                                                  Icons.lock_sharp,
                                                   color: blackColor,
-                                                  size: 50,
+                                                  size: 70,
                                                 ),
                                                 const SizedBox(
-                                                  height: 20,
+                                                  height: 10,
                                                 ),
                                                 Text(
                                                   "Simpan Kata Sandi?",
@@ -314,7 +323,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       await savePassword(
                                                           _passwordController
                                                               .text);
-                                                      Navigator.push(
+                                                      // ignore: use_build_context_synchronously
+                                                      Navigator.pushReplacement(
                                                           context,
                                                           FadeAnimation(
                                                               page:
@@ -329,11 +339,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                                     textColor: primaryColor,
                                                     borderColor: primaryColor,
                                                     press: () {
-                                                      Navigator.push(
+                                                      Navigator.pushAndRemoveUntil(
                                                           context,
-                                                          FadeAnimation(
+                                                          SlideAnimation(
                                                               page:
-                                                                  const HomeScreen()));
+                                                                  const HomeScreen()),
+                                                          (route) => false);
                                                     })
                                               ],
                                             ),
@@ -342,10 +353,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                       });
                                 } else {
                                   // ignore: use_build_context_synchronously
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                    content: Text(message),
-                                  ));
+                                  AnimatedSnackBar.material(message,
+                                          type: AnimatedSnackBarType.error,
+                                          snackBarStrategy:
+                                              RemoveSnackBarStrategy())
+                                      .show(context);
                                 }
                               }
                             },
@@ -370,7 +382,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             GestureDetector(
                               onTap: () {
                                 // ignore: use_build_context_synchronously
-                                Navigator.pushReplacement(
+                                Navigator.push(
                                     context,
                                     SlideAnimation(
                                         page: const RegisterScreen()));

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/color/color.dart';
+import 'package:staredu/views/screen/course/course_taken_list_screen.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
+
+import '../../utils/animation/fade_animation2.dart';
 
 class ModuleSendTaskDoneDialog extends StatelessWidget {
   const ModuleSendTaskDoneDialog({super.key});
@@ -83,19 +86,7 @@ class ModuleSendTaskDoneDialog extends StatelessWidget {
                 ),
                 onPressed: () {
                   Navigator.of(context).pushReplacement(
-                    PageRouteBuilder(
-                      pageBuilder: (context, animations, secondaryAnimations) =>
-                          const HomeScreen(),
-                      transitionsBuilder:
-                          (context, animations, secondaryAnimations, childs) {
-                        final tween = Tween(begin: 0.0, end: 1.0);
-                        return FadeTransition(
-                          opacity: animations.drive(tween),
-                          child: childs,
-                        );
-                      },
-                    ),
-                  );
+                      FadeAnimation2(page: const HomeScreen()));
                 },
                 child: Text(
                   "Kembali ke Home",
@@ -122,9 +113,12 @@ class ModuleSendTaskDoneDialog extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(
+                      FadeAnimation2(page: const CourseTakenListScreen()));
+                },
                 child: Text(
-                  "Tugas Saya",
+                  "Kursus Saya",
                   style: GoogleFonts.poppins(
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.w600,

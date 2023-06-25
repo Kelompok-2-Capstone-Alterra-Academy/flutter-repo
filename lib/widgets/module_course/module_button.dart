@@ -1,26 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:staredu/views/screen/course/module/module_ask_mentor_screen.dart';
-// import 'package:staredu/views/screen/course/module/module_live_session.dart';
+import 'package:staredu/views/screen/course/module/finished_module_list_quiz_screen.dart';
 import 'package:staredu/views/screen/course/module/module_list_quiz_screen.dart';
 import 'package:staredu/views/screen/live_session/schedule_course_screen.dart';
 import 'package:staredu/views/screen/mentor/chat_mentor_screen.dart';
 
+import '../../utils/animation/fade_animation2.dart';
 import '../../utils/color/color.dart';
 
 class ModuleButton extends StatelessWidget {
   const ModuleButton({
     super.key,
+    required this.courseId,
     required this.courseName,
     required this.width,
     required this.text,
     required this.borderColor,
+    required this.courseStatus,
   });
 
+  final int courseId;
   final String courseName;
   final double width;
   final String text;
   final Color borderColor;
+  final bool courseStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -38,56 +42,31 @@ class ModuleButton extends StatelessWidget {
         child: InkWell(
           onTap: () {
             if (text == "Live Session") {
-              Navigator.of(context).push(
-                PageRouteBuilder(
-                  pageBuilder: (context, animations, secondaryAnimations) =>
-                      const ScheduleCourseScreen(),
-                  transitionsBuilder:
-                      (context, animations, secondaryAnimations, childs) {
-                    final tween = Tween(begin: 0.0, end: 1.0);
-                    return FadeTransition(
-                      opacity: animations.drive(tween),
-                      child: childs,
-                    );
-                  },
-                ),
-              );
-              // Navigator.pushNamed(context, LiveSessionScreen.routeName);
-              // Navigator.pushNamed(context, TaskListScreen.routeName);
+              Navigator.of(context)
+                  .push(FadeAnimation2(page: const ScheduleCourseScreen()));
             }
 
-            if (text == "Quiz") {
-              Navigator.of(context).push(
-                PageRouteBuilder(
-                  pageBuilder: (context, animations, secondaryAnimations) =>
-                      ModuleListQuizScreen(courseName: courseName),
-                  transitionsBuilder:
-                      (context, animations, secondaryAnimations, childs) {
-                    final tween = Tween(begin: 0.0, end: 1.0);
-                    return FadeTransition(
-                      opacity: animations.drive(tween),
-                      child: childs,
-                    );
-                  },
-                ),
-              );
+            if (text == "Quiz" && courseStatus == false) {
+              Navigator.of(context).push(FadeAnimation2(
+                  page: ModuleListQuizScreen(
+                courseName: courseName,
+                courseId: courseId,
+                courseStatus: courseStatus,
+              )));
+            }
+
+            if (text == "Quiz" && courseStatus == true) {
+              Navigator.of(context).push(FadeAnimation2(
+                  page: FinishedModuleListQuizScreen(
+                courseName: courseName,
+                courseId: courseId,
+                courseStatus: courseStatus,
+              )));
             }
 
             if (text == "Tanya Mentor") {
-              Navigator.of(context).push(
-                PageRouteBuilder(
-                  pageBuilder: (context, animations, secondaryAnimations) =>
-                      const ChatMentorScreen(),
-                  transitionsBuilder:
-                      (context, animations, secondaryAnimations, childs) {
-                    final tween = Tween(begin: 0.0, end: 1.0);
-                    return FadeTransition(
-                      opacity: animations.drive(tween),
-                      child: childs,
-                    );
-                  },
-                ),
-              );
+              Navigator.of(context)
+                  .push(FadeAnimation2(page: const ChatMentorScreen()));
             }
           },
           child: Row(

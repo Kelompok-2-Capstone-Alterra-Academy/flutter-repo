@@ -19,7 +19,10 @@ handleErrorApi(error) {
       case DioErrorType.badResponse:
         switch (error.response!.statusCode) {
           case 400:
-            message = 'Bad request';
+            message = error.response!.data['message'] ?? 'Bad request';
+            break;
+          case 401:
+            message = error.response!.data['message'] ?? 'Unauthorized request';
             break;
           case 404:
             message = 'Requested resource not found';

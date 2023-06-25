@@ -1,3 +1,4 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -34,6 +35,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
       return 'Nama Lengkap tidak boleh kosong';
     } else if (value.length < 3) {
       return 'Nama Lengkap minimal 3 karakter';
+    } else if (value.contains(RegExp(r'^(?=.*?[0-9])'))) {
+      return 'Nama Lengkap tidak boleh mengandung angka';
+    } else if (value.contains(RegExp(r'^(?=.*?[!@#\-$_&+*~])'))) {
+      return 'Nama Lengkap tidak boleh mengandung karakter spesial';
     }
     return null;
   }
@@ -58,15 +63,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return null;
   }
 
-  String? validateUsername(String value) {
-    if (value.isEmpty) {
-      return 'Username tidak boleh kosong';
-    } else if (value.length < 3) {
-      return 'Username minimal 3 karakter';
-    }
-    return null;
-  }
-
   String? validatePassword(String value) {
     if (value.isEmpty) {
       return 'Kata Sandi tidak boleh kosong';
@@ -80,6 +76,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
       return 'Kata Sandi harus mengandung 1 angka';
     } else if (!value.contains(RegExp(r'^(?=.*?[!@#\$&*~])'))) {
       return 'Kata Sandi harus mengandung 1 karakter spesial';
+    }
+    return null;
+  }
+
+  String? validateConfirmPassword(String value) {
+    if (value != _passwordController.text) {
+      return 'Kata Sandi Dan Konfirmasi Kata Sandi Tidak Sama';
+    } else if (value.isEmpty) {
+      return 'Konfirmasi Kata Sandi tidak boleh kosong';
     }
     return null;
   }
@@ -187,7 +192,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               TextFormField(
                                 controller: _nameController,
                                 validator: (value) => validateName(value!),
-                                keyboardType: TextInputType.name,
+                                keyboardType: TextInputType.visiblePassword,
                                 maxLength: 28,
                                 autocorrect: false,
                                 textInputAction: TextInputAction.next,
@@ -211,7 +216,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   fillColor: whiteColor,
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
-                                      borderSide: BorderSide(width: 1)),
+                                      borderSide: const BorderSide(width: 1)),
                                 ),
                               ),
                             ],
@@ -258,7 +263,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   fillColor: whiteColor,
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
-                                      borderSide: BorderSide(width: 1)),
+                                      borderSide: const BorderSide(width: 1)),
                                 ),
                               ),
                             ],
@@ -305,7 +310,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   fillColor: whiteColor,
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
-                                      borderSide: BorderSide(width: 1)),
+                                      borderSide: const BorderSide(width: 1)),
                                 ),
                               ),
                             ],
@@ -390,7 +395,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               TextFormField(
                                 obscureText: _obscureTextConfirm,
                                 controller: _confirmPasswordController,
-                                validator: (value) => validatePassword(value!),
+                                validator: (value) =>
+                                    validateConfirmPassword(value!),
                                 maxLength: 20,
                                 autocorrect: false,
                                 textInputAction: TextInputAction.next,
@@ -485,18 +491,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                             arguments: _emailController.text));
                                   } else {
                                     // ignore: use_build_context_synchronously
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
-                                      content: Text(message),
-                                    ));
+                                    AnimatedSnackBar.material(
+                                            'Email Sudah Terdaftar / $message',
+                                            type: AnimatedSnackBarType.error,
+                                            snackBarStrategy:
+                                                RemoveSnackBarStrategy())
+                                        .show(context);
                                   }
                                 } else {
                                   // ignore: use_build_context_synchronously
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(const SnackBar(
-                                    content: Text(
-                                        'Kata Sandi dan Konfirmasi Kata Sandi tidak sama'),
-                                  ));
+                                  AnimatedSnackBar.material(
+                                          'Pastikan Semua Data Terisi Dengan Benar',
+                                          type: AnimatedSnackBarType.info,
+                                          snackBarStrategy:
+                                              RemoveSnackBarStrategy())
+                                      .show(context);
                                 }
                               },
                               child: Text("Lanjut",

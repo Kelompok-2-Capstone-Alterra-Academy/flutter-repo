@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:staredu/utils/color/color.dart';
-import 'package:staredu/utils/constant/module_section_list.dart';
+import 'package:staredu/utils/preferences/preferences_utils.dart';
+import 'package:staredu/views/view_model/course/module_view_model.dart';
 import 'package:staredu/widgets/module_course/module_quiz_card.dart';
 
 class ModuleListQuizScreen extends StatefulWidget {
   static const String routeName = "/modulelistquiz";
 
   final String? courseName;
-  const ModuleListQuizScreen({super.key, this.courseName});
+  final int courseId;
+  final bool? courseStatus;
+  const ModuleListQuizScreen(
+      {super.key, this.courseName, required this.courseId, this.courseStatus});
 
   @override
   State<ModuleListQuizScreen> createState() => _ModuleListQuizScreenState();
@@ -16,8 +21,51 @@ class ModuleListQuizScreen extends StatefulWidget {
 
 class _ModuleListQuizScreenState extends State<ModuleListQuizScreen> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  Future<bool> checkIfLastModule(String courseId) async {
+    PreferencesUtils preferencesUtils = PreferencesUtils();
+    await preferencesUtils.init();
+
+    String email = preferencesUtils.getPreferencesString("user_email") ?? "";
+
+    int? currentSection = preferencesUtils
+            .getPreferencesInt('current_section_course_${courseId}_$email') ??
+        0;
+    int? totalSection = preferencesUtils
+            .getPreferencesInt('total_section_course_${courseId}_$email') ??
+        0;
+
+    if (totalSection - currentSection == 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool?> getModuleStatus(int moduleId) async {
+    PreferencesUtils preferencesUtils = PreferencesUtils();
+
+    String email = preferencesUtils.getPreferencesString("user_email") ?? "";
+
+    await preferencesUtils.init();
+
+    var moduleStatus =
+        preferencesUtils.getPreferencesBool("${moduleId.toString()}_$email") ??
+            false;
+
+    return moduleStatus;
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final moduleViewModel =
+        Provider.of<ModuleListViewModel>(context, listen: false);
     final double screenWidth = MediaQuery.of(context).size.width;
+
+    final isLastModule = checkIfLastModule(widget.courseId.toString());
 
     return Scaffold(
       appBar: AppBar(
@@ -63,21 +111,72 @@ class _ModuleListQuizScreenState extends State<ModuleListQuizScreen> {
               const SizedBox(
                 height: 12,
               ),
-              ListView.separated(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: moduleSection.length,
-                itemBuilder: (context, index) {
-                  return ModuleQuizCard(
-                    id: moduleSection[index].id!.toInt(),
-                    isQuizAvailable: moduleSection[index].quiz,
-                    title: moduleSection[index].title!.toString(),
-                    numbering: index.toString(),
-                  );
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  return const SizedBox(
-                    height: 2,
+              Consumer<ModuleListViewModel>(
+                builder: (context, value, child) {
+                  return ListView.separated(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: moduleViewModel.courseQuiz.length,
+                    itemBuilder: (context, firstIndex) {
+                      return ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: moduleViewModel
+                            .courseQuiz[firstIndex].module!.length,
+                        itemBuilder: (context, secondIndex) {
+                          return FutureBuilder(
+                            future: isLastModule,
+                            builder: (context, snapshotLastModule) {
+                              var sectionFinished = getModuleStatus(
+                                  moduleViewModel.courseModule[firstIndex]
+                                      .module![secondIndex].id!
+                                      .toInt());
+                              return FutureBuilder(
+                                future: sectionFinished,
+                                builder: (context, snapshot) {
+                                  return ModuleQuizCard(
+                                    isLastModule:
+                                        snapshotLastModule.data ?? false,
+                                    id: int.parse(moduleViewModel
+                                        .courseModule[firstIndex].courseId
+                                        .toString()),
+                                    isQuizAvailable: moduleViewModel
+                                            .courseQuiz[firstIndex]
+                                            .module![secondIndex]
+                                            .attachment!
+                                            .type!
+                                            .contains('quiz')
+                                        ? true
+                                        : false,
+                                    title: moduleViewModel
+                                        .courseQuiz[firstIndex].sectionName,
+                                    numbering: (secondIndex + 1).toString(),
+                                    url: moduleViewModel
+                                        .courseQuiz[firstIndex]
+                                        .module![secondIndex]
+                                        .attachment!
+                                        .attachmentSource,
+                                    moduleId: moduleViewModel
+                                        .courseQuiz[firstIndex]
+                                        .module![secondIndex]
+                                        .id!
+                                        .toInt(),
+                                    sectionFinished: snapshot.data ?? false,
+                                    courseName: widget.courseName,
+                                    courseStatus: widget.courseStatus,
+                                  );
+                                },
+                              );
+                            },
+                          );
+                        },
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const SizedBox(
+                        height: 2,
+                      );
+                    },
                   );
                 },
               ),

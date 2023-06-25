@@ -1,20 +1,46 @@
+// ignore_for_file: prefer_is_empty
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:staredu/models/course_taken_model.dart';
+import 'package:staredu/models/schedule_model.dart';
+import 'package:staredu/utils/animation/fade_animation.dart';
+import 'package:staredu/utils/animation/slide_animation.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/constant/list_post_feed.dart';
+import 'package:staredu/utils/preferences/preferences_utils.dart';
+import 'package:staredu/views/screen/auth/login/login_screen.dart';
+import 'package:staredu/views/screen/course/course_taken_list_screen.dart';
+import 'package:staredu/views/screen/course/module/module_task_list_screen.dart';
 import 'package:staredu/views/screen/home/home_view_model.dart';
+import 'package:staredu/views/screen/live_session/schedule_course_screen.dart';
+import 'package:staredu/views/screen/live_session/schedule_view_model.dart';
 import 'package:staredu/views/screen/mentor/mentor_screen.dart';
 import 'package:staredu/views/screen/news/news_screen.dart';
+import 'package:staredu/views/screen/notification/notification_screen.dart';
 import 'package:staredu/views/screen/post_feed/post_feed_screen.dart';
+import 'package:staredu/views/screen/profile/profile_view_model.dart';
 import 'package:staredu/views/screen/sell_course/sell_course_screen.dart';
 import 'package:staredu/views/screen/wishlist/wishlist_screen.dart';
+import 'package:staredu/views/view_model/course/course_taken_view_model.dart';
+import 'package:staredu/views/view_model/sell_course/sell_course_view_model.dart';
 import 'package:staredu/widgets/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'package:staredu/widgets/button/button_text.dart';
+import 'package:staredu/widgets/card/card_course_taken.dart';
+import 'package:staredu/widgets/button/button_full.dart';
+import 'package:staredu/widgets/card/card_live_session.dart';
 import 'package:staredu/widgets/card/card_mentor.dart';
+import 'package:staredu/widgets/card/card_task_list.dart';
+import 'package:staredu/widgets/carousel/carousel_component.dart';
 import 'package:staredu/widgets/news/news.dart';
 import 'package:staredu/widgets/post_feed/post_feed.dart';
 import 'package:staredu/widgets/row/row_text.dart';
+
+import '../../../utils/animation/fade_animation2.dart';
+import '../../../utils/animation/slide_animation2.dart';
+import '../../../widgets/row/row_text2.dart';
+import '../profile/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -25,17 +51,54 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late PreferencesUtils preferencesUtils;
+  String? token;
+  String? email;
+  bool? isLogin = false;
+  String? name = '';
+  String? profile = '';
+  ScheduleCourseModel scheduleCourseModel = ScheduleCourseModel(
+      course: 'course', date: 'date', status: 'status', url: 'url');
+
+  void init() async {
+    preferencesUtils = PreferencesUtils();
+    await preferencesUtils.init();
+    setState(() {
+      token = preferencesUtils.getPreferencesString('token');
+      isLogin = preferencesUtils.getPreferencesBool('isLogin');
+      email = preferencesUtils.getPreferencesString('email');
+    });
+    // ignore: use_build_context_synchronously
+    Provider.of<HomeViewModel>(context, listen: false).getAllTypeCourse(token);
+    // ignore: use_build_context_synchronously
+    Provider.of<HomeViewModel>(context, listen: false).getAllMentor(token);
+    // ignore: use_build_context_synchronously
+    Provider.of<HomeViewModel>(context, listen: false).getAllCourses(token);
+    // ignore: use_build_context_synchronously
+    Provider.of<HomeViewModel>(context, listen: false).getPostFeed();
+    // ignore: use_build_context_synchronously
+    Provider.of<SellCourseViewModel>(context, listen: false)
+        .getAllCourseForSale(token);
+    // ignore: use_build_context_synchronously
+    Provider.of<CourseTakenViewModel>(context, listen: false)
+        .getCourseTaken(token ?? '');
+    // ignore: use_build_context_synchronously
+    Provider.of<ScheduleViewModel>(context, listen: false).getAllSchedule();
+    // ignore: use_build_context_synchronously
+    Provider.of<ProfileViewModel>(context, listen: false)
+        .getUserDetail(email, token ?? '');
+    // ignore: use_build_context_synchronously
+    Provider.of<HomeViewModel>(context, listen: false).getAllNews();
+  }
+
   @override
   void initState() {
     super.initState();
-    Provider.of<HomeViewModel>(context, listen: false).getAllTypeCourse();
-    Provider.of<HomeViewModel>(context, listen: false).getAllMentor();
+    init();
   }
 
   @override
   Widget build(BuildContext context) {
-    // final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-    // final TextEditingController _searchController = TextEditingController();
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -47,6 +110,28 @@ class _HomeScreenState extends State<HomeScreen> {
             width: 120,
             height: 120,
           ),
+          // action
+          actions: isLogin == null || isLogin == false
+              ? [
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: SizedBox(
+                      width: 80,
+                      child: ButtonFull(
+                          title: 'Masuk',
+                          color: whiteColor,
+                          textColor: primaryColor,
+                          borderColor: primaryColor,
+                          press: () {
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                SlideAnimation(page: const LoginScreen()),
+                                (route) => false);
+                          }),
+                    ),
+                  )
+                ]
+              : null,
         ),
         body: SingleChildScrollView(
             child: Column(
@@ -71,44 +156,87 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.all(12.0),
                   child: Column(
                     children: [
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                      isLogin != null && isLogin == true
+                          ? Column(
                               children: [
-                                Text('Selamat Pagi',
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 11,
-                                        color: whiteColor,
-                                        fontWeight: FontWeight.w400)),
-                                Text('Dwi Bagus',
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 14,
-                                        color: whiteColor,
-                                        fontWeight: FontWeight.w600)),
+                                Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text('Selamat Pagi',
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 11,
+                                                  color: whiteColor,
+                                                  fontWeight: FontWeight.w400)),
+                                          Consumer<ProfileViewModel>(
+                                              builder: (context, value, child) {
+                                            return value.response != null
+                                                ? Text(
+                                                    value.response!.name ?? '',
+                                                    style: GoogleFonts.poppins(
+                                                        fontSize: 14,
+                                                        color: whiteColor,
+                                                        fontWeight:
+                                                            FontWeight.w600))
+                                                : Container();
+                                          }),
+                                        ],
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              FadeAnimation(
+                                                  page: const Profile()));
+                                        },
+                                        child: Consumer<ProfileViewModel>(
+                                            builder: (context, value, child) {
+                                          return value.response != null
+                                              ? Container(
+                                                  width: 32,
+                                                  height: 32,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            50),
+                                                    image: value.response!
+                                                                    .profile ==
+                                                                '' ||
+                                                            value.response!
+                                                                    .profile ==
+                                                                'noimage.png' ||
+                                                            !value.response!
+                                                                .profile!
+                                                                .contains(
+                                                                    'http')
+                                                        ? const DecorationImage(
+                                                            image: AssetImage(
+                                                                'assets/images/default_mentor.jpg'),
+                                                            fit: BoxFit.cover,
+                                                          )
+                                                        : DecorationImage(
+                                                            image: NetworkImage(
+                                                                value.response!
+                                                                        .profile ??
+                                                                    ''),
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                  ),
+                                                )
+                                              : Container();
+                                        }),
+                                      ),
+                                    ]),
+                                const SizedBox(height: 10),
                               ],
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(context, '/profile');
-                              },
-                              child: Container(
-                                width: 32,
-                                height: 32,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  image: const DecorationImage(
-                                    image: AssetImage(
-                                        'assets/images/default_mentor.jpg'),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ]),
-                      const SizedBox(height: 10),
+                            )
+                          : Container(),
                       Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,10 +245,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               onTap: () {
                                 Navigator.push(
                                     context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const SellCourseScreen(),
-                                    ));
+                                    FadeAnimation2(
+                                        page: const SellCourseScreen()));
                               },
                               child: Container(
                                 width: MediaQuery.of(context).size.width * 0.7,
@@ -143,41 +269,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ],
                                 ),
-                                // child: Form(
-                                //     child: TextFormField(
-                                //   controller: _searchController,
-                                //   decoration: InputDecoration(
-                                //     prefixIcon: const Icon(Icons.search),
-                                //     filled: true,
-                                //     fillColor: whiteColor,
-                                //     hintText: "Cari kelas yang kamu minati",
-                                //     hintStyle: GoogleFonts.poppins(
-                                //         fontSize: 12, color: blackColor),
-                                //     border: OutlineInputBorder(
-                                //       borderRadius: BorderRadius.circular(10),
-                                //       borderSide: const BorderSide(
-                                //           color: Colors.white, width: 1),
-                                //     ),
-                                //     enabledBorder: OutlineInputBorder(
-                                //       borderRadius: BorderRadius.circular(10),
-                                //       borderSide: const BorderSide(
-                                //           color: Colors.white, width: 1),
-                                //     ),
-                                //     focusedBorder: OutlineInputBorder(
-                                //       borderRadius: BorderRadius.circular(10),
-                                //       borderSide: const BorderSide(
-                                //           color: Colors.white, width: 1),
-                                //     ),
-                                //   ),
-                                // )),
                               ),
                             ),
                             SizedBox(
                                 height: 45,
                                 child: GestureDetector(
                                   onTap: () {
-                                    Navigator.pushNamed(
-                                        context, '/notification');
+                                    Navigator.push(
+                                        context,
+                                        SlideAnimation2(
+                                            page: const NotificationScreen()));
                                   },
                                   child: const Icon(Icons.notifications_none,
                                       color: whiteColor, size: 28),
@@ -188,10 +289,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   onTap: () {
                                     Navigator.push(
                                         context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const WishlistScreen(),
-                                        ));
+                                        SlideAnimation2(
+                                            page: const WishlistScreen()));
                                   },
                                   child: const Icon(
                                       Icons.collections_bookmark_outlined,
@@ -205,7 +304,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Transform(
-              transform: Matrix4.translationValues(0.0, -70.0, 0.0),
+              transform: isLogin != null && isLogin == true
+                  ? Matrix4.translationValues(0.0, -70.0, 0.0)
+                  : Matrix4.translationValues(0.0, -100.0, 0.0),
               child: Column(
                 children: [
                   Padding(
@@ -220,50 +321,194 @@ class _HomeScreenState extends State<HomeScreen> {
                             fit: BoxFit.cover,
                           ),
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 5),
+
+                        isLogin != null && isLogin == true
+                            ? Consumer<CourseTakenViewModel>(
+                                builder: (context, value, child) {
+                                List<InProgress> courseTaken =
+                                    value.inProgressCourseTaken;
+                                return courseTaken.isEmpty ||
+                                        courseTaken.length == 0
+                                    ? Container()
+                                    : Column(
+                                        children: [
+                                          const RowText2(
+                                              left: 'Course yang diikuti',
+                                              right: 'Lihat Semua',
+                                              page: CourseTakenListScreen()),
+                                          CardCourseTaken(
+                                            id: courseTaken[
+                                                        courseTaken.length - 1]
+                                                    .id ??
+                                                0,
+                                            title: courseTaken[
+                                                        courseTaken.length - 1]
+                                                    .courseName ??
+                                                '',
+                                            img: courseTaken[
+                                                        courseTaken.length - 1]
+                                                    .thumbnail ??
+                                                '',
+                                          ),
+                                          const SizedBox(height: 5),
+                                        ],
+                                      );
+                              })
+                            : Container(),
+                        isLogin != null && isLogin == true
+                            ? Consumer<CourseTakenViewModel>(
+                                builder: (context, value, child) {
+                                List<InProgress> courseTaken =
+                                    value.inProgressCourseTaken;
+                                return Consumer<ScheduleViewModel>(
+                                    builder: (context, value, child) {
+                                  List<ScheduleCourseModel> scheduleList = value
+                                      .filteredList
+                                      .where((element) =>
+                                          element.status == 'Belum Ikut')
+                                      .toList();
+                                  return courseTaken.isEmpty ||
+                                          courseTaken.length == 0
+                                      ? Container()
+                                      : Column(
+                                          children: [
+                                            const RowText(
+                                                left: 'Presensi',
+                                                right: 'Lihat Semua',
+                                                page: ScheduleCourseScreen()),
+                                            CardLiveSession(
+                                                schedule: scheduleList[0],
+                                                index: 1),
+                                            const SizedBox(height: 5),
+                                          ],
+                                        );
+                                });
+                              })
+                            : Container(),
+                        isLogin != null && isLogin == true
+                            ? Consumer<CourseTakenViewModel>(
+                                builder: (context, value, child) {
+                                List<InProgress> courseTaken =
+                                    value.inProgressCourseTaken;
+                                return courseTaken.isEmpty ||
+                                        courseTaken.length == 0
+                                    ? Container()
+                                    : Column(
+                                        children: [
+                                          const RowText(
+                                              left: 'Tugas Terkini',
+                                              right: 'Lihat Semua',
+                                              page: TaskListScreen()),
+                                          CardTaskList(
+                                              sectionNumbering: 1,
+                                              sectionName: courseTaken[0]
+                                                      .inProgressClass!
+                                                      .className ??
+                                                  '',
+                                              courseName:
+                                                  courseTaken[0].courseName ??
+                                                      '',
+                                              isAssignmentAvailable: true),
+                                          const SizedBox(height: 2),
+                                        ],
+                                      );
+                              })
+                            : Container(),
                         const RowText(
                             left: 'Course Populer',
                             right: 'Lihat Semua',
                             page: SellCourseScreen()),
-                        const SizedBox(height: 10),
-                        Consumer<HomeViewModel>(
-                          builder: (context, value, child) {
-                            return SingleChildScrollView(
-                              // horisontal
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: value.typeCourse
-                                    .map((e) => Container(
-                                        margin:
-                                            const EdgeInsets.only(right: 10),
-                                        child: e.id == 1
-                                            ? ButtonText(
-                                                text: e.name,
-                                                press: () {},
-                                                isSelected: true)
-                                            : ButtonText(
-                                                text: e.name, press: () {})))
-                                    .toList(),
+                        Consumer<SellCourseViewModel>(
+                            builder: (context, valueSell, child) {
+                          return Column(
+                            children: [
+                              Consumer<HomeViewModel>(
+                                builder: (context, value, child) {
+                                  return SingleChildScrollView(
+                                    // horisontal
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                      children: value.typeCourse
+                                          .map((e) => Container(
+                                              margin: const EdgeInsets.only(
+                                                  right: 10),
+                                              child: e.id == value.selectedIndex
+                                                  ? ButtonText(
+                                                      text: e.name,
+                                                      press: () {
+                                                        Provider.of<HomeViewModel>(
+                                                                context,
+                                                                listen: false)
+                                                            .onItemSelected(
+                                                                e.id);
+                                                        Provider.of<SellCourseViewModel>(
+                                                                context,
+                                                                listen: false)
+                                                            .filterCourse(
+                                                                filterBy:
+                                                                    'major',
+                                                                majorFilter:
+                                                                    e.name);
+                                                      },
+                                                      isSelected: true)
+                                                  : ButtonText(
+                                                      text: e.name,
+                                                      press: () {
+                                                        Provider.of<HomeViewModel>(
+                                                                context,
+                                                                listen: false)
+                                                            .onItemSelected(
+                                                                e.id);
+                                                        Provider.of<SellCourseViewModel>(
+                                                                context,
+                                                                listen: false)
+                                                            .filterCourse(
+                                                                filterBy:
+                                                                    'major',
+                                                                majorFilter:
+                                                                    e.name);
+                                                      },
+                                                    )))
+                                          .toList(),
+                                    ),
+                                  );
+                                },
                               ),
-                            );
-                          },
-                        ),
-                        const SizedBox(height: 20),
+                              const SizedBox(height: 5),
+                              valueSell.findCourse.isEmpty
+                                  ? const Text('Tidak ada Course')
+                                  : SizedBox(
+                                      height: 200,
+                                      child: CarouselComponent(
+                                          courseForSale: valueSell.findCourse),
+                                    )
+                            ],
+                          );
+                        }),
+                        const SizedBox(height: 5),
                         const RowText(
                             left: 'Mentor Terbaik Kami',
                             right: 'Lihat Semua',
                             page: MentorScreen()),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 5),
                         Consumer<HomeViewModel>(
                           builder: (context, value, child) {
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: value.mentor
-                                  .map((e) => Container(
-                                      margin: const EdgeInsets.only(right: 15),
-                                      child: CardMentor(name: e.name)))
-                                  .toList(),
-                            );
+                            return value.mentor.isEmpty
+                                ? const CircularProgressIndicator()
+                                : Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: value.mentor
+                                        .map((e) => Container(
+                                            margin: const EdgeInsets.only(
+                                                right: 15),
+                                            child: CardMentor(
+                                              name: e.name.split(' ').last,
+                                              profile: e.profile,
+                                            )))
+                                        .toList(),
+                                  );
                           },
                         ),
                         const SizedBox(height: 20),
@@ -271,13 +516,32 @@ class _HomeScreenState extends State<HomeScreen> {
                             left: 'Seputar Pendidikan di Indonesia',
                             right: 'Lihat Semua',
                             page: NewsScreen()),
-                        News(screenWidth: MediaQuery.of(context).size.width),
+                        Consumer<HomeViewModel>(
+                          builder: (context, value, child) {
+                            if (value.news.isNotEmpty) {
+                              final newsItem =
+                                  value.news[0]; // Ambil item berita pertama
+                              return News(
+                                screenWidth: MediaQuery.of(context).size.width,
+                                link: newsItem.link,
+                                shortDescription: newsItem.content,
+                                tittle: newsItem.title,
+                              );
+                            } else {
+                              return Container(); // Tampilkan widget kosong jika tidak ada berita
+                            }
+                          },
+                        ),
+
                         const SizedBox(height: 20),
                         const RowText(
                             left: 'Yuk, sharing sama pengguna lain',
                             right: 'Lihat Semua',
                             page: PostFeedScreen()),
-                        PostFeed(postFeeds: postFeedsData),
+                        PostFeed(
+                          index: 0,
+                          postFeeds: postFeedsList,
+                        ),
                       ],
                     ),
                   ),
@@ -286,6 +550,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         )),
-        bottomNavigationBar: const BottomNavigationBarComponent());
+        bottomNavigationBar: isLogin != null && isLogin == true
+            ? BottomNavigationBarComponent(
+                indexDefined: 0,
+              )
+            : null);
   }
 }

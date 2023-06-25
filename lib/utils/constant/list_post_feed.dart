@@ -1,44 +1,40 @@
 import '../../models/post_feed_model.dart';
 
-List<PostFeedModel> postFeedsData = [
+List<PostFeedModel> postFeedsList = [
   PostFeedModel(
-    name: 'Jung Jaehyun',
+    name: 'Indra Primawan',
     time: '20 April 2023, 12:37',
-    comment:
-        'Lorem ipsum dolor sit amet consectetur. Et risus interdum nulla egestas rhoncus. Eu eget euismod sem ullamcorper eget sed.',
-    like: '15',
-    reply: '3',
+    comment: 'Sangat Menyenangkan belajar di sini',
+    like: 15,
+    reply: '0',
   ),
   PostFeedModel(
-    name: 'Jung Jaehyun',
-    time: '20 April 2023, 12:37',
+    name: 'Kevin Sanjaya',
+    time: '23 April 2023, 12:37',
     comment:
-        'Lorem ipsum dolor sit amet consectetur. Et risus interdum nulla egestas rhoncus. Eu eget euismod sem ullamcorper eget sed.',
-    like: '10',
-    reply: '2',
+        'Belajar di sini telah meningkatkan keterampilan saya secara signifikan.',
+    like: 12,
+    reply: '0',
   ),
   PostFeedModel(
-    name: 'Jung Jaehyun',
+    name: 'Imam Raul',
     time: '20 April 2023, 12:37',
-    comment:
-        'Lorem ipsum dolor sit amet consectetur. Et risus interdum nulla egestas rhoncus. Eu eget euismod sem ullamcorper eget sed.',
-    like: '10',
-    reply: '2',
+    comment: 'Ini adalah platform yang bagus untuk belajar!',
+    like: 10,
+    reply: '0',
   ),
   PostFeedModel(
-    name: 'Jung Jaehyun',
-    time: '20 April 2023, 12:37',
-    comment:
-        'Lorem ipsum dolor sit amet consectetur. Et risus interdum nulla egestas rhoncus. Eu eget euismod sem ullamcorper eget sed.',
-    like: '10',
-    reply: '2',
+    name: 'Fitri Nur',
+    time: '27 April 2023, 12:37',
+    comment: 'Saya sangat merekomendasikan platform ini kepada siapa saja!',
+    like: 20,
+    reply: '0',
   ),
   PostFeedModel(
-    name: 'Jung Jaehyun',
-    time: '20 April 2023, 12:37',
-    comment:
-        'Lorem ipsum dolor sit amet consectetur. Et risus interdum nulla egestas rhoncus. Eu eget euismod sem ullamcorper eget sed.',
-    like: '10',
-    reply: '2',
+    name: 'Andre Fahri',
+    time: '29 April 2023, 09:12',
+    comment: 'Sumber belajar yang disediakan sangat baik.',
+    like: 11,
+    reply: '0',
   ),
 ];

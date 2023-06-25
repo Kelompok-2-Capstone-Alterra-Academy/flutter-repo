@@ -8,9 +8,9 @@ class SlideAnimation extends PageRouteBuilder {
 
   SlideAnimation({required this.page, this.arguments})
       : super(
-        settings: arguments != null
-            ? RouteSettings(arguments: arguments)
-            : const RouteSettings(),
+          settings: arguments != null
+              ? RouteSettings(arguments: arguments)
+              : const RouteSettings(),
           transitionDuration: const Duration(milliseconds: 1000),
           transitionsBuilder: (
             BuildContext context,

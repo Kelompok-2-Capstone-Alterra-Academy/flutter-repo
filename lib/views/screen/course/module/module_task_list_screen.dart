@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:staredu/utils/color/color.dart';
 import 'package:staredu/utils/constant/list_course_taken.dart';
-import 'package:staredu/utils/constant/module_section_list.dart';
+import 'package:staredu/views/view_model/course/module_view_model.dart';
 import 'package:staredu/widgets/module_course/module_task_card.dart';
 
 class TaskListScreen extends StatefulWidget {
@@ -15,7 +16,17 @@ class TaskListScreen extends StatefulWidget {
 
 class _TaskListScreenState extends State<TaskListScreen> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final moduleViewModel =
+        Provider.of<ModuleListViewModel>(context, listen: false);
+    final List taskList = moduleViewModel.moduleList
+        .where((moduleList) => moduleList.assignment == true)
+        .toList();
     final double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
@@ -50,22 +61,31 @@ class _TaskListScreenState extends State<TaskListScreen> {
               const SizedBox(
                 height: 12,
               ),
-              ListView.separated(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemBuilder: (context, indexCourse) {
-                    return ListView.separated(
+              Consumer<ModuleListViewModel>(
+                builder: (context, value, child) {
+                  return ListView.separated(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: moduleSection.length,
-                      itemBuilder: (context, indexSection) {
-                        String? courseName = courseTaken[indexCourse].title;
-                        return ModuleTaskCard(
-                          courseName: courseName,
-                          sectionName: moduleSection[indexSection].title,
-                          sectionNumbering: indexSection.toInt(),
-                          isAssignmentAvailable:
-                              moduleSection[indexSection].assignment,
+                      itemBuilder: (context, indexCourse) {
+                        return ListView.separated(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: taskList.length,
+                          itemBuilder: (context, indexSection) {
+                            String? courseName = courseTaken[indexCourse].title;
+                            return ModuleTaskCard(
+                              courseName: courseName,
+                              sectionName: taskList[indexSection].title,
+                              sectionNumbering: indexSection.toInt(),
+                              isAssignmentAvailable:
+                                  taskList[indexSection].assignment,
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return const SizedBox(
+                              height: 2,
+                            );
+                          },
                         );
                       },
                       separatorBuilder: (BuildContext context, int index) {
@@ -73,14 +93,9 @@ class _TaskListScreenState extends State<TaskListScreen> {
                           height: 2,
                         );
                       },
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(
-                      height: 2,
-                    );
-                  },
-                  itemCount: courseTaken.length)
+                      itemCount: courseTaken.length);
+                },
+              )
             ],
           ),
         ),

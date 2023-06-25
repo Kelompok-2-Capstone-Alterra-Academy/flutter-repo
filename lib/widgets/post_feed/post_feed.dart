@@ -1,27 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:staredu/utils/constant/list_post_feed.dart';
+import 'package:staredu/views/screen/post_feed/post_feed_view_model.dart';
 
 import '../../models/post_feed_model.dart';
 import '../../utils/color/color.dart';
 import '../../views/screen/post_feed/post_detail_screen.dart';
 
-class PostFeed extends StatelessWidget {
+class PostFeed extends StatefulWidget {
+  final int index;
+
   const PostFeed({
     super.key,
+    required this.index,
     required this.postFeeds,
   });
 
   final List<PostFeedModel> postFeeds;
 
   @override
+  State<PostFeed> createState() => _PostFeedState();
+}
+
+class _PostFeedState extends State<PostFeed> {
+  List<PostFeedModel> postFeedScreenList = postFeedsList;
+
+  @override
   Widget build(BuildContext context) {
-    PostFeedModel postFeed = postFeeds[0];
+    PostFeedModel postFeed = widget.postFeeds[0];
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => PostDetailScreen(postFeed: postFeed),
+            builder: (context) => PostDetailScreen(
+              index: widget.index,
+            ),
           ),
         );
       },
@@ -78,14 +93,18 @@ class PostFeed extends StatelessWidget {
               Row(
                 children: [
                   IconButton(
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.thumb_up,
-                      color: Colors.blue,
+                      color: postFeedScreenList[widget.index].isLiked
+                          ? Colors.blue
+                          : Colors.grey,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      context.read<PostFeedViewModel>().toggleLikeStatus(0);
+                    },
                   ),
                   Text(
-                    postFeed.like ?? '',
+                    postFeed.like.toString(),
                     style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w400,
                       fontSize: 11,
@@ -94,7 +113,16 @@ class PostFeed extends StatelessWidget {
                   const SizedBox(width: 15),
                   IconButton(
                     icon: const Icon(Icons.comment_outlined),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PostDetailScreen(
+                            index: widget.index,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                   Text(
                     postFeed.reply ?? '',

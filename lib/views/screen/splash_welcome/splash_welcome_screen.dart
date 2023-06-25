@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:staredu/utils/animation/fade_animation.dart';
 import 'package:staredu/utils/animation/slide_animation.dart';
 import 'package:staredu/utils/preferences/preferences_utils.dart';
-import 'package:staredu/views/screen/auth/login/login_screen.dart';
-import 'package:staredu/views/screen/auth/register/main/register_screen.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
 
 class SplashWelcomeScreen extends StatefulWidget {
@@ -36,22 +33,22 @@ class _SplashWelcomeScreenState extends State<SplashWelcomeScreen> {
     PreferencesUtils preferencesUtils = PreferencesUtils();
     await preferencesUtils.init();
     Future.delayed(const Duration(seconds: 5), () {
-      setState(() {
-        isLogin = preferencesUtils.getPreferencesBool('isLogin');
-      });
-      if (isLogin == null) {
-        Navigator.pushAndRemoveUntil(
-          context,
-          FadeAnimation(page: const LoginScreen()),
-          (Route<dynamic> route) => false,
-        );
-      } else {
-        Navigator.pushAndRemoveUntil(
-          context,
-          SlideAnimation(page: const HomeScreen()),
-          (Route<dynamic> route) => false,
-        );
-      }
+      // setState(() {
+      //   isLogin = preferencesUtils.getPreferencesBool('isLogin');
+      // });
+      // if (isLogin == null) {
+      //   Navigator.pushAndRemoveUntil(
+      //     context,
+      //     FadeAnimation(page: const LoginScreen()),
+      //     (Route<dynamic> route) => false,
+      //   );
+      // } else {
+      Navigator.pushAndRemoveUntil(
+        context,
+        SlideAnimation(page: const HomeScreen()),
+        (Route<dynamic> route) => false,
+      );
+      // }
     });
   }
 }

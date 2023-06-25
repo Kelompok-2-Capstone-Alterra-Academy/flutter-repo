@@ -1,3 +1,6 @@
+// ignore_for_file: unused_local_variable
+
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -42,9 +45,19 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     return null;
   }
 
+  String? validateConfirmPassword(String value) {
+    if (value != _passwordController.text) {
+      return 'Kata Sandi Dan Konfirmasi Kata Sandi Tidak Sama';
+    } else if (value.isEmpty) {
+      return 'Konfirmasi Kata Sandi tidak boleh kosong';
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final String token = ModalRoute.of(context)!.settings.arguments as String;
+    final String token;
+    final dynamic args = ModalRoute.of(context)!.settings.arguments;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: whiteColor,
@@ -54,8 +67,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             style: GoogleFonts.poppins(
                 fontSize: 18, color: blackColor, fontWeight: FontWeight.w600)),
       ),
-      body: Stack(
-        children: [SingleChildScrollView(
+      body: Stack(children: [
+        SingleChildScrollView(
           child: Container(
               color: whiteColor,
               padding: const EdgeInsets.all(10),
@@ -132,7 +145,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                   color: blackColor.withOpacity(0.4),
                                   fontWeight: FontWeight.w400),
                               filled: true,
-                              floatingLabelBehavior: FloatingLabelBehavior.never,
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.never,
                               fillColor: whiteColor,
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
@@ -162,7 +176,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           TextFormField(
                             obscureText: _obscureTextConfirmPass,
                             controller: _confirmPasswordController,
-                            validator: (value) => validatePassword(value!),
+                            validator: (value) =>
+                                validateConfirmPassword(value!),
                             maxLength: 20,
                             autocorrect: false,
                             textInputAction: TextInputAction.next,
@@ -194,7 +209,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                   color: blackColor.withOpacity(0.4),
                                   fontWeight: FontWeight.w400),
                               filled: true,
-                              floatingLabelBehavior: FloatingLabelBehavior.never,
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.never,
                               fillColor: whiteColor,
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
@@ -213,8 +229,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         width: double.infinity,
                         child: ElevatedButton(
                           style: ButtonStyle(
-                            shape:
-                                MaterialStateProperty.all<RoundedRectangleBorder>(
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -230,7 +246,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                             ),
                           ),
                           onPressed: () async {
-                            if (_formkey.currentState!.validate() && _passwordController.text == _confirmPasswordController.text) {
+                            if (_formkey.currentState!.validate() &&
+                                _passwordController.text ==
+                                    _confirmPasswordController.text) {
                               Provider.of<ForgotPasswordViewModel>(context,
                                       listen: false)
                                   .setStateResetPassword(MyState.loading);
@@ -239,102 +257,119 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                           context,
                                           listen: false)
                                       .resetPassword(
-                                          token,
-                                          _passwordController.text,);
+                                args["token"],
+                                args["otp"],
+                                _passwordController.text,
+                              );
                               if (message.contains('success')) {
                                 // ignore: use_build_context_synchronously
                                 showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: SizedBox(
-                                        height: 200,
-                                        child: Image.asset(
-                                          'assets/images/alert_reset_password.jpg',
-                                          width: 100,
-                                          height: 120,
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(25)),
+                                        title: SizedBox(
+                                          height: 210,
+                                          child: Image.asset(
+                                            'assets/images/alert_reset_password.jpg',
+                                            width: 100,
+                                            height: 120,
+                                          ),
                                         ),
-                                      ),
-                                      content: SizedBox(
-                                        height: 80,
-                                        child: Container(
-                                          alignment: Alignment.center,
-                                          child: Column(children: [
-                                            Text('Sukses Ganti Kata Sandi',
-                                                style: GoogleFonts.poppins(
-                                                  fontSize: 17,
-                                                  color: blackColor,
-                                                  fontWeight: FontWeight.w600,
-                                                )),
-                                            const SizedBox(
-                                              height: 20,
-                                            ),
-                                            Text(
-                                              textAlign: TextAlign.center,
-                                              'Kata Sandi akunmu telah diperbaharui, silahkan untuk masuk kembali',
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 14,
-                                                color: blackColor,
-                                                fontWeight: FontWeight.w400,
+                                        content: SizedBox(
+                                          height: 110,
+                                          child: Container(
+                                            alignment: Alignment.center,
+                                            child: Column(children: [
+                                              Text('Sukses Ganti Kata Sandi',
+                                                  style: GoogleFonts.poppins(
+                                                    fontSize: 17,
+                                                    color: blackColor,
+                                                    fontWeight: FontWeight.w600,
+                                                  )),
+                                              const SizedBox(
+                                                height: 20,
                                               ),
-                                            ),
-                                          ]),
-                                        ),
-                                      ),
-                                      actions: [
-                                        SizedBox(
-                                          height: 40,
-                                          width: double.infinity,
-                                          child: ElevatedButton(
-                                            style: ButtonStyle(
-                                              shape: MaterialStateProperty.all<
-                                                  RoundedRectangleBorder>(
-                                                RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
+                                              Text(
+                                                textAlign: TextAlign.center,
+                                                'Kata Sandi akunmu telah diperbaharui, silahkan untuk masuk kembali',
+                                                style: GoogleFonts.poppins(
+                                                  fontSize: 14,
+                                                  color: blackColor,
+                                                  fontWeight: FontWeight.w400,
                                                 ),
                                               ),
-                                              backgroundColor:
-                                                  MaterialStateProperty
-                                                      .resolveWith<Color?>(
-                                                (Set<MaterialState> states) {
-                                                  if (states.contains(
-                                                      MaterialState.pressed)) {
-                                                    return lightBlueColor;
-                                                  }
-                                                  return primaryColor;
+                                            ]),
+                                          ),
+                                        ),
+                                        actions: [
+                                          SizedBox(
+                                            height: 40,
+                                            width: double.infinity,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 20),
+                                              child: ElevatedButton(
+                                                style: ButtonStyle(
+                                                  shape:
+                                                      MaterialStateProperty.all<
+                                                          RoundedRectangleBorder>(
+                                                    RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                    ),
+                                                  ),
+                                                  backgroundColor:
+                                                      MaterialStateProperty
+                                                          .resolveWith<Color?>(
+                                                    (Set<MaterialState>
+                                                        states) {
+                                                      if (states.contains(
+                                                          MaterialState
+                                                              .pressed)) {
+                                                        return lightBlueColor;
+                                                      }
+                                                      return primaryColor;
+                                                    },
+                                                  ),
+                                                ),
+                                                onPressed: () {
+                                                  Navigator.pushAndRemoveUntil(
+                                                    context,
+                                                    FadeAnimation(
+                                                        page:
+                                                            const LoginScreen()),
+                                                    (Route<dynamic> route) =>
+                                                        false,
+                                                  );
                                                 },
+                                                child: Text(
+                                                  "Masuk",
+                                                  style: GoogleFonts.poppins(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 14),
+                                                ),
                                               ),
                                             ),
-                                            onPressed: ()  {
-                                              Navigator.pushAndRemoveUntil(
-                                                context,
-                                                FadeAnimation(
-                                                    page: const LoginScreen()),
-                                                (Route<dynamic> route) =>
-                                                    false,
-                                              );
-                                            },
-                                            child: Text(
-                                              "Masuk",
-                                              style: GoogleFonts.poppins(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 14),
-                                            ),
                                           ),
-                                        )
-                                      ],
-                                    );
-                                  });
-                            
+                                          const SizedBox(height: 20),
+                                        ],
+                                      );
+                                    });
                               } else {
                                 // ignore: use_build_context_synchronously
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(SnackBar(
-                                  content: Text(message),
-                                ));
+                                AnimatedSnackBar.material(message,
+                                        type: AnimatedSnackBarType.error,
+                                        snackBarStrategy:
+                                            RemoveSnackBarStrategy())
+                                    .show(context);
                               }
-                              }
+                            }
                           },
                           child: Text(
                             "Lanjutkan",
@@ -351,19 +386,18 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               )),
         ),
         Consumer<ForgotPasswordViewModel>(
-            builder: (context, value, child) =>
-                value.stateResetPassword == MyState.loading
-                    ? const OpacityProgressComponent()
-                    : const SizedBox.shrink(),
-          ),
-          Consumer<ForgotPasswordViewModel>(
-            builder: (context, value, child) =>
-                value.stateResetPassword == MyState.loading
-                    ? const CircularProgressComponent()
-                    : const SizedBox.shrink(),
-          )
-        ]
-      ),
+          builder: (context, value, child) =>
+              value.stateResetPassword == MyState.loading
+                  ? const OpacityProgressComponent()
+                  : const SizedBox.shrink(),
+        ),
+        Consumer<ForgotPasswordViewModel>(
+          builder: (context, value, child) =>
+              value.stateResetPassword == MyState.loading
+                  ? const CircularProgressComponent()
+                  : const SizedBox.shrink(),
+        )
+      ]),
     );
   }
 }

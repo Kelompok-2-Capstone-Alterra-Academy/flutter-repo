@@ -1,10 +1,12 @@
 import 'dart:async';
 
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:staredu/utils/animation/fade_animation.dart';
 import 'package:staredu/utils/color/color.dart';
+import 'package:staredu/utils/preferences/preferences_utils.dart';
 import 'package:staredu/utils/state/my_state.dart';
 import 'package:staredu/views/screen/auth/register/register_screen_view_model.dart';
 import 'package:staredu/views/screen/home/home_screen.dart';
@@ -24,14 +26,27 @@ class _AccountVerificationState extends State<AccountVerification> {
   final TextEditingController _otpController2 = TextEditingController();
   final TextEditingController _otpController3 = TextEditingController();
   final TextEditingController _otpController4 = TextEditingController();
+
+  final FocusNode _otpFocus1 = FocusNode();
+  final FocusNode _otpFocus2 = FocusNode();
+  final FocusNode _otpFocus3 = FocusNode();
+  final FocusNode _otpFocus4 = FocusNode();
+
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  late PreferencesUtils preferencesUtils;
   int _start = 60;
   late Timer _timer;
 
   @override
   void initState() {
     super.initState();
+    init();
     startTimer();
+  }
+
+  void init() async {
+    preferencesUtils = PreferencesUtils();
+    await preferencesUtils.init();
   }
 
   @override
@@ -41,6 +56,10 @@ class _AccountVerificationState extends State<AccountVerification> {
     _otpController2.dispose();
     _otpController3.dispose();
     _otpController4.dispose();
+    _otpFocus1.dispose();
+    _otpFocus2.dispose();
+    _otpFocus3.dispose();
+    _otpFocus4.dispose();
     super.dispose();
   }
 
@@ -66,6 +85,12 @@ class _AccountVerificationState extends State<AccountVerification> {
       return "Kode OTP tidak boleh lebih dari 1 digit";
     }
     return null;
+  }
+
+  saveToken(String value) async {
+    String token = value.split(' ')[1];
+    preferencesUtils.savePreferencesString('token', token);
+    preferencesUtils.savePreferencesBool('isLogin', true);
   }
 
   @override
@@ -115,7 +140,7 @@ class _AccountVerificationState extends State<AccountVerification> {
                                 fontWeight: FontWeight.w400),
                             children: <TextSpan>[
                               TextSpan(
-                                  text: 'agnescherrly@contoh.com',
+                                  text: email,
                                   style: GoogleFonts.poppins(
                                       fontSize: 14,
                                       color: blackColor,
@@ -145,6 +170,20 @@ class _AccountVerificationState extends State<AccountVerification> {
                             SizedBox(
                               width: 60,
                               child: TextFormField(
+                                textAlign: TextAlign.center,
+                                maxLength: 1,
+                                focusNode: _otpFocus1,
+                                onChanged: (value) {
+                                  if (value.length == 1) {
+                                    FocusScope.of(context)
+                                        .requestFocus(_otpFocus2);
+                                  }
+                                },
+                                buildCounter: (BuildContext context,
+                                        {int? currentLength,
+                                        int? maxLength,
+                                        bool? isFocused}) =>
+                                    null,
                                 controller: _otpController1,
                                 keyboardType: TextInputType.number,
                                 decoration: InputDecoration(
@@ -166,6 +205,20 @@ class _AccountVerificationState extends State<AccountVerification> {
                             SizedBox(
                               width: 60,
                               child: TextFormField(
+                                textAlign: TextAlign.center,
+                                maxLength: 1,
+                                focusNode: _otpFocus2,
+                                onChanged: (value) {
+                                  if (value.length == 1) {
+                                    FocusScope.of(context)
+                                        .requestFocus(_otpFocus3);
+                                  }
+                                },
+                                buildCounter: (BuildContext context,
+                                        {int? currentLength,
+                                        int? maxLength,
+                                        bool? isFocused}) =>
+                                    null,
                                 controller: _otpController2,
                                 keyboardType: TextInputType.number,
                                 decoration: InputDecoration(
@@ -187,6 +240,20 @@ class _AccountVerificationState extends State<AccountVerification> {
                             SizedBox(
                               width: 60,
                               child: TextFormField(
+                                textAlign: TextAlign.center,
+                                maxLength: 1,
+                                focusNode: _otpFocus3,
+                                onChanged: (value) {
+                                  if (value.length == 1) {
+                                    FocusScope.of(context)
+                                        .requestFocus(_otpFocus4);
+                                  }
+                                },
+                                buildCounter: (BuildContext context,
+                                        {int? currentLength,
+                                        int? maxLength,
+                                        bool? isFocused}) =>
+                                    null,
                                 controller: _otpController3,
                                 keyboardType: TextInputType.number,
                                 decoration: InputDecoration(
@@ -208,7 +275,20 @@ class _AccountVerificationState extends State<AccountVerification> {
                             SizedBox(
                               width: 60,
                               child: TextFormField(
+                                textAlign: TextAlign.center,
                                 controller: _otpController4,
+                                maxLength: 1,
+                                focusNode: _otpFocus4,
+                                onChanged: (value) {
+                                  if (value.length == 1) {
+                                    _otpFocus4.unfocus();
+                                  }
+                                },
+                                buildCounter: (BuildContext context,
+                                        {int? currentLength,
+                                        int? maxLength,
+                                        bool? isFocused}) =>
+                                    null,
                                 keyboardType: TextInputType.number,
                                 decoration: InputDecoration(
                                   hintStyle: GoogleFonts.poppins(
@@ -317,15 +397,25 @@ class _AccountVerificationState extends State<AccountVerification> {
                                             _otpController3.text +
                                             _otpController4.text);
                             if (message.contains('success')) {
+                              await saveToken(message);
                               // ignore: use_build_context_synchronously
-                              Navigator.push(context,
-                                  FadeAnimation(page: const HomeScreen()));
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  FadeAnimation(page: const HomeScreen()),
+                                  (route) => false);
                             } else {
                               // ignore: use_build_context_synchronously
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content: Text(message),
-                              ));
+                              // clear all controller
+                              _otpController1.clear();
+                              _otpController2.clear();
+                              _otpController3.clear();
+                              _otpController4.clear();
+                              // ignore: use_build_context_synchronously
+                              AnimatedSnackBar.material('Salah Atau $message',
+                                      type: AnimatedSnackBarType.error,
+                                      snackBarStrategy:
+                                          RemoveSnackBarStrategy())
+                                  .show(context);
                             }
                           }
                         },

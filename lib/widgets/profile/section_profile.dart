@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:staredu/utils/color/color.dart';
 
@@ -19,42 +17,43 @@ class SectionProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 50,
-      decoration: BoxDecoration(
-        // border shading
-        border: Border.all(width: 0.1),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          // icons, edit profile and arrow right
-          children: [
-            Icon(
-              icon,
-              color: secondaryColor,
-            ),
-            const SizedBox(
-              width: 20,
-            ),
-            Text(title,
-                style: GoogleFonts.poppins(
-                  color: blackColor,
-                  fontStyle: FontStyle.normal,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 15,
-                )),
-            const Spacer(),
-            GestureDetector(
-              onTap: press,
-              child: Icon(
+    return InkWell(
+      onTap: press,
+      borderRadius: BorderRadius.circular(10),
+      child: Container(
+        width: double.infinity,
+        height: 50,
+        decoration: BoxDecoration(
+          // border shading
+          border: Border.all(width: 0.1),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            // icons, edit profile and arrow right
+            children: [
+              Icon(
+                icon,
+                color: secondaryColor,
+              ),
+              const SizedBox(
+                width: 20,
+              ),
+              Text(title,
+                  style: GoogleFonts.poppins(
+                    color: blackColor,
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 15,
+                  )),
+              const Spacer(),
+              Icon(
                 iconRight,
                 color: blackColor,
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
