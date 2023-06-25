@@ -322,7 +322,7 @@ class _SellCourseDetailScreenState extends State<SellCourseDetailScreen> {
                         if (context
                                 .read<CourseTakenViewModel>()
                                 .inProgressCourseTaken
-                                .isEmpty ||
+                                .isEmpty &&
                             context
                                 .read<CourseTakenViewModel>()
                                 .completedCourseTaken

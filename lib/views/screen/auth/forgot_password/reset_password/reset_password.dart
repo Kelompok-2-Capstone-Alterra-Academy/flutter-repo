@@ -265,8 +265,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                     context: context,
                                     builder: (BuildContext context) {
                                       return AlertDialog(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(25)),
                                         title: SizedBox(
-                                          height: 200,
+                                          height: 210,
                                           child: Image.asset(
                                             'assets/images/alert_reset_password.jpg',
                                             width: 100,
@@ -274,7 +277,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                           ),
                                         ),
                                         content: SizedBox(
-                                          height: 80,
+                                          height: 110,
                                           child: Container(
                                             alignment: Alignment.center,
                                             child: Column(children: [
@@ -303,48 +306,56 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                           SizedBox(
                                             height: 40,
                                             width: double.infinity,
-                                            child: ElevatedButton(
-                                              style: ButtonStyle(
-                                                shape:
-                                                    MaterialStateProperty.all<
-                                                        RoundedRectangleBorder>(
-                                                  RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 20),
+                                              child: ElevatedButton(
+                                                style: ButtonStyle(
+                                                  shape:
+                                                      MaterialStateProperty.all<
+                                                          RoundedRectangleBorder>(
+                                                    RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                    ),
+                                                  ),
+                                                  backgroundColor:
+                                                      MaterialStateProperty
+                                                          .resolveWith<Color?>(
+                                                    (Set<MaterialState>
+                                                        states) {
+                                                      if (states.contains(
+                                                          MaterialState
+                                                              .pressed)) {
+                                                        return lightBlueColor;
+                                                      }
+                                                      return primaryColor;
+                                                    },
                                                   ),
                                                 ),
-                                                backgroundColor:
-                                                    MaterialStateProperty
-                                                        .resolveWith<Color?>(
-                                                  (Set<MaterialState> states) {
-                                                    if (states.contains(
-                                                        MaterialState
-                                                            .pressed)) {
-                                                      return lightBlueColor;
-                                                    }
-                                                    return primaryColor;
-                                                  },
+                                                onPressed: () {
+                                                  Navigator.pushAndRemoveUntil(
+                                                    context,
+                                                    FadeAnimation(
+                                                        page:
+                                                            const LoginScreen()),
+                                                    (Route<dynamic> route) =>
+                                                        false,
+                                                  );
+                                                },
+                                                child: Text(
+                                                  "Masuk",
+                                                  style: GoogleFonts.poppins(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 14),
                                                 ),
                                               ),
-                                              onPressed: () {
-                                                Navigator.pushAndRemoveUntil(
-                                                  context,
-                                                  FadeAnimation(
-                                                      page:
-                                                          const LoginScreen()),
-                                                  (Route<dynamic> route) =>
-                                                      false,
-                                                );
-                                              },
-                                              child: Text(
-                                                "Masuk",
-                                                style: GoogleFonts.poppins(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 14),
-                                              ),
                                             ),
-                                          )
+                                          ),
+                                          const SizedBox(height: 20),
                                         ],
                                       );
                                     });
